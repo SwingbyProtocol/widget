@@ -1,5 +1,14 @@
 import { Swap } from '../modules/swap';
+import { RootLayout } from '../components/RootLayout';
+import { GlobalStyles } from '../modules/styles';
 
 export default function Home() {
-  return <Swap />;
+  return (
+    <>
+      <GlobalStyles />
+      <RootLayout>
+        <Swap />
+      </RootLayout>
+    </>
+  );
 }

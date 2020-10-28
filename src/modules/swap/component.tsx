@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Button, TextInput } from '@swingby-protocol/pulsar';
 
+import { SwapContainer } from './styled';
+
 export const Swap = () => {
   const [fromToken, setFromToken] = useState('');
   const [fromAmount, setFromAmount] = useState('');
@@ -8,7 +10,7 @@ export const Swap = () => {
   const [toAmount, setToAmount] = useState('');
   const [address, setAddress] = useState('');
   return (
-    <div>
+    <SwapContainer>
       <div>
         From:
         <TextInput
@@ -40,6 +42,6 @@ export const Swap = () => {
       <Button variant="primary" size="country">
         Swap
       </Button>
-    </div>
+    </SwapContainer>
   );
 };
