@@ -1268,11 +1268,12 @@
   resolved "https://registry.yarnpkg.com/@swingby-protocol/prettier-config/-/prettier-config-1.0.0.tgz#42d320794d4705df2fed5037ba6243d40ef1337b"
   integrity sha512-ugPj1pYogquSqQL3S+gR2EJp+c0t6zaU50uayD7PXeM32x8B9ZynC5o7h91nYxnCxBlVb5DoPcLNQ5z6rKcSFA==
 
-"@swingby-protocol/pulsar@^1.0.0-alpha.8":
-  version "1.0.0-alpha.8"
-  resolved "https://registry.yarnpkg.com/@swingby-protocol/pulsar/-/pulsar-1.0.0-alpha.8.tgz#053e592469650bb24b9006ece778f043c66dcb81"
-  integrity sha512-+YxAxkO2+n88z7LNRdHtOyMJjbaHw+Mnr2SFsDmrlifqhnc5cuXMTL1fj2iVMDGjYG8Pahuocjwdh0W9OYB9iA==
+"@swingby-protocol/pulsar@^1.0.0-alpha.10":
+  version "1.0.0-alpha.10"
+  resolved "https://registry.yarnpkg.com/@swingby-protocol/pulsar/-/pulsar-1.0.0-alpha.10.tgz#b7d76deda9b7ab6f97dc17323d4dab15397d8aa9"
+  integrity sha512-C9rf8j0Mr6L2so3wFI9z80ivCqZlN+rBQBi4WZ1Vc5hwvaIYk8x61VciavULNE3ezcJEZfxzrd55AcnEKChFsQ==
   dependencies:
+    "@types/styled-components" "^5.1.4"
     polished "^4.0.3"
     react-spring "^8.0.27"
     styled-components "^5.2.0"
