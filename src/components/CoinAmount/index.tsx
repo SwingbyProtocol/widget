@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 
 import { useWidgetLayout } from '../../modules/swap/useWidgetLayout';
 
@@ -19,7 +20,9 @@ export const CoinAmount = ({ label }: Props) => {
 
   return (
     <CoinAmountContainer>
-      <Label>From</Label>
+      <Label>
+        <FormattedMessage id="widget.from" />
+      </Label>
       <StyledTextInput
         size="state"
         value={fromToken}
@@ -32,7 +35,9 @@ export const CoinAmount = ({ label }: Props) => {
       />
       {layout === 'vertical' && <SwapVertical />}
       {layout === 'horizontal' && <SwapHorizontal />}
-      <Label>To</Label>
+      <Label>
+        <FormattedMessage id="widget.to" />
+      </Label>
       <StyledTextInput
         size="state"
         value={fromToken}
