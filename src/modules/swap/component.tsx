@@ -1,38 +1,20 @@
 import { useState } from 'react';
 import { Button, TextInput } from '@swingby-protocol/pulsar';
 
-import { SwapContainer } from './styled';
+import { CoinAmount } from '../../components/CoinAmount';
+
+import { SwapContainer, SwapVertical, SwapHorizontal } from './styled';
+import { useWidgetLayout } from './useWidgetLayout';
 
 export const Swap = () => {
-  const [fromToken, setFromToken] = useState('');
-  const [fromAmount, setFromAmount] = useState('');
-  const [toToken, setToToken] = useState('');
-  const [toAmount, setToAmount] = useState('');
+  const layout = useWidgetLayout();
   const [address, setAddress] = useState('');
   return (
     <SwapContainer>
-      <div>
-        From:
-        <TextInput
-          size="state"
-          value={fromToken}
-          onChange={(evt) => setFromToken(evt.target.value)}
-        />
-        <TextInput
-          size="state"
-          value={fromAmount}
-          onChange={(evt) => setFromAmount(evt.target.value)}
-        />
-      </div>
-      <div>
-        To:
-        <TextInput size="state" value={toToken} onChange={(evt) => setToToken(evt.target.value)} />
-        <TextInput
-          size="state"
-          value={toAmount}
-          onChange={(evt) => setToAmount(evt.target.value)}
-        />
-      </div>
+      <CoinAmount label="From" />
+      {layout === 'vertical' && <SwapVertical />}
+      {layout === 'horizontal' && <SwapHorizontal />}
+      <CoinAmount label="To" />
       <TextInput
         size="state"
         label="Receiving Address"

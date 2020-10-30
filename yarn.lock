@@ -1268,10 +1268,10 @@
   resolved "https://registry.yarnpkg.com/@swingby-protocol/prettier-config/-/prettier-config-1.0.0.tgz#42d320794d4705df2fed5037ba6243d40ef1337b"
   integrity sha512-ugPj1pYogquSqQL3S+gR2EJp+c0t6zaU50uayD7PXeM32x8B9ZynC5o7h91nYxnCxBlVb5DoPcLNQ5z6rKcSFA==
 
-"@swingby-protocol/pulsar@^1.0.0-alpha.10":
-  version "1.0.0-alpha.10"
-  resolved "https://registry.yarnpkg.com/@swingby-protocol/pulsar/-/pulsar-1.0.0-alpha.10.tgz#b7d76deda9b7ab6f97dc17323d4dab15397d8aa9"
-  integrity sha512-C9rf8j0Mr6L2so3wFI9z80ivCqZlN+rBQBi4WZ1Vc5hwvaIYk8x61VciavULNE3ezcJEZfxzrd55AcnEKChFsQ==
+"@swingby-protocol/pulsar@^1.0.0-alpha.12":
+  version "1.0.0-alpha.12"
+  resolved "https://registry.yarnpkg.com/@swingby-protocol/pulsar/-/pulsar-1.0.0-alpha.12.tgz#56c0481dcfe2f8bd0f3c02e2221e194403525031"
+  integrity sha512-/GsscrPuQcBe2xP6cfMAx70nqXAa1wf4YKQir8TYJL7v/o7rORXQTEdOYsR+66hp1woTeZybhXGhWb7HBgFntA==
   dependencies:
     "@types/styled-components" "^5.1.4"
     polished "^4.0.3"
