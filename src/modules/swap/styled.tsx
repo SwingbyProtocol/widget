@@ -27,15 +27,3 @@ export const SwapContainer = styled.div`
   @media (min-height: ${em(StylingConstants.media.big)}) {
   }
 `;
-
-export const SwapVertical = styled(Icon.SwapVertical)`
-  font-size: ${({ theme }) => em(theme.pulsar.size.house)};
-  flex-shrink: 0;
-  margin: ${({ theme }) => em(theme.pulsar.size.house, theme.pulsar.size.house)};
-`;
-
-export const SwapHorizontal = styled(Icon.SwapHorizontal)`
-  font-size: ${({ theme }) => em(theme.pulsar.size.house)};
-  flex-shrink: 0;
-  margin: ${({ theme }) => em(theme.pulsar.size.house, theme.pulsar.size.house)};
-`;

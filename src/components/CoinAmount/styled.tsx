@@ -1,22 +1,26 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { em } from 'polished';
-import { TextInput } from '@swingby-protocol/pulsar';
+import { Icon, TextInput } from '@swingby-protocol/pulsar';
 
 import { StylingConstants } from '../../modules/styles';
 
 export const CoinAmountContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr auto 1fr 1fr;
+  column-gap: ${({ theme }) => em(theme.pulsar.size.house)};
+  row-gap: ${({ theme }) => em(theme.pulsar.size.house)};
+
+  @media (min-height: ${em(StylingConstants.media.medium)}) {
+    grid-template-columns: auto 1fr 1fr;
+  }
 `;
 
 export const Label = styled.span`
   display: none;
-  margin-right: ${({ theme }) => em(theme.pulsar.size.house, theme.pulsar.size.room)};
   flex-grow: 0;
   flex-shrink: 0;
   font-size: ${({ theme }) => em(theme.pulsar.size.room)};
+  place-self: center center;
 
   @media (min-height: ${em(StylingConstants.media.medium)}) {
     display: block;
@@ -26,8 +30,22 @@ export const Label = styled.span`
 export const StyledTextInput = styled(TextInput)`
   flex-grow: 1;
   flex-shrink: 1;
+`;
 
-  :not(:last-of-type) {
-    margin-right: ${({ theme }) => em(theme.pulsar.size.house)};
+const swap = css`
+  font-size: ${({ theme }) => em(theme.pulsar.size.house)};
+  flex-shrink: 0;
+  place-self: center center;
+
+  @media (min-height: ${em(StylingConstants.media.medium)}) {
+    grid-column: 1 / 4;
   }
+`;
+
+export const SwapVertical = styled(Icon.SwapVertical)`
+  ${swap};
+`;
+
+export const SwapHorizontal = styled(Icon.SwapHorizontal)`
+  ${swap};
 `;
