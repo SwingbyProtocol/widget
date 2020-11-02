@@ -13,8 +13,6 @@ export const prepareSwap = async ({
   amount: BigNumber.Value;
 }): Promise<{ sendAmount: string; nonce: number }> => {
   let startSecs = new Date().getSeconds();
-  // console.log("Start calculation");
-  // console.log("Start Secs:", startSecs);
 
   let nonce = 0;
   let hash: any;
@@ -23,8 +21,8 @@ export const prepareSwap = async ({
   const flooredAmount = floorAmount(amount);
 
   do {
-    nonce++;
-    // strHashArg => e.g.: 1738;1234;tbnb157dxmw9jz5emuf0apj4d6p3ee42ck0uwksxfff;BTC.B;10.23456;
+    nonce += 1;
+
     strHashArg =
       String(nonce) +
       ';' +
@@ -46,19 +44,13 @@ export const prepareSwap = async ({
       latestRound = getRound();
     }
   } while (!verifyHashPrefix(hash));
-  const BigNumberPrefix = '0x';
-  const rejectionSample = new BigNumber(BigNumberPrefix + hash).mod(1024);
 
-  const BigNumberFloorAmount = new BigNumber(toSatoshi(flooredAmount));
+  const rejectionSample = new BigNumber(`0x${hash}`).mod(1024);
+  const BigNumberFloorAmount = toSatoshi(flooredAmount);
   const toSendBI = BigNumberFloorAmount.minus(rejectionSample);
   const numSendAmount = toBTC(toSendBI.toString());
-  const sendAmount = String(numSendAmount);
+  const sendAmount = numSendAmount.toFixed();
 
-  // if (Number(sendAmount) > 0) {
-  // const finishSecs = new Date().getSeconds();
-  // console.log("Finish Secs", finishSecs);
-  // console.log(`${finishSecs - startSecs} secs to calculate nonce`);
-  // }
   return { sendAmount, nonce };
 };
 
@@ -104,12 +96,12 @@ const verifyHashPrefix = (hash: string) => {
   }
 };
 
-const toBTC = (satoshiValue: string): number => {
-  return Number(satoshiValue) / 100000000;
+const toBTC = (satoshiValue: BigNumber.Value): BigNumber => {
+  return new BigNumber(satoshiValue).div(100000000, 10);
 };
 
-const toSatoshi = (btcValue: string): number => {
-  return Math.round(Number(btcValue) * 100000000);
+const toSatoshi = (btcValue: BigNumber.Value): BigNumber => {
+  return new BigNumber(btcValue).times(100000000, 10);
 };
 
 const generateHash = async (
