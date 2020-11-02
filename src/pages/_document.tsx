@@ -1,8 +1,16 @@
 import Document from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
+import { logger } from '../modules/logger';
+import { swapNodeEndpoints, indexerEthereumEndpoint, indexerBitcoinEndpoint } from '../modules/env';
+
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {
+    logger.info(
+      { swapNodeEndpoints, indexerEthereumEndpoint, indexerBitcoinEndpoint },
+      '_document.tsx',
+    );
+
     const sheet = new ServerStyleSheet();
     const originalRenderPage = ctx.renderPage;
 
