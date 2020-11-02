@@ -7,6 +7,8 @@ it.each([
   ['2020-08-25T10:21:00Z', { nonce: 197, sendAmount: '0.99999626' }],
   ['2020-08-25T10:22:00Z', { nonce: 835, sendAmount: '0.99999586' }],
 ])('works for %s', async (date, expected) => {
+  expect.assertions(1);
+
   try {
     global.Date.now = jest.fn(() => new Date(date).getTime());
 
