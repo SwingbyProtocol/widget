@@ -1,5 +1,6 @@
 import { BigNumber } from 'bignumber.js';
 import hexToBinary from 'hex-to-binary';
+import crypto from 'isomorphic-webcrypto';
 
 const difficultyZeroBits = 10;
 
@@ -38,7 +39,6 @@ export const prepareSwap = async ({
     hash = await generateHash(strHashArg);
     const finishSecs = new Date().getSeconds();
     if (startSecs > finishSecs) {
-      // console.log("Start Secs:", startSecs);
       nonce = 0;
       startSecs = new Date().getSeconds();
       latestRound = getRound();
@@ -109,8 +109,7 @@ const generateHash = async (
   format: BufferEncoding = 'hex',
   name = 'SHA-512',
 ) => {
-  // @ts-ignore
-  const digest = await window.crypto.subtle.digest(
+  const digest = await crypto.subtle.digest(
     {
       name,
     },
