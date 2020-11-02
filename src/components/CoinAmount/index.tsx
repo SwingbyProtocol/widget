@@ -11,13 +11,13 @@ import {
   SwapHorizontal,
 } from './styled';
 
-type Props = { label?: React.ReactNode };
+type State = { fromToken: string; toToken: string; fromAmount: string; toAmount: string };
+const emptyState: State = { fromToken: '', fromAmount: '', toToken: '', toAmount: '' };
 
-export const CoinAmount = ({ label }: Props) => {
+type Props = { state: State; onChange: (state: State) => void };
+
+export const CoinAmount = ({ state, onChange }: Props) => {
   const layout = useWidgetLayout();
-  const [fromToken, setFromToken] = useState('');
-  const [fromAmount, setFromAmount] = useState('');
-
   return (
     <CoinAmountContainer>
       <Label>
@@ -25,13 +25,13 @@ export const CoinAmount = ({ label }: Props) => {
       </Label>
       <StyledTextInput
         size="state"
-        value={fromToken}
-        onChange={(evt) => setFromToken(evt.target.value)}
+        value={state.fromToken}
+        onChange={(evt) => onChange({ ...state, fromToken: evt.target.value })}
       />
       <StyledTextInput
         size="state"
-        value={fromAmount}
-        onChange={(evt) => setFromAmount(evt.target.value)}
+        value={state.fromAmount}
+        onChange={(evt) => onChange({ ...state, fromAmount: evt.target.value })}
       />
       {layout === 'vertical' && <SwapVertical />}
       {layout === 'horizontal' && <SwapHorizontal />}
@@ -40,14 +40,16 @@ export const CoinAmount = ({ label }: Props) => {
       </Label>
       <StyledTextInput
         size="state"
-        value={fromToken}
-        onChange={(evt) => setFromToken(evt.target.value)}
+        value={state.toToken}
+        onChange={(evt) => onChange({ ...state, toToken: evt.target.value })}
       />
       <StyledTextInput
         size="state"
-        value={fromAmount}
-        onChange={(evt) => setFromAmount(evt.target.value)}
+        value={state.toAmount}
+        onChange={(evt) => onChange({ ...state, toAmount: evt.target.value })}
       />
     </CoinAmountContainer>
   );
 };
+
+CoinAmount.emptyState = emptyState;

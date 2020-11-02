@@ -1,3 +1,6 @@
+export const logLevel =
+  process.env.NEXT_PUBLIC_LOG_LEVEL || (process.env.NODE_ENV === 'production' ? 'info' : 'trace');
+
 const swapNodeEndpointList =
   process.env.NEXT_PUBLIC_SWAP_NODE_ENDPOINT_LIST ||
   new Array(25)
