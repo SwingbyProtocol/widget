@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button, TextInput } from '@swingby-protocol/pulsar';
 import { useIntl } from 'react-intl';
 
-import { CoinAmount } from '../../components/CoinAmount';
+import { CoinAmount } from '../../../components/CoinAmount';
 
 import { SwapContainer } from './styled';
 

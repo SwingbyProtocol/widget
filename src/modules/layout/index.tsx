@@ -1,7 +1,7 @@
 import { useEffect, useState, useLayoutEffect as _useLayoutEffect } from 'react';
 import { em } from 'polished';
 
-import { StylingConstants } from '../../styles';
+import { StylingConstants } from '../styles';
 
 type Layout = 'vertical' | 'horizontal';
 

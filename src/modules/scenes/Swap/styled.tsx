@@ -1,8 +1,7 @@
 import styled from 'styled-components';
-import { Icon } from '@swingby-protocol/pulsar';
 import { em } from 'polished';
 
-import { StylingConstants } from '../styles';
+import { StylingConstants } from '../../styles';
 
 export const SwapContainer = styled.div`
   flex-basis: ${em(StylingConstants.maxWidth)};

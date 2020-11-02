@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { useWidgetLayout } from '../../modules/swap/useWidgetLayout';
+import { useWidgetLayout } from '../../modules/layout';
 
 import {
   CoinAmountContainer,

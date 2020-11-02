@@ -1,4 +1,4 @@
-import { Swap } from '../modules/swap';
+import { Swap } from '../modules/scenes/Swap';
 import { RootLayout } from '../components/RootLayout';
 import { GlobalStyles } from '../modules/styles';
 
