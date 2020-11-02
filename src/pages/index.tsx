@@ -1,10 +1,14 @@
-import styled from 'styled-components';
-
-const Title = styled.h1`
-  font-size: 50px;
-  color: red;
-`;
+import { Swap } from '../modules/swap';
+import { RootLayout } from '../components/RootLayout';
+import { GlobalStyles } from '../modules/styles';
 
 export default function Home() {
-  return <Title>My page</Title>;
+  return (
+    <>
+      <GlobalStyles />
+      <RootLayout>
+        <Swap />
+      </RootLayout>
+    </>
+  );
 }

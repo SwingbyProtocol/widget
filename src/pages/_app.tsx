@@ -1,4 +1,4 @@
-import { PulsarGlobalStyles } from '@swingby-protocol/pulsar';
+import { PulsarGlobalStyles, PulsarThemeProvider } from '@swingby-protocol/pulsar';
 import { useRouter } from 'next/router';
 import { IntlProvider } from 'react-intl';
 
@@ -10,10 +10,12 @@ function MyApp({ Component, pageProps }) {
   const locale = router.locale ?? defaultLocale;
 
   return (
-    <IntlProvider messages={en} locale={locale} defaultLocale={defaultLocale}>
-      <PulsarGlobalStyles />
-      <Component {...pageProps} />
-    </IntlProvider>
+    <PulsarThemeProvider>
+      <IntlProvider messages={en} locale={locale} defaultLocale={defaultLocale}>
+        <PulsarGlobalStyles />
+        <Component {...pageProps} />
+      </IntlProvider>
+    </PulsarThemeProvider>
   );
 }
 

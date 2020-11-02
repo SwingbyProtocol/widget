@@ -1,1 +1,7 @@
-{ "test": "value" }
+{
+  "widget.from": "From",
+  "widget.to": "To",
+  "widget.receiving-address.label": "Receiving Address",
+  "widget.receiving-address.placeholder": "Your receiving address…",
+  "widget.swap-btn": "Swap"
+}
