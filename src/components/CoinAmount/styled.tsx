@@ -20,7 +20,7 @@ export const Label = styled.span`
   flex-grow: 0;
   flex-shrink: 0;
   font-size: ${({ theme }) => em(theme.pulsar.size.room)};
-  place-self: center center;
+  place-self: center left;
 
   @media (min-height: ${em(StylingConstants.media.medium)}) {
     display: block;
