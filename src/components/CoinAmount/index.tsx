@@ -25,7 +25,9 @@ export const CoinAmount = ({ state, onChange }: Props) => {
       </Label>
       <Dropdown
         target={
-          <Dropdown.DefaultTarget variant="input">{state.currencyFrom}</Dropdown.DefaultTarget>
+          <Dropdown.DefaultTarget variant="input" size="state">
+            {state.currencyFrom}
+          </Dropdown.DefaultTarget>
         }
       >
         {SUPPORTED_COINS.map((coin) => (
@@ -44,7 +46,11 @@ export const CoinAmount = ({ state, onChange }: Props) => {
         <FormattedMessage id="widget.to" />
       </Label>
       <Dropdown
-        target={<Dropdown.DefaultTarget variant="input">{state.currencyTo}</Dropdown.DefaultTarget>}
+        target={
+          <Dropdown.DefaultTarget variant="input" size="state">
+            {state.currencyTo}
+          </Dropdown.DefaultTarget>
+        }
       >
         {SUPPORTED_COINS.map((coin) => (
           <Dropdown.Item key={coin} onClick={(evt) => onChange({ ...state, currencyTo: coin })}>
