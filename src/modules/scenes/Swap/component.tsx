@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Button, TextInput } from '@swingby-protocol/pulsar';
+import { TextInput } from '@swingby-protocol/pulsar';
 import { useIntl } from 'react-intl';
 import { calculateSwap, isSupportedCoin } from '@swingby-protocol/sdk';
 
 import { CoinAmount } from '../../../components/CoinAmount';
 import { logger } from '../../logger';
 
-import { SwapContainer } from './styled';
+import { StyledButton, SwapContainer } from './styled';
 
 export const Swap = () => {
   const { formatMessage } = useIntl();
@@ -47,9 +47,9 @@ export const Swap = () => {
         label={formatMessage({ id: 'widget.receiving-address.label' })}
         placeholder={formatMessage({ id: 'widget.receiving-address.placeholder' })}
       />
-      <Button variant="primary" size="country">
+      <StyledButton variant="primary" size="state">
         {formatMessage({ id: 'widget.swap-btn' })}
-      </Button>
+      </StyledButton>
     </SwapContainer>
   );
 };

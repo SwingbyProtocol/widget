@@ -28,11 +28,6 @@ export const Label = styled.span`
   }
 `;
 
-export const StyledTextInput = styled(TextInput)`
-  flex-grow: 1;
-  flex-shrink: 1;
-`;
-
 const swap = css`
   font-size: ${({ theme }) => em(theme.pulsar.size.house)};
   flex-shrink: 0;
