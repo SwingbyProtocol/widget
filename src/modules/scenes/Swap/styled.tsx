@@ -8,7 +8,6 @@ export const SwapContainer = styled.div`
   flex-basis: ${em(StylingConstants.maxWidth)};
   flex-grow: 1;
   flex-shrink: 1;
-  overflow: hidden;
   background: ${({ theme }) => theme.pulsar.color.bg.normal};
   padding: 0 ${({ theme }) => em(theme.pulsar.size.street)};
   display: flex;
