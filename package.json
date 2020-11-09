@@ -19,7 +19,8 @@
     "trailingComma": "all"
   },
   "dependencies": {
-    "@swingby-protocol/pulsar": "^1.0.0-alpha.12",
+    "@swingby-protocol/pulsar": "^1.0.0-alpha.15",
+    "@swingby-protocol/sdk": "^1.0.0-alpha.3",
     "bignumber.js": "^9.0.1",
     "hex-to-binary": "^1.0.1",
     "isomorphic-webcrypto": "^2.3.6",

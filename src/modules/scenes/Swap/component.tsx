@@ -1,28 +1,41 @@
 import { useEffect, useState } from 'react';
 import { Button, TextInput } from '@swingby-protocol/pulsar';
 import { useIntl } from 'react-intl';
+import { calculateSwap, isSupportedCoin } from '@swingby-protocol/sdk';
 
 import { CoinAmount } from '../../../components/CoinAmount';
-import { prepareSwap } from '../../swap/prepareSwap';
 import { logger } from '../../logger';
 
 import { SwapContainer } from './styled';
 
 export const Swap = () => {
   const { formatMessage } = useIntl();
-  const [coinAmountState, setCoinAmountState] = useState(CoinAmount.emptyState);
   const [address, setAddress] = useState('');
+  const [coinAmountState, setCoinAmountState] = useState(CoinAmount.emptyState);
+  const { currencyTo, amountTo, amountFrom, currencyFrom } = coinAmountState;
 
   useEffect(() => {
     (async () => {
-      const result = await prepareSwap({
-        amount: coinAmountState.fromAmount,
-        currencyFrom: coinAmountState.fromToken,
-        destAddr: address,
+      if (!isSupportedCoin(currencyFrom)) {
+        logger.debug(`"${currencyFrom}" not supported. Won't do anything.`);
+        return;
+      }
+
+      if (!isSupportedCoin(currencyTo)) {
+        logger.debug(`"${currencyTo}" not supported. Won't do anything.`);
+        return;
+      }
+
+      const result = await calculateSwap({
+        amount: amountFrom,
+        currencyFrom,
+        currencyTo,
+        addressTo: address,
       });
+
       logger.debug(result, 'prepareSwap()');
     })();
-  }, [coinAmountState, address]);
+  }, [amountFrom, amountTo, currencyFrom, currencyTo, address]);
 
   return (
     <SwapContainer>
