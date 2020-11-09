@@ -9,9 +9,9 @@ export const CoinAmountContainer = styled.div`
   grid-template-columns: 1fr 1fr auto 1fr 1fr;
   column-gap: ${({ theme }) => em(theme.pulsar.size.house)};
   row-gap: ${({ theme }) => em(theme.pulsar.size.house)};
+  width: 100%;
 
   @media (min-height: ${em(StylingConstants.media.medium)}) {
-    width: 100%;
     grid-template-columns: auto 1fr 1fr;
   }
 `;
