@@ -11,6 +11,7 @@ export const CoinAmountContainer = styled.div`
   row-gap: ${({ theme }) => em(theme.pulsar.size.house)};
 
   @media (min-height: ${em(StylingConstants.media.medium)}) {
+    width: 100%;
     grid-template-columns: auto 1fr 1fr;
   }
 `;

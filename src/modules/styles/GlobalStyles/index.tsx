@@ -8,7 +8,7 @@ export const GlobalStyles = css`
     background: ${({ theme }) => theme.pulsar.color.bg.normal};
   }
 
-  @media (min-height: ${em(StylingConstants.media.medium)}) {
+  @media (min-height: ${em(StylingConstants.media.massive)}) {
     :root {
       background: ${({ theme }) => theme.pulsar.color.bg.masked};
     }

@@ -9,20 +9,22 @@ export const SwapContainer = styled.div`
   flex-shrink: 1;
   overflow: hidden;
   background: ${({ theme }) => theme.pulsar.color.bg.normal};
+  padding: 0 ${({ theme }) => em(theme.pulsar.size.street)};
   display: flex;
-  flex-direction: row;
-  max-width: ${em(900)};
   align-items: center;
   justify-content: center;
 
   @media (min-height: ${em(StylingConstants.media.medium)}) {
     flex-direction: column;
-    max-width: ${em(StylingConstants.maxWidth)};
     padding: ${({ theme }) => em(theme.pulsar.size.city)};
-    box-shadow: 0px 50px 78px -10px rgba(43, 55, 74, 0.152644);
-    border-radius: ${em(10)};
   }
 
   @media (min-height: ${em(StylingConstants.media.big)}) {
+  }
+
+  @media (min-height: ${em(StylingConstants.media.massive)}) {
+    max-width: ${em(StylingConstants.maxWidth)};
+    box-shadow: 0px 50px 78px -10px rgba(43, 55, 74, 0.152644);
+    border-radius: ${em(10)};
   }
 `;

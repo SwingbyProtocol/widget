@@ -3,5 +3,6 @@ export const StylingConstants = {
   media: {
     medium: 375,
     big: 510,
+    massive: 600,
   },
 };

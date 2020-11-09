@@ -32,8 +32,7 @@ export const CoinAmount = ({ state, onChange }: Props) => {
         value={state.amountFrom}
         onChange={(evt) => onChange({ ...state, amountFrom: evt.target.value })}
       />
-      {layout === 'vertical' && <SwapVertical />}
-      {layout === 'horizontal' && <SwapHorizontal />}
+      {layout === 'small' ? <SwapHorizontal /> : <SwapVertical />}
       <Label>
         <FormattedMessage id="widget.to" />
       </Label>

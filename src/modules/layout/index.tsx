@@ -1,46 +1,60 @@
-import { useEffect, useState, useLayoutEffect as _useLayoutEffect } from 'react';
+import { useEffect, useState, useLayoutEffect as _useLayoutEffect, useCallback } from 'react';
 import { em } from 'polished';
 
 import { StylingConstants } from '../styles';
 
-type Layout = 'vertical' | 'horizontal';
-
 const useLayoutEffect = typeof window !== 'undefined' ? _useLayoutEffect : useEffect;
-const query = `(min-height: ${em(StylingConstants.media.medium)})`;
+const queryMedium = `(min-height: ${em(StylingConstants.media.medium)})`;
+const queryBig = `(min-height: ${em(StylingConstants.media.big)})`;
+const queryMassive = `(min-height: ${em(StylingConstants.media.massive)})`;
+
+type Layout = 'small' | 'medium' | 'big' | 'massive';
 
 export const useWidgetLayout = (): Layout => {
-  const [layout, setLayout] = useState<Layout>('vertical');
+  const [layout, setLayout] = useState<Layout>('small');
+
+  const updateState = useCallback(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) {
+      return;
+    }
+
+    if (!window.matchMedia(queryMedium).matches) {
+      setLayout('small');
+      return;
+    }
+
+    if (!window.matchMedia(queryBig).matches) {
+      setLayout('medium');
+      return;
+    }
+
+    if (!window.matchMedia(queryMassive).matches) {
+      setLayout('big');
+      return;
+    }
+
+    setLayout('massive');
+  }, []);
 
   useEffect(() => {
     if (typeof window === 'undefined' || !window.matchMedia) {
       return;
     }
 
-    const media = window.matchMedia(query);
-    const listener = ({ matches }: MediaQueryListEvent) => {
-      setLayout(matches ? 'vertical' : 'horizontal');
-    };
+    const media = window.matchMedia(queryMedium);
 
     if (media.addEventListener) {
-      media.addEventListener('change', listener);
-      return () => media.removeEventListener('change', listener);
+      media.addEventListener('change', updateState);
+      return () => media.removeEventListener('change', updateState);
     }
 
-    media.addListener(listener);
-    return () => media.removeListener(listener);
-  }, []);
+    media.addListener(updateState);
+    return () => media.removeListener(updateState);
+  }, [updateState]);
 
   useLayoutEffect(() => {
-    if (typeof window === 'undefined' || !window.matchMedia) {
-      return;
-    }
-
-    if (window.matchMedia(query).matches) {
-      setLayout('vertical');
-    } else {
-      setLayout('horizontal');
-    }
-  }, [setLayout]);
+    updateState();
+  }, [updateState]);
 
   return layout;
 };
