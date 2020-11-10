@@ -8,7 +8,17 @@ export const GlobalStyles = css`
     background: ${({ theme }) => theme.pulsar.color.bg.normal};
   }
 
-  @media (min-height: ${em(StylingConstants.media.massive)}) {
+  body {
+    margin: 0 ${({ theme }) => em(theme.pulsar.size.street)};
+  }
+
+  @media (min-height: ${em(StylingConstants.mediaHeight.medium)}) {
+    body {
+      margin: ${({ theme }) => em(theme.pulsar.size.city)};
+    }
+  }
+
+  @media (min-height: ${em(StylingConstants.mediaHeight.massive)}) {
     :root {
       background: ${({ theme }) => theme.pulsar.color.bg.masked};
     }

@@ -1,6 +1,6 @@
 export const StylingConstants = {
   maxWidth: 445,
-  media: {
+  mediaHeight: {
     medium: 375,
     big: 510,
     massive: 600,

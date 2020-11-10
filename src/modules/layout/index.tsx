@@ -4,9 +4,9 @@ import { em } from 'polished';
 import { StylingConstants } from '../styles';
 
 const useLayoutEffect = typeof window !== 'undefined' ? _useLayoutEffect : useEffect;
-const queryMedium = `(min-height: ${em(StylingConstants.media.medium)})`;
-const queryBig = `(min-height: ${em(StylingConstants.media.big)})`;
-const queryMassive = `(min-height: ${em(StylingConstants.media.massive)})`;
+const queryMedium = `(min-height: ${em(StylingConstants.mediaHeight.medium)})`;
+const queryBig = `(min-height: ${em(StylingConstants.mediaHeight.big)})`;
+const queryMassive = `(min-height: ${em(StylingConstants.mediaHeight.massive)})`;
 
 type Layout = 'small' | 'medium' | 'big' | 'massive';
 

@@ -11,7 +11,7 @@ export const CoinAmountContainer = styled.div`
   row-gap: ${({ theme }) => em(theme.pulsar.size.house)};
   width: 100%;
 
-  @media (min-height: ${em(StylingConstants.media.medium)}) {
+  @media (min-height: ${em(StylingConstants.mediaHeight.medium)}) {
     grid-template-columns: auto 1fr 1fr;
   }
 `;
@@ -23,7 +23,7 @@ export const Label = styled.span`
   font-size: ${({ theme }) => em(theme.pulsar.size.room)};
   place-self: center left;
 
-  @media (min-height: ${em(StylingConstants.media.medium)}) {
+  @media (min-height: ${em(StylingConstants.mediaHeight.medium)}) {
     display: block;
   }
 `;
@@ -33,7 +33,7 @@ const swap = css`
   flex-shrink: 0;
   place-self: center center;
 
-  @media (min-height: ${em(StylingConstants.media.medium)}) {
+  @media (min-height: ${em(StylingConstants.mediaHeight.medium)}) {
     grid-column: 1 / 4;
   }
 `;
