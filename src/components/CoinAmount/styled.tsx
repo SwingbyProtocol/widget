@@ -17,15 +17,11 @@ export const CoinAmountContainer = styled.div`
 `;
 
 export const Label = styled.span`
-  display: none;
+  display: block;
   flex-grow: 0;
   flex-shrink: 0;
   font-size: ${({ theme }) => rem(theme.pulsar.size.room)};
   place-self: center left;
-
-  @media (${StylingConstants.mediaLayout.widgetSmall}) {
-    display: block;
-  }
 `;
 
 const swap = css`
@@ -34,7 +30,7 @@ const swap = css`
   place-self: center center;
 
   @media (${StylingConstants.mediaLayout.widgetSmall}) {
-    grid-column: 1 / 4;
+    grid-column: 2 / 4;
   }
 `;
 

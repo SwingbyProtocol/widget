@@ -20,9 +20,11 @@ export const CoinAmount = ({ state, onChange }: Props) => {
   const layout = useWidgetLayout();
   return (
     <CoinAmountContainer>
-      <Label>
-        <FormattedMessage id="widget.from" />
-      </Label>
+      {layout !== 'widget-banner' && (
+        <Label>
+          <FormattedMessage id="widget.from" />
+        </Label>
+      )}
       <Dropdown
         target={
           <Dropdown.DefaultTarget variant="input" size="state">
@@ -41,10 +43,13 @@ export const CoinAmount = ({ state, onChange }: Props) => {
         value={state.amountFrom}
         onChange={(evt) => onChange({ ...state, amountFrom: evt.target.value })}
       />
+      {layout !== 'widget-banner' && <Label />}
       {layout === 'widget-banner' ? <SwapHorizontal /> : <SwapVertical />}
-      <Label>
-        <FormattedMessage id="widget.to" />
-      </Label>
+      {layout !== 'widget-banner' && (
+        <Label>
+          <FormattedMessage id="widget.to" />
+        </Label>
+      )}
       <Dropdown
         target={
           <Dropdown.DefaultTarget variant="input" size="state">
