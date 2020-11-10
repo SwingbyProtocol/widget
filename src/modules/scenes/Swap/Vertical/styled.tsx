@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Button } from '@swingby-protocol/pulsar';
 import { rem } from 'polished';
 
-import { StylingConstants } from '../../styles';
+import { StylingConstants } from '../../../styles';
 
 export const SwapContainer = styled.div`
   flex-grow: 1;
@@ -11,13 +11,7 @@ export const SwapContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-
-  @media (${StylingConstants.mediaLayout.widgetSmall}) {
-    flex-direction: column;
-  }
-
-  @media (${StylingConstants.mediaLayout.widgetFull}) {
-  }
+  flex-direction: column;
 
   @media (${StylingConstants.mediaLayout.website}) {
     max-width: ${rem(445)};
@@ -28,10 +22,5 @@ export const SwapContainer = styled.div`
 
 export const StyledButton = styled(Button)`
   width: auto;
-  margin-left: ${({ theme }) => rem(theme.pulsar.size.street)};
-
-  @media (${StylingConstants.mediaLayout.widgetSmall}) {
-    margin-left: 0;
-    margin-top: ${({ theme }) => rem(theme.pulsar.size.street)};
-  }
+  margin-top: ${({ theme }) => rem(theme.pulsar.size.street)};
 `;

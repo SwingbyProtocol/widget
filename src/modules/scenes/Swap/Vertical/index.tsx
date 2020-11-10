@@ -3,12 +3,12 @@ import { TextInput } from '@swingby-protocol/pulsar';
 import { useIntl } from 'react-intl';
 import { calculateSwap, isSupportedCoin } from '@swingby-protocol/sdk';
 
-import { CoinAmount } from '../../../components/CoinAmount';
-import { logger } from '../../logger';
+import { CoinAmount } from '../../../../components/CoinAmount';
+import { logger } from '../../../logger';
 
 import { StyledButton, SwapContainer } from './styled';
 
-export const Swap = () => {
+export const Vertical = () => {
   const { formatMessage } = useIntl();
   const [address, setAddress] = useState('');
   const [coinAmountState, setCoinAmountState] = useState(CoinAmount.emptyState);
