@@ -1,39 +1,35 @@
 import { useEffect, useState, useLayoutEffect as _useLayoutEffect, useCallback } from 'react';
-import { em } from 'polished';
 
 import { StylingConstants } from '../styles';
 
 const useLayoutEffect = typeof window !== 'undefined' ? _useLayoutEffect : useEffect;
-const queryMedium = `(min-height: ${em(StylingConstants.mediaHeight.medium)})`;
-const queryBig = `(min-height: ${em(StylingConstants.mediaHeight.big)})`;
-const queryMassive = `(min-height: ${em(StylingConstants.mediaHeight.massive)})`;
 
-type Layout = 'small' | 'medium' | 'big' | 'massive';
+type Layout = 'widget-banner' | 'widget-small' | 'widget-full' | 'website';
 
 export const useWidgetLayout = (): Layout => {
-  const [layout, setLayout] = useState<Layout>('small');
+  const [layout, setLayout] = useState<Layout>('widget-banner');
 
   const updateState = useCallback(() => {
     if (typeof window === 'undefined' || !window.matchMedia) {
       return;
     }
 
-    if (!window.matchMedia(queryMedium).matches) {
-      setLayout('small');
+    if (!window.matchMedia(StylingConstants.mediaLayout.widgetSmall).matches) {
+      setLayout('widget-banner');
       return;
     }
 
-    if (!window.matchMedia(queryBig).matches) {
-      setLayout('medium');
+    if (!window.matchMedia(StylingConstants.mediaLayout.widgetFull).matches) {
+      setLayout('widget-small');
       return;
     }
 
-    if (!window.matchMedia(queryMassive).matches) {
-      setLayout('big');
+    if (!window.matchMedia(StylingConstants.mediaLayout.website).matches) {
+      setLayout('widget-full');
       return;
     }
 
-    setLayout('massive');
+    setLayout('website');
   }, []);
 
   useEffect(() => {
@@ -41,7 +37,7 @@ export const useWidgetLayout = (): Layout => {
       return;
     }
 
-    const media = window.matchMedia(queryMedium);
+    const media = window.matchMedia(StylingConstants.mediaLayout.widgetSmall);
 
     if (media.addEventListener) {
       media.addEventListener('change', updateState);

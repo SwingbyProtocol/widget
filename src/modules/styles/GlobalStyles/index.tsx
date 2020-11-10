@@ -1,5 +1,5 @@
 import { createGlobalStyle as css } from 'styled-components';
-import { em } from 'polished';
+import { rem } from 'polished';
 
 import { StylingConstants } from '../constants';
 
@@ -9,16 +9,16 @@ export const GlobalStyles = css`
   }
 
   body {
-    margin: 0 ${({ theme }) => em(theme.pulsar.size.street)};
+    margin: 0 ${({ theme }) => rem(theme.pulsar.size.street)};
   }
 
-  @media (min-height: ${em(StylingConstants.mediaHeight.medium)}) {
+  @media (${StylingConstants.mediaLayout.widgetSmall}) {
     body {
-      margin: ${({ theme }) => em(theme.pulsar.size.city)};
+      margin: ${({ theme }) => rem(theme.pulsar.size.city)};
     }
   }
 
-  @media (min-height: ${em(StylingConstants.mediaHeight.massive)}) {
+  @media (${StylingConstants.mediaLayout.website}) {
     :root {
       background: ${({ theme }) => theme.pulsar.color.bg.masked};
     }

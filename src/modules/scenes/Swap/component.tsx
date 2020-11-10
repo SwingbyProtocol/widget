@@ -40,13 +40,13 @@ export const Swap = () => {
   return (
     <SwapContainer>
       <CoinAmount state={coinAmountState} onChange={setCoinAmountState} />
-      {/* <TextInput
+      <TextInput
         size="state"
         value={address}
         onChange={(evt) => setAddress(evt.target.value)}
         label={formatMessage({ id: 'widget.receiving-address.label' })}
         placeholder={formatMessage({ id: 'widget.receiving-address.placeholder' })}
-      /> */}
+      />
       <StyledButton variant="primary" size="state">
         {formatMessage({ id: 'widget.swap-btn' })}
       </StyledButton>

@@ -1,8 +1,9 @@
+import { rem } from 'polished';
+
 export const StylingConstants = {
-  maxWidth: 445,
-  mediaHeight: {
-    medium: 375,
-    big: 510,
-    massive: 600,
+  mediaLayout: {
+    widgetSmall: `(min-height: ${rem(375)})`,
+    widgetFull: `(min-height: ${rem(510)})`,
+    website: `(min-height: ${rem(600)})`,
   },
 };
