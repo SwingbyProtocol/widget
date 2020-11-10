@@ -11,7 +11,7 @@ export const Banner = () => {
 
   return (
     <BannerContainer>
-      <CoinAmount state={coinAmountState} onChange={setCoinAmountState} />
+      <CoinAmount variant="banner" state={coinAmountState} onChange={setCoinAmountState} />
       <StyledButton variant="primary" size="state">
         {formatMessage({ id: 'widget.swap-btn' })}
       </StyledButton>

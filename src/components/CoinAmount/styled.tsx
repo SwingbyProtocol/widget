@@ -2,18 +2,20 @@ import styled, { css } from 'styled-components';
 import { rem } from 'polished';
 import { Icon } from '@swingby-protocol/pulsar';
 
-import { StylingConstants } from '../../modules/styles';
+export const VARIANTS = ['banner', 'vertical'] as const;
+export type Variant = typeof VARIANTS[number];
 
-export const CoinAmountContainer = styled.div`
+const vertical = css`
+  grid-template-columns: auto 1fr 1fr;
+`;
+
+export const CoinAmountContainer = styled.div<{ variant: Variant }>`
   display: grid;
   grid-template-columns: 1fr 1fr auto 1fr 1fr;
   column-gap: ${({ theme }) => rem(theme.pulsar.size.house)};
   row-gap: ${({ theme }) => rem(theme.pulsar.size.house)};
   width: 100%;
-
-  @media (${StylingConstants.mediaLayout.widgetSmall}) {
-    grid-template-columns: auto 1fr 1fr;
-  }
+  ${({ variant }) => variant === 'vertical' && vertical};
 `;
 
 export const Label = styled.span`
@@ -28,14 +30,11 @@ const swap = css`
   font-size: ${({ theme }) => rem(theme.pulsar.size.house)};
   flex-shrink: 0;
   place-self: center center;
-
-  @media (${StylingConstants.mediaLayout.widgetSmall}) {
-    grid-column: 2 / 4;
-  }
 `;
 
 export const SwapVertical = styled(Icon.SwapVertical)`
   ${swap};
+  grid-column: 2 / 4;
 `;
 
 export const SwapHorizontal = styled(Icon.SwapHorizontal)`

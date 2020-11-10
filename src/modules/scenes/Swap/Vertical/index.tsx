@@ -39,7 +39,7 @@ export const Vertical = () => {
 
   return (
     <SwapContainer>
-      <CoinAmount state={coinAmountState} onChange={setCoinAmountState} />
+      <CoinAmount variant="vertical" state={coinAmountState} onChange={setCoinAmountState} />
       <TextInput
         size="state"
         value={address}
