@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { StylingConstants } from '../../../modules/styles';
 
+import { HorizontalSelector } from './HorizonalSelector';
 import { ButtonCoinCaret, ButtonCoinName, LonelyCoinButton, Variant } from './styled';
 
 type Props = { variant: Variant; value: Coin; onChange: (coin: Coin) => void };
@@ -40,17 +41,29 @@ export const TokenSelector = ({ variant, value, onChange }: Props) => {
 
   if (hasWideWidth) {
     return (
-      <Button variant="tertiary" size="state" onClick={() => setHorizontalSelectorOpen(true)}>
-        <CoinIcon symbol={value} />
-        <ButtonCoinName>{value}</ButtonCoinName>
-        <ButtonCoinCaret />
-      </Button>
+      <>
+        <Button variant="tertiary" size="state" onClick={() => setHorizontalSelectorOpen(true)}>
+          <CoinIcon symbol={value} />
+          <ButtonCoinName>{value}</ButtonCoinName>
+          <ButtonCoinCaret />
+        </Button>
+        <HorizontalSelector
+          isOpen={isHorizontalSelectorOpen}
+          onClose={() => setHorizontalSelectorOpen(false)}
+        />
+      </>
     );
   }
 
   return (
-    <LonelyCoinButton onClick={() => setHorizontalSelectorOpen(true)}>
-      <CoinIcon symbol={value} />
-    </LonelyCoinButton>
+    <>
+      <LonelyCoinButton onClick={() => setHorizontalSelectorOpen(true)}>
+        <CoinIcon symbol={value} />
+      </LonelyCoinButton>
+      <HorizontalSelector
+        isOpen={isHorizontalSelectorOpen}
+        onClose={() => setHorizontalSelectorOpen(false)}
+      />
+    </>
   );
 };
