@@ -1,10 +1,11 @@
-import { Dropdown, TextInput } from '@swingby-protocol/pulsar';
-import { SUPPORTED_COINS } from '@swingby-protocol/sdk';
+import { TextInput } from '@swingby-protocol/pulsar';
+import { Coin } from '@swingby-protocol/sdk';
 import { FormattedMessage } from 'react-intl';
 
 import { CoinAmountContainer, Label, SwapVertical, SwapHorizontal, Variant } from './styled';
+import { TokenSelector } from './TokenSelector';
 
-type State = { currencyFrom: string; currencyTo: string; amountFrom: string; amountTo: string };
+type State = { currencyFrom: Coin; currencyTo: Coin; amountFrom: string; amountTo: string };
 const emptyState: State = {
   currencyFrom: 'BTC',
   amountFrom: '',
@@ -21,19 +22,11 @@ export const CoinAmount = ({ variant, state, onChange }: Props) => (
         <FormattedMessage id="widget.from" />
       </Label>
     )}
-    <Dropdown
-      target={
-        <Dropdown.DefaultTarget variant="input" size="state">
-          {state.currencyFrom}
-        </Dropdown.DefaultTarget>
-      }
-    >
-      {SUPPORTED_COINS.map((coin) => (
-        <Dropdown.Item key={coin} onClick={(evt) => onChange({ ...state, currencyFrom: coin })}>
-          {coin}
-        </Dropdown.Item>
-      ))}
-    </Dropdown>
+    <TokenSelector
+      variant={variant}
+      value={state.currencyFrom}
+      onChange={(currencyFrom) => onChange({ ...state, currencyFrom })}
+    />
     <TextInput
       size="state"
       value={state.amountFrom}
@@ -46,19 +39,11 @@ export const CoinAmount = ({ variant, state, onChange }: Props) => (
         <FormattedMessage id="widget.to" />
       </Label>
     )}
-    <Dropdown
-      target={
-        <Dropdown.DefaultTarget variant="input" size="state">
-          {state.currencyTo}
-        </Dropdown.DefaultTarget>
-      }
-    >
-      {SUPPORTED_COINS.map((coin) => (
-        <Dropdown.Item key={coin} onClick={(evt) => onChange({ ...state, currencyTo: coin })}>
-          {coin}
-        </Dropdown.Item>
-      ))}
-    </Dropdown>
+    <TokenSelector
+      variant={variant}
+      value={state.currencyTo}
+      onChange={(currencyTo) => onChange({ ...state, currencyTo })}
+    />
     <TextInput
       size="state"
       value={state.amountTo}
