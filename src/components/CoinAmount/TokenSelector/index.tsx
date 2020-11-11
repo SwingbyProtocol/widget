@@ -1,14 +1,22 @@
 import { Button, CoinIcon, Dropdown, useMatchMedia } from '@swingby-protocol/pulsar';
 import { Coin, SUPPORTED_COINS } from '@swingby-protocol/sdk';
+import { useEffect, useState } from 'react';
 
 import { StylingConstants } from '../../../modules/styles';
 
-import { ButtonCoinCaret, ButtonCoinName, Variant } from './styled';
+import { ButtonCoinCaret, ButtonCoinName, LonelyCoinButton, Variant } from './styled';
 
 type Props = { variant: Variant; value: Coin; onChange: (coin: Coin) => void };
 
 export const TokenSelector = ({ variant, value, onChange }: Props) => {
   const hasWideWidth = useMatchMedia({ query: StylingConstants.mediaWideWidth });
+  const [isHorizontalSelectorOpen, setHorizontalSelectorOpen] = useState(false);
+
+  useEffect(() => {
+    if (variant === 'vertical') {
+      setHorizontalSelectorOpen(false);
+    }
+  }, [variant]);
 
   if (variant === 'vertical') {
     return (
@@ -32,7 +40,7 @@ export const TokenSelector = ({ variant, value, onChange }: Props) => {
 
   if (hasWideWidth) {
     return (
-      <Button variant="tertiary" size="state">
+      <Button variant="tertiary" size="state" onClick={() => setHorizontalSelectorOpen(true)}>
         <CoinIcon symbol={value} />
         <ButtonCoinName>{value}</ButtonCoinName>
         <ButtonCoinCaret />
@@ -40,5 +48,9 @@ export const TokenSelector = ({ variant, value, onChange }: Props) => {
     );
   }
 
-  return <CoinIcon symbol={value} />;
+  return (
+    <LonelyCoinButton onClick={() => setHorizontalSelectorOpen(true)}>
+      <CoinIcon symbol={value} />
+    </LonelyCoinButton>
+  );
 };
