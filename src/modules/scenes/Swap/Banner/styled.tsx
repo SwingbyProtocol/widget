@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import { Button } from '@swingby-protocol/pulsar';
 import { rem } from 'polished';
 
+import { StylingConstants } from '../../../styles';
+
 export const BannerContainer = styled.div`
   flex-grow: 1;
   flex-shrink: 1;
@@ -13,5 +15,9 @@ export const BannerContainer = styled.div`
 
 export const StyledButton = styled(Button)`
   width: auto;
-  margin-left: ${({ theme }) => rem(theme.pulsar.size.street)};
+  margin-left: ${({ theme }) => rem(theme.pulsar.size.drawer)};
+
+  @media (${StylingConstants.mediaWideWidth}) {
+    margin-left: ${({ theme }) => rem(theme.pulsar.size.street)};
+  }
 `;
