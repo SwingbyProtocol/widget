@@ -40,5 +40,7 @@ export const CoinListWrapper = styled.div`
 `;
 
 export const CoinButton = styled(Button)`
+  border-color: ${({ theme }) => theme.pulsar.components.input.idle.border};
+  color: ${({ theme }) => theme.pulsar.color.text.accent};
   margin-right: ${({ theme }) => rem(theme.pulsar.size.room)};
 `;

@@ -4,9 +4,9 @@ import { useTransition, animated } from 'react-spring';
 
 import { HorizontalSelectorBg, Container, CoinList, CoinButton, CoinListWrapper } from './styled';
 
-type Props = { isOpen: boolean; onClose: () => void };
+type Props = { isOpen: boolean; onClose: () => void; onChange: (coin: Coin) => void };
 
-export const HorizontalSelector = ({ isOpen, onClose }: Props) => {
+export const HorizontalSelector = ({ isOpen, onClose, onChange }: Props) => {
   const boxTransitions = useTransition(isOpen, null, {
     from: { opacity: 0 },
     enter: { opacity: 1 },
@@ -35,7 +35,14 @@ export const HorizontalSelector = ({ isOpen, onClose }: Props) => {
                       <CoinList>
                         <CoinListWrapper>
                           {SUPPORTED_COINS.map((coin) => (
-                            <CoinButton variant="tertiary" size="state">
+                            <CoinButton
+                              variant="tertiary"
+                              size="state"
+                              onClick={() => {
+                                onChange(coin);
+                                onClose();
+                              }}
+                            >
                               <CoinIcon symbol={coin} />
                               &nbsp;{coin}
                             </CoinButton>

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { rem } from 'polished';
-import { Icon, reset } from '@swingby-protocol/pulsar';
+import { Button, Icon, reset } from '@swingby-protocol/pulsar';
 
 export const VARIANTS = ['banner', 'vertical'] as const;
 export type Variant = typeof VARIANTS[number];
@@ -8,6 +8,19 @@ export type Variant = typeof VARIANTS[number];
 export const ButtonCoinCaret = styled(Icon.CaretRight)`
   font-size: ${({ theme }) => rem(theme.pulsar.size.drawer)};
   margin-left: ${({ theme }) => rem(theme.pulsar.size.house)};
+  color: ${({ theme }) => theme.pulsar.color.primary.normal};
+`;
+
+export const ButtonCoin = styled(Button)`
+  border-color: ${({ theme }) => theme.pulsar.components.input.idle.border};
+  color: ${({ theme }) => theme.pulsar.color.text.accent};
+
+  :hover,
+  :active {
+    > ${ButtonCoinCaret} {
+      color: inherit;
+    }
+  }
 `;
 
 export const ButtonCoinName = styled.span`
