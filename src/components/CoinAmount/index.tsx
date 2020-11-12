@@ -3,7 +3,7 @@ import { Coin } from '@swingby-protocol/sdk';
 import { FormattedMessage } from 'react-intl';
 
 import { CoinAmountContainer, Label, SwapVertical, SwapHorizontal, Variant } from './styled';
-import { TokenSelector } from './TokenSelector';
+import { CurrencySelector } from './CurrencySelector';
 
 type State = { currencyFrom: Coin; currencyTo: Coin; amountFrom: string; amountTo: string };
 const emptyState: State = {
@@ -22,7 +22,7 @@ export const CoinAmount = ({ variant, state, onChange }: Props) => (
         <FormattedMessage id="widget.from" />
       </Label>
     )}
-    <TokenSelector
+    <CurrencySelector
       variant={variant}
       value={state.currencyFrom}
       onChange={(currencyFrom) => onChange({ ...state, currencyFrom })}
@@ -39,7 +39,7 @@ export const CoinAmount = ({ variant, state, onChange }: Props) => (
         <FormattedMessage id="widget.to" />
       </Label>
     )}
-    <TokenSelector
+    <CurrencySelector
       variant={variant}
       value={state.currencyTo}
       onChange={(currencyTo) => onChange({ ...state, currencyTo })}

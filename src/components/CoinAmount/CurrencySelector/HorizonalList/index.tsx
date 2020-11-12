@@ -1,12 +1,12 @@
 import { Button, CoinIcon, Icon } from '@swingby-protocol/pulsar';
-import { SUPPORTED_COINS } from '@swingby-protocol/sdk';
+import { Coin, SUPPORTED_COINS } from '@swingby-protocol/sdk';
 import { useTransition, animated } from 'react-spring';
 
 import { HorizontalSelectorBg, Container, CoinList, CoinButton, CoinListWrapper } from './styled';
 
 type Props = { isOpen: boolean; onClose: () => void; onChange: (coin: Coin) => void };
 
-export const HorizontalSelector = ({ isOpen, onClose, onChange }: Props) => {
+export const HorizonalList = ({ isOpen, onClose, onChange }: Props) => {
   const boxTransitions = useTransition(isOpen, null, {
     from: { opacity: 0 },
     enter: { opacity: 1 },
