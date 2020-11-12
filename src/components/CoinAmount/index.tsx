@@ -1,6 +1,7 @@
 import { TextInput } from '@swingby-protocol/pulsar';
-import { Coin } from '@swingby-protocol/sdk';
+import { Coin, SUPPORTED_COINS } from '@swingby-protocol/sdk';
 import { FormattedMessage } from 'react-intl';
+import { BigNumber } from 'bignumber.js';
 
 import { CoinAmountContainer, Label, SwapVertical, SwapHorizontal, Variant } from './styled';
 import { CurrencySelector } from './CurrencySelector';
@@ -53,3 +54,22 @@ export const CoinAmount = ({ variant, state, onChange }: Props) => (
 );
 
 CoinAmount.emptyState = emptyState;
+
+CoinAmount.isValid = (state: State) => {
+  if (
+    !SUPPORTED_COINS.includes(state.currencyFrom) ||
+    !SUPPORTED_COINS.includes(state.currencyTo)
+  ) {
+    return false;
+  }
+
+  if (state.currencyFrom === state.currencyTo) {
+    return false;
+  }
+
+  if (new BigNumber(state.amountFrom).isNaN() || new BigNumber(state.amountTo).isNaN()) {
+    return false;
+  }
+
+  return true;
+};

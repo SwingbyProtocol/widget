@@ -47,7 +47,7 @@ export const Vertical = () => {
         label={formatMessage({ id: 'widget.receiving-address.label' })}
         placeholder={formatMessage({ id: 'widget.receiving-address.placeholder' })}
       />
-      <StyledButton variant="primary" size="state">
+      <StyledButton variant="primary" size="state" disabled={!CoinAmount.isValid(coinAmountState)}>
         {formatMessage({ id: 'widget.swap-btn' })}
       </StyledButton>
     </SwapContainer>
