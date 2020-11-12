@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { Button } from '@swingby-protocol/pulsar';
 import { rem } from 'polished';
+import { TextInput } from '@swingby-protocol/pulsar';
 
 import { StylingConstants } from '../../../styles';
 
@@ -13,9 +13,12 @@ export const BannerContainer = styled.div`
   justify-content: center;
 `;
 
-export const StyledButton = styled(Button)`
-  width: auto;
-  margin-left: ${({ theme }) => rem(theme.pulsar.size.drawer)};
+export const AddressInput = styled(TextInput)`
+  flex-grow: 1;
+`;
+
+export const Space = styled.div`
+  flex-basis: ${({ theme }) => rem(theme.pulsar.size.drawer)};
 
   @media (${StylingConstants.mediaWideWidth}) {
     margin-left: ${({ theme }) => rem(theme.pulsar.size.street)};

@@ -7,5 +7,5 @@ export const isReceivingAddressValid = (state: DefaultRootState['formAddress']):
 
 export const useIsReceivingAddressValid = () => {
   const data = useSelector((state) => state.formAddress);
-  return useMemo(() => ({ isFormDataValid: isReceivingAddressValid(data) }), [data]);
+  return useMemo(() => ({ isReceivingAddressValid: isReceivingAddressValid(data) }), [data]);
 };
