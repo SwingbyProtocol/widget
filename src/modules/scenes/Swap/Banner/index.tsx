@@ -1,4 +1,11 @@
-import { Button, CoinIcon, formatCryptoAsset, Icon, useMatchMedia } from '@swingby-protocol/pulsar';
+import {
+  Button,
+  CoinIcon,
+  formatCryptoAsset,
+  Icon,
+  useMatchMedia,
+  CopyToClipboard,
+} from '@swingby-protocol/pulsar';
 import { useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,7 +33,12 @@ export const Banner = () => {
     <BannerContainer>
       {step === 'send-to' ? (
         <>
-          <Button variant="secondary" size="town" shape="circle" onClick={() => setStep('address')}>
+          <Button
+            variant="secondary"
+            size="street"
+            shape="circle"
+            onClick={() => setStep('address')}
+          >
             <Icon.CaretLeft />
           </Button>
           <Space />
@@ -52,21 +64,29 @@ export const Banner = () => {
             </SendToValue>
           </SendTo>
           <Space />
-          <AddressInput
-            disabled
+          <CopyToClipboard
             size="state"
             left={hasWideWidth ? <CoinIcon symbol={currencyTo} /> : undefined}
-            right={<Icon.Paste />}
             value="mzoPuK5PnAGNT19dF22L5Wng8D5T1jSBEG"
           />
           <Space />
-          <Button variant="tertiary" size="state" shape="fit" disabled={!isFormDataValid}>
+          <Button
+            variant="tertiary"
+            size={hasWideWidth ? 'state' : 'town'}
+            shape={hasWideWidth ? 'fit' : 'square'}
+            disabled={!isFormDataValid}
+          >
             {hasWideWidth ? formatMessage({ id: 'widget.explorer-btn' }) : <Icon.ExternalLink />}
           </Button>
         </>
       ) : step === 'address' ? (
         <>
-          <Button variant="secondary" size="town" shape="circle" onClick={() => setStep('amounts')}>
+          <Button
+            variant="secondary"
+            size="street"
+            shape="circle"
+            onClick={() => setStep('amounts')}
+          >
             <Icon.CaretLeft />
           </Button>
           <Space />
@@ -83,7 +103,7 @@ export const Banner = () => {
           <Button
             variant="primary"
             size="state"
-            shape="square"
+            shape="fit"
             disabled={!isFormDataValid}
             onClick={() => setStep('send-to')}
           >
@@ -97,7 +117,7 @@ export const Banner = () => {
           <Button
             variant="primary"
             size="state"
-            shape="square"
+            shape="fit"
             disabled={!isFormDataValid}
             onClick={() => setStep('address')}
           >

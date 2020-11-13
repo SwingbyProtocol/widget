@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { rem } from 'polished';
-import { TextInput } from '@swingby-protocol/pulsar';
+import { CopyToClipboard, TextInput } from '@swingby-protocol/pulsar';
 
 import { StylingConstants } from '../../../styles';
 

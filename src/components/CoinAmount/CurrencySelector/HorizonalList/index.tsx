@@ -29,7 +29,7 @@ export const HorizonalList = ({ isOpen, onClose, onChange }: Props) => {
                 ({ item, key, props }) =>
                   item && (
                     <Container as={animated.div} style={props} key={key}>
-                      <Button variant="secondary" size="town" shape="circle">
+                      <Button variant="secondary" size="street" shape="circle">
                         <Icon.CaretLeft />
                       </Button>
                       <CoinList>
