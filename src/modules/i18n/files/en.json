@@ -3,5 +3,7 @@
   "widget.to": "To",
   "widget.receiving-address.label": "Receiving Address",
   "widget.receiving-address.placeholder": "Your receiving address…",
-  "widget.swap-btn": "Swap"
+  "widget.swap-btn": "Swap",
+  "widget.send-to": "Send",
+  "widget.explorer-btn": "Explorer"
 }

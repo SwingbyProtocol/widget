@@ -1,6 +1,6 @@
-import { Button, CoinIcon, Icon, useMatchMedia } from '@swingby-protocol/pulsar';
+import { Button, CoinIcon, formatCryptoAsset, Icon, useMatchMedia } from '@swingby-protocol/pulsar';
 import { useState } from 'react';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { CoinAmount } from '../../../../components/CoinAmount';
@@ -8,23 +8,65 @@ import { actionSetFormAddress, useIsReceivingAddressValid } from '../../../store
 import { useAreFormAmountsValid } from '../../../store/formAmounts';
 import { StylingConstants } from '../../../styles';
 
-import { BannerContainer, Space, AddressInput } from './styled';
+import { BannerContainer, Space, AddressInput, SendTo, SendToLabel, SendToValue } from './styled';
 
 export const Banner = () => {
-  const { formatMessage } = useIntl();
+  const { formatMessage, locale } = useIntl();
   const hasWideWidth = useMatchMedia({ query: StylingConstants.mediaWideWidth });
-  const { currencyFrom } = useSelector((state) => state.formAmounts);
+  const { currencyFrom, currencyTo } = useSelector((state) => state.formAmounts);
   const { receivingAddress } = useSelector((state) => state.formAddress);
   const { isReceivingAddressValid } = useIsReceivingAddressValid();
   const { isFormDataValid } = useAreFormAmountsValid();
   const dispatch = useDispatch();
-  const [step, setStep] = useState(isFormDataValid && isReceivingAddressValid ? 2 : 1);
+  const [step, setStep] = useState<'amounts' | 'address' | 'send-to'>(
+    isFormDataValid && isReceivingAddressValid ? 'address' : 'amounts',
+  );
 
   return (
     <BannerContainer>
-      {step === 2 ? (
+      {step === 'send-to' ? (
         <>
-          <Button variant="secondary" size="town" shape="circle" onClick={() => setStep(1)}>
+          <Button variant="secondary" size="town" shape="circle" onClick={() => setStep('address')}>
+            <Icon.CaretLeft />
+          </Button>
+          <Space />
+          <SendTo>
+            <SendToLabel>
+              <FormattedMessage
+                id="widget.send-to"
+                values={{
+                  amount: formatCryptoAsset({
+                    locale,
+                    amount: 0.999967,
+                    displaySymbol: currencyFrom,
+                  }),
+                }}
+              />
+            </SendToLabel>
+            <SendToValue>
+              {formatCryptoAsset({
+                locale,
+                amount: 0.999967,
+                displaySymbol: currencyFrom,
+              })}
+            </SendToValue>
+          </SendTo>
+          <Space />
+          <AddressInput
+            disabled
+            size="state"
+            left={hasWideWidth ? <CoinIcon symbol={currencyTo} /> : undefined}
+            right={<Icon.Paste />}
+            value="mzoPuK5PnAGNT19dF22L5Wng8D5T1jSBEG"
+          />
+          <Space />
+          <Button variant="tertiary" size="state" shape="fit" disabled={!isFormDataValid}>
+            {hasWideWidth ? formatMessage({ id: 'widget.explorer-btn' }) : <Icon.ExternalLink />}
+          </Button>
+        </>
+      ) : step === 'address' ? (
+        <>
+          <Button variant="secondary" size="town" shape="circle" onClick={() => setStep('amounts')}>
             <Icon.CaretLeft />
           </Button>
           <Space />
@@ -43,7 +85,7 @@ export const Banner = () => {
             size="state"
             shape="square"
             disabled={!isFormDataValid}
-            onClick={() => setStep(2)}
+            onClick={() => setStep('send-to')}
           >
             {hasWideWidth ? formatMessage({ id: 'widget.swap-btn' }) : <Icon.CaretRight />}
           </Button>
@@ -57,7 +99,7 @@ export const Banner = () => {
             size="state"
             shape="square"
             disabled={!isFormDataValid}
-            onClick={() => setStep(2)}
+            onClick={() => setStep('address')}
           >
             {hasWideWidth ? formatMessage({ id: 'widget.swap-btn' }) : <Icon.CaretRight />}
           </Button>
