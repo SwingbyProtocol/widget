@@ -22,7 +22,7 @@ export const Form = ({
   const { buildTestId } = useBuildTestId({ id: testId });
   const { formatMessage } = useIntl();
   const { receivingAddress } = useSelector((state) => state.form);
-  const { currencyFrom } = useSelector((state) => state.form);
+  const { currencyTo } = useSelector((state) => state.form);
   const dispatch = useDispatch();
   const [step, setStep] = useState<'all' | 'amounts' | 'address'>('all');
   const layout = useWidgetLayout();
@@ -58,7 +58,7 @@ export const Form = ({
           )}
           <TextInput
             size="state"
-            left={<CoinIcon symbol={currencyFrom} />}
+            left={<CoinIcon symbol={currencyTo} />}
             value={receivingAddress}
             onChange={(evt) => dispatch(actionSetFormData({ receivingAddress: evt.target.value }))}
             placeholder={formatMessage({ id: 'widget.receiving-address.placeholder' })}

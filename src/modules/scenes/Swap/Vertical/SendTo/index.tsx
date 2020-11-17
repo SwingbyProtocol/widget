@@ -22,7 +22,7 @@ export const SendTo = ({
           <SendLabel data-testid={buildTestId('top.send-label')}>
             <FormattedMessage
               id="widget.send-to-long"
-              values={{ value: <FancyCryptoAmount amount={1} displaySymbol="BTC" /> }}
+              values={{ value: <FancyCryptoAmount amount={1} displaySymbol={currencyFrom} /> }}
             />
           </SendLabel>
           <CopyToClipboard

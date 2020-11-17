@@ -72,7 +72,7 @@ export const Banner = () => {
           <ResponsiveSpace />
           <CopyToClipboard
             size="state"
-            left={hasWideWidth ? <CoinIcon symbol={currencyTo} /> : undefined}
+            left={hasWideWidth ? <CoinIcon symbol={currencyFrom} /> : undefined}
             value="mzoPuK5PnAGNT19dF22L5Wng8D5T1jSBEG"
             data-testid={buildTestId('step-send-to.address')}
           />
@@ -96,7 +96,7 @@ export const Banner = () => {
           <ResponsiveSpace />
           <AddressInput
             size="state"
-            left={<CoinIcon symbol={currencyFrom} />}
+            left={<CoinIcon symbol={currencyTo} />}
             value={receivingAddress}
             onChange={(evt) => dispatch(actionSetFormData({ receivingAddress: evt.target.value }))}
             placeholder={formatMessage({ id: 'widget.receiving-address.placeholder' })}
