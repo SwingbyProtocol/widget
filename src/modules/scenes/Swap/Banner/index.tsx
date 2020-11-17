@@ -7,7 +7,6 @@ import {
   getCryptoAssetFormatter,
   useBuildTestId,
 } from '@swingby-protocol/pulsar';
-import { useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -18,6 +17,7 @@ import {
   useAreFormAmountsValid,
   useIsReceivingAddressValid,
 } from '../../../store/form';
+import { useSetStep } from '../../../store/pagination';
 import { StylingConstants } from '../../../styles';
 
 import {
@@ -34,23 +34,22 @@ export const Banner = () => {
   const { formatMessage, locale } = useIntl();
   const hasWideWidth = useMatchMedia({ query: StylingConstants.mediaWideWidth });
   const { currencyFrom, currencyTo, receivingAddress } = useSelector((state) => state.form);
-  const { isReceivingAddressValid } = useIsReceivingAddressValid();
   const { areFormAmountsValid } = useAreFormAmountsValid();
   const dispatch = useDispatch();
-  const [step, setStep] = useState<'amounts' | 'address' | 'send-to'>(
-    areFormAmountsValid && isReceivingAddressValid ? 'address' : 'amounts',
-  );
+  const step = useSelector((state) => state.pagination.step);
+  const { setStep } = useSetStep();
+  const { isReceivingAddressValid } = useIsReceivingAddressValid();
 
   return (
     <BannerContainer>
-      {step === 'send-to' ? (
+      {step === 'step-submitted' ? (
         <>
           <BackButton
-            onClick={() => setStep('address')}
-            data-testid={buildTestId('step-send-to.back-btn')}
+            onClick={() => setStep('step-address')}
+            data-testid={buildTestId(`${step}.back-btn`)}
           />
           <ResponsiveSpace />
-          <SendTo data-testid={buildTestId('step-send-to.send-label')}>
+          <SendTo data-testid={buildTestId(`${step}.send-label`)}>
             <SendToLabel>
               <FormattedMessage
                 id="widget.send-to"
@@ -74,7 +73,7 @@ export const Banner = () => {
             size="state"
             left={hasWideWidth ? <CoinIcon symbol={currencyFrom} /> : undefined}
             value="mzoPuK5PnAGNT19dF22L5Wng8D5T1jSBEG"
-            data-testid={buildTestId('step-send-to.address')}
+            data-testid={buildTestId(`${step}.address`)}
           />
           <ResponsiveSpace />
           <Button
@@ -82,16 +81,16 @@ export const Banner = () => {
             size={hasWideWidth ? 'state' : 'town'}
             shape={hasWideWidth ? 'fit' : 'square'}
             disabled={!areFormAmountsValid}
-            data-testid={buildTestId('step-send-to.explorer-btn')}
+            data-testid={buildTestId(`${step}.explorer-btn`)}
           >
             {hasWideWidth ? formatMessage({ id: 'widget.explorer-btn' }) : <Icon.ExternalLink />}
           </Button>
         </>
-      ) : step === 'address' ? (
+      ) : step === 'step-address' ? (
         <>
           <BackButton
-            onClick={() => setStep('amounts')}
-            data-testid={buildTestId('step-address.back-btn')}
+            onClick={() => setStep('step-amounts')}
+            data-testid={buildTestId(`${step}.back-btn`)}
           />
           <ResponsiveSpace />
           <AddressInput
@@ -100,31 +99,31 @@ export const Banner = () => {
             value={receivingAddress}
             onChange={(evt) => dispatch(actionSetFormData({ receivingAddress: evt.target.value }))}
             placeholder={formatMessage({ id: 'widget.receiving-address.placeholder' })}
-            data-testid={buildTestId('step-address.receiving-address')}
+            data-testid={buildTestId(`${step}.receiving-address`)}
           />
           <ResponsiveSpace />
           <Button
             variant="primary"
             size="state"
             shape="fit"
-            disabled={!areFormAmountsValid}
-            onClick={() => setStep('send-to')}
-            data-testid={buildTestId('step-address.swap-btn')}
+            disabled={!isReceivingAddressValid}
+            onClick={() => setStep('step-submitted')}
+            data-testid={buildTestId(`${step}.swap-btn`)}
           >
             {hasWideWidth ? formatMessage({ id: 'widget.swap-btn' }) : <Icon.CaretRight />}
           </Button>
         </>
       ) : (
         <>
-          <CoinAmount variant="banner" data-testid={buildTestId('step-amounts.amounts')} />
+          <CoinAmount variant="banner" data-testid={buildTestId(`${step}.amounts`)} />
           <ResponsiveSpace />
           <Button
             variant="primary"
             size="state"
             shape="fit"
             disabled={!areFormAmountsValid}
-            onClick={() => setStep('address')}
-            data-testid={buildTestId('step-address.next-btn')}
+            onClick={() => setStep('step-address')}
+            data-testid={buildTestId(`${step}.next-btn`)}
           >
             {hasWideWidth ? formatMessage({ id: 'widget.swap-btn' }) : <Icon.CaretRight />}
           </Button>

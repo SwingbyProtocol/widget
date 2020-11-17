@@ -76,13 +76,17 @@ export const CurrencySelector = ({ variant, value, onChange, 'data-testid': test
 
   return (
     <>
-      <LonelyCoinButton onClick={() => setHorizontalSelectorOpen(true)}>
+      <LonelyCoinButton
+        onClick={() => setHorizontalSelectorOpen(true)}
+        data-testid={buildTestId('')}
+      >
         <CoinIcon symbol={value} />
       </LonelyCoinButton>
       <HorizonalList
         isOpen={isHorizontalSelectorOpen}
         onClose={() => setHorizontalSelectorOpen(false)}
         onChange={onChange}
+        data-testid={buildTestId('coin-list')}
       />
     </>
   );
