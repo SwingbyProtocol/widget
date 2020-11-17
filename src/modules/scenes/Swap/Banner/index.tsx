@@ -1,10 +1,10 @@
 import {
   Button,
   CoinIcon,
-  formatCryptoAsset,
   Icon,
   useMatchMedia,
   CopyToClipboard,
+  getCryptoAssetFormatter,
 } from '@swingby-protocol/pulsar';
 import { useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -50,20 +50,18 @@ export const Banner = () => {
               <FormattedMessage
                 id="widget.send-to"
                 values={{
-                  amount: formatCryptoAsset({
+                  amount: getCryptoAssetFormatter({
                     locale,
-                    amount: 0.999967,
                     displaySymbol: currencyFrom,
-                  }),
+                  }).format(0.999967),
                 }}
               />
             </SendToLabel>
             <SendToValue>
-              {formatCryptoAsset({
+              {getCryptoAssetFormatter({
                 locale,
-                amount: 0.999967,
                 displaySymbol: currencyFrom,
-              })}
+              }).format(0.999967)}
             </SendToValue>
           </SendTo>
           <ResponsiveSpace />

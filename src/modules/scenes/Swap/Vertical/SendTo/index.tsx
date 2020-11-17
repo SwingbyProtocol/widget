@@ -3,12 +3,13 @@ import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
 
 import { FancyCryptoAmount } from '../../../../../components/FancyCryptoAmount';
+import { ProgressIndicator } from '../../../../../components/ProgressIndicator';
 import { StepView } from '../StepView';
 
 import { SendLabel } from './styled';
 
 export const SendTo = ({ onClickBack }: { onClickBack: () => void }) => {
-  const { currencyFrom } = useSelector((state) => state.form);
+  const { currencyFrom, currencyTo } = useSelector((state) => state.form);
   return (
     <StepView
       onClickBack={onClickBack}
@@ -24,7 +25,22 @@ export const SendTo = ({ onClickBack }: { onClickBack: () => void }) => {
         </>
       }
     >
-      bottom
+      <ProgressIndicator
+        status="awaiting-deposit"
+        currencyFrom={currencyFrom}
+        currencyTo={currencyTo}
+      />
+      <ProgressIndicator
+        status="processing-swap"
+        currencyFrom={currencyFrom}
+        currencyTo={currencyTo}
+      />
+      <ProgressIndicator
+        status="sending-swap"
+        currencyFrom={currencyFrom}
+        currencyTo={currencyTo}
+      />
+      <ProgressIndicator status="completed" currencyFrom={currencyFrom} currencyTo={currencyTo} />
     </StepView>
   );
 };
