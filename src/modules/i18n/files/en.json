@@ -3,7 +3,9 @@
   "widget.to": "To",
   "widget.receiving-address.label": "Receiving Address",
   "widget.receiving-address.placeholder": "Your receiving address…",
+  "widget.next-btn": "Next",
   "widget.swap-btn": "Swap",
   "widget.send-to": "Send",
+  "widget.send-to-long": "Send {value} to",
   "widget.explorer-btn": "Explorer"
 }

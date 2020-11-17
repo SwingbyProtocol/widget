@@ -19,7 +19,7 @@
     "trailingComma": "all"
   },
   "dependencies": {
-    "@swingby-protocol/pulsar": "^1.0.0-alpha.49",
+    "@swingby-protocol/pulsar": "^1.0.0-alpha.54",
     "@swingby-protocol/sdk": "^1.0.0-alpha.3",
     "bignumber.js": "^9.0.1",
     "hex-to-binary": "^1.0.1",
@@ -30,6 +30,7 @@
     "react-dom": "17.0.1",
     "react-intl": "^5.8.8",
     "react-redux": "^7.2.2",
+    "react-use": "^15.3.4",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8"
   },

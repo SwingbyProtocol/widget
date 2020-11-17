@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { rem } from 'polished';
-import { CopyToClipboard, TextInput } from '@swingby-protocol/pulsar';
+import { TextInput } from '@swingby-protocol/pulsar';
 
 import { StylingConstants } from '../../../styles';
 
@@ -11,6 +11,7 @@ export const BannerContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: ${({ theme }) => rem(theme.pulsar.size.city)};
 `;
 
 export const AddressInput = styled(TextInput)`
@@ -34,7 +35,7 @@ export const SendToValue = styled.span`
   font-weight: 700;
 `;
 
-export const Space = styled.div`
+export const ResponsiveSpace = styled.div`
   flex-basis: ${({ theme }) => rem(theme.pulsar.size.drawer)};
   flex-shrink: 0;
 

@@ -4,6 +4,7 @@ import { IntlProvider } from 'react-intl';
 import { Provider as ReduxProvider } from 'react-redux';
 
 import { en } from '../modules/i18n';
+import { WidgetLayoutProvider } from '../modules/layout';
 import { useStore } from '../modules/store';
 
 function MyApp({ Component, pageProps }) {
@@ -17,7 +18,9 @@ function MyApp({ Component, pageProps }) {
       <IntlProvider messages={en} locale={locale} defaultLocale={defaultLocale}>
         <PulsarGlobalStyles />
         <ReduxProvider store={store}>
-          <Component {...pageProps} />
+          <WidgetLayoutProvider>
+            <Component {...pageProps} />
+          </WidgetLayoutProvider>
         </ReduxProvider>
       </IntlProvider>
     </PulsarThemeProvider>

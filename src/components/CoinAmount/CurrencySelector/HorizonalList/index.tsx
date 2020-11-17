@@ -1,6 +1,8 @@
-import { Button, CoinIcon, Icon } from '@swingby-protocol/pulsar';
+import { CoinIcon } from '@swingby-protocol/pulsar';
 import { Coin, SUPPORTED_COINS } from '@swingby-protocol/sdk';
 import { useTransition, animated } from 'react-spring';
+
+import { BackButton } from '../../../BackButton';
 
 import { HorizontalSelectorBg, Container, CoinList, CoinButton, CoinListWrapper } from './styled';
 
@@ -29,9 +31,7 @@ export const HorizonalList = ({ isOpen, onClose, onChange }: Props) => {
                 ({ item, key, props }) =>
                   item && (
                     <Container as={animated.div} style={props} key={key}>
-                      <Button variant="secondary" size="street" shape="circle">
-                        <Icon.CaretLeft />
-                      </Button>
+                      <BackButton />
                       <CoinList>
                         <CoinListWrapper>
                           {SUPPORTED_COINS.map((coin) => (

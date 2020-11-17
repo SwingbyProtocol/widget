@@ -1,4 +1,5 @@
-import { useEffect, useState, useLayoutEffect as _useLayoutEffect, useCallback } from 'react';
+import { useMatchMedia } from '@swingby-protocol/pulsar';
+import React, { useEffect, useState, useLayoutEffect as _useLayoutEffect, useContext } from 'react';
 
 import { StylingConstants } from '../styles';
 
@@ -6,51 +7,39 @@ const useLayoutEffect = typeof window !== 'undefined' ? _useLayoutEffect : useEf
 
 type Layout = 'widget-banner' | 'widget-small' | 'widget-full' | 'website';
 
-export const useWidgetLayout = (): Layout => {
+const WidgetLayoutContext = React.createContext<Layout>('widget-banner');
+
+const useCalcWidgetLayout = (): Layout => {
   const [layout, setLayout] = useState<Layout>('widget-banner');
+  const mediaSmall = useMatchMedia({ query: StylingConstants.mediaLayout.widgetSmall });
+  const mediaFull = useMatchMedia({ query: StylingConstants.mediaLayout.widgetFull });
+  const mediaWebsite = useMatchMedia({ query: StylingConstants.mediaLayout.website });
 
-  const updateState = useCallback(() => {
-    if (typeof window === 'undefined' || !window.matchMedia) {
-      return;
-    }
-
-    if (!window.matchMedia(StylingConstants.mediaLayout.widgetSmall).matches) {
+  useLayoutEffect(() => {
+    if (!mediaSmall) {
       setLayout('widget-banner');
       return;
     }
 
-    if (!window.matchMedia(StylingConstants.mediaLayout.widgetFull).matches) {
+    if (!mediaFull) {
       setLayout('widget-small');
       return;
     }
 
-    if (!window.matchMedia(StylingConstants.mediaLayout.website).matches) {
+    if (!mediaWebsite) {
       setLayout('widget-full');
       return;
     }
 
     setLayout('website');
-  }, []);
-
-  useEffect(() => {
-    if (typeof window === 'undefined' || !window.matchMedia) {
-      return;
-    }
-
-    const media = window.matchMedia(StylingConstants.mediaLayout.widgetSmall);
-
-    if (media.addEventListener) {
-      media.addEventListener('change', updateState);
-      return () => media.removeEventListener('change', updateState);
-    }
-
-    media.addListener(updateState);
-    return () => media.removeListener(updateState);
-  }, [updateState]);
-
-  useLayoutEffect(() => {
-    updateState();
-  }, [updateState]);
+  }, [mediaSmall, mediaFull, mediaWebsite]);
 
   return layout;
 };
+
+export const WidgetLayoutProvider = ({ children }: { children: React.ReactNode }) => {
+  const layout = useCalcWidgetLayout();
+  return <WidgetLayoutContext.Provider value={layout}>{children}</WidgetLayoutContext.Provider>;
+};
+
+export const useWidgetLayout = () => useContext(WidgetLayoutContext);

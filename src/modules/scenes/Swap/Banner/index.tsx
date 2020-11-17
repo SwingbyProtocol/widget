@@ -10,38 +10,41 @@ import { useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { BackButton } from '../../../../components/BackButton';
 import { CoinAmount } from '../../../../components/CoinAmount';
-import { actionSetFormAddress, useIsReceivingAddressValid } from '../../../store/formAddress';
-import { useAreFormAmountsValid } from '../../../store/formAmounts';
+import {
+  actionSetFormData,
+  useAreFormAmountsValid,
+  useIsReceivingAddressValid,
+} from '../../../store/form';
 import { StylingConstants } from '../../../styles';
 
-import { BannerContainer, Space, AddressInput, SendTo, SendToLabel, SendToValue } from './styled';
+import {
+  BannerContainer,
+  ResponsiveSpace,
+  AddressInput,
+  SendTo,
+  SendToLabel,
+  SendToValue,
+} from './styled';
 
 export const Banner = () => {
   const { formatMessage, locale } = useIntl();
   const hasWideWidth = useMatchMedia({ query: StylingConstants.mediaWideWidth });
-  const { currencyFrom, currencyTo } = useSelector((state) => state.formAmounts);
-  const { receivingAddress } = useSelector((state) => state.formAddress);
+  const { currencyFrom, currencyTo, receivingAddress } = useSelector((state) => state.form);
   const { isReceivingAddressValid } = useIsReceivingAddressValid();
-  const { isFormDataValid } = useAreFormAmountsValid();
+  const { areFormAmountsValid } = useAreFormAmountsValid();
   const dispatch = useDispatch();
   const [step, setStep] = useState<'amounts' | 'address' | 'send-to'>(
-    isFormDataValid && isReceivingAddressValid ? 'address' : 'amounts',
+    areFormAmountsValid && isReceivingAddressValid ? 'address' : 'amounts',
   );
 
   return (
     <BannerContainer>
       {step === 'send-to' ? (
         <>
-          <Button
-            variant="secondary"
-            size="street"
-            shape="circle"
-            onClick={() => setStep('address')}
-          >
-            <Icon.CaretLeft />
-          </Button>
-          <Space />
+          <BackButton onClick={() => setStep('address')} />
+          <ResponsiveSpace />
           <SendTo>
             <SendToLabel>
               <FormattedMessage
@@ -63,48 +66,39 @@ export const Banner = () => {
               })}
             </SendToValue>
           </SendTo>
-          <Space />
+          <ResponsiveSpace />
           <CopyToClipboard
             size="state"
             left={hasWideWidth ? <CoinIcon symbol={currencyTo} /> : undefined}
             value="mzoPuK5PnAGNT19dF22L5Wng8D5T1jSBEG"
           />
-          <Space />
+          <ResponsiveSpace />
           <Button
             variant="tertiary"
             size={hasWideWidth ? 'state' : 'town'}
             shape={hasWideWidth ? 'fit' : 'square'}
-            disabled={!isFormDataValid}
+            disabled={!areFormAmountsValid}
           >
             {hasWideWidth ? formatMessage({ id: 'widget.explorer-btn' }) : <Icon.ExternalLink />}
           </Button>
         </>
       ) : step === 'address' ? (
         <>
-          <Button
-            variant="secondary"
-            size="street"
-            shape="circle"
-            onClick={() => setStep('amounts')}
-          >
-            <Icon.CaretLeft />
-          </Button>
-          <Space />
+          <BackButton onClick={() => setStep('amounts')} />
+          <ResponsiveSpace />
           <AddressInput
             size="state"
             left={<CoinIcon symbol={currencyFrom} />}
             value={receivingAddress}
-            onChange={(evt) =>
-              dispatch(actionSetFormAddress({ receivingAddress: evt.target.value }))
-            }
+            onChange={(evt) => dispatch(actionSetFormData({ receivingAddress: evt.target.value }))}
             placeholder={formatMessage({ id: 'widget.receiving-address.placeholder' })}
           />
-          <Space />
+          <ResponsiveSpace />
           <Button
             variant="primary"
             size="state"
             shape="fit"
-            disabled={!isFormDataValid}
+            disabled={!areFormAmountsValid}
             onClick={() => setStep('send-to')}
           >
             {hasWideWidth ? formatMessage({ id: 'widget.swap-btn' }) : <Icon.CaretRight />}
@@ -113,12 +107,12 @@ export const Banner = () => {
       ) : (
         <>
           <CoinAmount variant="banner" />
-          <Space />
+          <ResponsiveSpace />
           <Button
             variant="primary"
             size="state"
             shape="fit"
-            disabled={!isFormDataValid}
+            disabled={!areFormAmountsValid}
             onClick={() => setStep('address')}
           >
             {hasWideWidth ? formatMessage({ id: 'widget.swap-btn' }) : <Icon.CaretRight />}

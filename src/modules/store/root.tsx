@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux';
 
-import { formAmounts } from './formAmounts';
-import { formAddress } from './formAddress';
+import { form } from './form';
 
-export const rootReducer = combineReducers({ formAmounts, formAddress });
+export const rootReducer = combineReducers({ form });
