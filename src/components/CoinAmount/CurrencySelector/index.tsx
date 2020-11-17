@@ -1,4 +1,10 @@
-import { CoinIcon, Dropdown, useMatchMedia } from '@swingby-protocol/pulsar';
+import {
+  CoinIcon,
+  Dropdown,
+  Testable,
+  useBuildTestId,
+  useMatchMedia,
+} from '@swingby-protocol/pulsar';
 import { Coin, SUPPORTED_COINS } from '@swingby-protocol/sdk';
 import { useEffect, useState } from 'react';
 
@@ -7,9 +13,10 @@ import { StylingConstants } from '../../../modules/styles';
 import { HorizonalList } from './HorizonalList';
 import { ButtonCoin, ButtonCoinCaret, ButtonCoinName, LonelyCoinButton, Variant } from './styled';
 
-type Props = { variant: Variant; value: Coin; onChange: (coin: Coin) => void };
+type Props = { variant: Variant; value: Coin; onChange: (coin: Coin) => void } & Testable;
 
-export const CurrencySelector = ({ variant, value, onChange }: Props) => {
+export const CurrencySelector = ({ variant, value, onChange, 'data-testid': testId }: Props) => {
+  const { buildTestId } = useBuildTestId({ id: testId });
   const hasWideWidth = useMatchMedia({ query: StylingConstants.mediaWideWidth });
   const [isHorizontalSelectorOpen, setHorizontalSelectorOpen] = useState(false);
 
@@ -28,9 +35,14 @@ export const CurrencySelector = ({ variant, value, onChange }: Props) => {
             &nbsp;{value}
           </Dropdown.DefaultTarget>
         }
+        data-testid={buildTestId('')}
       >
         {SUPPORTED_COINS.map((coin) => (
-          <Dropdown.Item key={coin} onClick={() => onChange(coin)}>
+          <Dropdown.Item
+            key={coin}
+            onClick={() => onChange(coin)}
+            data-testid={buildTestId(`item-${coin}`)}
+          >
             <CoinIcon symbol={coin} />
             &nbsp;{coin}
           </Dropdown.Item>
@@ -42,7 +54,12 @@ export const CurrencySelector = ({ variant, value, onChange }: Props) => {
   if (hasWideWidth) {
     return (
       <>
-        <ButtonCoin variant="tertiary" size="state" onClick={() => setHorizontalSelectorOpen(true)}>
+        <ButtonCoin
+          variant="tertiary"
+          size="state"
+          onClick={() => setHorizontalSelectorOpen(true)}
+          data-testid={buildTestId('')}
+        >
           <CoinIcon symbol={value} />
           <ButtonCoinName>{value}</ButtonCoinName>
           <ButtonCoinCaret />
@@ -51,6 +68,7 @@ export const CurrencySelector = ({ variant, value, onChange }: Props) => {
           isOpen={isHorizontalSelectorOpen}
           onClose={() => setHorizontalSelectorOpen(false)}
           onChange={onChange}
+          data-testid={buildTestId('coin-list')}
         />
       </>
     );
@@ -58,13 +76,17 @@ export const CurrencySelector = ({ variant, value, onChange }: Props) => {
 
   return (
     <>
-      <LonelyCoinButton onClick={() => setHorizontalSelectorOpen(true)}>
+      <LonelyCoinButton
+        onClick={() => setHorizontalSelectorOpen(true)}
+        data-testid={buildTestId('')}
+      >
         <CoinIcon symbol={value} />
       </LonelyCoinButton>
       <HorizonalList
         isOpen={isHorizontalSelectorOpen}
         onClose={() => setHorizontalSelectorOpen(false)}
         onChange={onChange}
+        data-testid={buildTestId('coin-list')}
       />
     </>
   );

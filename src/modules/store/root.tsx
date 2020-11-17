@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { formAmounts } from './formAmounts';
-import { formAddress } from './formAddress';
+import { form } from './form';
+import { pagination } from './pagination';
 
-export const rootReducer = combineReducers({ formAmounts, formAddress });
+export const rootReducer = combineReducers({ form, pagination });
