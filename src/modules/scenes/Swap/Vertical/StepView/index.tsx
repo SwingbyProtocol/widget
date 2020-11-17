@@ -1,4 +1,4 @@
-import { PulsarThemeProvider } from '@swingby-protocol/pulsar';
+import { PulsarThemeProvider, Testable, useBuildTestId } from '@swingby-protocol/pulsar';
 
 import { Space } from '../../../../../components/Space';
 import { useWidgetLayout } from '../../../../layout';
@@ -12,18 +12,25 @@ import {
   LightTopContainer,
 } from './styled';
 
-type Props = { onClickBack?: () => void; top?: React.ReactNode; children?: React.ReactNode };
+type Props = {
+  onClickBack?: () => void;
+  top?: React.ReactNode;
+  children?: React.ReactNode;
+} & Testable;
 
-export const StepView = ({ onClickBack, top, children }: Props) => {
+export const StepView = ({ onClickBack, top, children, 'data-testid': testId }: Props) => {
+  const { buildTestId } = useBuildTestId({ id: testId });
   const layout = useWidgetLayout();
   return (
-    <StepViewContainer>
+    <StepViewContainer data-testid={buildTestId('')}>
       {layout !== 'widget-small' && (top || onClickBack) && (
         <>
           <PulsarThemeProvider theme="accent">
-            <FancyTopContainer>
+            <FancyTopContainer data-testid={buildTestId('top')}>
               <Space size="city" />
-              {onClickBack && <StyledBackButton onClick={onClickBack} />}
+              {onClickBack && (
+                <StyledBackButton onClick={onClickBack} data-testid={buildTestId('top.back-btn')} />
+              )}
               <TopContent>{top}</TopContent>
               <Space size="city" />
             </FancyTopContainer>
@@ -31,14 +38,18 @@ export const StepView = ({ onClickBack, top, children }: Props) => {
         </>
       )}
       {layout === 'widget-small' && (top || onClickBack) && (
-        <LightTopContainer>
+        <LightTopContainer data-testid={buildTestId('top')}>
           <Space size="city" />
-          {onClickBack && <StyledBackButton onClick={onClickBack} />}
+          {onClickBack && (
+            <StyledBackButton onClick={onClickBack} data-testid={buildTestId('top.back-btn')} />
+          )}
           {top && <TopContent>{top}</TopContent>}
         </LightTopContainer>
       )}
       <Space size="city" />
-      {children && <BottomContainer>{children}</BottomContainer>}
+      {children && (
+        <BottomContainer data-testid={buildTestId('bottom')}>{children}</BottomContainer>
+      )}
       <Space size="city" />
     </StepViewContainer>
   );

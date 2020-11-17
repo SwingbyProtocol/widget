@@ -5,6 +5,7 @@ import {
   useMatchMedia,
   CopyToClipboard,
   getCryptoAssetFormatter,
+  useBuildTestId,
 } from '@swingby-protocol/pulsar';
 import { useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -29,6 +30,7 @@ import {
 } from './styled';
 
 export const Banner = () => {
+  const { buildTestId } = useBuildTestId({ id: 'banner' });
   const { formatMessage, locale } = useIntl();
   const hasWideWidth = useMatchMedia({ query: StylingConstants.mediaWideWidth });
   const { currencyFrom, currencyTo, receivingAddress } = useSelector((state) => state.form);
@@ -43,9 +45,12 @@ export const Banner = () => {
     <BannerContainer>
       {step === 'send-to' ? (
         <>
-          <BackButton onClick={() => setStep('address')} />
+          <BackButton
+            onClick={() => setStep('address')}
+            data-testid={buildTestId('step-send-to.back-btn')}
+          />
           <ResponsiveSpace />
-          <SendTo>
+          <SendTo data-testid={buildTestId('step-send-to.send-label')}>
             <SendToLabel>
               <FormattedMessage
                 id="widget.send-to"
@@ -69,6 +74,7 @@ export const Banner = () => {
             size="state"
             left={hasWideWidth ? <CoinIcon symbol={currencyTo} /> : undefined}
             value="mzoPuK5PnAGNT19dF22L5Wng8D5T1jSBEG"
+            data-testid={buildTestId('step-send-to.address')}
           />
           <ResponsiveSpace />
           <Button
@@ -76,13 +82,17 @@ export const Banner = () => {
             size={hasWideWidth ? 'state' : 'town'}
             shape={hasWideWidth ? 'fit' : 'square'}
             disabled={!areFormAmountsValid}
+            data-testid={buildTestId('step-send-to.explorer-btn')}
           >
             {hasWideWidth ? formatMessage({ id: 'widget.explorer-btn' }) : <Icon.ExternalLink />}
           </Button>
         </>
       ) : step === 'address' ? (
         <>
-          <BackButton onClick={() => setStep('amounts')} />
+          <BackButton
+            onClick={() => setStep('amounts')}
+            data-testid={buildTestId('step-address.back-btn')}
+          />
           <ResponsiveSpace />
           <AddressInput
             size="state"
@@ -90,6 +100,7 @@ export const Banner = () => {
             value={receivingAddress}
             onChange={(evt) => dispatch(actionSetFormData({ receivingAddress: evt.target.value }))}
             placeholder={formatMessage({ id: 'widget.receiving-address.placeholder' })}
+            data-testid={buildTestId('step-address.receiving-address')}
           />
           <ResponsiveSpace />
           <Button
@@ -98,13 +109,14 @@ export const Banner = () => {
             shape="fit"
             disabled={!areFormAmountsValid}
             onClick={() => setStep('send-to')}
+            data-testid={buildTestId('step-address.swap-btn')}
           >
             {hasWideWidth ? formatMessage({ id: 'widget.swap-btn' }) : <Icon.CaretRight />}
           </Button>
         </>
       ) : (
         <>
-          <CoinAmount variant="banner" />
+          <CoinAmount variant="banner" data-testid={buildTestId('step-amounts.amounts')} />
           <ResponsiveSpace />
           <Button
             variant="primary"
@@ -112,6 +124,7 @@ export const Banner = () => {
             shape="fit"
             disabled={!areFormAmountsValid}
             onClick={() => setStep('address')}
+            data-testid={buildTestId('step-address.next-btn')}
           >
             {hasWideWidth ? formatMessage({ id: 'widget.swap-btn' }) : <Icon.CaretRight />}
           </Button>

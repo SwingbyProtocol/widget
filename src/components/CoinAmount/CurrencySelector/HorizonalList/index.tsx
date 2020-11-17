@@ -1,4 +1,4 @@
-import { CoinIcon } from '@swingby-protocol/pulsar';
+import { CoinIcon, Testable, useBuildTestId } from '@swingby-protocol/pulsar';
 import { Coin, SUPPORTED_COINS } from '@swingby-protocol/sdk';
 import { useTransition, animated } from 'react-spring';
 
@@ -6,9 +6,10 @@ import { BackButton } from '../../../BackButton';
 
 import { HorizontalSelectorBg, Container, CoinList, CoinButton, CoinListWrapper } from './styled';
 
-type Props = { isOpen: boolean; onClose: () => void; onChange: (coin: Coin) => void };
+type Props = { isOpen: boolean; onClose: () => void; onChange: (coin: Coin) => void } & Testable;
 
-export const HorizonalList = ({ isOpen, onClose, onChange }: Props) => {
+export const HorizonalList = ({ isOpen, onClose, onChange, 'data-testid': testId }: Props) => {
+  const { buildTestId } = useBuildTestId({ id: testId });
   const boxTransitions = useTransition(isOpen, null, {
     from: { opacity: 0 },
     enter: { opacity: 1 },
@@ -26,12 +27,18 @@ export const HorizonalList = ({ isOpen, onClose, onChange }: Props) => {
       {boxTransitions.map(
         ({ item, key, props }) =>
           item && (
-            <HorizontalSelectorBg as={animated.div} onClick={onClose} style={props} key={key}>
+            <HorizontalSelectorBg
+              as={animated.div}
+              onClick={onClose}
+              style={props}
+              key={key}
+              data-testid={buildTestId('')}
+            >
               {contentTransitions.map(
                 ({ item, key, props }) =>
                   item && (
                     <Container as={animated.div} style={props} key={key}>
-                      <BackButton />
+                      <BackButton data-testid={buildTestId('back-btn')} />
                       <CoinList>
                         <CoinListWrapper>
                           {SUPPORTED_COINS.map((coin) => (
@@ -42,6 +49,7 @@ export const HorizonalList = ({ isOpen, onClose, onChange }: Props) => {
                                 onChange(coin);
                                 onClose();
                               }}
+                              data-testid={buildTestId(`item-${coin}`)}
                             >
                               <CoinIcon symbol={coin} />
                               &nbsp;{coin}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button, CoinIcon, TextInput } from '@swingby-protocol/pulsar';
+import { Button, CoinIcon, Testable, TextInput, useBuildTestId } from '@swingby-protocol/pulsar';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -15,7 +15,11 @@ import { StepView } from '../StepView';
 
 import { Separator } from './styled';
 
-export const Form = ({ onClickSwap }: { onClickSwap: () => void }) => {
+export const Form = ({
+  onClickSwap,
+  'data-testid': testId,
+}: { onClickSwap: () => void } & Testable) => {
+  const { buildTestId } = useBuildTestId({ id: testId });
   const { formatMessage } = useIntl();
   const { receivingAddress } = useSelector((state) => state.form);
   const { currencyFrom } = useSelector((state) => state.form);
@@ -35,8 +39,13 @@ export const Form = ({ onClickSwap }: { onClickSwap: () => void }) => {
   }, [layout, isReceivingAddressValid]);
 
   return (
-    <StepView onClickBack={step === 'address' ? () => setStep('amounts') : undefined}>
-      {(step === 'all' || step === 'amounts') && <CoinAmount variant="vertical" />}
+    <StepView
+      onClickBack={step === 'address' ? () => setStep('amounts') : undefined}
+      data-testid={buildTestId('')}
+    >
+      {(step === 'all' || step === 'amounts') && (
+        <CoinAmount variant="vertical" data-testid={buildTestId('amounts')} />
+      )}
 
       {(step === 'all' || step === 'address') && (
         <>
