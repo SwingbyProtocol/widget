@@ -3,20 +3,19 @@ import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
 
 import { FancyCryptoAmount } from '../../../../../components/FancyCryptoAmount';
+import { useSetStep } from '../../../../store/pagination';
 import { StepIndicator } from '../StepIndicator';
 import { StepView } from '../StepView';
 
 import { SendLabel } from './styled';
 
-export const SendTo = ({
-  onClickBack,
-  'data-testid': testId,
-}: { onClickBack: () => void } & Testable) => {
+export const SendTo = ({ 'data-testid': testId }: Testable) => {
   const { buildTestId } = useBuildTestId({ id: testId });
   const { currencyFrom } = useSelector((state) => state.form);
+  const { setStep } = useSetStep();
   return (
     <StepView
-      onClickBack={onClickBack}
+      onClickBack={() => setStep('step-address')}
       top={
         <>
           <SendLabel data-testid={buildTestId('top.send-label')}>

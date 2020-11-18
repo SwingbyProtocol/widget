@@ -11,21 +11,48 @@
 
     it('can switch coins', () => {
       cy.clock();
-      cy.get('[data-testid="vertical.form.amounts.currency-from-select.target"]').click();
+      cy.get('[data-testid="vertical.step-amounts.amounts.currency-from-select.target"]').click();
       cy.tick(10000);
 
-      cy.get('[data-testid="vertical.form.amounts.currency-from-select.content.item-BTC.B"]')
+      cy.get(
+        '[data-testid="vertical.step-amounts.amounts.currency-from-select.content.item-BTC.B"]',
+      )
         .should('be.visible')
         .click();
       cy.tick(10000);
 
-      cy.get('[data-testid="vertical.form.amounts.currency-to-select.target"]').click();
+      cy.get('[data-testid="vertical.step-amounts.amounts.currency-to-select.target"]').click();
       cy.tick(10000);
 
       cy.percySnapshot(`${name}: switch coin`, { widths: [width] });
 
-      cy.get('[data-testid="vertical.form.amounts.currency-to-select.content.item-BTC"]').click();
+      cy.get(
+        '[data-testid="vertical.step-amounts.amounts.currency-to-select.content.item-BTC"]',
+      ).click();
       cy.tick(10000);
+    });
+
+    it('can input amounts', () => {
+      cy.get('[data-testid="vertical.step-amounts.swap-btn"]').should('be.disabled');
+
+      cy.get('[data-testid="vertical.step-amounts.amounts.amount-from"]').type('1');
+      cy.get('[data-testid="vertical.step-amounts.amounts.amount-to"]').type('1');
+
+      cy.get('[data-testid="vertical.step-amounts.swap-btn"]').should('be.disabled');
+    });
+
+    it('can input address', () => {
+      cy.get('[data-testid="vertical.step-amounts.swap-btn"]').should('be.disabled');
+
+      cy.get('[data-testid="vertical.step-amounts.receiving-address"]').type(
+        'mkHS9ne12qx9pS9VojpwU5xtRd4T7X7ZUt',
+      );
+
+      cy.get('[data-testid="vertical.step-amounts.swap-btn"]').should('not.be.disabled').click();
+    });
+
+    it('renders last step', () => {
+      cy.percySnapshot(`${name}: submitted`, { widths: [width] });
     });
   };
 
