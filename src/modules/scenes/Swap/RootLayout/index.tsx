@@ -10,7 +10,7 @@ export const RootLayout = styled.div`
   align-items: center;
   justify-content: center;
 
-  @media (${StylingConstants.mediaLayout.website}) {
+  @media ${StylingConstants.mediaLayout.website} {
     padding: ${({ theme }) => rem(theme.pulsar.size.city)};
   }
 `;
