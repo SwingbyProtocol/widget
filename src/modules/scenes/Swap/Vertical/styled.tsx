@@ -13,7 +13,7 @@ export const SwapContainer = styled.div`
   justify-content: center;
   flex-direction: column;
 
-  @media (${StylingConstants.mediaLayout.website}) {
+  @media ${StylingConstants.mediaLayout.website} {
     align-self: center;
     max-width: ${rem(445)};
     min-height: ${rem(500)};

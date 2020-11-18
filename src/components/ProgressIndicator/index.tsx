@@ -3,6 +3,8 @@ import { Coin } from '@swingby-protocol/sdk';
 import { useMemo } from 'react';
 import { useTheme } from 'styled-components';
 
+import { Svg } from './styled';
+
 const STATUSES = ['awaiting-deposit', 'processing-swap', 'sending-swap', 'completed'] as const;
 type Status = typeof STATUSES[number];
 
@@ -26,7 +28,7 @@ export const ProgressIndicator = ({
   const stepIndex = STATUSES.indexOf(status);
 
   return (
-    <svg className={className} viewBox="0 0 251 55" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <Svg className={className} viewBox="0 0 251 55" fill="none" xmlns="http://www.w3.org/2000/svg">
       <image x="7" y="7" width="41" height="41" href={logoFrom} />
       <image x="104" y="7" width="41" height="41" href={logos.SwingbyFlat} />
       <image x="203" y="7" width="41" height="41" href={logoTo} />
@@ -36,7 +38,7 @@ export const ProgressIndicator = ({
         cy="27.5"
         r="26.5"
         stroke={stepIndex >= 0 ? completedColor : pendingColor}
-        stroke-width="2"
+        strokeWidth="2"
       />
       <rect
         x="53"
@@ -58,7 +60,7 @@ export const ProgressIndicator = ({
         cy="27.5"
         r="26.5"
         stroke={stepIndex >= 1 ? completedColor : pendingColor}
-        stroke-width="2"
+        strokeWidth="2"
       />
       <rect
         x="152"
@@ -80,8 +82,8 @@ export const ProgressIndicator = ({
         cy="27.5"
         r="26.5"
         stroke={stepIndex >= 3 ? completedColor : pendingColor}
-        stroke-width="2"
+        strokeWidth="2"
       />
-    </svg>
+    </Svg>
   );
 };

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useBuildTestId } from '@swingby-protocol/pulsar';
 
 import { SwapContainer } from './styled';
@@ -7,14 +7,12 @@ import { SendTo } from './SendTo';
 
 export const Vertical = () => {
   const { buildTestId } = useBuildTestId({ id: 'vertical' });
-  const [step, setStep] = useState<'form' | 'send-to'>('form');
+  const step = useSelector((state) => state.pagination.step);
   return (
     <SwapContainer>
-      {step === 'send-to' && (
-        <SendTo onClickBack={() => setStep('form')} data-testid={buildTestId('send-to')} />
-      )}
-      {step === 'form' && (
-        <Form onClickSwap={() => setStep('send-to')} data-testid={buildTestId('form')} />
+      {step === 'step-submitted' && <SendTo data-testid={buildTestId(step)} />}
+      {(step === 'step-amounts' || step === 'step-address') && (
+        <Form data-testid={buildTestId(step)} />
       )}
     </SwapContainer>
   );

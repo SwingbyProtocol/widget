@@ -33,25 +33,22 @@
     });
 
     it('can input amounts', () => {
-      cy.get('[data-testid="vertical.step-amounts.next-btn"]').should('be.disabled');
+      cy.get('[data-testid="vertical.step-amounts.swap-btn"]').should('be.disabled');
 
       cy.get('[data-testid="vertical.step-amounts.amounts.amount-from"]').type('1');
       cy.get('[data-testid="vertical.step-amounts.amounts.amount-to"]').type('1');
 
-      cy.get('[data-testid="vertical.step-amounts.next-btn"]').should('not.be.disabled').click();
+      cy.get('[data-testid="vertical.step-amounts.swap-btn"]').should('be.disabled');
     });
 
     it('can input address', () => {
-      cy.get('[data-testid="vertical.step-address.top.back-btn"]').should('be.visible').click();
-      cy.get('[data-testid="vertical.step-amounts.next-btn"]').click();
+      cy.get('[data-testid="vertical.step-amounts.swap-btn"]').should('be.disabled');
 
-      cy.get('[data-testid="vertical.step-address.swap-btn"]').should('be.disabled');
-
-      cy.get('[data-testid="vertical.step-address.receiving-address"]').type(
+      cy.get('[data-testid="vertical.step-amounts.receiving-address"]').type(
         'mkHS9ne12qx9pS9VojpwU5xtRd4T7X7ZUt',
       );
 
-      cy.get('[data-testid="vertical.step-address.swap-btn"]').should('not.be.disabled').click();
+      cy.get('[data-testid="vertical.step-amounts.swap-btn"]').should('not.be.disabled').click();
     });
 
     it('renders last step', () => {
@@ -59,7 +56,11 @@
     });
   };
 
-  describe('Small vertical', () => {
-    testCases({ width: 445, height: 375, name: 'Small vertical' });
+  describe('Full vertical', () => {
+    testCases({ width: 445, height: 510, name: 'Full vertical' });
+  });
+
+  describe('Website', () => {
+    testCases({ width: 600, height: 600, name: 'Website' });
   });
 })();

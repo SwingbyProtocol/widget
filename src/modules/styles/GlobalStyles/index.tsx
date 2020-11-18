@@ -7,7 +7,7 @@ export const GlobalStyles = css`
     background: ${({ theme }) => theme.pulsar.color.bg.normal};
   }
 
-  @media (${StylingConstants.mediaLayout.website}) {
+  @media ${StylingConstants.mediaLayout.website} {
     :root {
       background: ${({ theme }) => theme.pulsar.color.bg.masked};
     }

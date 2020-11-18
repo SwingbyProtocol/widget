@@ -9,5 +9,5 @@ export const Container = styled.div`
 `;
 
 export const ProgressContainer = styled.div`
-  max-width: ${rem(250)};
+  font-size: ${({ theme }) => rem(theme.pulsar.size.city)};
 `;
