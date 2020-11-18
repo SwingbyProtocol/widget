@@ -6,7 +6,7 @@
 
     it('renders correctly', () => {
       cy.visit('/');
-      cy.percySnapshot(`${name}: after loading`, { widths: [width] });
+      cy.percySnapshot(`${name}: after loading`, { widths: [width], minHeight: height });
     });
 
     it('can switch coins', () => {
@@ -24,7 +24,7 @@
       cy.get('[data-testid="vertical.step-amounts.amounts.currency-to-select.target"]').click();
       cy.tick(10000);
 
-      cy.percySnapshot(`${name}: switch coin`, { widths: [width] });
+      cy.percySnapshot(`${name}: switch coin`, { widths: [width], minHeight: height });
 
       cy.get(
         '[data-testid="vertical.step-amounts.amounts.currency-to-select.content.item-BTC"]',
@@ -52,7 +52,7 @@
     });
 
     it('renders last step', () => {
-      cy.percySnapshot(`${name}: submitted`, { widths: [width] });
+      cy.percySnapshot(`${name}: submitted`, { widths: [width], minHeight: height });
     });
   };
 

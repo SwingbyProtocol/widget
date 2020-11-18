@@ -1,12 +1,12 @@
 (() => {
-  const testCases = ({ width, name }: { width: number; name: string }) => {
+  const testCases = ({ width, height, name }: { width: number; height: number; name: string }) => {
     beforeEach(() => {
       cy.viewport(width, 200);
     });
 
     it('renders correctly', () => {
       cy.visit('/');
-      cy.percySnapshot(`${name}: after loading`, { widths: [width] });
+      cy.percySnapshot(`${name}: after loading`, { widths: [width], minHeight: height });
     });
 
     it('can switch coins', () => {
@@ -18,7 +18,7 @@
         '[data-testid="banner.step-amounts.amounts.currency-from-select.coin-list.back-btn"]',
       ).should('be.visible');
 
-      cy.percySnapshot(`${name}: switch coin`, { widths: [width] });
+      cy.percySnapshot(`${name}: switch coin`, { widths: [width], minHeight: height });
 
       cy.get(
         '[data-testid="banner.step-amounts.amounts.currency-from-select.coin-list.back-btn"]',
@@ -62,7 +62,7 @@
       cy.get('[data-testid="banner.step-address.back-btn"]').should('be.visible').click();
       cy.get('[data-testid="banner.step-amounts.next-btn"]').should('not.be.disabled').click();
 
-      cy.percySnapshot(`${name}: address step`, { widths: [width] });
+      cy.percySnapshot(`${name}: address step`, { widths: [width], minHeight: height });
 
       cy.get('[data-testid="banner.step-address.swap-btn"]').should('be.disabled');
       cy.get('[data-testid="banner.step-address.receiving-address.native-input"]').type(
@@ -72,15 +72,15 @@
     });
 
     it('renders last step', () => {
-      cy.percySnapshot(`${name}: submitted`, { widths: [width] });
+      cy.percySnapshot(`${name}: submitted`, { widths: [width], minHeight: height });
     });
   };
 
   describe('Narrow banner', () => {
-    testCases({ width: 320, name: 'Narrow banner' });
+    testCases({ width: 320, height: 200, name: 'Narrow banner' });
   });
 
   describe('Wide banner', () => {
-    testCases({ width: 650, name: 'Wide banner' });
+    testCases({ width: 650, height: 200, name: 'Wide banner' });
   });
 })();
