@@ -1,11 +1,11 @@
-describe('Wide banner', () => {
+const testCases = ({ width }: { width: number }) => {
   beforeEach(() => {
-    cy.viewport(650, 200);
+    cy.viewport(width, 200);
   });
 
-  it('render correctly', () => {
+  it('renders correctly', () => {
     cy.visit('/');
-    cy.percySnapshot('Wide banner: after loading', { widths: [650] });
+    cy.percySnapshot('Narrow banner: after loading', { widths: [width] });
   });
 
   it('can switch coins', () => {
@@ -17,7 +17,7 @@ describe('Wide banner', () => {
       '[data-testid="banner.step-amounts.amounts.currency-from-select.coin-list.back-btn"]',
     ).should('be.visible');
 
-    cy.percySnapshot('Wide banner: switch coin', { widths: [650] });
+    cy.percySnapshot('Narrow banner: switch coin', { widths: [width] });
 
     cy.get(
       '[data-testid="banner.step-amounts.amounts.currency-from-select.coin-list.back-btn"]',
@@ -59,7 +59,7 @@ describe('Wide banner', () => {
     cy.get('[data-testid="banner.step-address.back-btn"]').should('be.visible').click();
     cy.get('[data-testid="banner.step-amounts.next-btn"]').should('not.be.disabled').click();
 
-    cy.percySnapshot('Wide banner: address step', { widths: [650] });
+    cy.percySnapshot('Narrow banner: address step', { widths: [width] });
 
     cy.get('[data-testid="banner.step-address.swap-btn"]').should('be.disabled');
     cy.get('[data-testid="banner.step-address.receiving-address.native-input"]').type(
@@ -69,6 +69,14 @@ describe('Wide banner', () => {
   });
 
   it('renders last step', () => {
-    cy.percySnapshot('Wide banner: submitted', { widths: [650] });
+    cy.percySnapshot('Narrow banner: submitted', { widths: [width] });
   });
+};
+
+describe('Narrow banner', () => {
+  testCases({ width: 320 });
+});
+
+describe('Wide banner', () => {
+  testCases({ width: 650 });
 });
