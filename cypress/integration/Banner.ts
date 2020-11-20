@@ -27,9 +27,7 @@
       cy.get('[data-testid="banner.step-amounts.amounts.currency-from-select"]').click();
       cy.tick(10000);
 
-      cy.get(
-        '[data-testid="banner.step-amounts.amounts.currency-from-select.coin-list.item-BTC.B"]',
-      )
+      cy.get('[data-testid="banner.step-amounts.amounts.currency-from-select.coin-list.item-BTCB"]')
         .scrollIntoView()
         .should('be.visible')
         .click();
@@ -53,7 +51,6 @@
       cy.get('[data-testid="banner.step-amounts.next-btn"]').should('be.disabled');
 
       cy.get('[data-testid="banner.step-amounts.amounts.amount-from"]').type('1');
-      cy.get('[data-testid="banner.step-amounts.amounts.amount-to"]').type('1');
 
       cy.get('[data-testid="banner.step-amounts.next-btn"]').should('not.be.disabled').click();
     });

@@ -29,5 +29,5 @@ export const useAreCurrenciesValid = () => {
 
 export const useIsAddressOutValid = () => {
   const addressOut = useSelector((state) => state.form.addressOut);
-  return useMemo(() => ({ isAddressOutValid: () => !!addressOut }), [addressOut]);
+  return useMemo(() => ({ isAddressOutValid: !!addressOut }), [addressOut]);
 };

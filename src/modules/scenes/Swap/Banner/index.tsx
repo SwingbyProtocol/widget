@@ -38,7 +38,7 @@ export const Banner = () => {
   const dispatch = useDispatch();
   const step = useSelector((state) => state.pagination.step);
   const { setStep } = useSetStep();
-  const { isAddressOutValid: isReceivingAddressValid } = useIsAddressOutValid();
+  const { isAddressOutValid } = useIsAddressOutValid();
 
   return (
     <BannerContainer>
@@ -106,7 +106,7 @@ export const Banner = () => {
             variant="primary"
             size="state"
             shape="fit"
-            disabled={!isReceivingAddressValid}
+            disabled={!areFormAmountsValid || !isAddressOutValid}
             onClick={() => setStep('step-submitted')}
             data-testid={buildTestId(`${step}.swap-btn`)}
           >

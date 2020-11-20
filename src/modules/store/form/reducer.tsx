@@ -8,7 +8,7 @@ enum Actions {
 
 const initialState = {
   currencyIn: 'BTC' as Coin,
-  currencyOut: 'BTC.B' as Coin,
+  currencyOut: 'BTCB' as Coin,
   amountUser: '',
   addressOut: '',
 };
