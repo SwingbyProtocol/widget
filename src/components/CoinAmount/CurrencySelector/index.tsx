@@ -98,6 +98,7 @@ export const CurrencySelector = ({
       </LonelyCoinButton>
       <HorizonalList
         isOpen={isHorizontalSelectorOpen}
+        except={except}
         onClose={() => setHorizontalSelectorOpen(false)}
         onChange={onChange}
         data-testid={buildTestId('coin-list')}

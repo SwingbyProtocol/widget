@@ -7,9 +7,20 @@ import { BackButton } from '../../../BackButton';
 
 import { HorizontalSelectorBg, Container, CoinList, CoinButton, CoinListWrapper } from './styled';
 
-type Props = { isOpen: boolean; onClose: () => void; onChange: (coin: Coin) => void } & Testable;
+type Props = {
+  except?: Coin;
+  isOpen: boolean;
+  onClose: () => void;
+  onChange: (coin: Coin) => void;
+} & Testable;
 
-export const HorizonalList = ({ isOpen, onClose, onChange, 'data-testid': testId }: Props) => {
+export const HorizonalList = ({
+  except,
+  isOpen,
+  onClose,
+  onChange,
+  'data-testid': testId,
+}: Props) => {
   const { buildTestId } = useBuildTestId({ id: testId });
   const boxTransitions = useTransition(isOpen, null, {
     from: { opacity: 0 },
@@ -42,20 +53,22 @@ export const HorizonalList = ({ isOpen, onClose, onChange, 'data-testid': testId
                       <BackButton data-testid={buildTestId('back-btn')} />
                       <CoinList>
                         <CoinListWrapper>
-                          {getCoinList().map((coin) => (
-                            <CoinButton
-                              variant="tertiary"
-                              size="state"
-                              onClick={() => {
-                                onChange(coin);
-                                onClose();
-                              }}
-                              data-testid={buildTestId(`item-${coin}`)}
-                            >
-                              <CoinIcon symbol={coin} />
-                              &nbsp;{coin}
-                            </CoinButton>
-                          ))}
+                          {getCoinList()
+                            .filter((it) => it !== except)
+                            .map((coin) => (
+                              <CoinButton
+                                variant="tertiary"
+                                size="state"
+                                onClick={() => {
+                                  onChange(coin);
+                                  onClose();
+                                }}
+                                data-testid={buildTestId(`item-${coin}`)}
+                              >
+                                <CoinIcon symbol={coin} />
+                                &nbsp;{coin}
+                              </CoinButton>
+                            ))}
                         </CoinListWrapper>
                       </CoinList>
                     </Container>
