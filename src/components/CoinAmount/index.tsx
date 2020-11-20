@@ -88,6 +88,7 @@ export const CoinAmount = ({ variant, 'data-testid': testId }: Props) => {
       <CurrencySelector
         variant={variant}
         value={currencyOut}
+        except={currencyIn}
         onChange={(currencyOut) => dispatch(actionSetFormData({ currencyOut }))}
         data-testid={buildTestId('currency-to-select')}
       />

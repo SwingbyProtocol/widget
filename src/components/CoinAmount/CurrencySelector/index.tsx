@@ -14,9 +14,20 @@ import { StylingConstants } from '../../../modules/styles';
 import { HorizonalList } from './HorizonalList';
 import { ButtonCoin, ButtonCoinCaret, ButtonCoinName, LonelyCoinButton, Variant } from './styled';
 
-type Props = { variant: Variant; value: Coin; onChange: (coin: Coin) => void } & Testable;
+type Props = {
+  except?: Coin;
+  variant: Variant;
+  value: Coin;
+  onChange: (coin: Coin) => void;
+} & Testable;
 
-export const CurrencySelector = ({ variant, value, onChange, 'data-testid': testId }: Props) => {
+export const CurrencySelector = ({
+  except,
+  variant,
+  value,
+  onChange,
+  'data-testid': testId,
+}: Props) => {
   const { buildTestId } = useBuildTestId({ id: testId });
   const hasWideWidth = useMatchMedia({ query: StylingConstants.mediaWideWidth });
   const [isHorizontalSelectorOpen, setHorizontalSelectorOpen] = useState(false);
@@ -38,16 +49,18 @@ export const CurrencySelector = ({ variant, value, onChange, 'data-testid': test
         }
         data-testid={buildTestId('')}
       >
-        {getCoinList().map((coin) => (
-          <Dropdown.Item
-            key={coin}
-            onClick={() => onChange(coin)}
-            data-testid={buildTestId(`item-${coin}`)}
-          >
-            <CoinIcon symbol={coin} />
-            &nbsp;{coin}
-          </Dropdown.Item>
-        ))}
+        {getCoinList()
+          .filter((it) => it !== except)
+          .map((coin) => (
+            <Dropdown.Item
+              key={coin}
+              onClick={() => onChange(coin)}
+              data-testid={buildTestId(`item-${coin}`)}
+            >
+              <CoinIcon symbol={coin} />
+              &nbsp;{coin}
+            </Dropdown.Item>
+          ))}
       </Dropdown>
     );
   }
