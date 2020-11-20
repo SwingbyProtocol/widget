@@ -7,7 +7,14 @@ import { buildContext, estimateAmountOut } from '@swingby-protocol/sdk';
 import { actionSetFormData } from '../../modules/store/form';
 import { logger } from '../../modules/logger';
 
-import { CoinAmountContainer, Label, SwapVertical, SwapHorizontal, Variant } from './styled';
+import {
+  CoinAmountContainer,
+  Label,
+  SwapVertical,
+  SwapHorizontal,
+  Variant,
+  AmountOut,
+} from './styled';
 import { CurrencySelector } from './CurrencySelector';
 
 type Props = { variant: Variant } & Testable;
@@ -19,20 +26,37 @@ export const CoinAmount = ({ variant, 'data-testid': testId }: Props) => {
   const [amountOut, setAmountOut] = useState('0');
 
   useEffect(() => {
+    let cancelled = false;
+
     (async () => {
       try {
+        if (cancelled) return;
+        setAmountOut('…');
+
+        if (cancelled) return;
         const context = await buildContext({ mode: 'test' });
+
+        if (cancelled) return;
         const { amountOut } = await estimateAmountOut({
           context,
           amountUser,
           currencyIn,
           currencyOut,
         });
+
+        if (cancelled) return;
         setAmountOut(amountOut);
       } catch (e) {
         logger.error(e);
+
+        if (cancelled) return;
+        setAmountOut('0');
       }
     })();
+
+    return () => {
+      cancelled = true;
+    };
   }, [amountUser, currencyIn, currencyOut]);
 
   return (
@@ -67,7 +91,7 @@ export const CoinAmount = ({ variant, 'data-testid': testId }: Props) => {
         onChange={(currencyOut) => dispatch(actionSetFormData({ currencyOut }))}
         data-testid={buildTestId('currency-to-select')}
       />
-      <TextInput size="state" value={amountOut} data-testid={buildTestId('amount-to')} disabled />
+      <AmountOut>{amountOut}</AmountOut>
     </CoinAmountContainer>
   );
 };
