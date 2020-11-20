@@ -11,7 +11,7 @@ import { SendLabel } from './styled';
 
 export const SendTo = ({ 'data-testid': testId }: Testable) => {
   const { buildTestId } = useBuildTestId({ id: testId });
-  const { currencyFrom } = useSelector((state) => state.form);
+  const { currencyIn } = useSelector((state) => state.form);
   const { setStep } = useSetStep();
   return (
     <StepView
@@ -21,12 +21,12 @@ export const SendTo = ({ 'data-testid': testId }: Testable) => {
           <SendLabel data-testid={buildTestId('top.send-label')}>
             <FormattedMessage
               id="widget.send-to-long"
-              values={{ value: <FancyCryptoAmount amount={1} displaySymbol={currencyFrom} /> }}
+              values={{ value: <FancyCryptoAmount amount={1} displaySymbol={currencyIn} /> }}
             />
           </SendLabel>
           <CopyToClipboard
             value="aaaaa"
-            left={<CoinIcon symbol={currencyFrom} />}
+            left={<CoinIcon symbol={currencyIn} />}
             size="country"
             data-testid={buildTestId('top.address')}
           />

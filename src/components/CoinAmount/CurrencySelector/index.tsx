@@ -5,9 +5,10 @@ import {
   useBuildTestId,
   useMatchMedia,
 } from '@swingby-protocol/pulsar';
-import { Coin, SUPPORTED_COINS } from '@swingby-protocol/sdk';
+import { Coin } from '@swingby-protocol/sdk';
 import { useEffect, useState } from 'react';
 
+import { getCoinList } from '../../../modules/coins';
 import { StylingConstants } from '../../../modules/styles';
 
 import { HorizonalList } from './HorizonalList';
@@ -37,7 +38,7 @@ export const CurrencySelector = ({ variant, value, onChange, 'data-testid': test
         }
         data-testid={buildTestId('')}
       >
-        {SUPPORTED_COINS.map((coin) => (
+        {getCoinList().map((coin) => (
           <Dropdown.Item
             key={coin}
             onClick={() => onChange(coin)}

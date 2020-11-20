@@ -11,7 +11,7 @@ import { Container, ProgressContainer } from './styled';
 export const StepIndicator = ({
   status,
 }: Pick<React.ComponentPropsWithoutRef<typeof ProgressIndicator>, 'status'>) => {
-  const { currencyFrom, currencyTo } = useSelector((state) => state.form);
+  const { currencyIn, currencyOut } = useSelector((state) => state.form);
   const layout = useWidgetLayout();
   return (
     <Container>
@@ -24,7 +24,7 @@ export const StepIndicator = ({
         </>
       )}
       <ProgressContainer>
-        <ProgressIndicator status={status} currencyFrom={currencyFrom} currencyTo={currencyTo} />
+        <ProgressIndicator status={status} currencyIn={currencyIn} currencyOut={currencyOut} />
       </ProgressContainer>
     </Container>
   );

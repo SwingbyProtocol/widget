@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CoinAmount } from '../../../../../components/CoinAmount';
 import {
   actionSetFormData,
-  useAreFormAmountsValid,
-  useIsReceivingAddressValid,
+  useAreCurrenciesValid,
+  useIsAddressOutValid,
 } from '../../../../store/form';
 import { Space } from '../../../../../components/Space';
 import { useWidgetLayout } from '../../../../layout';
@@ -18,14 +18,14 @@ import { Separator } from './styled';
 export const Form = ({ 'data-testid': testId }: Testable) => {
   const { buildTestId } = useBuildTestId({ id: testId });
   const { formatMessage } = useIntl();
-  const { receivingAddress } = useSelector((state) => state.form);
-  const { currencyTo } = useSelector((state) => state.form);
+  const { addressOut } = useSelector((state) => state.form);
+  const { currencyOut } = useSelector((state) => state.form);
   const dispatch = useDispatch();
   const step = useSelector((state) => state.pagination.step);
   const { setStep } = useSetStep();
   const layout = useWidgetLayout();
-  const { areFormAmountsValid } = useAreFormAmountsValid();
-  const { isReceivingAddressValid } = useIsReceivingAddressValid();
+  const { areCurrenciesValid: areFormAmountsValid } = useAreCurrenciesValid();
+  const { isAddressOutValid: isReceivingAddressValid } = useIsAddressOutValid();
 
   return (
     <StepView
@@ -51,9 +51,9 @@ export const Form = ({ 'data-testid': testId }: Testable) => {
           )}
           <TextInput
             size="state"
-            left={<CoinIcon symbol={currencyTo} />}
-            value={receivingAddress}
-            onChange={(evt) => dispatch(actionSetFormData({ receivingAddress: evt.target.value }))}
+            left={<CoinIcon symbol={currencyOut} />}
+            value={addressOut}
+            onChange={(evt) => dispatch(actionSetFormData({ addressOut: evt.target.value }))}
             placeholder={formatMessage({ id: 'widget.receiving-address.placeholder' })}
             label={formatMessage({ id: 'widget.receiving-address.label' })}
             data-testid={buildTestId('receiving-address')}

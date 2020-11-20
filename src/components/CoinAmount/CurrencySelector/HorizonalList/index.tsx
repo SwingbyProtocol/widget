@@ -1,7 +1,8 @@
 import { CoinIcon, Testable, useBuildTestId } from '@swingby-protocol/pulsar';
-import { Coin, SUPPORTED_COINS } from '@swingby-protocol/sdk';
+import { Coin } from '@swingby-protocol/sdk';
 import { useTransition, animated } from 'react-spring';
 
+import { getCoinList } from '../../../../modules/coins';
 import { BackButton } from '../../../BackButton';
 
 import { HorizontalSelectorBg, Container, CoinList, CoinButton, CoinListWrapper } from './styled';
@@ -41,7 +42,7 @@ export const HorizonalList = ({ isOpen, onClose, onChange, 'data-testid': testId
                       <BackButton data-testid={buildTestId('back-btn')} />
                       <CoinList>
                         <CoinListWrapper>
-                          {SUPPORTED_COINS.map((coin) => (
+                          {getCoinList().map((coin) => (
                             <CoinButton
                               variant="tertiary"
                               size="state"

@@ -10,18 +10,18 @@ type Status = typeof STATUSES[number];
 
 export const ProgressIndicator = ({
   status,
-  currencyFrom,
-  currencyTo,
+  currencyIn,
+  currencyOut,
   className,
 }: {
   status: Status;
-  currencyFrom: Coin;
-  currencyTo: Coin;
+  currencyIn: Coin;
+  currencyOut: Coin;
   className?: string;
 }) => {
   const theme = useTheme();
-  const logoFrom = useMemo(() => getCoinLogo({ symbol: currencyFrom }), [currencyFrom]);
-  const logoTo = useMemo(() => getCoinLogo({ symbol: currencyTo }), [currencyTo]);
+  const logoFrom = useMemo(() => getCoinLogo({ symbol: currencyIn }), [currencyIn]);
+  const logoTo = useMemo(() => getCoinLogo({ symbol: currencyOut }), [currencyOut]);
 
   const completedColor = theme.pulsar.color.primary.normal;
   const pendingColor = theme.pulsar.color.border.normal;

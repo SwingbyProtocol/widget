@@ -14,8 +14,8 @@ import { BackButton } from '../../../../components/BackButton';
 import { CoinAmount } from '../../../../components/CoinAmount';
 import {
   actionSetFormData,
-  useAreFormAmountsValid,
-  useIsReceivingAddressValid,
+  useAreCurrenciesValid,
+  useIsAddressOutValid,
 } from '../../../store/form';
 import { useSetStep } from '../../../store/pagination';
 import { StylingConstants } from '../../../styles';
@@ -33,12 +33,12 @@ export const Banner = () => {
   const { buildTestId } = useBuildTestId({ id: 'banner' });
   const { formatMessage, locale } = useIntl();
   const hasWideWidth = useMatchMedia({ query: StylingConstants.mediaWideWidth });
-  const { currencyFrom, currencyTo, receivingAddress } = useSelector((state) => state.form);
-  const { areFormAmountsValid } = useAreFormAmountsValid();
+  const { currencyIn, currencyOut, addressOut } = useSelector((state) => state.form);
+  const { areCurrenciesValid: areFormAmountsValid } = useAreCurrenciesValid();
   const dispatch = useDispatch();
   const step = useSelector((state) => state.pagination.step);
   const { setStep } = useSetStep();
-  const { isReceivingAddressValid } = useIsReceivingAddressValid();
+  const { isAddressOutValid: isReceivingAddressValid } = useIsAddressOutValid();
 
   return (
     <BannerContainer>
@@ -56,7 +56,7 @@ export const Banner = () => {
                 values={{
                   amount: getCryptoAssetFormatter({
                     locale,
-                    displaySymbol: currencyFrom,
+                    displaySymbol: currencyIn,
                   }).format(0.999967),
                 }}
               />
@@ -64,14 +64,14 @@ export const Banner = () => {
             <SendToValue>
               {getCryptoAssetFormatter({
                 locale,
-                displaySymbol: currencyFrom,
+                displaySymbol: currencyIn,
               }).format(0.999967)}
             </SendToValue>
           </SendTo>
           <ResponsiveSpace />
           <CopyToClipboard
             size="state"
-            left={hasWideWidth ? <CoinIcon symbol={currencyFrom} /> : undefined}
+            left={hasWideWidth ? <CoinIcon symbol={currencyIn} /> : undefined}
             value="mzoPuK5PnAGNT19dF22L5Wng8D5T1jSBEG"
             data-testid={buildTestId(`${step}.address`)}
           />
@@ -95,9 +95,9 @@ export const Banner = () => {
           <ResponsiveSpace />
           <AddressInput
             size="state"
-            left={<CoinIcon symbol={currencyTo} />}
-            value={receivingAddress}
-            onChange={(evt) => dispatch(actionSetFormData({ receivingAddress: evt.target.value }))}
+            left={<CoinIcon symbol={currencyOut} />}
+            value={addressOut}
+            onChange={(evt) => dispatch(actionSetFormData({ addressOut: evt.target.value }))}
             placeholder={formatMessage({ id: 'widget.receiving-address.placeholder' })}
             data-testid={buildTestId(`${step}.receiving-address`)}
           />

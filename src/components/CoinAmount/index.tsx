@@ -1,8 +1,11 @@
 import { Testable, TextInput, useBuildTestId } from '@swingby-protocol/pulsar';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { buildContext, estimateAmountOut } from '@swingby-protocol/sdk';
 
 import { actionSetFormData } from '../../modules/store/form';
+import { logger } from '../../modules/logger';
 
 import { CoinAmountContainer, Label, SwapVertical, SwapHorizontal, Variant } from './styled';
 import { CurrencySelector } from './CurrencySelector';
@@ -11,8 +14,27 @@ type Props = { variant: Variant } & Testable;
 
 export const CoinAmount = ({ variant, 'data-testid': testId }: Props) => {
   const { buildTestId } = useBuildTestId({ id: testId });
-  const { amountFrom, currencyFrom, amountTo, currencyTo } = useSelector((state) => state.form);
+  const { amountUser, currencyIn, currencyOut } = useSelector((state) => state.form);
   const dispatch = useDispatch();
+  const [amountOut, setAmountOut] = useState('0');
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const context = await buildContext({ mode: 'test' });
+        const { amountOut } = await estimateAmountOut({
+          context,
+          amountUser,
+          currencyIn,
+          currencyOut,
+        });
+        setAmountOut(amountOut);
+      } catch (e) {
+        logger.error(e);
+      }
+    })();
+  }, [amountUser, currencyIn, currencyOut]);
+
   return (
     <CoinAmountContainer variant={variant} data-testid={buildTestId('')}>
       {variant === 'vertical' && (
@@ -22,14 +44,14 @@ export const CoinAmount = ({ variant, 'data-testid': testId }: Props) => {
       )}
       <CurrencySelector
         variant={variant}
-        value={currencyFrom}
-        onChange={(currencyFrom) => dispatch(actionSetFormData({ currencyFrom }))}
+        value={currencyIn}
+        onChange={(currencyIn) => dispatch(actionSetFormData({ currencyIn }))}
         data-testid={buildTestId('currency-from-select')}
       />
       <TextInput
         size="state"
-        value={amountFrom}
-        onChange={(evt) => dispatch(actionSetFormData({ amountFrom: evt.target.value }))}
+        value={amountUser}
+        onChange={(evt) => dispatch(actionSetFormData({ amountUser: evt.target.value }))}
         data-testid={buildTestId('amount-from')}
       />
       {variant === 'vertical' && <Label />}
@@ -41,16 +63,11 @@ export const CoinAmount = ({ variant, 'data-testid': testId }: Props) => {
       )}
       <CurrencySelector
         variant={variant}
-        value={currencyTo}
-        onChange={(currencyTo) => dispatch(actionSetFormData({ currencyTo }))}
+        value={currencyOut}
+        onChange={(currencyOut) => dispatch(actionSetFormData({ currencyOut }))}
         data-testid={buildTestId('currency-to-select')}
       />
-      <TextInput
-        size="state"
-        value={amountTo}
-        onChange={(evt) => dispatch(actionSetFormData({ amountTo: evt.target.value }))}
-        data-testid={buildTestId('amount-to')}
-      />
+      <TextInput size="state" value={amountOut} data-testid={buildTestId('amount-to')} disabled />
     </CoinAmountContainer>
   );
 };
