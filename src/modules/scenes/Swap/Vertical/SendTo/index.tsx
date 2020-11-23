@@ -34,7 +34,7 @@ export const SendTo = ({ 'data-testid': testId }: Testable) => {
       }
       data-testid={buildTestId('')}
     >
-      <StepIndicator status="awaiting-deposit" data-testid={buildTestId('bottom.step-indicator')} />
+      <StepIndicator status="waiting" data-testid={buildTestId('bottom.step-indicator')} />
     </StepView>
   );
 };

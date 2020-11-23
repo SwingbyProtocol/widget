@@ -1,8 +1,7 @@
-import { Text } from '@swingby-protocol/pulsar';
+import { SwapProgress, Text } from '@swingby-protocol/pulsar';
 import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
 
-import { ProgressIndicator } from '../../../../../components/ProgressIndicator';
 import { Space } from '../../../../../components/Space';
 import { useWidgetLayout } from '../../../../layout';
 
@@ -10,7 +9,7 @@ import { Container, ProgressContainer } from './styled';
 
 export const StepIndicator = ({
   status,
-}: Pick<React.ComponentPropsWithoutRef<typeof ProgressIndicator>, 'status'>) => {
+}: Pick<React.ComponentPropsWithoutRef<typeof SwapProgress>, 'status'>) => {
   const { currencyIn, currencyOut } = useSelector((state) => state.form);
   const layout = useWidgetLayout();
   return (
@@ -24,7 +23,7 @@ export const StepIndicator = ({
         </>
       )}
       <ProgressContainer>
-        <ProgressIndicator status={status} currencyIn={currencyIn} currencyOut={currencyOut} />
+        <SwapProgress status={status} currencyIn={currencyIn} currencyOut={currencyOut} />
       </ProgressContainer>
     </Container>
   );
