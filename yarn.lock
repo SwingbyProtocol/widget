@@ -1847,12 +1847,14 @@
     "@tippyjs/react" "^4.2.0"
     nanoid "3.1.18"
 
-"@swingby-protocol/sdk@^1.0.0-alpha.10":
-  version "1.0.0-alpha.10"
-  resolved "https://registry.yarnpkg.com/@swingby-protocol/sdk/-/sdk-1.0.0-alpha.10.tgz#93ecdea71ba9ead31ddcb6f23e3bba84a95646e8"
-  integrity sha512-50hb9/AImGUX4G9feX3f/3Tte1RBP79O2vztgHf9U02i6ncZS8PxVpMhP4G6kxWVQD7naijwYMve6dv1+/QXbA==
+"@swingby-protocol/sdk@^1.0.0-alpha.12":
+  version "1.0.0-alpha.12"
+  resolved "https://registry.yarnpkg.com/@swingby-protocol/sdk/-/sdk-1.0.0-alpha.12.tgz#9ab291b65c49ccd5dfa588fa6198189fb6e609b8"
+  integrity sha512-KxaPOXhk8ZY3UjZT9Mvy3G5cOzpeVRzZZPWn5rK5C/2bsMJ+fWesYp6nMVHZgq/aVsmwmbyGBbjt9aI0IbbkKg==
   dependencies:
+    bech32 "^1.1.4"
     big.js "^6.0.2"
+    bitcoin-address-validation "^1.0.2"
     debug "^4.2.0"
     hex-to-binary "^1.0.1"
     isomorphic-unfetch "^3.1.0"
@@ -2903,6 +2905,13 @@ base-64@^0.1.0:
   resolved "https://registry.yarnpkg.com/base-64/-/base-64-0.1.0.tgz#780a99c84e7d600260361511c4877613bf24f6bb"
   integrity sha1-eAqZyE59YAJgNhURxId2E78k9rs=
 
+base-x@^3.0.6:
+  version "3.0.8"
+  resolved "https://registry.yarnpkg.com/base-x/-/base-x-3.0.8.tgz#1e1106c2537f0162e8b52474a557ebb09000018d"
+  integrity sha512-Rl/1AWP4J/zRrk54hhlxH4drNxPJXYUaKffODVI53/dAsV4t9fBxyxYKAVPU1XBHxYwOWP9h9H0hM2MVw4YfJA==
+  dependencies:
+    safe-buffer "^5.0.1"
+
 base64-js@*, base64-js@^1.0.2, base64-js@^1.3.0, base64-js@^1.3.1:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.3.1.tgz#58ece8cb75dd07e71ed08c736abc5fac4dbf8df1"
@@ -2927,6 +2936,11 @@ bcrypt-pbkdf@^1.0.0:
   integrity sha1-pDAdOJtqQ/m2f/PKEaP2Y342Dp4=
   dependencies:
     tweetnacl "^0.14.3"
+
+bech32@^1.1.3, bech32@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/bech32/-/bech32-1.1.4.tgz#e38c9f37bf179b8eb16ae3a772b40c356d4832e9"
+  integrity sha512-s0IrSOzLlbvX7yp4WBfPITzpAU8sqQcpsmwXDiKwrG4r491vwCO/XpejasRNl0piBMe/DvP4Tz0mIS/X1DPJBQ==
 
 big.js@^5.2.2:
   version "5.2.2"
@@ -2959,6 +2973,15 @@ bindings@^1.5.0:
   integrity sha512-p2q/t/mhvuOj/UeLlV6566GD/guowlr0hHxClI0W9m7MWYkL1F0hLo+0Aexs9HSPCtR1SXQ0TD3MMKrXZajbiQ==
   dependencies:
     file-uri-to-path "1.0.0"
+
+bitcoin-address-validation@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/bitcoin-address-validation/-/bitcoin-address-validation-1.0.2.tgz#967fc22f4549ad17c380d3f7489ddae486c99047"
+  integrity sha512-Eh2eLYPL3XtyAnleXBV1MANnqaG2nsrQnTaynpik+5kQFI8ro5ANkrbjYiirIfM+1mibh54UhV+hg8rEW51lYw==
+  dependencies:
+    base-x "^3.0.6"
+    bech32 "^1.1.3"
+    sha.js "^2.4.11"
 
 bl@^4.0.3:
   version "4.0.3"
@@ -9383,7 +9406,7 @@ setprototypeof@1.1.1:
   resolved "https://registry.yarnpkg.com/setprototypeof/-/setprototypeof-1.1.1.tgz#7e95acb24aa92f5885e0abef5ba131330d4ae683"
   integrity sha512-JvdAWfbXeIGaZ9cILp38HntZSFSo3mWg6xGcJJsd+d4aRMOqauag1C63dJfDw7OaMYwEbHMOxEZ1lqVRYP2OAw==
 
-sha.js@^2.4.0, sha.js@^2.4.8:
+sha.js@^2.4.0, sha.js@^2.4.11, sha.js@^2.4.8:
   version "2.4.11"
   resolved "https://registry.yarnpkg.com/sha.js/-/sha.js-2.4.11.tgz#37a5cf0b81ecbc6943de109ba2960d1b26584ae7"
   integrity sha512-QMEp5B7cftE7APOjk5Y6xgrbWu+WkLVQwk8JNjZ8nKRciZaByEW6MubieAiToS7+dwvrjGhH8jRXz3MVd0AYqQ==
