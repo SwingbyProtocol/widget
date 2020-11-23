@@ -15,7 +15,7 @@ const initialState = {
 
 type State = typeof initialState;
 
-export const form: Reducer<State, Action> = (state = initialState, action) => {
+export const swap: Reducer<State, Action> = (state = initialState, action) => {
   if (action.type === Actions.Clear) {
     return initialState;
   }

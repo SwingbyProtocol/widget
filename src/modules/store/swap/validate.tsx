@@ -5,7 +5,7 @@ import { DefaultRootState, useSelector } from 'react-redux';
 import { isCoinSupported } from '../../coins';
 
 const areCurrenciesValid = (
-  state: Pick<DefaultRootState['form'], 'currencyIn' | 'currencyOut' | 'amountUser'>,
+  state: Pick<DefaultRootState['swap'], 'currencyIn' | 'currencyOut' | 'amountUser'>,
 ): boolean => {
   if (!isCoinSupported(state.currencyIn) || !isCoinSupported(state.currencyOut)) {
     return false;
@@ -23,11 +23,11 @@ const areCurrenciesValid = (
 };
 
 export const useAreCurrenciesValid = () => {
-  const data = useSelector((state) => state.form);
+  const data = useSelector((state) => state.swap);
   return useMemo(() => ({ areCurrenciesValid: areCurrenciesValid(data) }), [data]);
 };
 
 export const useIsAddressOutValid = () => {
-  const addressOut = useSelector((state) => state.form.addressOut);
+  const addressOut = useSelector((state) => state.swap.addressOut);
   return useMemo(() => ({ isAddressOutValid: !!addressOut }), [addressOut]);
 };

@@ -7,7 +7,7 @@ import {
   actionSetFormData,
   useAreCurrenciesValid,
   useIsAddressOutValid,
-} from '../../../../store/form';
+} from '../../../../store/swap';
 import { Space } from '../../../../../components/Space';
 import { useWidgetLayout } from '../../../../layout';
 import { StepView } from '../StepView';
@@ -18,8 +18,8 @@ import { Separator } from './styled';
 export const Form = ({ 'data-testid': testId }: Testable) => {
   const { buildTestId } = useBuildTestId({ id: testId });
   const { formatMessage } = useIntl();
-  const { addressOut } = useSelector((state) => state.form);
-  const { currencyOut } = useSelector((state) => state.form);
+  const { addressOut } = useSelector((state) => state.swap);
+  const { currencyOut } = useSelector((state) => state.swap);
   const dispatch = useDispatch();
   const step = useSelector((state) => state.pagination.step);
   const { setStep } = useSetStep();

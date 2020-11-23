@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { buildContext, estimateAmountOut } from '@swingby-protocol/sdk';
 
-import { actionSetFormData } from '../../modules/store/form';
+import { actionSetFormData } from '../../modules/store/swap';
 import { logger } from '../../modules/logger';
 
 import {
@@ -21,7 +21,7 @@ type Props = { variant: Variant } & Testable;
 
 export const CoinAmount = ({ variant, 'data-testid': testId }: Props) => {
   const { buildTestId } = useBuildTestId({ id: testId });
-  const { amountUser, currencyIn, currencyOut } = useSelector((state) => state.form);
+  const { amountUser, currencyIn, currencyOut } = useSelector((state) => state.swap);
   const dispatch = useDispatch();
   const [amountOut, setAmountOut] = useState('0');
 

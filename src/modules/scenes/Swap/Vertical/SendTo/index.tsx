@@ -11,7 +11,7 @@ import { SendLabel } from './styled';
 
 export const SendTo = ({ 'data-testid': testId }: Testable) => {
   const { buildTestId } = useBuildTestId({ id: testId });
-  const { currencyIn } = useSelector((state) => state.form);
+  const { currencyIn } = useSelector((state) => state.swap);
   const { setStep } = useSetStep();
   return (
     <StepView

@@ -16,7 +16,7 @@ import {
   actionSetFormData,
   useAreCurrenciesValid,
   useIsAddressOutValid,
-} from '../../../store/form';
+} from '../../../store/swap';
 import { useSetStep } from '../../../store/pagination';
 import { StylingConstants } from '../../../styles';
 
@@ -33,7 +33,7 @@ export const Banner = () => {
   const { buildTestId } = useBuildTestId({ id: 'banner' });
   const { formatMessage, locale } = useIntl();
   const hasWideWidth = useMatchMedia({ query: StylingConstants.mediaWideWidth });
-  const { currencyIn, currencyOut, addressOut } = useSelector((state) => state.form);
+  const { currencyIn, currencyOut, addressOut } = useSelector((state) => state.swap);
   const { areCurrenciesValid: areFormAmountsValid } = useAreCurrenciesValid();
   const dispatch = useDispatch();
   const step = useSelector((state) => state.pagination.step);
