@@ -2,8 +2,8 @@ import { CoinIcon, CopyToClipboard, Testable, useBuildTestId } from '@swingby-pr
 import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
 
-import { FancyCryptoAmount } from '../../../../../components/FancyCryptoAmount';
-import { useSetStep } from '../../../../store/pagination';
+import { FancyCryptoAmount } from '../../../FancyCryptoAmount';
+import { useSetStep } from '../../../../modules/store/pagination';
 import { StepIndicator } from '../StepIndicator';
 import { StepView } from '../StepView';
 

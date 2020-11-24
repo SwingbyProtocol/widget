@@ -1,7 +1,7 @@
 import { PulsarThemeProvider, Testable, useBuildTestId } from '@swingby-protocol/pulsar';
 
-import { Space } from '../../../../../components/Space';
-import { useWidgetLayout } from '../../../../layout';
+import { Space } from '../../../Space';
+import { useWidgetLayout } from '../../../../modules/layout';
 
 import {
   StepViewContainer,

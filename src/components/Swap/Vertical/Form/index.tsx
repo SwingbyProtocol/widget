@@ -2,16 +2,16 @@ import { Button, CoinIcon, Testable, TextInput, useBuildTestId } from '@swingby-
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { CoinAmount } from '../../../../../components/CoinAmount';
+import { CoinAmount } from '../../../CoinAmount';
 import {
   actionSetFormData,
   useAreCurrenciesValid,
   useIsAddressOutValid,
-} from '../../../../store/swap';
-import { Space } from '../../../../../components/Space';
-import { useWidgetLayout } from '../../../../layout';
+} from '../../../../modules/store/swap';
+import { Space } from '../../../Space';
+import { useWidgetLayout } from '../../../../modules/layout';
 import { StepView } from '../StepView';
-import { useSetStep } from '../../../../store/pagination';
+import { useSetStep } from '../../../../modules/store/pagination';
 
 import { Separator } from './styled';
 

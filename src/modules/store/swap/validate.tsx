@@ -1,7 +1,7 @@
 import { BigNumber } from 'bignumber.js';
 import { useMemo } from 'react';
 import { DefaultRootState, useSelector } from 'react-redux';
-import { buildContext, getNetworkForCoin, isAddressValid } from '@swingby-protocol/sdk';
+import { getNetworkForCoin, isAddressValid } from '@swingby-protocol/sdk';
 
 import { isCoinSupported } from '../../coins';
 import { useSdkContext } from '../../sdk-context';

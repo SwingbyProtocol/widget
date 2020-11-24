@@ -2,8 +2,8 @@ import { SwapProgress, Text } from '@swingby-protocol/pulsar';
 import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
 
-import { Space } from '../../../../../components/Space';
-import { useWidgetLayout } from '../../../../layout';
+import { Space } from '../../../Space';
+import { useWidgetLayout } from '../../../../modules/layout';
 
 import { Container, ProgressContainer } from './styled';
 

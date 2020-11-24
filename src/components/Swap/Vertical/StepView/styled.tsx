@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import { rem } from 'polished';
 import { logos } from '@swingby-protocol/pulsar';
 
-import { BackButton } from '../../../../../components/BackButton';
-import { StylingConstants } from '../../../../styles';
+import { BackButton } from '../../../BackButton';
+import { StylingConstants } from '../../../../modules/styles';
 
 export const StepViewContainer = styled.div`
   display: flex;

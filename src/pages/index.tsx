@@ -1,4 +1,4 @@
-import { Swap } from '../modules/scenes/Swap';
+import { Swap } from '../components/Swap';
 import { GlobalStyles } from '../modules/styles';
 
 export default function Home() {

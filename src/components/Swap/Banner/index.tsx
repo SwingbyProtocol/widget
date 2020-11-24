@@ -10,15 +10,15 @@ import {
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { BackButton } from '../../../../components/BackButton';
-import { CoinAmount } from '../../../../components/CoinAmount';
+import { BackButton } from '../../BackButton';
+import { CoinAmount } from '../../CoinAmount';
 import {
   actionSetFormData,
   useAreCurrenciesValid,
   useIsAddressOutValid,
-} from '../../../store/swap';
-import { useSetStep } from '../../../store/pagination';
-import { StylingConstants } from '../../../styles';
+} from '../../../modules/store/swap';
+import { useSetStep } from '../../../modules/store/pagination';
+import { StylingConstants } from '../../../modules/styles';
 
 import {
   BannerContainer,

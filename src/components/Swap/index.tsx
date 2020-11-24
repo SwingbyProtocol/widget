@@ -1,4 +1,4 @@
-import { useWidgetLayout } from '../../layout';
+import { useWidgetLayout } from '../../modules/layout';
 
 import { Banner } from './Banner';
 import { RootLayout } from './RootLayout';
