@@ -1,4 +1,4 @@
-import { BigNumber } from 'bignumber.js';
+import { Big } from 'big.js';
 import { useMemo } from 'react';
 import { DefaultRootState, useSelector } from 'react-redux';
 import { getNetworkForCoin, isAddressValid } from '@swingby-protocol/sdk';
@@ -17,7 +17,9 @@ const areCurrenciesValid = (
     return false;
   }
 
-  if (new BigNumber(state.amountUser).isNaN()) {
+  try {
+    new Big(state.amountUser);
+  } catch (e) {
     return false;
   }
 

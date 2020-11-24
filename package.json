@@ -21,7 +21,7 @@
   "dependencies": {
     "@swingby-protocol/pulsar": "^1.0.0-alpha.64",
     "@swingby-protocol/sdk": "^1.0.0-alpha.13",
-    "bignumber.js": "^9.0.1",
+    "big.js": "^6.0.2",
     "hex-to-binary": "^1.0.1",
     "isomorphic-webcrypto": "^2.3.6",
     "next": "10.0.0",
@@ -41,6 +41,7 @@
     "@percy/cypress": "^2.3.2",
     "@swingby-protocol/eslint-config": "^1.0.2",
     "@swingby-protocol/prettier-config": "^1.0.0",
+    "@types/big.js": "^6.0.0",
     "@types/jest": "^26.0.15",
     "@types/node": "^14.14.5",
     "@types/pino": "^6.3.3",
@@ -54,5 +55,8 @@
     "prettier": "^2.1.2",
     "typescript": "^4.0.5",
     "wait-on": "^5.2.0"
+  },
+  "resolutions": {
+    "**/big.js": "6.0.2"
   }
 }
