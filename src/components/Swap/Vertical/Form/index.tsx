@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { Button, CoinIcon, Testable, TextInput, useBuildTestId } from '@swingby-protocol/pulsar';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,12 +7,14 @@ import { CoinAmount } from '../../../CoinAmount';
 import {
   actionSetSwapData,
   useAreCurrenciesValid,
+  useCreateSwap,
   useIsAddressOutValid,
 } from '../../../../modules/store/swap';
 import { Space } from '../../../Space';
 import { useWidgetLayout } from '../../../../modules/layout';
 import { StepView } from '../StepView';
 import { useSetStep } from '../../../../modules/store/pagination';
+import { logger } from '../../../../modules/logger';
 
 import { Separator } from './styled';
 
@@ -26,6 +29,16 @@ export const Form = ({ 'data-testid': testId }: Testable) => {
   const layout = useWidgetLayout();
   const { areCurrenciesValid: areFormAmountsValid } = useAreCurrenciesValid();
   const { isAddressOutValid: isReceivingAddressValid } = useIsAddressOutValid();
+  const { createSwap } = useCreateSwap();
+
+  const clickSwap = useCallback(async () => {
+    try {
+      await createSwap();
+      setStep('step-submitted');
+    } catch (e) {
+      logger.error('Failed to create swap', e);
+    }
+  }, [createSwap, setStep]);
 
   return (
     <StepView
@@ -68,7 +81,7 @@ export const Form = ({ 'data-testid': testId }: Testable) => {
           variant="primary"
           size="state"
           disabled={!areFormAmountsValid || !isReceivingAddressValid}
-          onClick={() => setStep('step-submitted')}
+          onClick={clickSwap}
           data-testid={buildTestId('swap-btn')}
         >
           {formatMessage({ id: 'widget.swap-btn' })}
