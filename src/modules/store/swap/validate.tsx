@@ -1,7 +1,7 @@
 import { BigNumber } from 'bignumber.js';
 import { useMemo } from 'react';
 import { DefaultRootState, useSelector } from 'react-redux';
-import { buildContext, isAddressValid } from '@swingby-protocol/sdk';
+import { buildContext, getNetworkForCoin, isAddressValid } from '@swingby-protocol/sdk';
 
 import { isCoinSupported } from '../../coins';
 import { useSdkContext } from '../../sdk-context';
@@ -31,9 +31,10 @@ export const useAreCurrenciesValid = () => {
 
 export const useIsAddressOutValid = () => {
   const addressOut = useSelector((state) => state.swap.addressOut);
+  const currencyOut = useSelector((state) => state.swap.currencyOut);
   const context = useSdkContext();
-  return useMemo(() => ({ isAddressOutValid: isAddressValid({ context, address: addressOut }) }), [
-    context,
-    addressOut,
-  ]);
+  return useMemo(() => {
+    const network = getNetworkForCoin(currencyOut);
+    return { isAddressOutValid: isAddressValid({ context, address: addressOut, network }) };
+  }, [context, addressOut, currencyOut]);
 };
