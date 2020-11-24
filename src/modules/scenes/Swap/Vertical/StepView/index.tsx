@@ -27,7 +27,7 @@ export const StepView = ({ onClickBack, top, children, 'data-testid': testId }: 
         <>
           <PulsarThemeProvider theme="accent">
             <FancyTopContainer data-testid={buildTestId('top')}>
-              <Space size="city" />
+              <Space size="widgetVerticalPadding" />
               {onClickBack && (
                 <StyledBackButton onClick={onClickBack} data-testid={buildTestId('top.back-btn')} />
               )}
@@ -39,18 +39,18 @@ export const StepView = ({ onClickBack, top, children, 'data-testid': testId }: 
       )}
       {layout === 'widget-small' && (top || onClickBack) && (
         <LightTopContainer data-testid={buildTestId('top')}>
-          <Space size="city" />
+          <Space size="widgetVerticalPadding" />
           {onClickBack && (
             <StyledBackButton onClick={onClickBack} data-testid={buildTestId('top.back-btn')} />
           )}
           {top && <TopContent>{top}</TopContent>}
         </LightTopContainer>
       )}
-      <Space size="city" />
+      <Space size="widgetVerticalPadding" />
       {children && (
         <BottomContainer data-testid={buildTestId('bottom')}>{children}</BottomContainer>
       )}
-      <Space size="city" />
+      <Space size="widgetVerticalPadding" />
     </StepViewContainer>
   );
 };

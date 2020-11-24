@@ -3,6 +3,7 @@ import { rem } from 'polished';
 import { logos } from '@swingby-protocol/pulsar';
 
 import { BackButton } from '../../../../../components/BackButton';
+import { StylingConstants } from '../../../../styles';
 
 export const StepViewContainer = styled.div`
   display: flex;
@@ -23,18 +24,18 @@ export const FancyTopContainer = styled.div`
   background-position: top right;
   background-size: 100%;
   background-repeat: no-repeat;
-  padding: 0 ${({ theme }) => rem(theme.pulsar.size.city)};
+  padding: 0 ${rem(StylingConstants.widgetVerticalPadding)};
   width: 100%;
 `;
 
 export const TopContent = styled.div``;
 
 export const LightTopContainer = styled.div`
-  padding: 0 ${({ theme }) => rem(theme.pulsar.size.city)};
+  padding: 0 ${rem(StylingConstants.widgetVerticalPadding)};
 `;
 
 export const BottomContainer = styled.div`
-  padding: 0 ${({ theme }) => rem(theme.pulsar.size.city)};
+  padding: 0 ${rem(StylingConstants.widgetVerticalPadding)};
   width: 100%;
   flex-grow: 1;
   display: flex;

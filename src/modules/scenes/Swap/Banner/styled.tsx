@@ -11,7 +11,7 @@ export const BannerContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: ${({ theme }) => rem(theme.pulsar.size.city)};
+  padding: ${rem(StylingConstants.widgetBannerPadding)};
 `;
 
 export const AddressInput = styled(TextInput)`
