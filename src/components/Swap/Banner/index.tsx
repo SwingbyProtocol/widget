@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import {
   Button,
   CoinIcon,
@@ -13,12 +14,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BackButton } from '../../BackButton';
 import { CoinAmount } from '../../CoinAmount';
 import {
-  actionSetFormData,
+  actionSetSwapData,
   useAreCurrenciesValid,
+  useCreateSwap,
   useIsAddressOutValid,
 } from '../../../modules/store/swap';
 import { useSetStep } from '../../../modules/store/pagination';
 import { StylingConstants } from '../../../modules/styles';
+import { logger } from '../../../modules/logger';
 
 import {
   BannerContainer,
@@ -39,6 +42,16 @@ export const Banner = () => {
   const step = useSelector((state) => state.pagination.step);
   const { setStep } = useSetStep();
   const { isAddressOutValid } = useIsAddressOutValid();
+  const { createSwap } = useCreateSwap();
+
+  const clickSwap = useCallback(async () => {
+    try {
+      await createSwap();
+      setStep('step-submitted');
+    } catch (e) {
+      logger.error('Failed to create swap', e);
+    }
+  }, [createSwap, setStep]);
 
   return (
     <BannerContainer>
@@ -97,7 +110,7 @@ export const Banner = () => {
             size="state"
             left={<CoinIcon symbol={currencyOut} />}
             value={addressOut}
-            onChange={(evt) => dispatch(actionSetFormData({ addressOut: evt.target.value }))}
+            onChange={(evt) => dispatch(actionSetSwapData({ addressOut: evt.target.value }))}
             placeholder={formatMessage({ id: 'widget.receiving-address.placeholder' })}
             data-testid={buildTestId(`${step}.receiving-address`)}
           />
@@ -107,7 +120,7 @@ export const Banner = () => {
             size="state"
             shape="fit"
             disabled={!areFormAmountsValid || !isAddressOutValid}
-            onClick={() => setStep('step-submitted')}
+            onClick={clickSwap}
             data-testid={buildTestId(`${step}.swap-btn`)}
           >
             {hasWideWidth ? formatMessage({ id: 'widget.swap-btn' }) : <Icon.CaretRight />}

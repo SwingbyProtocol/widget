@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { CoinAmount } from '../../../CoinAmount';
 import {
-  actionSetFormData,
+  actionSetSwapData,
   useAreCurrenciesValid,
   useIsAddressOutValid,
 } from '../../../../modules/store/swap';
@@ -53,7 +53,7 @@ export const Form = ({ 'data-testid': testId }: Testable) => {
             size="state"
             left={<CoinIcon symbol={currencyOut} />}
             value={addressOut}
-            onChange={(evt) => dispatch(actionSetFormData({ addressOut: evt.target.value }))}
+            onChange={(evt) => dispatch(actionSetSwapData({ addressOut: evt.target.value }))}
             placeholder={formatMessage({ id: 'widget.receiving-address.placeholder' })}
             label={formatMessage({ id: 'widget.receiving-address.label' })}
             data-testid={buildTestId('receiving-address')}
