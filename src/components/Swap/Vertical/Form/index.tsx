@@ -1,17 +1,20 @@
+import { useCallback } from 'react';
 import { Button, CoinIcon, Testable, TextInput, useBuildTestId } from '@swingby-protocol/pulsar';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { CoinAmount } from '../../../CoinAmount';
 import {
-  actionSetFormData,
+  actionSetSwapData,
   useAreCurrenciesValid,
+  useCreateSwap,
   useIsAddressOutValid,
 } from '../../../../modules/store/swap';
 import { Space } from '../../../Space';
 import { useWidgetLayout } from '../../../../modules/layout';
 import { StepView } from '../StepView';
 import { useSetStep } from '../../../../modules/store/pagination';
+import { logger } from '../../../../modules/logger';
 
 import { Separator } from './styled';
 
@@ -26,6 +29,16 @@ export const Form = ({ 'data-testid': testId }: Testable) => {
   const layout = useWidgetLayout();
   const { areCurrenciesValid: areFormAmountsValid } = useAreCurrenciesValid();
   const { isAddressOutValid: isReceivingAddressValid } = useIsAddressOutValid();
+  const { loading, createSwap } = useCreateSwap();
+
+  const clickSwap = useCallback(async () => {
+    try {
+      await createSwap();
+      setStep('step-submitted');
+    } catch (e) {
+      logger.error('Failed to create swap', e);
+    }
+  }, [createSwap, setStep]);
 
   return (
     <StepView
@@ -53,7 +66,7 @@ export const Form = ({ 'data-testid': testId }: Testable) => {
             size="state"
             left={<CoinIcon symbol={currencyOut} />}
             value={addressOut}
-            onChange={(evt) => dispatch(actionSetFormData({ addressOut: evt.target.value }))}
+            onChange={(evt) => dispatch(actionSetSwapData({ addressOut: evt.target.value }))}
             placeholder={formatMessage({ id: 'widget.receiving-address.placeholder' })}
             label={formatMessage({ id: 'widget.receiving-address.label' })}
             data-testid={buildTestId('receiving-address')}
@@ -67,11 +80,11 @@ export const Form = ({ 'data-testid': testId }: Testable) => {
         <Button
           variant="primary"
           size="state"
-          disabled={!areFormAmountsValid || !isReceivingAddressValid}
-          onClick={() => setStep('step-submitted')}
+          disabled={!areFormAmountsValid || !isReceivingAddressValid || loading}
+          onClick={clickSwap}
           data-testid={buildTestId('swap-btn')}
         >
-          {formatMessage({ id: 'widget.swap-btn' })}
+          {loading ? '…' : formatMessage({ id: 'widget.swap-btn' })}
         </Button>
       )}
 

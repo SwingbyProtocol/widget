@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { buildContext, estimateAmountOut } from '@swingby-protocol/sdk';
 
-import { actionSetFormData } from '../../modules/store/swap';
+import { actionSetSwapData } from '../../modules/store/swap';
 import { logger } from '../../modules/logger';
 
 import {
@@ -69,13 +69,13 @@ export const CoinAmount = ({ variant, 'data-testid': testId }: Props) => {
       <CurrencySelector
         variant={variant}
         value={currencyIn}
-        onChange={(currencyIn) => dispatch(actionSetFormData({ currencyIn }))}
+        onChange={(currencyIn) => dispatch(actionSetSwapData({ currencyIn }))}
         data-testid={buildTestId('currency-from-select')}
       />
       <TextInput
         size="state"
         value={amountUser}
-        onChange={(evt) => dispatch(actionSetFormData({ amountUser: evt.target.value }))}
+        onChange={(evt) => dispatch(actionSetSwapData({ amountUser: evt.target.value }))}
         data-testid={buildTestId('amount-from')}
       />
       {variant === 'vertical' && <Label />}
@@ -89,7 +89,7 @@ export const CoinAmount = ({ variant, 'data-testid': testId }: Props) => {
         variant={variant}
         value={currencyOut}
         except={currencyIn}
-        onChange={(currencyOut) => dispatch(actionSetFormData({ currencyOut }))}
+        onChange={(currencyOut) => dispatch(actionSetSwapData({ currencyOut }))}
         data-testid={buildTestId('currency-to-select')}
       />
       <AmountOut data-testid={buildTestId('amount-to')}>{amountOut}</AmountOut>

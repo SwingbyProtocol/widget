@@ -2,8 +2,8 @@ import { Coin } from '@swingby-protocol/sdk';
 import { Reducer } from 'redux';
 
 enum Actions {
-  Set = 'Form/SET',
-  Clear = 'Form/CLEAR',
+  Set = 'Swap/SET',
+  Clear = 'Swap/CLEAR',
 }
 
 const initialState = {
@@ -11,6 +11,8 @@ const initialState = {
   currencyOut: 'BTCB' as Coin,
   amountUser: '',
   addressOut: '',
+  addressIn: '',
+  amountIn: '',
 };
 
 type State = typeof initialState;
@@ -27,7 +29,7 @@ export const swap: Reducer<State, Action> = (state = initialState, action) => {
   return state;
 };
 
-export const actionClearFormData = () => ({ type: Actions.Clear } as const);
-export const actionSetFormData = (data: Partial<State>) => ({ type: Actions.Set, data } as const);
+export const actionClearSwapData = () => ({ type: Actions.Clear } as const);
+export const actionSetSwapData = (data: Partial<State>) => ({ type: Actions.Set, data } as const);
 
-type Action = ReturnType<typeof actionSetFormData> | ReturnType<typeof actionClearFormData>;
+type Action = ReturnType<typeof actionSetSwapData> | ReturnType<typeof actionClearSwapData>;
