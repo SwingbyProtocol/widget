@@ -52,6 +52,7 @@
     });
 
     it('renders last step', () => {
+      cy.get('[data-testid="vertical.step-submitted.top.send-label"]').should('be.visible');
       cy.percySnapshot(`${name}: submitted`, { widths: [width], minHeight: height });
     });
   };

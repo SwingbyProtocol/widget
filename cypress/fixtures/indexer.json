@@ -1,0 +1,28 @@
+{
+  "blockbook": {
+    "coin": "Ethereum Testnet Goerli",
+    "host": "7e35d465fe00",
+    "version": "0.3.4",
+    "gitCommit": "3f85595",
+    "buildTime": "2020-10-20T14:07:27+00:00",
+    "syncMode": true,
+    "initialSync": false,
+    "inSync": true,
+    "bestHeight": 3816199,
+    "lastBlockTime": "2020-11-25T14:43:03.779922217Z",
+    "inSyncMempool": true,
+    "lastMempoolTime": "2020-11-25T14:43:05.818372216Z",
+    "mempoolSize": 40,
+    "decimals": 18,
+    "dbSize": 1561311205,
+    "about": "Blockbook - blockchain indexer for Trezor wallet https://trezor.io/. Do not use for any other purpose."
+  },
+  "backend": {
+    "chain": "testnet 5",
+    "blocks": 3816199,
+    "bestBlockHash": "0x4506345cc0042a2c6e826f5daa68dfcd50fc255a5dd459f68b46d3161a6a3a67",
+    "difficulty": "2",
+    "version": "Geth/v1.9.22-unstable-07751c3d-20200917/linux-amd64/go1.15.2",
+    "protocolVersion": "0x41"
+  }
+}
