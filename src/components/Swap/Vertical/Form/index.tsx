@@ -29,7 +29,7 @@ export const Form = ({ 'data-testid': testId }: Testable) => {
   const layout = useWidgetLayout();
   const { areCurrenciesValid: areFormAmountsValid } = useAreCurrenciesValid();
   const { isAddressOutValid: isReceivingAddressValid } = useIsAddressOutValid();
-  const { createSwap } = useCreateSwap();
+  const { loading, createSwap } = useCreateSwap();
 
   const clickSwap = useCallback(async () => {
     try {
@@ -80,11 +80,11 @@ export const Form = ({ 'data-testid': testId }: Testable) => {
         <Button
           variant="primary"
           size="state"
-          disabled={!areFormAmountsValid || !isReceivingAddressValid}
+          disabled={!areFormAmountsValid || !isReceivingAddressValid || loading}
           onClick={clickSwap}
           data-testid={buildTestId('swap-btn')}
         >
-          {formatMessage({ id: 'widget.swap-btn' })}
+          {loading ? '…' : formatMessage({ id: 'widget.swap-btn' })}
         </Button>
       )}
 

@@ -42,7 +42,7 @@ export const Banner = () => {
   const step = useSelector((state) => state.pagination.step);
   const { setStep } = useSetStep();
   const { isAddressOutValid } = useIsAddressOutValid();
-  const { createSwap } = useCreateSwap();
+  const { loading, createSwap } = useCreateSwap();
 
   const clickSwap = useCallback(async () => {
     try {
@@ -119,11 +119,17 @@ export const Banner = () => {
             variant="primary"
             size="state"
             shape="fit"
-            disabled={!areFormAmountsValid || !isAddressOutValid}
+            disabled={!areFormAmountsValid || !isAddressOutValid || loading}
             onClick={clickSwap}
             data-testid={buildTestId(`${step}.swap-btn`)}
           >
-            {hasWideWidth ? formatMessage({ id: 'widget.swap-btn' }) : <Icon.CaretRight />}
+            {loading ? (
+              '…'
+            ) : hasWideWidth ? (
+              formatMessage({ id: 'widget.swap-btn' })
+            ) : (
+              <Icon.CaretRight />
+            )}
           </Button>
         </>
       ) : (
