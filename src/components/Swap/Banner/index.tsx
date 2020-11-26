@@ -7,6 +7,7 @@ import {
   CopyToClipboard,
   getCryptoAssetFormatter,
   useBuildTestId,
+  Loading,
 } from '@swingby-protocol/pulsar';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
@@ -124,7 +125,7 @@ export const Banner = () => {
             data-testid={buildTestId(`${step}.swap-btn`)}
           >
             {loading ? (
-              '…'
+              <Loading />
             ) : hasWideWidth ? (
               formatMessage({ id: 'widget.swap-btn' })
             ) : (

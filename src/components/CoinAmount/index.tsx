@@ -1,4 +1,4 @@
-import { Testable, TextInput, useBuildTestId } from '@swingby-protocol/pulsar';
+import { Loading, Testable, TextInput, useBuildTestId } from '@swingby-protocol/pulsar';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
@@ -24,6 +24,7 @@ export const CoinAmount = ({ variant, 'data-testid': testId }: Props) => {
   const { amountUser, currencyIn, currencyOut } = useSelector((state) => state.swap);
   const dispatch = useDispatch();
   const [amountOut, setAmountOut] = useState('0');
+  const [isCalculating, setIsCalculating] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -31,7 +32,7 @@ export const CoinAmount = ({ variant, 'data-testid': testId }: Props) => {
     (async () => {
       try {
         if (cancelled) return;
-        setAmountOut('…');
+        setIsCalculating(true);
 
         if (cancelled) return;
         const context = await buildContext({ mode: 'test' });
@@ -51,6 +52,8 @@ export const CoinAmount = ({ variant, 'data-testid': testId }: Props) => {
 
         if (cancelled) return;
         setAmountOut('0');
+      } finally {
+        setIsCalculating(false);
       }
     })();
 
@@ -92,7 +95,9 @@ export const CoinAmount = ({ variant, 'data-testid': testId }: Props) => {
         onChange={(currencyOut) => dispatch(actionSetSwapData({ currencyOut }))}
         data-testid={buildTestId('currency-to-select')}
       />
-      <AmountOut data-testid={buildTestId('amount-to')}>{amountOut}</AmountOut>
+      <AmountOut data-testid={buildTestId('amount-to')}>
+        {isCalculating ? <Loading /> : amountOut}
+      </AmountOut>
     </CoinAmountContainer>
   );
 };

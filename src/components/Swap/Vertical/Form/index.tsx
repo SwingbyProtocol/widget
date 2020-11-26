@@ -1,5 +1,12 @@
 import { useCallback } from 'react';
-import { Button, CoinIcon, Testable, TextInput, useBuildTestId } from '@swingby-protocol/pulsar';
+import {
+  Button,
+  CoinIcon,
+  Loading,
+  Testable,
+  TextInput,
+  useBuildTestId,
+} from '@swingby-protocol/pulsar';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -84,7 +91,7 @@ export const Form = ({ 'data-testid': testId }: Testable) => {
           onClick={clickSwap}
           data-testid={buildTestId('swap-btn')}
         >
-          {loading ? '…' : formatMessage({ id: 'widget.swap-btn' })}
+          {loading ? <Loading /> : formatMessage({ id: 'widget.swap-btn' })}
         </Button>
       )}
 
