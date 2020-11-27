@@ -19,7 +19,7 @@ import {
   useAreCurrenciesValid,
   useCreateSwap,
   useIsAddressOutValid,
-} from '../../../modules/store/swap';
+} from '../../../modules/store/swapForm';
 import { useSetStep } from '../../../modules/store/pagination';
 import { StylingConstants } from '../../../modules/styles';
 import { logger } from '../../../modules/logger';

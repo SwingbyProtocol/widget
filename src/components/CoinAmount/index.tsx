@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { buildContext, estimateAmountOut } from '@swingby-protocol/sdk';
 
-import { actionSetSwapData } from '../../modules/store/swap';
+import { actionSetSwapData } from '../../modules/store/swapForm';
 import { logger } from '../../modules/logger';
 
 import {

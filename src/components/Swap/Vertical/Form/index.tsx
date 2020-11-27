@@ -16,7 +16,7 @@ import {
   useAreCurrenciesValid,
   useCreateSwap,
   useIsAddressOutValid,
-} from '../../../../modules/store/swap';
+} from '../../../../modules/store/swapForm';
 import { Space } from '../../../Space';
 import { useWidgetLayout } from '../../../../modules/layout';
 import { StepView } from '../StepView';

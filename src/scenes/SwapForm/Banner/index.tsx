@@ -13,14 +13,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BackButton } from '../../../components/BackButton';
 import { CoinAmount } from '../../../components/CoinAmount';
 import {
+  actionSetStep,
   actionSetSwapData,
   useAreCurrenciesValid,
   useCreateSwap,
   useIsAddressOutValid,
-} from '../../../modules/store/swap';
-import { useSetStep } from '../../../modules/store/pagination';
+} from '../../../modules/store/swapForm';
 import { StylingConstants } from '../../../modules/styles';
-import { logger } from '../../../modules/logger';
 
 import { BannerContainer, ResponsiveSpace, AddressInput } from './styled';
 
@@ -28,29 +27,18 @@ export const Banner = () => {
   const { buildTestId } = useBuildTestId({ id: 'banner' });
   const { formatMessage } = useIntl();
   const hasWideWidth = useMatchMedia({ query: StylingConstants.mediaWideWidth });
-  const { currencyOut, addressOut } = useSelector((state) => state.swap);
+  const { currencyOut, addressOut, step } = useSelector((state) => state.swapForm);
   const { areCurrenciesValid: areFormAmountsValid } = useAreCurrenciesValid();
   const dispatch = useDispatch();
-  const step = useSelector((state) => state.pagination.step);
-  const { setStep } = useSetStep();
   const { isAddressOutValid } = useIsAddressOutValid();
   const { loading, createSwap } = useCreateSwap();
-
-  const clickSwap = useCallback(async () => {
-    try {
-      await createSwap();
-      setStep('step-submitted');
-    } catch (e) {
-      logger.error('Failed to create swap', e);
-    }
-  }, [createSwap, setStep]);
 
   return (
     <BannerContainer>
       {step === 'step-address' ? (
         <>
           <BackButton
-            onClick={() => setStep('step-amounts')}
+            onClick={() => dispatch(actionSetStep('step-amounts'))}
             data-testid={buildTestId(`${step}.back-btn`)}
           />
           <ResponsiveSpace />
@@ -68,7 +56,7 @@ export const Banner = () => {
             size="state"
             shape="fit"
             disabled={!areFormAmountsValid || !isAddressOutValid || loading}
-            onClick={clickSwap}
+            onClick={createSwap}
             data-testid={buildTestId(`${step}.swap-btn`)}
           >
             {loading ? (
@@ -89,7 +77,7 @@ export const Banner = () => {
             size="state"
             shape="fit"
             disabled={!areFormAmountsValid}
-            onClick={() => setStep('step-address')}
+            onClick={() => dispatch(actionSetStep('step-address'))}
             data-testid={buildTestId(`${step}.next-btn`)}
           >
             {hasWideWidth ? formatMessage({ id: 'widget.swap-btn' }) : <Icon.CaretRight />}
