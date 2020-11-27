@@ -1,11 +1,11 @@
-import { Swap } from '../../components/Swap';
+import { SwapForm } from '../../components/SwapForm';
 import { GlobalStyles } from '../../modules/styles';
 
 export default function SwapNew() {
   return (
     <>
       <GlobalStyles />
-      <Swap />
+      <SwapForm />
     </>
   );
 }
