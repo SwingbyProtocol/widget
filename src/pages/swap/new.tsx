@@ -1,4 +1,4 @@
-import { SwapForm } from '../../components/SwapForm';
+import { SwapForm } from '../../scenes/swap';
 import { GlobalStyles } from '../../modules/styles';
 
 export default function SwapNew() {

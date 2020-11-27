@@ -10,17 +10,17 @@ import {
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { BackButton } from '../../BackButton';
-import { CoinAmount } from '../../CoinAmount';
+import { BackButton } from '../../../../components/BackButton';
+import { CoinAmount } from '../../../../components/CoinAmount';
 import {
   actionSetSwapData,
   useAreCurrenciesValid,
   useCreateSwap,
   useIsAddressOutValid,
-} from '../../../modules/store/swap';
-import { useSetStep } from '../../../modules/store/pagination';
-import { StylingConstants } from '../../../modules/styles';
-import { logger } from '../../../modules/logger';
+} from '../../../../modules/store/swap';
+import { useSetStep } from '../../../../modules/store/pagination';
+import { StylingConstants } from '../../../../modules/styles';
+import { logger } from '../../../../modules/logger';
 
 import { BannerContainer, ResponsiveSpace, AddressInput } from './styled';
 

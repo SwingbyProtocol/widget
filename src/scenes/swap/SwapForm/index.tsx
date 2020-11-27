@@ -1,4 +1,4 @@
-import { useWidgetLayout } from '../../modules/layout';
+import { useWidgetLayout } from '../../../modules/layout';
 import { SwapContainer } from '../SwapContainer';
 
 import { Banner } from './Banner';

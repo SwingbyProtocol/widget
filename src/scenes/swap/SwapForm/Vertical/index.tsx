@@ -3,19 +3,19 @@ import { useCallback } from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { CoinAmount } from '../../CoinAmount';
+import { CoinAmount } from '../../../../components/CoinAmount';
 import {
   actionSetSwapData,
   useAreCurrenciesValid,
   useCreateSwap,
   useIsAddressOutValid,
-} from '../../../modules/store/swap';
-import { Space } from '../../Space';
-import { useWidgetLayout } from '../../../modules/layout';
-import { StepView } from '../../VerticalView';
-import { useSetStep } from '../../../modules/store/pagination';
-import { logger } from '../../../modules/logger';
-import { Separator } from '../../Separator';
+} from '../../../../modules/store/swap';
+import { Space } from '../../../../components/Space';
+import { useWidgetLayout } from '../../../../modules/layout';
+import { StepView } from '../../../../components/VerticalView';
+import { useSetStep } from '../../../../modules/store/pagination';
+import { logger } from '../../../../modules/logger';
+import { Separator } from '../../../../components/Separator';
 
 import { SwapContainer } from './styled';
 

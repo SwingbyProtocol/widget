@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { rem } from 'polished';
 
-import { StylingConstants } from '../../modules/styles';
+import { StylingConstants } from '../../../modules/styles';
 
 export const SwapContainer = styled.div`
   min-height: 100vh;
