@@ -1,16 +1,19 @@
 import { SwapProgress, Text } from '@swingby-protocol/pulsar';
 import { FormattedMessage } from 'react-intl';
-import { useSelector } from 'react-redux';
 
-import { Space } from '../../../Space';
-import { useWidgetLayout } from '../../../../modules/layout';
+import { Space } from '../Space';
+import { useWidgetLayout } from '../../modules/layout';
 
 import { Container, ProgressContainer } from './styled';
 
 export const StepIndicator = ({
   status,
-}: Pick<React.ComponentPropsWithoutRef<typeof SwapProgress>, 'status'>) => {
-  const { currencyIn, currencyOut } = useSelector((state) => state.swap);
+  currencyIn,
+  currencyOut,
+}: Pick<
+  React.ComponentPropsWithoutRef<typeof SwapProgress>,
+  'status' | 'currencyIn' | 'currencyOut'
+>) => {
   const layout = useWidgetLayout();
   return (
     <Container>

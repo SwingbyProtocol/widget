@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { rem } from 'polished';
-import { TextInput } from '@swingby-protocol/pulsar';
 
 import { StylingConstants } from '../../../modules/styles';
 
@@ -12,10 +11,6 @@ export const BannerContainer = styled.div`
   align-items: center;
   justify-content: center;
   padding: ${rem(StylingConstants.widgetBannerPadding)};
-`;
-
-export const AddressInput = styled(TextInput)`
-  flex-grow: 1;
 `;
 
 export const SendTo = styled.div`

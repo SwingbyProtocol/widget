@@ -22,3 +22,11 @@ export const SwapContainer = styled.div`
     overflow: hidden;
   }
 `;
+
+export const SendLabel = styled.span`
+  display: block;
+  text-align: center;
+  font-weight: 800;
+  font-size: ${({ theme }) => rem(theme.pulsar.size.street)};
+  margin-bottom: ${({ theme }) => rem(theme.pulsar.size.town)};
+`;

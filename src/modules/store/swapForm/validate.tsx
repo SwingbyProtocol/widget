@@ -8,7 +8,7 @@ import { useSdkContext } from '../../sdk-context';
 import { logger } from '../../logger';
 
 const areCurrenciesValid = (
-  state: Pick<DefaultRootState['swap'], 'currencyIn' | 'currencyOut' | 'amountUser'>,
+  state: Pick<DefaultRootState['swapForm'], 'currencyIn' | 'currencyOut' | 'amountUser'>,
 ): boolean => {
   if (!isCoinSupported(state.currencyIn) || !isCoinSupported(state.currencyOut)) {
     return false;
@@ -28,13 +28,13 @@ const areCurrenciesValid = (
 };
 
 export const useAreCurrenciesValid = () => {
-  const data = useSelector((state) => state.swap);
+  const data = useSelector((state) => state.swapForm);
   return useMemo(() => ({ areCurrenciesValid: areCurrenciesValid(data) }), [data]);
 };
 
 export const useIsAddressOutValid = () => {
-  const addressOut = useSelector((state) => state.swap.addressOut);
-  const currencyOut = useSelector((state) => state.swap.currencyOut);
+  const addressOut = useSelector((state) => state.swapForm.addressOut);
+  const currencyOut = useSelector((state) => state.swapForm.currencyOut);
   const context = useSdkContext();
   return useMemo(() => {
     try {

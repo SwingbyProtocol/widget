@@ -21,7 +21,7 @@ type Props = { variant: Variant } & Testable;
 
 export const CoinAmount = ({ variant, 'data-testid': testId }: Props) => {
   const { buildTestId } = useBuildTestId({ id: testId });
-  const { amountUser, currencyIn, currencyOut } = useSelector((state) => state.swap);
+  const { amountUser, currencyIn, currencyOut } = useSelector((state) => state.swapForm);
   const dispatch = useDispatch();
   const [amountOut, setAmountOut] = useState('0');
   const [isCalculating, setIsCalculating] = useState(false);
