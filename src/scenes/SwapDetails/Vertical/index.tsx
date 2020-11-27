@@ -35,7 +35,7 @@ export const Vertical = () => {
               />
             </SendLabel>
             <CopyToClipboard
-              value={swap.addressIn}
+              value={swap.addressSwapIn}
               left={<CoinIcon symbol={swap.currencyIn} />}
               size="country"
               data-testid={buildTestId('top.address')}

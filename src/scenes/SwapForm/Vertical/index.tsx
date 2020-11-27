@@ -7,7 +7,7 @@ import {
   actionSetSwapFormStep,
   actionSetSwapFormData,
   useAreCurrenciesValid,
-  useIsAddressOutValid,
+  useIsReceivingAddressValid,
 } from '../../../modules/store/swapForm';
 import { Space } from '../../../components/Space';
 import { useWidgetLayout } from '../../../modules/layout';
@@ -20,11 +20,11 @@ import { SwapContainer } from './styled';
 export const Vertical = () => {
   const { buildTestId } = useBuildTestId({ id: 'vertical.form' });
   const { formatMessage } = useIntl();
-  const { addressOut, currencyOut, step } = useSelector((state) => state.swapForm);
+  const { addressUserIn, currencyOut, step } = useSelector((state) => state.swapForm);
   const dispatch = useDispatch();
   const layout = useWidgetLayout();
   const { areCurrenciesValid: areFormAmountsValid } = useAreCurrenciesValid();
-  const { isAddressOutValid: isReceivingAddressValid } = useIsAddressOutValid();
+  const { isReceivingAddressValid } = useIsReceivingAddressValid();
   const { loading, createSwap } = useCreateSwap();
 
   return (
@@ -53,8 +53,10 @@ export const Vertical = () => {
             <TextInput
               size="state"
               left={<CoinIcon symbol={currencyOut} />}
-              value={addressOut}
-              onChange={(evt) => dispatch(actionSetSwapFormData({ addressOut: evt.target.value }))}
+              value={addressUserIn}
+              onChange={(evt) =>
+                dispatch(actionSetSwapFormData({ addressUserIn: evt.target.value }))
+              }
               placeholder={formatMessage({ id: 'widget.receiving-address.placeholder' })}
               label={formatMessage({ id: 'widget.receiving-address.label' })}
               data-testid={buildTestId('receiving-address')}

@@ -8,10 +8,11 @@ enum Actions {
 
 type SwapData = {
   hash: string;
-  addressIn: string;
-  addressOut: string;
+  addressUserIn: string;
+  addressSwapIn: string;
+  addressUserOut?: string | null;
   amountIn: string;
-  amountOut?: string;
+  amountOut?: string | null;
   currencyIn: Coin;
   currencyOut: Coin;
   timestamp: Date;
@@ -31,7 +32,14 @@ export const swaps: Reducer<State, Action> = (state = initialState, action) => {
   }
 
   if (action.type === Actions.Set) {
-    return { ...state, [action.data.hash]: { ...state[action.data.hash], ...action.data } };
+    return {
+      ...state,
+      [action.data.hash]: {
+        ...state[action.data.hash],
+        ...action.data,
+        addressSwapIn: (action.data.addressSwapIn ?? state[action.data.hash]?.addressSwapIn) || '',
+      },
+    };
   }
 
   return state;
@@ -39,6 +47,8 @@ export const swaps: Reducer<State, Action> = (state = initialState, action) => {
 
 export const actionClearAllSwaps = () => ({ type: Actions.Clear } as const);
 
-export const actionSetSwap = (data: SwapData) => ({ type: Actions.Set, data } as const);
+export const actionSetSwap = (
+  data: Omit<SwapData, 'addressSwapIn'> & Partial<Pick<SwapData, 'addressSwapIn'>>,
+) => ({ type: Actions.Set, data } as const);
 
 type Action = ReturnType<typeof actionSetSwap> | ReturnType<typeof actionClearAllSwaps>;

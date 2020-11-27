@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import {
   Button,
   CoinIcon,
@@ -16,7 +15,7 @@ import {
   actionSetSwapFormStep,
   actionSetSwapFormData,
   useAreCurrenciesValid,
-  useIsAddressOutValid,
+  useIsReceivingAddressValid,
 } from '../../../modules/store/swapForm';
 import { StylingConstants } from '../../../modules/styles';
 import { useCreateSwap } from '../../../modules/create-swap';
@@ -27,10 +26,10 @@ export const Banner = () => {
   const { buildTestId } = useBuildTestId({ id: 'banner' });
   const { formatMessage } = useIntl();
   const hasWideWidth = useMatchMedia({ query: StylingConstants.mediaWideWidth });
-  const { currencyOut, addressOut, step } = useSelector((state) => state.swapForm);
+  const { currencyOut, addressUserIn, step } = useSelector((state) => state.swapForm);
   const { areCurrenciesValid: areFormAmountsValid } = useAreCurrenciesValid();
   const dispatch = useDispatch();
-  const { isAddressOutValid } = useIsAddressOutValid();
+  const { isReceivingAddressValid } = useIsReceivingAddressValid();
   const { loading, createSwap } = useCreateSwap();
 
   return (
@@ -45,8 +44,8 @@ export const Banner = () => {
           <AddressInput
             size="state"
             left={<CoinIcon symbol={currencyOut} />}
-            value={addressOut}
-            onChange={(evt) => dispatch(actionSetSwapFormData({ addressOut: evt.target.value }))}
+            value={addressUserIn}
+            onChange={(evt) => dispatch(actionSetSwapFormData({ addressUserIn: evt.target.value }))}
             placeholder={formatMessage({ id: 'widget.receiving-address.placeholder' })}
             data-testid={buildTestId(`${step}.receiving-address`)}
           />
@@ -55,7 +54,7 @@ export const Banner = () => {
             variant="primary"
             size="state"
             shape="fit"
-            disabled={!areFormAmountsValid || !isAddressOutValid || loading}
+            disabled={!areFormAmountsValid || !isReceivingAddressValid || loading}
             onClick={createSwap}
             data-testid={buildTestId(`${step}.swap-btn`)}
           >

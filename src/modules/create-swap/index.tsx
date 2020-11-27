@@ -11,7 +11,7 @@ import { actionSetSwap } from '../store/swaps';
 export const useCreateSwap = () => {
   const [loading, setLoading] = useState(false);
   const context = useSdkContext();
-  const addressOut = useSelector((state) => state.swapForm.addressOut);
+  const addressUserIn = useSelector((state) => state.swapForm.addressUserIn);
   const currencyIn = useSelector((state) => state.swapForm.currencyIn);
   const currencyOut = useSelector((state) => state.swapForm.currencyOut);
   const amountUser = useSelector((state) => state.swapForm.amountUser);
@@ -22,7 +22,7 @@ export const useCreateSwap = () => {
     setLoading(true);
 
     logger.debug('Will call createSwap()', {
-      addressOut,
+      addressUserIn,
       currencyIn,
       currencyOut,
       amountUser,
@@ -34,7 +34,7 @@ export const useCreateSwap = () => {
         amountUser,
         currencyOut,
         currencyIn,
-        addressOut,
+        addressUserIn,
       });
 
       logger.debug('createSwap() has finished', swap);
@@ -45,7 +45,7 @@ export const useCreateSwap = () => {
     } finally {
       setLoading(false);
     }
-  }, [context, addressOut, currencyIn, currencyOut, amountUser, push, dispatch]);
+  }, [context, addressUserIn, currencyIn, currencyOut, amountUser, push, dispatch]);
 
   return useMemo(() => ({ loading, createSwap }), [createSwap, loading]);
 };

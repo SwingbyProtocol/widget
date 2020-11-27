@@ -12,7 +12,7 @@ const initialState = {
   currencyIn: 'BTC' as Coin,
   currencyOut: 'BTCE' as Coin,
   amountUser: '',
-  addressOut: '',
+  addressUserIn: '',
 };
 
 type State = typeof initialState;

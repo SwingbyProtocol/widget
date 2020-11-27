@@ -32,17 +32,17 @@ export const useAreCurrenciesValid = () => {
   return useMemo(() => ({ areCurrenciesValid: areCurrenciesValid(data) }), [data]);
 };
 
-export const useIsAddressOutValid = () => {
-  const addressOut = useSelector((state) => state.swapForm.addressOut);
+export const useIsReceivingAddressValid = () => {
+  const addressOut = useSelector((state) => state.swapForm.addressUserIn);
   const currencyOut = useSelector((state) => state.swapForm.currencyOut);
   const context = useSdkContext();
   return useMemo(() => {
     try {
       const network = getNetworkForCoin(currencyOut);
-      return { isAddressOutValid: isAddressValid({ context, address: addressOut, network }) };
+      return { isReceivingAddressValid: isAddressValid({ context, address: addressOut, network }) };
     } catch (e) {
       logger.error(e);
-      return { isAddressOutValid: false };
+      return { isReceivingAddressValid: false };
     }
   }, [context, addressOut, currencyOut]);
 };

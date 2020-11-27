@@ -22,7 +22,7 @@ export const useSwapDetails = (): SwapDetails => {
         const swap = await getSwapDetails();
 
         logger.debug('getSwapDetails() returned: %O', swap);
-        dispatch(actionSetSwap(swap));
+        dispatch(actionSetSwap({ ...swap }));
 
         if (swap.status === 'completed' || swap.status === 'refunded') {
           setLoading(false);

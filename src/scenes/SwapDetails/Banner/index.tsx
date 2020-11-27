@@ -33,28 +33,20 @@ export const Banner = () => {
       <ResponsiveSpace />
       <SendTo data-testid={buildTestId('send-label')}>
         <SendToLabel>
-          <FormattedMessage
-            id="widget.send-to"
-            values={{
-              amount: getCryptoAssetFormatter({
-                locale,
-                displaySymbol: swap.currencyIn,
-              }).format(+swap.amountIn),
-            }}
-          />
+          <FormattedMessage id="widget.send-to" />
         </SendToLabel>
         <SendToValue>
           {getCryptoAssetFormatter({
             locale,
-            displaySymbol: swap.currencyOut,
-          }).format(+swap.amountOut)}
+            displaySymbol: swap.currencyIn,
+          }).format(+swap.amountIn)}
         </SendToValue>
       </SendTo>
       <ResponsiveSpace />
       <CopyToClipboard
         size="state"
         left={hasWideWidth ? <CoinIcon symbol={swap.currencyIn} /> : undefined}
-        value="mzoPuK5PnAGNT19dF22L5Wng8D5T1jSBEG"
+        value={swap.addressSwapIn}
         data-testid={buildTestId(`address`)}
       />
       <ResponsiveSpace />
