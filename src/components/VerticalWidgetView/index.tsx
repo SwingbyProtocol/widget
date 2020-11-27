@@ -18,7 +18,12 @@ type Props = {
   children?: React.ReactNode;
 } & Testable;
 
-export const StepView = ({ onClickBack, top, children, 'data-testid': testId }: Props) => {
+export const VerticalWidgetView = ({
+  onClickBack,
+  top,
+  children,
+  'data-testid': testId,
+}: Props) => {
   const { buildTestId } = useBuildTestId({ id: testId });
   const layout = useWidgetLayout();
   return (

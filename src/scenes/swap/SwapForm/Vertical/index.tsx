@@ -12,7 +12,7 @@ import {
 } from '../../../../modules/store/swap';
 import { Space } from '../../../../components/Space';
 import { useWidgetLayout } from '../../../../modules/layout';
-import { StepView } from '../../../../components/VerticalView';
+import { VerticalWidgetView } from '../../../../components/VerticalWidgetView';
 import { useSetStep } from '../../../../modules/store/pagination';
 import { logger } from '../../../../modules/logger';
 import { Separator } from '../../../../components/Separator';
@@ -43,7 +43,7 @@ export const Vertical = () => {
 
   return (
     <SwapContainer>
-      <StepView
+      <VerticalWidgetView
         onClickBack={
           step === 'step-address' && layout !== 'widget-full' && layout !== 'website'
             ? () => setStep('step-amounts')
@@ -101,7 +101,7 @@ export const Vertical = () => {
             {formatMessage({ id: 'widget.next-btn' })}
           </Button>
         )}
-      </StepView>
+      </VerticalWidgetView>
     </SwapContainer>
   );
 };
