@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { rem } from 'polished';
 import { TextInput } from '@swingby-protocol/pulsar';
 
-import { StylingConstants } from '../../../../modules/styles';
+import { StylingConstants } from '../../../modules/styles';
 
 export const BannerContainer = styled.div`
   flex-grow: 1;

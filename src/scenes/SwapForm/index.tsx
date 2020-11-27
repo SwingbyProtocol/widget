@@ -1,5 +1,5 @@
-import { useWidgetLayout } from '../../../modules/layout';
-import { WidgetContainer } from '../../../components/WidgetContainer';
+import { useWidgetLayout } from '../../modules/layout';
+import { WidgetContainer } from '../../components/WidgetContainer';
 
 import { Banner } from './Banner';
 import { Vertical } from './Vertical';
