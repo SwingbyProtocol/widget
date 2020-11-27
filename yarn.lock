@@ -1847,10 +1847,10 @@
     "@tippyjs/react" "^4.2.0"
     nanoid "3.1.18"
 
-"@swingby-protocol/sdk@^1.0.0-alpha.19":
-  version "1.0.0-alpha.19"
-  resolved "https://registry.yarnpkg.com/@swingby-protocol/sdk/-/sdk-1.0.0-alpha.19.tgz#553e02c7923c5afad49bd27c4d5559b428010530"
-  integrity sha512-uLgosrMe+htf47A79O/y0FLjeEuUAmjzovTyBh2h/WO02E66Fn1ONW3kxr7be1MGkEOyBwQWkwTp23j2aEbpiA==
+"@swingby-protocol/sdk@^1.0.0-alpha.20":
+  version "1.0.0-alpha.20"
+  resolved "https://registry.yarnpkg.com/@swingby-protocol/sdk/-/sdk-1.0.0-alpha.20.tgz#a856bc2545cb69dbc0727e8ce8078916d3008443"
+  integrity sha512-7On8DzK7PL0ck+Ebxfq4awE3oz/KJBk//KdLXnS5SltJmQybcFTK6stQM7E/FUo7/xyU3+780nm4XaHiEiY3+Q==
   dependencies:
     bech32 "^1.1.4"
     big.js "^6.0.2"

@@ -1,11 +1,10 @@
 import { createSwap as originalCreateSwap } from '@swingby-protocol/sdk';
+import { useRouter } from 'next/router';
 import { useCallback, useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { logger } from '../../logger';
 import { useSdkContext } from '../../sdk-context';
-
-import { actionSetSwapData } from './reducer';
 
 export const useCreateSwap = () => {
   const [loading, setLoading] = useState(false);
@@ -14,7 +13,7 @@ export const useCreateSwap = () => {
   const currencyIn = useSelector((state) => state.swap.currencyIn);
   const currencyOut = useSelector((state) => state.swap.currencyOut);
   const amountUser = useSelector((state) => state.swap.amountUser);
-  const dispatch = useDispatch();
+  const { push } = useRouter();
 
   const createSwap = useCallback(async () => {
     setLoading(true);
@@ -27,7 +26,7 @@ export const useCreateSwap = () => {
     });
 
     try {
-      const { addressIn, amountIn, timestamp } = await originalCreateSwap({
+      const { addressIn, timestamp, hash } = await originalCreateSwap({
         context,
         amountUser,
         currencyOut,
@@ -37,11 +36,11 @@ export const useCreateSwap = () => {
 
       logger.debug('createSwap() has finished', { addressIn, timestamp });
 
-      dispatch(actionSetSwapData({ amountIn, addressIn }));
+      push(`/swap/${hash}`);
     } finally {
       setLoading(false);
     }
-  }, [context, addressOut, currencyIn, currencyOut, amountUser, dispatch]);
+  }, [context, addressOut, currencyIn, currencyOut, amountUser, push]);
 
   return useMemo(() => ({ loading, createSwap }), [createSwap, loading]);
 };

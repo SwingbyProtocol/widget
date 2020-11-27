@@ -8,11 +8,9 @@ enum Actions {
 
 const initialState = {
   currencyIn: 'BTC' as Coin,
-  currencyOut: 'BTCB' as Coin,
+  currencyOut: 'BTCE' as Coin,
   amountUser: '',
   addressOut: '',
-  addressIn: '',
-  amountIn: '',
 };
 
 type State = typeof initialState;
