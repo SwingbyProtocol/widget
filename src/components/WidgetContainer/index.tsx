@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import { rem } from 'polished';
 
-import { StylingConstants } from '../../../modules/styles';
+import { StylingConstants } from '../../modules/styles';
 
-export const SwapContainer = styled.div`
+export const WidgetContainer = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: row;
