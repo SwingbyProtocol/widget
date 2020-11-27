@@ -23,7 +23,7 @@ import { useCreateSwap } from '../../../modules/create-swap';
 import { BannerContainer, ResponsiveSpace, AddressInput } from './styled';
 
 export const Banner = () => {
-  const { buildTestId } = useBuildTestId({ id: 'banner' });
+  const { buildTestId } = useBuildTestId({ id: 'banner.form' });
   const { formatMessage } = useIntl();
   const hasWideWidth = useMatchMedia({ query: StylingConstants.mediaWideWidth });
   const { currencyOut, addressUserIn, step } = useSelector((state) => state.swapForm);
@@ -38,7 +38,7 @@ export const Banner = () => {
         <>
           <BackButton
             onClick={() => dispatch(actionSetSwapFormStep('step-amounts'))}
-            data-testid={buildTestId(`${step}.back-btn`)}
+            data-testid={buildTestId('back-btn')}
           />
           <ResponsiveSpace />
           <AddressInput
@@ -47,7 +47,7 @@ export const Banner = () => {
             value={addressUserIn}
             onChange={(evt) => dispatch(actionSetSwapFormData({ addressUserIn: evt.target.value }))}
             placeholder={formatMessage({ id: 'widget.receiving-address.placeholder' })}
-            data-testid={buildTestId(`${step}.receiving-address`)}
+            data-testid={buildTestId('receiving-address')}
           />
           <ResponsiveSpace />
           <Button
@@ -56,7 +56,7 @@ export const Banner = () => {
             shape="fit"
             disabled={!areFormAmountsValid || !isReceivingAddressValid || loading}
             onClick={createSwap}
-            data-testid={buildTestId(`${step}.swap-btn`)}
+            data-testid={buildTestId('swap-btn')}
           >
             {loading ? (
               <Loading />
@@ -69,7 +69,7 @@ export const Banner = () => {
         </>
       ) : (
         <>
-          <CoinAmount variant="banner" data-testid={buildTestId(`${step}.amounts`)} />
+          <CoinAmount variant="banner" data-testid={buildTestId('amounts')} />
           <ResponsiveSpace />
           <Button
             variant="primary"
@@ -77,7 +77,7 @@ export const Banner = () => {
             shape="fit"
             disabled={!areFormAmountsValid}
             onClick={() => dispatch(actionSetSwapFormStep('step-address'))}
-            data-testid={buildTestId(`${step}.next-btn`)}
+            data-testid={buildTestId('next-btn')}
           >
             {hasWideWidth ? formatMessage({ id: 'widget.swap-btn' }) : <Icon.CaretRight />}
           </Button>

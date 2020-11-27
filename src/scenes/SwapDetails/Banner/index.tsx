@@ -17,7 +17,7 @@ import { useSwapDetails } from '../../useSwapDetails';
 import { BannerContainer, ResponsiveSpace, SendTo, SendToLabel, SendToValue } from './styled';
 
 export const Banner = () => {
-  const { buildTestId } = useBuildTestId({ id: 'banner.details' });
+  const { buildTestId } = useBuildTestId({ id: 'banner.swap-details' });
   const { formatMessage, locale } = useIntl();
   const hasWideWidth = useMatchMedia({ query: StylingConstants.mediaWideWidth });
   const { swap } = useSwapDetails();
