@@ -45,7 +45,7 @@ export const Vertical = () => {
         data-testid={buildTestId('')}
       >
         <StepIndicator
-          status="waiting"
+          status={swap.status}
           currencyIn={swap.currencyIn}
           currencyOut={swap.currencyOut}
           data-testid={buildTestId('bottom.step-indicator')}
