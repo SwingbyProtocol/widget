@@ -1,28 +1,28 @@
 import { useEffect, useMemo, useState } from 'react';
-import type { getSwapDetails as originalGetSwapDetails } from '@swingby-protocol/sdk';
+import { DefaultRootState, useDispatch, useSelector } from 'react-redux';
 
 import { logger } from '../../modules/logger';
 import { useGetSwapDetails } from '../useGetSwapDetails';
+import { actionSetSwap } from '../../modules/store/swaps';
 
-type ThenArg<T> = T extends PromiseLike<infer U> ? U : T;
-type Result = ThenArg<ReturnType<typeof originalGetSwapDetails>>;
-
-type SwapDetails = { loading: true; swap: null } | { loading: boolean; swap: Result };
+type SwapDetails = { loading: boolean; swap: null | DefaultRootState['swaps'][string] };
 
 export const useSwapDetails = (): SwapDetails => {
-  const { getSwapDetails } = useGetSwapDetails();
-  const [swap, setSwap] = useState<null | Result>(null);
-  const [loading, setLoading] = useState(true);
+  const { getSwapDetails, swapHash } = useGetSwapDetails();
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const swap = useSelector((state) => state.swaps[swapHash]);
 
   useEffect(() => {
-    setLoading(true);
+    if (swap?.status === 'completed' || swap?.status === 'refunded') return;
 
+    setLoading(true);
     const id = setInterval(async () => {
       try {
         const swap = await getSwapDetails();
 
         logger.debug('getSwapDetails() returned: %O', swap);
-        setSwap(swap);
+        dispatch(actionSetSwap(swap));
 
         if (swap.status === 'completed' || swap.status === 'refunded') {
           setLoading(false);
@@ -33,8 +33,11 @@ export const useSwapDetails = (): SwapDetails => {
       }
     }, 5000);
 
-    return () => clearInterval(id);
-  }, [getSwapDetails]);
+    return () => {
+      clearInterval(id);
+      setLoading(false);
+    };
+  }, [getSwapDetails, dispatch, swap?.status]);
 
-  return useMemo(() => ({ swap, loading }), [swap, loading]);
+  return useMemo(() => ({ swap: swap ?? null, loading }), [swap, loading]);
 };

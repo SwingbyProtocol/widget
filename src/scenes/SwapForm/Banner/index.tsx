@@ -13,13 +13,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BackButton } from '../../../components/BackButton';
 import { CoinAmount } from '../../../components/CoinAmount';
 import {
-  actionSetStep,
-  actionSetSwapData,
+  actionSetSwapFormStep,
+  actionSetSwapFormData,
   useAreCurrenciesValid,
-  useCreateSwap,
   useIsAddressOutValid,
 } from '../../../modules/store/swapForm';
 import { StylingConstants } from '../../../modules/styles';
+import { useCreateSwap } from '../../../modules/create-swap';
 
 import { BannerContainer, ResponsiveSpace, AddressInput } from './styled';
 
@@ -38,7 +38,7 @@ export const Banner = () => {
       {step === 'step-address' ? (
         <>
           <BackButton
-            onClick={() => dispatch(actionSetStep('step-amounts'))}
+            onClick={() => dispatch(actionSetSwapFormStep('step-amounts'))}
             data-testid={buildTestId(`${step}.back-btn`)}
           />
           <ResponsiveSpace />
@@ -46,7 +46,7 @@ export const Banner = () => {
             size="state"
             left={<CoinIcon symbol={currencyOut} />}
             value={addressOut}
-            onChange={(evt) => dispatch(actionSetSwapData({ addressOut: evt.target.value }))}
+            onChange={(evt) => dispatch(actionSetSwapFormData({ addressOut: evt.target.value }))}
             placeholder={formatMessage({ id: 'widget.receiving-address.placeholder' })}
             data-testid={buildTestId(`${step}.receiving-address`)}
           />
@@ -77,7 +77,7 @@ export const Banner = () => {
             size="state"
             shape="fit"
             disabled={!areFormAmountsValid}
-            onClick={() => dispatch(actionSetStep('step-address'))}
+            onClick={() => dispatch(actionSetSwapFormStep('step-address'))}
             data-testid={buildTestId(`${step}.next-btn`)}
           >
             {hasWideWidth ? formatMessage({ id: 'widget.swap-btn' }) : <Icon.CaretRight />}

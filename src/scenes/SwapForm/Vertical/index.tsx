@@ -4,16 +4,16 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { CoinAmount } from '../../../components/CoinAmount';
 import {
-  actionSetStep,
-  actionSetSwapData,
+  actionSetSwapFormStep,
+  actionSetSwapFormData,
   useAreCurrenciesValid,
-  useCreateSwap,
   useIsAddressOutValid,
 } from '../../../modules/store/swapForm';
 import { Space } from '../../../components/Space';
 import { useWidgetLayout } from '../../../modules/layout';
 import { VerticalWidgetView } from '../../../components/VerticalWidgetView';
 import { Separator } from '../../../components/Separator';
+import { useCreateSwap } from '../../../modules/create-swap';
 
 import { SwapContainer } from './styled';
 
@@ -32,7 +32,7 @@ export const Vertical = () => {
       <VerticalWidgetView
         onClickBack={
           step === 'step-address' && layout !== 'widget-full' && layout !== 'website'
-            ? () => dispatch(actionSetStep('step-amounts'))
+            ? () => dispatch(actionSetSwapFormStep('step-amounts'))
             : undefined
         }
         data-testid={buildTestId('')}
@@ -54,7 +54,7 @@ export const Vertical = () => {
               size="state"
               left={<CoinIcon symbol={currencyOut} />}
               value={addressOut}
-              onChange={(evt) => dispatch(actionSetSwapData({ addressOut: evt.target.value }))}
+              onChange={(evt) => dispatch(actionSetSwapFormData({ addressOut: evt.target.value }))}
               placeholder={formatMessage({ id: 'widget.receiving-address.placeholder' })}
               label={formatMessage({ id: 'widget.receiving-address.label' })}
               data-testid={buildTestId('receiving-address')}
@@ -81,7 +81,7 @@ export const Vertical = () => {
             variant="primary"
             size="state"
             disabled={!areFormAmountsValid}
-            onClick={() => dispatch(actionSetStep('step-address'))}
+            onClick={() => dispatch(actionSetSwapFormStep('step-address'))}
             data-testid={buildTestId('next-btn')}
           >
             {formatMessage({ id: 'widget.next-btn' })}

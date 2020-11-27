@@ -1,3 +1,4 @@
+import { AppProps } from 'next/app';
 import { PulsarGlobalStyles, PulsarThemeProvider } from '@swingby-protocol/pulsar';
 import { useRouter } from 'next/router';
 import { IntlProvider } from 'react-intl';
@@ -8,7 +9,7 @@ import { WidgetLayoutProvider } from '../modules/layout';
 import { SdkContextProvider } from '../modules/sdk-context';
 import { useStore } from '../modules/store';
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const store = useStore();
   const defaultLocale = router.defaultLocale ?? 'en-US';

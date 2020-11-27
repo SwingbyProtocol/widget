@@ -1,7 +1,7 @@
 import { buildContext, SwingbyContext } from '@swingby-protocol/sdk';
 import React, { useContext, useEffect, useState } from 'react';
 
-const SdkContext = React.createContext<SwingbyContext>(null as SwingbyContext);
+const SdkContext = React.createContext<SwingbyContext>((null as unknown) as SwingbyContext);
 
 export const SdkContextProvider = ({ children }: { children?: React.ReactNode }) => {
   const [context, setContext] = useState<SwingbyContext | null>(null);

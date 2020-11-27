@@ -5,19 +5,18 @@ import { useMemo } from 'react';
 import { useSdkContext } from '../../modules/sdk-context';
 
 export const useGetSwapDetails = () => {
-  const { query } = useRouter();
+  const {
+    query: { swapHash: swapHashParam },
+  } = useRouter();
   const context = useSdkContext();
+
+  const swapHash = typeof swapHashParam === 'string' ? swapHashParam : '';
+
   return useMemo(
     () => ({
-      getSwapDetails: () => {
-        const { swapHash } = query;
-        if (typeof swapHash !== 'string') {
-          throw new Error(`Invalid swap hash "${swapHash}"`);
-        }
-
-        return getSwapDetails({ context, hash: swapHash });
-      },
+      swapHash,
+      getSwapDetails: () => getSwapDetails({ context, hash: swapHash }),
     }),
-    [query, context],
+    [context, swapHash],
   );
 };
