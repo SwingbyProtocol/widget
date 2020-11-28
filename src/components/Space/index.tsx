@@ -24,10 +24,14 @@ const verticalPadding = css`
 `;
 
 export const Space = styled.div<Props>`
-  width: ${// @ts-expect-error
-  ({ theme, size }) => rem(theme.pulsar.size[size])};
-  height: ${// @ts-expect-error
-  ({ theme, size }) => rem(theme.pulsar.size[size])};
+  width: ${
+    // @ts-expect-error
+    ({ theme, size }) => rem(theme.pulsar.size[size])
+  };
+  height: ${
+    // @ts-expect-error
+    ({ theme, size }) => rem(theme.pulsar.size[size])
+  };
   ${({ size }) => size === 'widgetBannerPadding' && bannerPadding};
   ${({ size }) => size === 'widgetVerticalPadding' && verticalPadding};
   ${({ shape }) => shape === 'fill' && fill};
