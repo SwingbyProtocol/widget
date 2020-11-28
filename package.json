@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@percy/cypress": "^2.3.2",
-    "@swingby-protocol/eslint-config": "^1.2.0",
+    "@swingby-protocol/eslint-config": "^1.3.0",
     "@swingby-protocol/prettier-config": "^1.0.2",
     "@types/big.js": "^6.0.0",
     "@types/jest": "^26.0.15",
