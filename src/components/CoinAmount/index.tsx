@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { buildContext, estimateAmountOut } from '@swingby-protocol/sdk';
 
-import { actionSetSwapData } from '../../modules/store/swap';
+import { actionSetSwapFormData } from '../../modules/store/swapForm';
 import { logger } from '../../modules/logger';
 
 import {
@@ -21,7 +21,7 @@ type Props = { variant: Variant } & Testable;
 
 export const CoinAmount = ({ variant, 'data-testid': testId }: Props) => {
   const { buildTestId } = useBuildTestId({ id: testId });
-  const { amountUser, currencyIn, currencyOut } = useSelector((state) => state.swap);
+  const { amountUser, currencyIn, currencyOut } = useSelector((state) => state.swapForm);
   const dispatch = useDispatch();
   const [amountOut, setAmountOut] = useState('0');
   const [isCalculating, setIsCalculating] = useState(false);
@@ -72,13 +72,13 @@ export const CoinAmount = ({ variant, 'data-testid': testId }: Props) => {
       <CurrencySelector
         variant={variant}
         value={currencyIn}
-        onChange={(currencyIn) => dispatch(actionSetSwapData({ currencyIn }))}
+        onChange={(currencyIn) => dispatch(actionSetSwapFormData({ currencyIn }))}
         data-testid={buildTestId('currency-from-select')}
       />
       <TextInput
         size="state"
         value={amountUser}
-        onChange={(evt) => dispatch(actionSetSwapData({ amountUser: evt.target.value }))}
+        onChange={(evt) => dispatch(actionSetSwapFormData({ amountUser: evt.target.value }))}
         data-testid={buildTestId('amount-from')}
       />
       {variant === 'vertical' && <Label />}
@@ -92,7 +92,7 @@ export const CoinAmount = ({ variant, 'data-testid': testId }: Props) => {
         variant={variant}
         value={currencyOut}
         except={currencyIn}
-        onChange={(currencyOut) => dispatch(actionSetSwapData({ currencyOut }))}
+        onChange={(currencyOut) => dispatch(actionSetSwapFormData({ currencyOut }))}
         data-testid={buildTestId('currency-to-select')}
       />
       <AmountOut data-testid={buildTestId('amount-to')}>

@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { swap } from './swap';
-import { pagination } from './pagination';
+import { swapForm } from './swapForm';
+import { swaps } from './swaps';
 
-export const rootReducer = combineReducers({ swap, pagination });
+export const rootReducer = combineReducers({ swapForm, swaps });
