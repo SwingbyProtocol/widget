@@ -1,4 +1,4 @@
-import { useBuildTestId } from '@swingby-protocol/pulsar';
+import { Loading, useBuildTestId } from '@swingby-protocol/pulsar';
 import { useRouter } from 'next/router';
 
 import { StepIndicator } from '../../../components/StepIndicator';
@@ -14,7 +14,7 @@ export const Vertical = () => {
   const { push } = useRouter();
 
   if (!swap) {
-    return <>…</>;
+    return <Loading />;
   }
 
   return (

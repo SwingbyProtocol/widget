@@ -7,9 +7,11 @@
   "widget.swap-btn": "Swap",
   "widget.send-to": "Send",
   "widget.send-to-long": "Send {value} to",
+  "widget.sending-to-long": "Sending {value} to",
   "widget.explorer-btn": "Explorer",
   "widget.status-message.waiting": "Waiting for your deposit…",
   "widget.status-message.pending": "Processing your swap…",
   "widget.status-message.sending": "Signing your swap…",
-  "widget.status-message.completed": "Swap completed!"
+  "widget.status-message.completed": "Swap completed!",
+  "widget.explorer-link": "Explorer"
 }

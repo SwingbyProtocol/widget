@@ -6,6 +6,7 @@ import {
   CopyToClipboard,
   getCryptoAssetFormatter,
   useBuildTestId,
+  Loading,
 } from '@swingby-protocol/pulsar';
 import { useRouter } from 'next/router';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -24,7 +25,7 @@ export const Banner = () => {
   const { push } = useRouter();
 
   if (!swap) {
-    return <>…</>;
+    return <Loading />;
   }
 
   return (
