@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import { rem } from 'polished';
 
-import { StylingConstants } from '../../../modules/styles';
+import { StylingConstants } from '../../modules/styles';
 
-export const SwapContainer = styled.div`
+export const WidgetVerticalContainer = styled.div`
   flex-grow: 1;
   flex-shrink: 1;
   background: ${({ theme }) => theme.pulsar.color.bg.normal};

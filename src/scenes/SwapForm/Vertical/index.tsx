@@ -14,8 +14,7 @@ import { useWidgetLayout } from '../../../modules/layout';
 import { VerticalWidgetView } from '../../../components/VerticalWidgetView';
 import { Separator } from '../../../components/Separator';
 import { useCreateSwap } from '../../../modules/create-swap';
-
-import { SwapContainer } from './styled';
+import { WidgetVerticalContainer } from '../../../components/WidgetVerticalContainer';
 
 export const Vertical = () => {
   const { buildTestId } = useBuildTestId({ id: 'vertical.form' });
@@ -28,7 +27,7 @@ export const Vertical = () => {
   const { loading, createSwap } = useCreateSwap();
 
   return (
-    <SwapContainer>
+    <WidgetVerticalContainer>
       <VerticalWidgetView
         onClickBack={
           step === 'step-address' && layout !== 'widget-full' && layout !== 'website'
@@ -90,6 +89,6 @@ export const Vertical = () => {
           </Button>
         )}
       </VerticalWidgetView>
-    </SwapContainer>
+    </WidgetVerticalContainer>
   );
 };
