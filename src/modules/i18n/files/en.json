@@ -6,6 +6,8 @@
   "widget.next-btn": "Next",
   "widget.swap-btn": "Swap",
   "widget.send-to": "Send",
+  "widget.sending-to": "Sending",
+  "widget.sent-to": "Sent",
   "widget.send-to-long": "Send {value} to",
   "widget.sending-to-long": "Sending {value} to",
   "widget.explorer-btn": "Explorer",
