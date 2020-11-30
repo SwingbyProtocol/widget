@@ -1,13 +1,12 @@
-import { CoinIcon, CopyToClipboard, useBuildTestId } from '@swingby-protocol/pulsar';
-import { FormattedMessage } from 'react-intl';
+import { useBuildTestId } from '@swingby-protocol/pulsar';
 import { useRouter } from 'next/router';
 
 import { StepIndicator } from '../../../components/StepIndicator';
-import { FancyCryptoAmount } from '../../../components/FancyCryptoAmount';
 import { VerticalWidgetView } from '../../../components/VerticalWidgetView';
 import { useSwapDetails } from '../../useSwapDetails';
 
-import { SwapContainer, SendLabel } from './styled';
+import { SwapContainer } from './styled';
+import { Top } from './Top';
 
 export const Vertical = () => {
   const { buildTestId } = useBuildTestId({ id: 'vertical.swap-details' });
@@ -22,26 +21,7 @@ export const Vertical = () => {
     <SwapContainer>
       <VerticalWidgetView
         onClickBack={() => push('/swap/new')}
-        top={
-          <>
-            <SendLabel data-testid={buildTestId('top.send-label')}>
-              <FormattedMessage
-                id="widget.send-to-long"
-                values={{
-                  value: (
-                    <FancyCryptoAmount amount={+swap.amountIn} displaySymbol={swap.currencyIn} />
-                  ),
-                }}
-              />
-            </SendLabel>
-            <CopyToClipboard
-              value={swap.addressSwapIn}
-              left={<CoinIcon symbol={swap.currencyIn} />}
-              size="country"
-              data-testid={buildTestId('top.address')}
-            />
-          </>
-        }
+        top={<Top swap={swap} data-testid={buildTestId('top')} />}
         data-testid={buildTestId('')}
       >
         <StepIndicator
