@@ -1,5 +1,6 @@
 {
-  "addressIn": "mzJ9Gi7vvp1NGw4fviWjkZaJxWakk5zfHt",
+  "addressDeposit": "mzJ9Gi7vvp1NGw4fviWjkZaJxWakk5zfHt",
+  "hash": "fake-hash-1",
   "addressOut": "0x90823ab4896cfbd6e59fd00e73380ee3cd93e909",
   "amountIn": "0.99999854",
   "currencyIn": "BTC",

@@ -35,8 +35,6 @@ export const Top = ({
     });
   }, [context, swap.currencyOut, swap.transactionOutId]);
 
-  swap.status = 'completed' as any;
-
   if (swap.status === 'completed') {
     return (
       <Container>
