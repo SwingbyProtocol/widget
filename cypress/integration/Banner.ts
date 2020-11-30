@@ -66,6 +66,27 @@
       cy.get('[data-testid="banner.swap-details.send-label"]').should('be.visible');
       cy.percySnapshot(`${name}: submitted`, { widths: [width], minHeight: height });
     });
+
+    it('renders "sending" status correctly', () => {
+      cy.visit('/swap/fake-hash-sending');
+      cy.get('[data-testid="banner.swap-details.sending-label"]').should('be.visible');
+      cy.percySnapshot(`${name}: sending`, { widths: [width], minHeight: height });
+    });
+
+    it('renders "sending" status with an explorer link correctly', () => {
+      cy.visit('/swap/fake-hash-sending-with-txout');
+      cy.get('[data-testid="banner.swap-details.explorer-link"]').should('be.visible');
+      cy.percySnapshot(`${name}: sending, with explorer link`, {
+        widths: [width],
+        minHeight: height,
+      });
+    });
+
+    it('renders "completed" status correctly', () => {
+      cy.visit('/swap/fake-hash-completed');
+      cy.get('[data-testid="banner.swap-details.explorer-link"]').should('be.visible');
+      cy.percySnapshot(`${name}: completed`, { widths: [width], minHeight: height });
+    });
   };
 
   describe('Narrow banner', () => {

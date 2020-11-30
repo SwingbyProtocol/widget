@@ -3,9 +3,9 @@ import { useRouter } from 'next/router';
 
 import { StepIndicator } from '../../../components/StepIndicator';
 import { VerticalWidgetView } from '../../../components/VerticalWidgetView';
+import { WidgetVerticalContainer } from '../../../components/WidgetVerticalContainer';
 import { useSwapDetails } from '../../useSwapDetails';
 
-import { SwapContainer } from './styled';
 import { Top } from './Top';
 
 export const Vertical = () => {
@@ -14,11 +14,11 @@ export const Vertical = () => {
   const { push } = useRouter();
 
   if (!swap) {
-    return <Loading />;
+    return <Loading data-testid={buildTestId('loading')} />;
   }
 
   return (
-    <SwapContainer>
+    <WidgetVerticalContainer>
       <VerticalWidgetView
         onClickBack={() => push('/swap/new')}
         top={<Top swap={swap} data-testid={buildTestId('top')} />}
@@ -31,6 +31,6 @@ export const Vertical = () => {
           data-testid={buildTestId('bottom.step-indicator')}
         />
       </VerticalWidgetView>
-    </SwapContainer>
+    </WidgetVerticalContainer>
   );
 };

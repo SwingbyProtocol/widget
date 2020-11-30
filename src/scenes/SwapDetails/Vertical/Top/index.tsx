@@ -38,7 +38,7 @@ export const Top = ({
   if (swap.status === 'completed') {
     return (
       <Container>
-        <BigText data-testid={buildTestId('sending-label')}>
+        <BigText data-testid={buildTestId('completed-label')}>
           <CoinWithText>
             <CoinIcon symbol={swap.currencyIn} />
             &nbsp;
@@ -64,6 +64,7 @@ export const Top = ({
               shape="fit"
               href={explorerLink}
               target="_blank"
+              data-testid={buildTestId('explorer-link')}
             >
               <FormattedMessage id="widget.explorer-link" />
             </Button>
@@ -90,20 +91,29 @@ export const Top = ({
           />
         </BigText>
         <Space size="town" />
-        <CopyToClipboard
-          value={swap.addressUserIn}
-          left={<CoinIcon symbol={swap.currencyOut} />}
-          size="country"
-          data-testid={buildTestId('address')}
-        />
-        {explorerLink && (
-          <>
-            <Space size="town" />
-            <Button variant="primary" size="country" shape="fit" href={explorerLink}>
-              <FormattedMessage id="widget.explorer-link" />
-            </Button>
-          </>
-        )}
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <CopyToClipboard
+            value={swap.addressUserIn}
+            left={<CoinIcon symbol={swap.currencyOut} />}
+            size="country"
+            data-testid={buildTestId('address')}
+          />
+          {explorerLink && (
+            <>
+              <Space size="town" />
+              <Button
+                variant="primary"
+                size="country"
+                shape="fit"
+                href={explorerLink}
+                target="_blank"
+                data-testid={buildTestId('explorer-link')}
+              >
+                <FormattedMessage id="widget.explorer-link" />
+              </Button>
+            </>
+          )}
+        </div>
       </>
     );
   }
