@@ -15,5 +15,6 @@
   "widget.status-message.pending": "Processing your swap…",
   "widget.status-message.sending": "Signing your swap…",
   "widget.status-message.completed": "Swap completed!",
-  "widget.explorer-link": "Explorer"
+  "widget.explorer-link": "Explorer",
+  "widget.explorer-link-long": "View on explorer"
 }

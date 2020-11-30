@@ -1,5 +1,4 @@
 import {
-  Button,
   CoinIcon,
   CopyToClipboard,
   getCryptoAssetFormatter,
@@ -7,14 +6,11 @@ import {
   Testable,
   useBuildTestId,
 } from '@swingby-protocol/pulsar';
-import { buildExplorerLink } from '@swingby-protocol/sdk';
-import { useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { DefaultRootState } from 'react-redux';
 
 import { FancyCryptoAmount } from '../../../../components/FancyCryptoAmount';
 import { Space } from '../../../../components/Space';
-import { useSdkContext } from '../../../../modules/sdk-context';
 
 import { BigText, CoinWithText, Container } from './styled';
 
@@ -24,16 +20,6 @@ export const Top = ({
 }: Testable & { swap: NonNullable<DefaultRootState['swaps'][string]> }) => {
   const { buildTestId } = useBuildTestId({ id: testId });
   const { locale } = useIntl();
-  const context = useSdkContext();
-
-  const explorerLink = useMemo(() => {
-    if (!swap.transactionOutId) return undefined;
-    return buildExplorerLink({
-      context,
-      currency: swap.currencyOut,
-      transactionId: swap.transactionOutId,
-    });
-  }, [context, swap.currencyOut, swap.transactionOutId]);
 
   if (swap.status === 'completed') {
     return (
@@ -55,21 +41,6 @@ export const Top = ({
             )}
           </CoinWithText>
         </BigText>
-        {explorerLink && (
-          <>
-            <Space size="town" />
-            <Button
-              variant="primary"
-              size="country"
-              shape="fit"
-              href={explorerLink}
-              target="_blank"
-              data-testid={buildTestId('explorer-link')}
-            >
-              <FormattedMessage id="widget.explorer-link" />
-            </Button>
-          </>
-        )}
       </Container>
     );
   }
@@ -98,21 +69,6 @@ export const Top = ({
             size="country"
             data-testid={buildTestId('address')}
           />
-          {explorerLink && (
-            <>
-              <Space size="town" />
-              <Button
-                variant="primary"
-                size="country"
-                shape="fit"
-                href={explorerLink}
-                target="_blank"
-                data-testid={buildTestId('explorer-link')}
-              >
-                <FormattedMessage id="widget.explorer-link" />
-              </Button>
-            </>
-          )}
         </div>
       </>
     );

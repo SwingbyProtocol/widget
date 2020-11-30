@@ -59,7 +59,7 @@
 
     it('renders "sending" status with an explorer link correctly', () => {
       cy.visit('/swap/fake-hash-sending-with-txout');
-      cy.get('[data-testid="vertical.swap-details.top.explorer-link"]').should('be.visible');
+      cy.get('[data-testid="vertical.swap-details.explorer-link"]').should('be.visible');
       cy.percySnapshot(`${name}: sending, with explorer link`, {
         widths: [width],
         minHeight: height,
@@ -68,7 +68,7 @@
 
     it('renders "completed" status correctly', () => {
       cy.visit('/swap/fake-hash-completed');
-      cy.get('[data-testid="vertical.swap-details.top.explorer-link"]').should('be.visible');
+      cy.get('[data-testid="vertical.swap-details.explorer-link"]').should('be.visible');
       cy.percySnapshot(`${name}: completed`, { widths: [width], minHeight: height });
     });
   };
