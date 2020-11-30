@@ -1,0 +1,23 @@
+{
+  "itemCount": 1,
+  "items": [
+    {
+      "addressDeposit": "mzJ9Gi7vvp1NGw4fviWjkZaJxWakk5zfHt",
+      "addressIn": "tb1qkyamrxnwv6cqj9s9nnm244s455sflatpnttk4n",
+      "addressOut": "0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc",
+      "amountIn": "0.99999854",
+      "amountOut": "0.99999612",
+      "currencyIn": "BTC",
+      "currencyOut": "BTCE",
+      "fee": "0.0000001",
+      "feeCurrency": "BTCE",
+      "hash": "fake-hash-1",
+      "rewards": [],
+      "status": "WAITING",
+      "timestamp": 1606315390,
+      "txIdIn": null,
+      "txIdOut": null
+    }
+  ],
+  "total": 1
+}

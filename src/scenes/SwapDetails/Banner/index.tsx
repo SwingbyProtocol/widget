@@ -25,7 +25,7 @@ export const Banner = () => {
   const { push } = useRouter();
 
   if (!swap) {
-    return <Loading />;
+    return <Loading data-testid={buildTestId('loading')} />;
   }
 
   return (
