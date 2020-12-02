@@ -1,22 +1,22 @@
-import { Loading, useBuildTestId } from '@swingby-protocol/pulsar';
+import { Loading, useBuildTestId, SwapProgress } from '@swingby-protocol/pulsar';
 import { buildExplorerLink } from '@swingby-protocol/sdk';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import { StepIndicator } from '../../../components/StepIndicator';
 import { VerticalWidgetView } from '../../../components/VerticalWidgetView';
 import { WidgetVerticalContainer } from '../../../components/WidgetVerticalContainer';
 import { useSdkContext } from '../../../modules/sdk-context';
 import { useSwapDetails } from '../../useSwapDetails';
 
-import { ExplorerLink, ExplorerLinkCaret } from './styled';
+import { ExplorerLink, ExplorerLinkCaret, ProgressContainer } from './styled';
 import { Top } from './Top';
 
 export const Vertical = () => {
   const { buildTestId } = useBuildTestId({ id: 'vertical.swap-details' });
   const { swap } = useSwapDetails();
   const { push } = useRouter();
+  const { locale } = useIntl();
   const context = useSdkContext();
 
   const explorerLink = useMemo(() => {
@@ -39,12 +39,15 @@ export const Vertical = () => {
         top={<Top swap={swap} data-testid={buildTestId('top')} />}
         data-testid={buildTestId('')}
       >
-        <StepIndicator
-          status={swap.status}
-          currencyIn={swap.currencyIn}
-          currencyOut={swap.currencyOut}
-          data-testid={buildTestId('bottom.step-indicator')}
-        />
+        <ProgressContainer>
+          <SwapProgress
+            messages={SwapProgress.defaultMessages({ locale })}
+            status={swap.status}
+            currencyIn={swap.currencyIn}
+            currencyOut={swap.currencyOut}
+            data-testid={buildTestId('bottom.step-indicator')}
+          />
+        </ProgressContainer>
       </VerticalWidgetView>
       {explorerLink && (
         <ExplorerLink

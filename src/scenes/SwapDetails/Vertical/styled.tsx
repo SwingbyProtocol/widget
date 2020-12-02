@@ -27,3 +27,7 @@ export const ExplorerLinkCaret = styled(Icon.CaretRight)`
   color: ${({ theme }) => theme.pulsar.color.primary.normal};
   margin-left: ${({ theme }) => rem(theme.pulsar.size.drawer)};
 `;
+
+export const ProgressContainer = styled.div`
+  font-size: ${({ theme }) => rem(theme.pulsar.size.city)};
+`;
