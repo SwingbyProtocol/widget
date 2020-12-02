@@ -8,21 +8,20 @@ import {
 import { Coin } from '@swingby-protocol/sdk';
 import { useEffect, useState } from 'react';
 
-import { getCoinList } from '../../../modules/coins';
 import { StylingConstants } from '../../../modules/styles';
 
 import { HorizonalList } from './HorizonalList';
 import { ButtonCoin, ButtonCoinCaret, ButtonCoinName, LonelyCoinButton, Variant } from './styled';
 
 type Props = {
-  except?: Coin;
+  coins: Coin[];
   variant: Variant;
   value: Coin;
   onChange: (coin: Coin) => void;
 } & Testable;
 
 export const CurrencySelector = ({
-  except,
+  coins,
   variant,
   value,
   onChange,
@@ -49,18 +48,16 @@ export const CurrencySelector = ({
         }
         data-testid={buildTestId('')}
       >
-        {getCoinList()
-          .filter((it) => it !== except)
-          .map((coin) => (
-            <Dropdown.Item
-              key={coin}
-              onClick={() => onChange(coin)}
-              data-testid={buildTestId(`item-${coin}`)}
-            >
-              <CoinIcon symbol={coin} />
-              &nbsp;{coin}
-            </Dropdown.Item>
-          ))}
+        {coins.map((coin) => (
+          <Dropdown.Item
+            key={coin}
+            onClick={() => onChange(coin)}
+            data-testid={buildTestId(`item-${coin}`)}
+          >
+            <CoinIcon symbol={coin} />
+            &nbsp;{coin}
+          </Dropdown.Item>
+        ))}
       </Dropdown>
     );
   }
@@ -79,6 +76,7 @@ export const CurrencySelector = ({
           <ButtonCoinCaret />
         </ButtonCoin>
         <HorizonalList
+          coins={coins}
           isOpen={isHorizontalSelectorOpen}
           onClose={() => setHorizontalSelectorOpen(false)}
           onChange={onChange}
@@ -98,7 +96,7 @@ export const CurrencySelector = ({
       </LonelyCoinButton>
       <HorizonalList
         isOpen={isHorizontalSelectorOpen}
-        except={except}
+        coins={coins}
         onClose={() => setHorizontalSelectorOpen(false)}
         onChange={onChange}
         data-testid={buildTestId('coin-list')}

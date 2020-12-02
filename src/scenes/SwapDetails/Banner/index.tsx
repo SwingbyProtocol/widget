@@ -43,7 +43,10 @@ export const Banner = () => {
 
   return (
     <BannerContainer>
-      <BackButton onClick={() => push('/swap/new')} data-testid={buildTestId('back-btn')} />
+      <BackButton
+        onClick={() => push(`${context.mode === 'test' ? '/test' : ''}/swap/new`)}
+        data-testid={buildTestId('back-btn')}
+      />
       <ResponsiveSpace />
 
       {swap.status === 'waiting' && (

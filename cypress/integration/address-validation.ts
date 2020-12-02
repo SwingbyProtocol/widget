@@ -7,7 +7,7 @@ describe('Address validation', () => {
   });
 
   it('fills currency and amount data', () => {
-    cy.visit('/swap/new');
+    cy.visit('/test/swap/new');
     cy.get('[data-testid="vertical.form.amounts.currency-from-select.target"]').click();
     cy.get('[data-testid="vertical.form.amounts.currency-from-select.content.item-BTCB"]').click();
     cy.get('[data-testid="vertical.form.amounts.currency-to-select.target"]').click();

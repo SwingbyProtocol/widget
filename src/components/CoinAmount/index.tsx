@@ -1,11 +1,13 @@
 import { Loading, Testable, TextInput, useBuildTestId } from '@swingby-protocol/pulsar';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { buildContext, estimateAmountOut } from '@swingby-protocol/sdk';
 
 import { actionSetSwapFormData } from '../../modules/store/swapForm';
 import { logger } from '../../modules/logger';
+import { getCoinList } from '../../modules/coins';
+import { useSdkContext } from '../../modules/sdk-context';
 
 import {
   CoinAmountContainer,
@@ -25,6 +27,17 @@ export const CoinAmount = ({ variant, 'data-testid': testId }: Props) => {
   const dispatch = useDispatch();
   const [amountOut, setAmountOut] = useState('0');
   const [isCalculating, setIsCalculating] = useState(false);
+  const context = useSdkContext();
+
+  const coinsOut = useMemo(() => getCoinList(context).filter((it) => it !== currencyIn), [
+    context,
+    currencyIn,
+  ]);
+
+  useEffect(() => {
+    if (coinsOut.includes(currencyOut)) return;
+    dispatch(actionSetSwapFormData({ currencyOut: coinsOut[0] ?? 'BTC' }));
+  }, [coinsOut, currencyOut, dispatch]);
 
   useEffect(() => {
     let cancelled = false;
@@ -70,6 +83,7 @@ export const CoinAmount = ({ variant, 'data-testid': testId }: Props) => {
         </Label>
       )}
       <CurrencySelector
+        coins={getCoinList(context)}
         variant={variant}
         value={currencyIn}
         onChange={(currencyIn) => dispatch(actionSetSwapFormData({ currencyIn }))}
@@ -91,7 +105,7 @@ export const CoinAmount = ({ variant, 'data-testid': testId }: Props) => {
       <CurrencySelector
         variant={variant}
         value={currencyOut}
-        except={currencyIn}
+        coins={coinsOut}
         onChange={(currencyOut) => dispatch(actionSetSwapFormData({ currencyOut }))}
         data-testid={buildTestId('currency-to-select')}
       />

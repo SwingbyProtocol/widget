@@ -41,7 +41,7 @@ export const useCreateSwap = () => {
 
       dispatch(actionClearSwapFormData());
       dispatch(actionSetSwap({ ...swap, status: 'waiting' }));
-      push(`/swap/${swap.hash}`);
+      push(`${context.mode === 'test' ? '/test' : ''}/swap/${swap.hash}`);
     } finally {
       setLoading(false);
     }
