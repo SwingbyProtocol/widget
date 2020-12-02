@@ -4,11 +4,10 @@ import {
   COINS_TEST,
   COINS_PRODUCTION,
   Coin,
+  Mode,
 } from '@swingby-protocol/sdk';
 
-import { mode } from '../env';
-
-export const isCoinSupported = (symbol: string): boolean => {
+export const isCoinSupported = ({ mode, symbol }: { symbol: string; mode: Mode }): boolean => {
   if (mode === 'production') {
     return isProductionCoin(symbol);
   }
@@ -16,5 +15,5 @@ export const isCoinSupported = (symbol: string): boolean => {
   return isTestCoin(symbol);
 };
 
-export const getCoinList = (): Coin[] =>
-  ((mode === 'production' ? COINS_PRODUCTION : COINS_TEST) as unknown) as Coin[];
+export const getCoinList = <M extends Mode>({ mode }: { mode: M }): Coin<M>[] =>
+  ((mode === 'production' ? COINS_PRODUCTION : COINS_TEST) as unknown) as Coin<M>[];

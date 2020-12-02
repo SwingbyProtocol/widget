@@ -3,6 +3,7 @@ import { Coin } from '@swingby-protocol/sdk';
 import { useTransition, animated } from 'react-spring';
 
 import { getCoinList } from '../../../../modules/coins';
+import { useSdkContext } from '../../../../modules/sdk-context';
 import { BackButton } from '../../../BackButton';
 
 import { HorizontalSelectorBg, Container, CoinList, CoinButton, CoinListWrapper } from './styled';
@@ -21,6 +22,7 @@ export const HorizonalList = ({
   onChange,
   'data-testid': testId,
 }: Props) => {
+  const context = useSdkContext();
   const { buildTestId } = useBuildTestId({ id: testId });
   const boxTransitions = useTransition(isOpen, null, {
     from: { opacity: 0 },
@@ -53,7 +55,7 @@ export const HorizonalList = ({
                       <BackButton data-testid={buildTestId('back-btn')} />
                       <CoinList>
                         <CoinListWrapper>
-                          {getCoinList()
+                          {getCoinList(context)
                             .filter((it) => it !== except)
                             .map((coin) => (
                               <CoinButton

@@ -9,6 +9,7 @@ import { Coin } from '@swingby-protocol/sdk';
 import { useEffect, useState } from 'react';
 
 import { getCoinList } from '../../../modules/coins';
+import { useSdkContext } from '../../../modules/sdk-context';
 import { StylingConstants } from '../../../modules/styles';
 
 import { HorizonalList } from './HorizonalList';
@@ -31,6 +32,7 @@ export const CurrencySelector = ({
   const { buildTestId } = useBuildTestId({ id: testId });
   const hasWideWidth = useMatchMedia({ query: StylingConstants.mediaWideWidth });
   const [isHorizontalSelectorOpen, setHorizontalSelectorOpen] = useState(false);
+  const context = useSdkContext();
 
   useEffect(() => {
     if (variant === 'vertical') {
@@ -49,7 +51,7 @@ export const CurrencySelector = ({
         }
         data-testid={buildTestId('')}
       >
-        {getCoinList()
+        {getCoinList(context)
           .filter((it) => it !== except)
           .map((coin) => (
             <Dropdown.Item

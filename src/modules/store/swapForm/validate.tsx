@@ -1,25 +1,33 @@
 import { Big } from 'big.js';
 import { useMemo } from 'react';
 import { DefaultRootState, useSelector } from 'react-redux';
-import { getNetworkForCoin, isAddressValid } from '@swingby-protocol/sdk';
+import { getNetworkForCoin, isAddressValid, Mode } from '@swingby-protocol/sdk';
 
 import { isCoinSupported } from '../../coins';
 import { useSdkContext } from '../../sdk-context';
 import { logger } from '../../logger';
 
-const areCurrenciesValid = (
-  state: Pick<DefaultRootState['swapForm'], 'currencyIn' | 'currencyOut' | 'amountUser'>,
-): boolean => {
-  if (!isCoinSupported(state.currencyIn) || !isCoinSupported(state.currencyOut)) {
+const areCurrenciesValid = ({
+  amountUser,
+  currencyIn,
+  currencyOut,
+  mode,
+}: Pick<DefaultRootState['swapForm'], 'currencyIn' | 'currencyOut' | 'amountUser'> & {
+  mode: Mode;
+}): boolean => {
+  if (
+    !isCoinSupported({ mode, symbol: currencyIn }) ||
+    !isCoinSupported({ mode, symbol: currencyOut })
+  ) {
     return false;
   }
 
-  if (state.currencyIn === state.currencyOut) {
+  if (currencyIn === currencyOut) {
     return false;
   }
 
   try {
-    new Big(state.amountUser);
+    new Big(amountUser);
   } catch (e) {
     return false;
   }
@@ -29,7 +37,11 @@ const areCurrenciesValid = (
 
 export const useAreCurrenciesValid = () => {
   const data = useSelector((state) => state.swapForm);
-  return useMemo(() => ({ areCurrenciesValid: areCurrenciesValid(data) }), [data]);
+  const context = useSdkContext();
+  return useMemo(
+    () => ({ areCurrenciesValid: areCurrenciesValid({ ...data, mode: context.mode }) }),
+    [data, context],
+  );
 };
 
 export const useIsReceivingAddressValid = () => {
