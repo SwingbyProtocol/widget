@@ -8,22 +8,20 @@ import {
 import { Coin } from '@swingby-protocol/sdk';
 import { useEffect, useState } from 'react';
 
-import { getCoinList } from '../../../modules/coins';
-import { useSdkContext } from '../../../modules/sdk-context';
 import { StylingConstants } from '../../../modules/styles';
 
 import { HorizonalList } from './HorizonalList';
 import { ButtonCoin, ButtonCoinCaret, ButtonCoinName, LonelyCoinButton, Variant } from './styled';
 
 type Props = {
-  except?: Coin;
+  coins: Coin[];
   variant: Variant;
   value: Coin;
   onChange: (coin: Coin) => void;
 } & Testable;
 
 export const CurrencySelector = ({
-  except,
+  coins,
   variant,
   value,
   onChange,
@@ -32,7 +30,6 @@ export const CurrencySelector = ({
   const { buildTestId } = useBuildTestId({ id: testId });
   const hasWideWidth = useMatchMedia({ query: StylingConstants.mediaWideWidth });
   const [isHorizontalSelectorOpen, setHorizontalSelectorOpen] = useState(false);
-  const context = useSdkContext();
 
   useEffect(() => {
     if (variant === 'vertical') {
@@ -51,18 +48,16 @@ export const CurrencySelector = ({
         }
         data-testid={buildTestId('')}
       >
-        {getCoinList(context)
-          .filter((it) => it !== except)
-          .map((coin) => (
-            <Dropdown.Item
-              key={coin}
-              onClick={() => onChange(coin)}
-              data-testid={buildTestId(`item-${coin}`)}
-            >
-              <CoinIcon symbol={coin} />
-              &nbsp;{coin}
-            </Dropdown.Item>
-          ))}
+        {coins.map((coin) => (
+          <Dropdown.Item
+            key={coin}
+            onClick={() => onChange(coin)}
+            data-testid={buildTestId(`item-${coin}`)}
+          >
+            <CoinIcon symbol={coin} />
+            &nbsp;{coin}
+          </Dropdown.Item>
+        ))}
       </Dropdown>
     );
   }
