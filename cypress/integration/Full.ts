@@ -5,7 +5,7 @@
     });
 
     it('renders correctly', () => {
-      cy.visit('/swap/new');
+      cy.visit('/test/swap/new');
       cy.percySnapshot(`${name}: after loading`, { widths: [width], minHeight: height });
     });
 
@@ -52,13 +52,13 @@
     });
 
     it('renders "sending" status correctly', () => {
-      cy.visit('/swap/fake-hash-sending');
+      cy.visit('/test/swap/fake-hash-sending');
       cy.get('[data-testid="vertical.swap-details.top.sending-label"]').should('be.visible');
       cy.percySnapshot(`${name}: sending`, { widths: [width], minHeight: height });
     });
 
     it('renders "sending" status with an explorer link correctly', () => {
-      cy.visit('/swap/fake-hash-sending-with-txout');
+      cy.visit('/test/swap/fake-hash-sending-with-txout');
       cy.get('[data-testid="vertical.swap-details.explorer-link"]').should('be.visible');
       cy.percySnapshot(`${name}: sending, with explorer link`, {
         widths: [width],
@@ -67,7 +67,7 @@
     });
 
     it('renders "completed" status correctly', () => {
-      cy.visit('/swap/fake-hash-completed');
+      cy.visit('/test/swap/fake-hash-completed');
       cy.get('[data-testid="vertical.swap-details.explorer-link"]').should('be.visible');
       cy.percySnapshot(`${name}: completed`, { widths: [width], minHeight: height });
     });
