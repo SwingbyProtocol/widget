@@ -2,10 +2,13 @@ Swingby's Swap widget.
 
 ## Getting started
 
-### Banner widget
+The easiest way to integrate the widget into your app is
+[our dedicated SDK](https://github.com/SwingbyProtocol/widget-sdk).
 
-The banner widget uses a `0.875rem` (`14px`) padding. It needs to be at least `76px` high.
+### Minimum sizes
 
-```html
-<iframe title="Swap" src="https://widget-seven.vercel.app" style="height: 76px;"></iframe>
-```
+|        |           |
+| ------ | --------- |
+| Banner | 320x76px  |
+| Small  | 320x375px |
+| Big    | 320x510px |
