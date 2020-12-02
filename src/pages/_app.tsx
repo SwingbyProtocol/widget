@@ -6,7 +6,6 @@ import { Provider as ReduxProvider } from 'react-redux';
 
 import { en } from '../modules/i18n';
 import { WidgetLayoutProvider } from '../modules/layout';
-import { SdkContextProvider } from '../modules/sdk-context';
 import { useStore } from '../modules/store';
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -21,9 +20,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <PulsarGlobalStyles />
         <ReduxProvider store={store}>
           <WidgetLayoutProvider>
-            <SdkContextProvider>
-              <Component {...pageProps} />
-            </SdkContextProvider>
+            <Component {...pageProps} />
           </WidgetLayoutProvider>
         </ReduxProvider>
       </IntlProvider>
