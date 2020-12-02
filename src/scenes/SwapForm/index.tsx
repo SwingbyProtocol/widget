@@ -1,5 +1,6 @@
 import { useWidgetLayout } from '../../modules/layout';
 import { WidgetContainer } from '../../components/WidgetContainer';
+import { ModeWarning } from '../../components/ModeWarning';
 
 import { Banner } from './Banner';
 import { Vertical } from './Vertical';
@@ -7,6 +8,9 @@ import { Vertical } from './Vertical';
 export const SwapForm = () => {
   const layout = useWidgetLayout();
   return (
-    <WidgetContainer>{layout === 'widget-banner' ? <Banner /> : <Vertical />}</WidgetContainer>
+    <>
+      <ModeWarning />
+      <WidgetContainer>{layout === 'widget-banner' ? <Banner /> : <Vertical />}</WidgetContainer>
+    </>
   );
 };
