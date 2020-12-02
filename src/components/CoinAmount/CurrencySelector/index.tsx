@@ -76,6 +76,7 @@ export const CurrencySelector = ({
           <ButtonCoinCaret />
         </ButtonCoin>
         <HorizonalList
+          coins={coins}
           isOpen={isHorizontalSelectorOpen}
           onClose={() => setHorizontalSelectorOpen(false)}
           onChange={onChange}
@@ -95,7 +96,7 @@ export const CurrencySelector = ({
       </LonelyCoinButton>
       <HorizonalList
         isOpen={isHorizontalSelectorOpen}
-        except={except}
+        coins={coins}
         onClose={() => setHorizontalSelectorOpen(false)}
         onChange={onChange}
         data-testid={buildTestId('coin-list')}
