@@ -1,6 +1,7 @@
 import { Mode } from '@swingby-protocol/sdk';
 import { rem } from 'polished';
 import styled, { css } from 'styled-components';
+
 import { StylingConstants } from '../../modules/styles';
 
 const test = css`
