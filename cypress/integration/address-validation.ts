@@ -9,9 +9,9 @@ describe('Address validation', () => {
   it('fills currency and amount data', () => {
     cy.visit('/test/swap/new');
     cy.get('[data-testid="vertical.form.amounts.currency-from-select.target"]').click();
-    cy.get('[data-testid="vertical.form.amounts.currency-from-select.content.item-BTCB"]').click();
+    cy.get('[data-testid="vertical.form.amounts.currency-from-select.content.item-BTC"]').click();
     cy.get('[data-testid="vertical.form.amounts.currency-to-select.target"]').click();
-    cy.get('[data-testid="vertical.form.amounts.currency-to-select.content.item-BTC"]').click();
+    cy.get('[data-testid="vertical.form.amounts.currency-to-select.content.item-BTCB"]').click();
     cy.get('[data-testid="vertical.form.amounts.amount-from"]').type('1');
   });
 
@@ -20,11 +20,6 @@ describe('Address validation', () => {
 
     cy.get('[data-testid="vertical.form.receiving-address.native-input"]').type(
       '{selectall}invalidaddress',
-    );
-    cy.get('[data-testid="vertical.form.swap-btn"]').should('be.disabled');
-
-    cy.get('[data-testid="vertical.form.receiving-address.native-input"]').type(
-      '{selectall}tbnb1k3cp6jl7z757hewt30nfvr97uywlxeap69glam',
     );
     cy.get('[data-testid="vertical.form.swap-btn"]').should('be.disabled');
 
@@ -45,6 +40,11 @@ describe('Address validation', () => {
 
     cy.get('[data-testid="vertical.form.receiving-address.native-input"]').type(
       '{selectall}mkHS9ne12qx9pS9VojpwU5xtRd4T7X7ZUt',
+    );
+    cy.get('[data-testid="vertical.form.swap-btn"]').should('be.disabled');
+
+    cy.get('[data-testid="vertical.form.receiving-address.native-input"]').type(
+      '{selectall}tbnb1k3cp6jl7z757hewt30nfvr97uywlxeap69glam',
     );
     cy.get('[data-testid="vertical.form.swap-btn"]').should('not.be.disabled');
   });
