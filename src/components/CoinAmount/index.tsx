@@ -2,11 +2,15 @@ import { Loading, Testable, TextInput, useBuildTestId } from '@swingby-protocol/
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useMemo, useState } from 'react';
-import { buildContext, estimateAmountOut } from '@swingby-protocol/sdk';
+import {
+  buildContext,
+  estimateAmountOut,
+  getCoinsFor,
+  getSwapableWith,
+} from '@swingby-protocol/sdk';
 
 import { actionSetSwapFormData } from '../../modules/store/swapForm';
 import { logger } from '../../modules/logger';
-import { getCoinList } from '../../modules/coins';
 import { useSdkContext } from '../../modules/sdk-context';
 
 import {
@@ -29,7 +33,9 @@ export const CoinAmount = ({ variant, 'data-testid': testId }: Props) => {
   const [isCalculating, setIsCalculating] = useState(false);
   const context = useSdkContext();
 
-  const coinsOut = useMemo(() => getCoinList(context).filter((it) => it !== currencyIn), [
+  const coinsIn = useMemo(() => getCoinsFor({ context }), [context]);
+
+  const coinsOut = useMemo(() => getSwapableWith({ context, coin: currencyIn }), [
     context,
     currencyIn,
   ]);
@@ -83,7 +89,7 @@ export const CoinAmount = ({ variant, 'data-testid': testId }: Props) => {
         </Label>
       )}
       <CurrencySelector
-        coins={getCoinList(context)}
+        coins={coinsIn}
         variant={variant}
         value={currencyIn}
         onChange={(currencyIn) => dispatch(actionSetSwapFormData({ currencyIn }))}

@@ -1,9 +1,8 @@
 import { Big } from 'big.js';
 import { useMemo } from 'react';
 import { DefaultRootState, useSelector } from 'react-redux';
-import { getNetworkForCoin, isAddressValid, Mode } from '@swingby-protocol/sdk';
+import { getChainFor, getCoinsFor, isAddressValid, SwingbyContext } from '@swingby-protocol/sdk';
 
-import { isCoinSupported } from '../../coins';
 import { useSdkContext } from '../../sdk-context';
 import { logger } from '../../logger';
 
@@ -11,14 +10,12 @@ const areCurrenciesValid = ({
   amountUser,
   currencyIn,
   currencyOut,
-  mode,
+  context,
 }: Pick<DefaultRootState['swapForm'], 'currencyIn' | 'currencyOut' | 'amountUser'> & {
-  mode: Mode;
+  context: SwingbyContext;
 }): boolean => {
-  if (
-    !isCoinSupported({ mode, symbol: currencyIn }) ||
-    !isCoinSupported({ mode, symbol: currencyOut })
-  ) {
+  const coins = getCoinsFor({ context });
+  if (!coins.includes(currencyIn) || !coins.includes(currencyOut)) {
     return false;
   }
 
@@ -38,10 +35,10 @@ const areCurrenciesValid = ({
 export const useAreCurrenciesValid = () => {
   const data = useSelector((state) => state.swapForm);
   const context = useSdkContext();
-  return useMemo(
-    () => ({ areCurrenciesValid: areCurrenciesValid({ ...data, mode: context.mode }) }),
-    [data, context],
-  );
+  return useMemo(() => ({ areCurrenciesValid: areCurrenciesValid({ ...data, context }) }), [
+    data,
+    context,
+  ]);
 };
 
 export const useIsReceivingAddressValid = () => {
@@ -50,8 +47,8 @@ export const useIsReceivingAddressValid = () => {
   const context = useSdkContext();
   return useMemo(() => {
     try {
-      const network = getNetworkForCoin(currencyOut);
-      return { isReceivingAddressValid: isAddressValid({ context, address: addressOut, network }) };
+      const chain = getChainFor({ coin: currencyOut });
+      return { isReceivingAddressValid: isAddressValid({ context, address: addressOut, chain }) };
     } catch (e) {
       logger.error(e);
       return { isReceivingAddressValid: false };

@@ -32,7 +32,7 @@ export const Banner = () => {
     if (!swap || !swap.transactionOutId) return undefined;
     return buildExplorerLink({
       context,
-      currency: swap.currencyOut,
+      coin: swap.currencyOut,
       transactionId: swap.transactionOutId,
     });
   }, [context, swap]);
