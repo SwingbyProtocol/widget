@@ -90,10 +90,10 @@
   };
 
   describe('Narrow banner', () => {
-    testCases({ width: 320, height: 200, name: 'Narrow banner' });
+    testCases({ width: 320, height: 76, name: 'Narrow banner' });
   });
 
   describe('Wide banner', () => {
-    testCases({ width: 650, height: 200, name: 'Wide banner' });
+    testCases({ width: 650, height: 76, name: 'Wide banner' });
   });
 })();
