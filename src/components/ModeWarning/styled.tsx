@@ -26,3 +26,11 @@ export const ModeWarningContainer = styled.div<{ mode: Mode }>`
   ${({ mode }) => mode === 'test' && test};
   ${({ mode }) => mode === 'production' && chaos};
 `;
+
+export const Link = styled.a`
+  color: inherit;
+
+  :visited {
+    color: inherit;
+  }
+`;

@@ -18,5 +18,6 @@
   "widget.explorer-link": "Explorer",
   "widget.explorer-link-long": "View on explorer",
   "widget.warning-test": "You are using “test” mode. Do not send real funds.",
-  "widget.warning-production": "This is a product in beta connected to real mainnets."
+  "widget.warning-production": "This is a product in beta connected to real mainnets.",
+  "widget.warning.learn-more": "Learn more."
 }
