@@ -34,7 +34,7 @@ export const VerticalWidgetView = ({
             <FancyTopContainer data-testid={buildTestId('top')}>
               <Space size="widgetVerticalPadding" />
               {onClickBack && (
-                <StyledBackButton onClick={onClickBack} data-testid={buildTestId('top.back-btn')} />
+                <StyledBackButton onClick={onClickBack} data-testid={buildTestId('back-btn')} />
               )}
               <TopContent>{top}</TopContent>
               <Space size="city" />
@@ -46,7 +46,7 @@ export const VerticalWidgetView = ({
         <LightTopContainer data-testid={buildTestId('top')}>
           <Space size="widgetVerticalPadding" />
           {onClickBack && (
-            <StyledBackButton onClick={onClickBack} data-testid={buildTestId('top.back-btn')} />
+            <StyledBackButton onClick={onClickBack} data-testid={buildTestId('back-btn')} />
           )}
           {top && <TopContent>{top}</TopContent>}
         </LightTopContainer>

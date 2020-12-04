@@ -21,10 +21,10 @@ export const Top = ({
   const { buildTestId } = useBuildTestId({ id: testId });
   const { locale } = useIntl();
 
-  if (swap.status === 'COMPLETED' || swap.status === 'REFUNDED' || swap.status === 'EXPIRED') {
+  if (swap.status === 'COMPLETED' || swap.status === 'EXPIRED') {
     return (
       <Container>
-        <BigText data-testid={buildTestId('completed-label')}>
+        <BigText data-testid={buildTestId('status-label')}>
           <CoinWithText>
             <CoinIcon symbol={swap.currencyIn} />
             &nbsp;
@@ -50,13 +50,14 @@ export const Top = ({
     swap.status === 'SIGNING' ||
     swap.status === 'SENDING' ||
     swap.status === 'SIGNING_REFUND' ||
-    swap.status === 'SENDING_REFUND'
+    swap.status === 'SENDING_REFUND' ||
+    swap.status === 'REFUNDED'
   ) {
     return (
       <>
-        <BigText data-testid={buildTestId('sending-label')}>
+        <BigText data-testid={buildTestId('status-label')}>
           <FormattedMessage
-            id="widget.sending-to-long"
+            id={`widget.status-label-long.${swap.status}`}
             values={{
               value: (
                 <FancyCryptoAmount
@@ -82,9 +83,9 @@ export const Top = ({
 
   return (
     <>
-      <BigText data-testid={buildTestId('send-label')}>
+      <BigText data-testid={buildTestId('status-label')}>
         <FormattedMessage
-          id="widget.send-to-long"
+          id={`widget.status-label-long.${swap.status}`}
           values={{
             value: <FancyCryptoAmount amount={+swap.amountIn} displaySymbol={swap.currencyIn} />,
           }}

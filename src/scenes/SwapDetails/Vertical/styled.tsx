@@ -2,12 +2,14 @@ import { Icon } from '@swingby-protocol/pulsar';
 import { rem } from 'polished';
 import styled from 'styled-components';
 
+import { StylingConstants } from '../../../modules/styles';
+
 export const ExplorerLink = styled.a`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  height: ${({ theme }) => rem(theme.pulsar.size.country)};
+  height: ${({ theme }) => rem(theme.pulsar.size.street)};
   width: 100%;
   flex-shrink: 0;
   border-top: 1px solid ${({ theme }) => theme.pulsar.color.border.normal};
@@ -19,6 +21,10 @@ export const ExplorerLink = styled.a`
   :visited {
     text-decoration: none;
     color: inherit;
+  }
+
+  @media ${StylingConstants.mediaLayout.widgetFull} {
+    height: ${({ theme }) => rem(theme.pulsar.size.country)};
   }
 `;
 

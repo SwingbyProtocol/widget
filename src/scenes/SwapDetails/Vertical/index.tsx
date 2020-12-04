@@ -36,7 +36,7 @@ export const Vertical = () => {
     <WidgetVerticalContainer>
       <VerticalWidgetView
         onClickBack={() => push(`${context.mode === 'test' ? '/test' : ''}/swap/new`)}
-        top={<Top swap={swap} data-testid={buildTestId('top')} />}
+        top={<Top swap={swap} data-testid={buildTestId('')} />}
         data-testid={buildTestId('')}
       >
         <ProgressContainer>
