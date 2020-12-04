@@ -50,59 +50,19 @@ export const Banner = () => {
       />
       <ResponsiveSpace />
 
-      {swap.status === 'WAITING' && (
-        <SendTo data-testid={buildTestId('send-label')}>
-          <SendToLabel>
-            <FormattedMessage id="widget.send-to" />
-          </SendToLabel>
+      <SendTo data-testid={buildTestId('status-label')}>
+        <SendToLabel>
+          <FormattedMessage id={`widget.status-label-short.${swap.status}`} />
+        </SendToLabel>
+        {swap.status !== 'EXPIRED' && (
           <SendToValue>
             {getCryptoAssetFormatter({
               locale,
-              displaySymbol: swap.currencyIn,
-            }).format(+swap.amountIn)}
+              displaySymbol: swap.status === 'WAITING' ? swap.currencyIn : swap.currencyOut,
+            }).format(+(swap.status === 'WAITING' ? swap.amountIn : swap.amountOut ?? 0))}
           </SendToValue>
-        </SendTo>
-      )}
-
-      {(swap.status === 'PENDING' ||
-        swap.status === 'SIGNING' ||
-        swap.status === 'SENDING' ||
-        swap.status === 'SIGNING_REFUND' ||
-        swap.status === 'SENDING_REFUND') && (
-        <SendTo data-testid={buildTestId('sending-label')}>
-          <SendToLabel>
-            <FormattedMessage id="widget.sending-to" />
-          </SendToLabel>
-          <SendToValue>
-            {getCryptoAssetFormatter({
-              locale,
-              displaySymbol: swap.currencyOut,
-            }).format(+(swap.amountOut ?? 0))}
-          </SendToValue>
-        </SendTo>
-      )}
-
-      {(swap.status === 'COMPLETED' || swap.status === 'REFUNDED') && (
-        <SendTo data-testid={buildTestId('completed-label')}>
-          <SendToLabel>
-            <FormattedMessage id="widget.sent-to" />
-          </SendToLabel>
-          <SendToValue>
-            {getCryptoAssetFormatter({
-              locale,
-              displaySymbol: swap.currencyOut,
-            }).format(+(swap.amountOut ?? 0))}
-          </SendToValue>
-        </SendTo>
-      )}
-
-      {swap.status === 'EXPIRED' && (
-        <SendTo data-testid={buildTestId('completed-label')}>
-          <SendToLabel>
-            <FormattedMessage id="widget.expired" />
-          </SendToLabel>
-        </SendTo>
-      )}
+        )}
+      </SendTo>
 
       {swap.status !== 'EXPIRED' && (
         <>

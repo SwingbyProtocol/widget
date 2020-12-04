@@ -63,7 +63,7 @@ import { testStatuses } from '../utils';
         'mkHS9ne12qx9pS9VojpwU5xtRd4T7X7ZUt',
       );
       cy.get('[data-testid="banner.form.swap-btn"]').should('not.be.disabled').click();
-      cy.get('[data-testid="banner.swap-details.send-label"]').should('be.visible');
+      cy.get('[data-testid="banner.swap-details.status-label"]').should('be.visible');
     });
 
     testStatuses({ name, width, height, testId: 'banner' });
