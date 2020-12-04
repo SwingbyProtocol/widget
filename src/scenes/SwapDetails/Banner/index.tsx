@@ -14,6 +14,7 @@ import { useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { BackButton } from '../../../components/BackButton';
+import { Space } from '../../../components/Space';
 import { useSdkContext } from '../../../modules/sdk-context';
 import { StylingConstants } from '../../../modules/styles';
 import { useSwapDetails } from '../../useSwapDetails';
@@ -95,17 +96,32 @@ export const Banner = () => {
         </SendTo>
       )}
 
-      <ResponsiveSpace />
-      <CopyToClipboard
-        size="state"
-        left={
-          hasWideWidth ? (
-            <CoinIcon symbol={swap.status === 'WAITING' ? swap.currencyIn : swap.currencyOut} />
-          ) : undefined
-        }
-        value={swap.status === 'WAITING' ? swap.addressSwapIn : swap.addressUserIn}
-        data-testid={buildTestId(`address`)}
-      />
+      {swap.status === 'EXPIRED' && (
+        <SendTo data-testid={buildTestId('completed-label')}>
+          <SendToLabel>
+            <FormattedMessage id="widget.expired" />
+          </SendToLabel>
+        </SendTo>
+      )}
+
+      {swap.status !== 'EXPIRED' && (
+        <>
+          <ResponsiveSpace />
+          <CopyToClipboard
+            size="state"
+            left={
+              hasWideWidth ? (
+                <CoinIcon symbol={swap.status === 'WAITING' ? swap.currencyIn : swap.currencyOut} />
+              ) : undefined
+            }
+            value={swap.status === 'WAITING' ? swap.addressSwapIn : swap.addressUserIn}
+            data-testid={buildTestId(`address`)}
+          />
+        </>
+      )}
+
+      {swap.status === 'EXPIRED' && <div style={{ flex: 1 }} />}
+
       <ResponsiveSpace />
       {explorerLink && (
         <Button

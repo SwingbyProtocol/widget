@@ -6,6 +6,7 @@
   "widget.next-btn": "Next",
   "widget.swap-btn": "Swap",
   "widget.send-to": "Send",
+  "widget.expired": "This swap has expired",
   "widget.sending-to": "Sending",
   "widget.sent-to": "Sent",
   "widget.send-to-long": "Send {value} to",

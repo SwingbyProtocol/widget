@@ -11,7 +11,7 @@
       "currencyOut": "BTCE",
       "fee": "0.0000001",
       "feeCurrency": "BTCE",
-      "hash": "fake-hash-completed",
+      "hash": "fake-hash-refunded",
       "rewards": [],
       "status": "REFUNDED",
       "timestamp": 1606315390,

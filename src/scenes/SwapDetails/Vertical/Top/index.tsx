@@ -21,7 +21,7 @@ export const Top = ({
   const { buildTestId } = useBuildTestId({ id: testId });
   const { locale } = useIntl();
 
-  if (swap.status === 'COMPLETED' || swap.status === 'REFUNDED') {
+  if (swap.status === 'COMPLETED' || swap.status === 'REFUNDED' || swap.status === 'EXPIRED') {
     return (
       <Container>
         <BigText data-testid={buildTestId('completed-label')}>
