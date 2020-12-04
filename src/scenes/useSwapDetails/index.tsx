@@ -14,7 +14,7 @@ export const useSwapDetails = (): SwapDetails => {
   const swap = useSelector((state) => state.swaps[swapHash]);
 
   useEffect(() => {
-    if (swap?.status === 'completed' || swap?.status === 'refunded') return;
+    if (swap?.status === 'COMPLETED' || swap?.status === 'REFUNDED') return;
 
     setLoading(true);
     const id = setInterval(async () => {
@@ -24,7 +24,7 @@ export const useSwapDetails = (): SwapDetails => {
         logger.debug('getSwapDetails() returned: %O', swap);
         dispatch(actionSetSwap({ ...swap }));
 
-        if (swap.status === 'completed' || swap.status === 'refunded') {
+        if (swap.status === 'COMPLETED' || swap.status === 'REFUNDED') {
           setLoading(false);
           clearInterval(id);
         }

@@ -49,7 +49,7 @@ export const Banner = () => {
       />
       <ResponsiveSpace />
 
-      {swap.status === 'waiting' && (
+      {swap.status === 'WAITING' && (
         <SendTo data-testid={buildTestId('send-label')}>
           <SendToLabel>
             <FormattedMessage id="widget.send-to" />
@@ -63,7 +63,11 @@ export const Banner = () => {
         </SendTo>
       )}
 
-      {(swap.status === 'signing' || swap.status === 'sending') && (
+      {(swap.status === 'PENDING' ||
+        swap.status === 'SIGNING' ||
+        swap.status === 'SENDING' ||
+        swap.status === 'SIGNING_REFUND' ||
+        swap.status === 'SENDING_REFUND') && (
         <SendTo data-testid={buildTestId('sending-label')}>
           <SendToLabel>
             <FormattedMessage id="widget.sending-to" />
@@ -77,7 +81,7 @@ export const Banner = () => {
         </SendTo>
       )}
 
-      {swap.status === 'completed' && (
+      {(swap.status === 'COMPLETED' || swap.status === 'REFUNDED') && (
         <SendTo data-testid={buildTestId('completed-label')}>
           <SendToLabel>
             <FormattedMessage id="widget.sent-to" />
@@ -96,10 +100,10 @@ export const Banner = () => {
         size="state"
         left={
           hasWideWidth ? (
-            <CoinIcon symbol={swap.status === 'waiting' ? swap.currencyIn : swap.currencyOut} />
+            <CoinIcon symbol={swap.status === 'WAITING' ? swap.currencyIn : swap.currencyOut} />
           ) : undefined
         }
-        value={swap.status === 'waiting' ? swap.addressSwapIn : swap.addressUserIn}
+        value={swap.status === 'WAITING' ? swap.addressSwapIn : swap.addressUserIn}
         data-testid={buildTestId(`address`)}
       />
       <ResponsiveSpace />

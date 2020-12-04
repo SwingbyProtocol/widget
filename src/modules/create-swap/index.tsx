@@ -40,7 +40,7 @@ export const useCreateSwap = () => {
       logger.debug('createSwap() has finished', swap);
 
       dispatch(actionClearSwapFormData());
-      dispatch(actionSetSwap({ ...swap, status: 'waiting' }));
+      dispatch(actionSetSwap({ ...swap, status: 'WAITING' }));
       push(`${context.mode === 'test' ? '/test' : ''}/swap/${swap.hash}`);
     } finally {
       setLoading(false);
