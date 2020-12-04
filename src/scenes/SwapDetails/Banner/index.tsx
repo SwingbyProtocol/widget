@@ -55,12 +55,15 @@ export const Banner = () => {
           <FormattedMessage id={`widget.status-label-short.${swap.status}`} />
         </SendToLabel>
         {swap.status !== 'EXPIRED' && (
-          <SendToValue>
-            {getCryptoAssetFormatter({
-              locale,
-              displaySymbol: swap.status === 'WAITING' ? swap.currencyIn : swap.currencyOut,
-            }).format(+(swap.status === 'WAITING' ? swap.amountIn : swap.amountOut ?? 0))}
-          </SendToValue>
+          <>
+            {' '}
+            <SendToValue>
+              {getCryptoAssetFormatter({
+                locale,
+                displaySymbol: swap.status === 'WAITING' ? swap.currencyIn : swap.currencyOut,
+              }).format(+(swap.status === 'WAITING' ? swap.amountIn : swap.amountOut ?? 0))}
+            </SendToValue>
+          </>
         )}
       </SendTo>
 

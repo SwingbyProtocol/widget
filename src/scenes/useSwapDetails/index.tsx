@@ -22,8 +22,6 @@ export const useSwapDetails = (): SwapDetails => {
       try {
         const swap = await getSwapDetails();
 
-        swap.status = 'SENDING_REFUND';
-
         logger.debug('getSwapDetails() returned: %O', swap);
         dispatch(actionSetSwap({ ...swap }));
 

@@ -21,7 +21,7 @@ export const Top = ({
   const { buildTestId } = useBuildTestId({ id: testId });
   const { locale } = useIntl();
 
-  if (swap.status === 'COMPLETED' || swap.status === 'REFUNDED' || swap.status === 'EXPIRED') {
+  if (swap.status === 'COMPLETED' || swap.status === 'EXPIRED') {
     return (
       <Container>
         <BigText data-testid={buildTestId('status-label')}>
@@ -50,7 +50,8 @@ export const Top = ({
     swap.status === 'SIGNING' ||
     swap.status === 'SENDING' ||
     swap.status === 'SIGNING_REFUND' ||
-    swap.status === 'SENDING_REFUND'
+    swap.status === 'SENDING_REFUND' ||
+    swap.status === 'REFUNDED'
   ) {
     return (
       <>
