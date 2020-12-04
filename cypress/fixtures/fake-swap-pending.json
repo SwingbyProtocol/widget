@@ -11,9 +11,9 @@
       "currencyOut": "BTCE",
       "fee": "0.0000001",
       "feeCurrency": "BTCE",
-      "hash": "fake-hash-waiting",
+      "hash": "fake-hash-pending",
       "rewards": [],
-      "status": "WAITING",
+      "status": "PENDING",
       "timestamp": 1606315390,
       "txIdIn": null,
       "txIdOut": null

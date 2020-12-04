@@ -11,12 +11,12 @@
       "currencyOut": "BTCE",
       "fee": "0.0000001",
       "feeCurrency": "BTCE",
-      "hash": "fake-hash-waiting",
+      "hash": "fake-hash-refunded",
       "rewards": [],
-      "status": "WAITING",
+      "status": "REFUNDED",
       "timestamp": 1606315390,
-      "txIdIn": null,
-      "txIdOut": null
+      "txIdIn": "298380c8f74ec2a7a2ff2b9a76fb46958338957ec53fabcba61aa59f7a840e93",
+      "txIdOut": "0x0e0c172a755bff9ea74e2404b271d4841082dc5fd10b41c83a6811c39e828f6e"
     }
   ],
   "total": 1

@@ -14,6 +14,7 @@ import { useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { BackButton } from '../../../components/BackButton';
+import { Space } from '../../../components/Space';
 import { useSdkContext } from '../../../modules/sdk-context';
 import { StylingConstants } from '../../../modules/styles';
 import { useSwapDetails } from '../../useSwapDetails';
@@ -49,7 +50,7 @@ export const Banner = () => {
       />
       <ResponsiveSpace />
 
-      {swap.status === 'waiting' && (
+      {swap.status === 'WAITING' && (
         <SendTo data-testid={buildTestId('send-label')}>
           <SendToLabel>
             <FormattedMessage id="widget.send-to" />
@@ -63,7 +64,11 @@ export const Banner = () => {
         </SendTo>
       )}
 
-      {(swap.status === 'signing' || swap.status === 'sending') && (
+      {(swap.status === 'PENDING' ||
+        swap.status === 'SIGNING' ||
+        swap.status === 'SENDING' ||
+        swap.status === 'SIGNING_REFUND' ||
+        swap.status === 'SENDING_REFUND') && (
         <SendTo data-testid={buildTestId('sending-label')}>
           <SendToLabel>
             <FormattedMessage id="widget.sending-to" />
@@ -77,7 +82,7 @@ export const Banner = () => {
         </SendTo>
       )}
 
-      {swap.status === 'completed' && (
+      {(swap.status === 'COMPLETED' || swap.status === 'REFUNDED') && (
         <SendTo data-testid={buildTestId('completed-label')}>
           <SendToLabel>
             <FormattedMessage id="widget.sent-to" />
@@ -91,17 +96,32 @@ export const Banner = () => {
         </SendTo>
       )}
 
-      <ResponsiveSpace />
-      <CopyToClipboard
-        size="state"
-        left={
-          hasWideWidth ? (
-            <CoinIcon symbol={swap.status === 'waiting' ? swap.currencyIn : swap.currencyOut} />
-          ) : undefined
-        }
-        value={swap.status === 'waiting' ? swap.addressSwapIn : swap.addressUserIn}
-        data-testid={buildTestId(`address`)}
-      />
+      {swap.status === 'EXPIRED' && (
+        <SendTo data-testid={buildTestId('completed-label')}>
+          <SendToLabel>
+            <FormattedMessage id="widget.expired" />
+          </SendToLabel>
+        </SendTo>
+      )}
+
+      {swap.status !== 'EXPIRED' && (
+        <>
+          <ResponsiveSpace />
+          <CopyToClipboard
+            size="state"
+            left={
+              hasWideWidth ? (
+                <CoinIcon symbol={swap.status === 'WAITING' ? swap.currencyIn : swap.currencyOut} />
+              ) : undefined
+            }
+            value={swap.status === 'WAITING' ? swap.addressSwapIn : swap.addressUserIn}
+            data-testid={buildTestId(`address`)}
+          />
+        </>
+      )}
+
+      {swap.status === 'EXPIRED' && <div style={{ flex: 1 }} />}
+
       <ResponsiveSpace />
       {explorerLink && (
         <Button

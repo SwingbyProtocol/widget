@@ -1,3 +1,5 @@
+import { testStatuses } from '../utils';
+
 (() => {
   const testCases = ({ width, height, name }: { width: number; height: number; name: string }) => {
     beforeEach(() => {
@@ -6,6 +8,7 @@
 
     it('renders correctly', () => {
       cy.visit('/test/swap/new');
+      cy.get('[data-testid="banner.form.amounts.currency-from-select"]').should('be.visible');
       cy.percySnapshot(`${name}: after loading`, { widths: [width], minHeight: height });
     });
 
@@ -60,33 +63,10 @@
         'mkHS9ne12qx9pS9VojpwU5xtRd4T7X7ZUt',
       );
       cy.get('[data-testid="banner.form.swap-btn"]').should('not.be.disabled').click();
-    });
-
-    it('renders last step', () => {
       cy.get('[data-testid="banner.swap-details.send-label"]').should('be.visible');
-      cy.percySnapshot(`${name}: submitted`, { widths: [width], minHeight: height });
     });
 
-    it('renders "sending" status correctly', () => {
-      cy.visit('/test/swap/fake-hash-sending');
-      cy.get('[data-testid="banner.swap-details.sending-label"]').should('be.visible');
-      cy.percySnapshot(`${name}: sending`, { widths: [width], minHeight: height });
-    });
-
-    it('renders "sending" status with an explorer link correctly', () => {
-      cy.visit('/test/swap/fake-hash-sending-with-txout');
-      cy.get('[data-testid="banner.swap-details.explorer-link"]').should('be.visible');
-      cy.percySnapshot(`${name}: sending, with explorer link`, {
-        widths: [width],
-        minHeight: height,
-      });
-    });
-
-    it('renders "completed" status correctly', () => {
-      cy.visit('/test/swap/fake-hash-completed');
-      cy.get('[data-testid="banner.swap-details.explorer-link"]').should('be.visible');
-      cy.percySnapshot(`${name}: completed`, { widths: [width], minHeight: height });
-    });
+    testStatuses({ name, width, height, testId: 'banner' });
   };
 
   describe('Narrow banner', () => {
