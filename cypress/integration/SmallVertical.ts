@@ -42,7 +42,7 @@ import { testStatuses } from '../utils';
     });
 
     it('can input address', () => {
-      cy.get('[data-testid="vertical.form.top.back-btn"]').should('be.visible').click();
+      cy.get('[data-testid="vertical.form.back-btn"]').should('be.visible').click();
       cy.get('[data-testid="vertical.form.next-btn"]').click();
 
       cy.get('[data-testid="vertical.form.swap-btn"]').should('be.disabled');
@@ -52,7 +52,7 @@ import { testStatuses } from '../utils';
       );
 
       cy.get('[data-testid="vertical.form.swap-btn"]').should('not.be.disabled').click();
-      cy.get('[data-testid="vertical.swap-details.top.send-label"]').should('be.visible');
+      cy.get('[data-testid="vertical.swap-details.send-label"]').should('be.visible');
     });
 
     testStatuses({ name, width, height, testId: 'vertical' });
