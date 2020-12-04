@@ -83,7 +83,7 @@ export const Banner = () => {
         </>
       )}
 
-      {swap.status === 'EXPIRED' && <div style={{ flex: 1 }} />}
+      {swap.status === 'EXPIRED' && <Space size="box" shape="fill" />}
 
       <ResponsiveSpace />
       {explorerLink && (

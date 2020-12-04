@@ -9,6 +9,7 @@ export const WidgetContainer = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 
   @media ${StylingConstants.mediaLayout.website} {
     padding: ${({ theme }) => rem(theme.pulsar.size.city)};
