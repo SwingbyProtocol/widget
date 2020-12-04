@@ -11,7 +11,7 @@ import { useStore } from '../modules/store';
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const store = useStore();
-  const defaultLocale = router.defaultLocale ?? 'en-US';
+  const defaultLocale = router.defaultLocale ?? 'en';
   const locale = router.locale ?? defaultLocale;
 
   return (
