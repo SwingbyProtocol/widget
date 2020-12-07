@@ -1,3 +1,4 @@
+import { Favicon } from '../../components/Favicon';
 import { HeadTitle } from '../../components/HeadTitle';
 import { ModeWarning } from '../../components/ModeWarning';
 import { WidgetContainer } from '../../components/WidgetContainer';
@@ -12,6 +13,7 @@ export const SwapDetails = () => {
     <>
       <ModeWarning />
       <HeadTitle />
+      <Favicon />
       <WidgetContainer>{layout === 'widget-banner' ? <Banner /> : <Vertical />}</WidgetContainer>
     </>
   );

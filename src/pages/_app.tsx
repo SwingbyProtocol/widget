@@ -7,6 +7,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { en } from '../modules/i18n';
 import { WidgetLayoutProvider } from '../modules/layout';
 import { useStore } from '../modules/store';
+import { Favicon } from '../components/Favicon';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -20,6 +21,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <PulsarGlobalStyles />
         <ReduxProvider store={store}>
           <WidgetLayoutProvider>
+            <Favicon />
             <Component {...pageProps} />
           </WidgetLayoutProvider>
         </ReduxProvider>
