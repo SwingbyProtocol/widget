@@ -1,4 +1,8 @@
 {
+  "widget.tab-title.test.form": "[Test] Swingby Swap Widget",
+  "widget.tab-title.test.details": "[Test] Swap: {swapHash} | Swingby Swap Widget",
+  "widget.tab-title.production.form": "Swingby Swap Widget",
+  "widget.tab-title.production.details": "Swap: {swapHash} | Swingby Swap Widget",
   "widget.from": "From",
   "widget.to": "To",
   "widget.receiving-address.label": "Receiving Address",
