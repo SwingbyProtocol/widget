@@ -3,6 +3,7 @@ import { PulsarGlobalStyles, PulsarThemeProvider } from '@swingby-protocol/pulsa
 import { useRouter } from 'next/router';
 import { IntlProvider } from 'react-intl';
 import { Provider as ReduxProvider } from 'react-redux';
+import Head from 'next/head';
 
 import { en } from '../modules/i18n';
 import { WidgetLayoutProvider } from '../modules/layout';
@@ -22,6 +23,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         <ReduxProvider store={store}>
           <WidgetLayoutProvider>
             <Favicon />
+            <Head>
+              <title>{en['widget.tab-title.generic']}</title>
+            </Head>
             <Component {...pageProps} />
           </WidgetLayoutProvider>
         </ReduxProvider>

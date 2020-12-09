@@ -6,7 +6,7 @@ import { useSdkContext } from '../../modules/sdk-context';
 
 export const useGetSwapDetails = () => {
   const {
-    query: { swapHash: swapHashParam },
+    query: { hash: swapHashParam },
   } = useRouter();
   const context = useSdkContext();
 
