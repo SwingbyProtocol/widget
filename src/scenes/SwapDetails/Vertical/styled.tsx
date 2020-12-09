@@ -37,3 +37,10 @@ export const ExplorerLinkCaret = styled(Icon.CaretRight)`
 export const ProgressContainer = styled.div`
   font-size: ${({ theme }) => rem(theme.pulsar.size.city)};
 `;
+
+export const ExplorerContainer = styled.div`
+  width: calc(100% + ${rem(StylingConstants.widgetVerticalPadding * 2)});
+  margin-left: ${rem(-StylingConstants.widgetVerticalPadding)};
+  margin-right: ${rem(-StylingConstants.widgetVerticalPadding)};
+  margin-bottom: ${rem(-StylingConstants.widgetVerticalPadding)};
+`;
