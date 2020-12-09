@@ -3,5 +3,5 @@
   { "bridgeFeePercent": "0.1", "currency": "BNB", "minerFee": "500" },
   { "bridgeFeePercent": "0.1", "currency": "BTCB", "minerFee": "500" },
   { "bridgeFeePercent": "0.1", "currency": "ETH", "minerFee": "0" },
-  { "bridgeFeePercent": "0.1", "currency": "BTCE", "minerFee": "0" }
+  { "bridgeFeePercent": "0.1", "currency": "WBTC", "minerFee": "0" }
 ]
