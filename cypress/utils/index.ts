@@ -27,8 +27,8 @@ export const testStatuses = ({
     cy.get(`[data-testid="${testId}.swap-details.status-label"`).should(
       'have.text',
       testId === 'banner'
-        ? `Sending 0.99999612${NON_BREAKING_SPACE}BTCE`
-        : `Sending 0.99999612${NON_BREAKING_SPACE}BTCE to`,
+        ? `Sending 0.99999612${NON_BREAKING_SPACE}WBTC`
+        : `Sending 0.99999612${NON_BREAKING_SPACE}WBTC to`,
     );
   });
 
@@ -37,8 +37,8 @@ export const testStatuses = ({
     cy.get(`[data-testid="${testId}.swap-details.status-label"`).should(
       'have.text',
       testId === 'banner'
-        ? `Sending 0.99999612${NON_BREAKING_SPACE}BTCE`
-        : `Sending 0.99999612${NON_BREAKING_SPACE}BTCE to`,
+        ? `Sending 0.99999612${NON_BREAKING_SPACE}WBTC`
+        : `Sending 0.99999612${NON_BREAKING_SPACE}WBTC to`,
     );
   });
 
@@ -58,8 +58,8 @@ export const testStatuses = ({
     cy.get(`[data-testid="${testId}.swap-details.status-label"`).should(
       'have.text',
       testId === 'banner'
-        ? `Sending 0.99999612${NON_BREAKING_SPACE}BTCE`
-        : `Sending 0.99999612${NON_BREAKING_SPACE}BTCE to`,
+        ? `Sending 0.99999612${NON_BREAKING_SPACE}WBTC`
+        : `Sending 0.99999612${NON_BREAKING_SPACE}WBTC to`,
     );
   });
 
@@ -78,8 +78,8 @@ export const testStatuses = ({
     cy.get(`[data-testid="${testId}.swap-details.status-label"`).should(
       'have.text',
       testId === 'banner'
-        ? `Sending 0.99999612${NON_BREAKING_SPACE}BTCE`
-        : `Sending 0.99999612${NON_BREAKING_SPACE}BTCE to`,
+        ? `Sending 0.99999612${NON_BREAKING_SPACE}WBTC`
+        : `Sending 0.99999612${NON_BREAKING_SPACE}WBTC to`,
     );
     cy.percySnapshot(`${name}: sending, with explorer link`, {
       widths: [width],
@@ -92,8 +92,8 @@ export const testStatuses = ({
     cy.get(`[data-testid="${testId}.swap-details.status-label"`).should(
       'have.text',
       testId === 'banner'
-        ? `Sent 0.99999612${NON_BREAKING_SPACE}BTCE`
-        : `${NON_BREAKING_SPACE}0.99999854${NON_BREAKING_SPACE}BTC${NON_BREAKING_SPACE}0.99999612${NON_BREAKING_SPACE}BTCE`,
+        ? `Sent 0.99999612${NON_BREAKING_SPACE}WBTC`
+        : `${NON_BREAKING_SPACE}0.99999854${NON_BREAKING_SPACE}BTC${NON_BREAKING_SPACE}0.99999612${NON_BREAKING_SPACE}WBTC`,
     );
     cy.percySnapshot(`${name}: completed`, { widths: [width], minHeight: height });
   });
@@ -115,7 +115,7 @@ export const testStatuses = ({
       'have.text',
       testId === 'banner'
         ? 'This swap has expired'
-        : `${NON_BREAKING_SPACE}0.99999854${NON_BREAKING_SPACE}BTC${NON_BREAKING_SPACE}0.99999612${NON_BREAKING_SPACE}BTCE`,
+        : `${NON_BREAKING_SPACE}0.99999854${NON_BREAKING_SPACE}BTC${NON_BREAKING_SPACE}0.99999612${NON_BREAKING_SPACE}WBTC`,
     );
     cy.get(`[data-testid="${testId}.swap-details.explorer-link"]`).should('not.exist');
     cy.percySnapshot(`${name}: expired`, { widths: [width], minHeight: height });

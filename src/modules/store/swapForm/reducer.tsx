@@ -10,7 +10,7 @@ enum Actions {
 const initialState = {
   step: 'step-amounts' as 'step-amounts' | 'step-address',
   currencyIn: 'BTC' as Coin,
-  currencyOut: 'BTCE' as Coin,
+  currencyOut: 'WBTC' as Coin,
   amountUser: '',
   addressUserIn: '',
 };

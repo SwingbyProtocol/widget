@@ -51,7 +51,7 @@ describe('Address validation', () => {
 
   it('invalidates form if "currencyOut" changes', () => {
     cy.get('[data-testid="vertical.form.amounts.currency-to-select.target"]').click();
-    cy.get('[data-testid="vertical.form.amounts.currency-to-select.content.item-BTCE"]').click();
+    cy.get('[data-testid="vertical.form.amounts.currency-to-select.content.item-WBTC"]').click();
     cy.get('[data-testid="vertical.form.swap-btn"]').should('be.disabled');
   });
 });
