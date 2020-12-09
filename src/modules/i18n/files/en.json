@@ -1,8 +1,8 @@
 {
-  "widget.tab-title.test.form": "[Test] Swingby Swap Widget",
-  "widget.tab-title.test.details": "[Test] Swap: {swapHash} | Swingby Swap Widget",
-  "widget.tab-title.production.form": "Swingby Swap Widget",
-  "widget.tab-title.production.details": "Swap: {swapHash} | Swingby Swap Widget",
+  "widget.tab-title.test.form": "[Test] Skybridge Swap Widget",
+  "widget.tab-title.test.details": "[Test] Swap: {swapHash} | Skybridge Swap Widget",
+  "widget.tab-title.production.form": "Skybridge Swap Widget",
+  "widget.tab-title.production.details": "Swap: {swapHash} | Skybridge Swap Widget",
   "widget.from": "From",
   "widget.to": "To",
   "widget.receiving-address.label": "Receiving Address",
