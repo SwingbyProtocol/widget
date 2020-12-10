@@ -5,6 +5,8 @@ import { logger } from '../../modules/logger';
 import { useGetSwapDetails } from '../useGetSwapDetails';
 import { actionSetSwap } from '../../modules/store/swaps';
 
+const MS_TILL_NEXT_TRY = 10000;
+
 type SwapDetails = { loading: boolean; swap: null | DefaultRootState['swaps'][string] };
 
 export const useSwapDetails = (): SwapDetails => {
@@ -14,13 +16,17 @@ export const useSwapDetails = (): SwapDetails => {
   const swap = useSelector((state) => state.swaps[swapHash]);
 
   useEffect(() => {
-    if (swap?.status === 'COMPLETED' || swap?.status === 'REFUNDED' || swap?.status === 'EXPIRED')
-      return;
+    let timeoutId: number | null = null;
+    let cancelled = false;
 
-    setLoading(true);
-    const id = setInterval(async () => {
+    const doStuff = async () => {
+      setLoading(true);
+
       try {
         const swap = await getSwapDetails();
+        if (cancelled) {
+          return;
+        }
 
         logger.debug('getSwapDetails() returned: %O', swap);
         dispatch(actionSetSwap({ ...swap }));
@@ -31,18 +37,27 @@ export const useSwapDetails = (): SwapDetails => {
           swap.status === 'EXPIRED'
         ) {
           setLoading(false);
-          clearInterval(id);
+          return;
         }
+
+        timeoutId = setTimeout(doStuff, MS_TILL_NEXT_TRY);
       } catch (e) {
         logger.error('Error trying to fetch swap details', e);
+        timeoutId = setTimeout(doStuff, MS_TILL_NEXT_TRY);
       }
-    }, 5000);
+    };
+
+    doStuff();
 
     return () => {
-      clearInterval(id);
-      setLoading(false);
+      cancelled = true;
+
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+        timeoutId = null;
+      }
     };
-  }, [getSwapDetails, dispatch, swap?.status]);
+  }, [dispatch, getSwapDetails]);
 
   return useMemo(() => ({ swap: swap ?? null, loading }), [swap, loading]);
 };

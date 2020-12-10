@@ -27,7 +27,7 @@ export const testStatuses = ({
     cy.get(`[data-testid="${testId}.swap-details.status-label"`).should(
       'have.text',
       testId === 'banner'
-        ? `Sending 0.99999612${NON_BREAKING_SPACE}WBTC`
+        ? `Observed Waiting for confirmations…`
         : `Sending 0.99999612${NON_BREAKING_SPACE}WBTC to`,
     );
   });

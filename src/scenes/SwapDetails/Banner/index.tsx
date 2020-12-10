@@ -54,7 +54,13 @@ export const Banner = () => {
         <SendToLabel>
           <FormattedMessage id={`widget.status-label-short.${swap.status}`} />
         </SendToLabel>
-        {swap.status !== 'EXPIRED' && (
+        {swap.status === 'PENDING' && (
+          <>
+            {' '}
+            <SendToValue>Waiting for confirmations…</SendToValue>
+          </>
+        )}
+        {swap.status !== 'EXPIRED' && swap.status !== 'PENDING' && (
           <>
             {' '}
             <SendToValue>
@@ -67,7 +73,7 @@ export const Banner = () => {
         )}
       </SendTo>
 
-      {swap.status !== 'EXPIRED' && (
+      {swap.status !== 'EXPIRED' && swap.status !== 'PENDING' && (
         <>
           <ResponsiveSpace />
           <CopyToClipboard
@@ -83,7 +89,9 @@ export const Banner = () => {
         </>
       )}
 
-      {swap.status === 'EXPIRED' && <Space size="box" shape="fill" />}
+      {(swap.status === 'EXPIRED' || swap.status === 'PENDING') && (
+        <Space size="box" shape="fill" />
+      )}
 
       <ResponsiveSpace />
       {explorerLink && (

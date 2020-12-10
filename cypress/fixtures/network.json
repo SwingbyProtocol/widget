@@ -1,0 +1,44 @@
+{
+  "production": {
+    "explorers": [],
+    "swapNodes": { "btc_erc": [], "btc_bep": [] },
+    "indexerNodes": { "btc_erc": [], "btc_bep": [] }
+  },
+  "test": {
+    "explorers": ["https://new-explorer.vercel.app"],
+    "swapNodes": {
+      "btc_erc": ["https://tbtc-goerli-1.swingby.network"],
+      "btc_bep": [
+        "https://testnet-node-1.swingby.network",
+        "https://testnet-node-2.swingby.network",
+        "https://testnet-node-3.swingby.network",
+        "https://testnet-node-4.swingby.network",
+        "https://testnet-node-5.swingby.network",
+        "https://testnet-node-6.swingby.network",
+        "https://testnet-node-7.swingby.network",
+        "https://testnet-node-8.swingby.network",
+        "https://testnet-node-9.swingby.network",
+        "https://testnet-node-10.swingby.network",
+        "https://testnet-node-11.swingby.network",
+        "https://testnet-node-12.swingby.network",
+        "https://testnet-node-13.swingby.network",
+        "https://testnet-node-14.swingby.network",
+        "https://testnet-node-15.swingby.network",
+        "https://testnet-node-16.swingby.network",
+        "https://testnet-node-17.swingby.network",
+        "https://testnet-node-18.swingby.network",
+        "https://testnet-node-19.swingby.network",
+        "https://testnet-node-20.swingby.network",
+        "https://testnet-node-21.swingby.network",
+        "https://testnet-node-22.swingby.network",
+        "https://testnet-node-23.swingby.network",
+        "https://testnet-node-24.swingby.network",
+        "https://testnet-node-25.swingby.network"
+      ]
+    },
+    "indexerNodes": {
+      "btc_erc": ["https://indexer-goerli.swingby.network"],
+      "btc_bep": ["https://indexer-tbtc.swingby.network"]
+    }
+  }
+}
