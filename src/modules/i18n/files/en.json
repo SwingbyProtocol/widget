@@ -15,7 +15,7 @@
   "widget.next-btn": "Next",
   "widget.swap-btn": "Swap",
   "widget.status-label-short.WAITING": "Send",
-  "widget.status-label-short.PENDING": "Sending",
+  "widget.status-label-short.PENDING": "Observed",
   "widget.status-label-short.SIGNING": "Sending",
   "widget.status-label-short.SENDING": "Sending",
   "widget.status-label-short.SIGNING_REFUND": "Refunding",
