@@ -7,7 +7,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { Space } from '../../../components/Space';
 import { VerticalWidgetView } from '../../../components/VerticalWidgetView';
 import { useSdkContext } from '../../../modules/sdk-context';
-import { useSwapDetails } from '../../useSwapDetails';
+import { useSwapDetails } from '../../../modules/swap-details';
 
 import { ExplorerLink, ExplorerLinkCaret, ProgressContainer, ExplorerContainer } from './styled';
 import { Top } from './Top';

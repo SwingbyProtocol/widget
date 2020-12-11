@@ -17,7 +17,7 @@ import { BackButton } from '../../../components/BackButton';
 import { Space } from '../../../components/Space';
 import { useSdkContext } from '../../../modules/sdk-context';
 import { StylingConstants } from '../../../modules/styles';
-import { useSwapDetails } from '../../useSwapDetails';
+import { useSwapDetails } from '../../../modules/swap-details';
 
 import { BannerContainer, ResponsiveSpace, SendTo, SendToLabel, SendToValue } from './styled';
 

@@ -3,10 +3,10 @@ import { useRouter } from 'next/router';
 import { useIntl } from 'react-intl';
 
 import { useSdkContext } from '../../modules/sdk-context';
-import { useGetSwapDetails } from '../../scenes/useGetSwapDetails';
+import { useSwapHash } from '../../modules/swap-details';
 
 export const HeadTitle = () => {
-  const { swapHash } = useGetSwapDetails();
+  const swapHash = useSwapHash();
   const { mode } = useSdkContext();
   const { formatMessage } = useIntl();
   const { route } = useRouter();
