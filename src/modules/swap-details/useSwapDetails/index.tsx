@@ -1,19 +1,22 @@
+import { getSwapDetails } from '@swingby-protocol/sdk';
 import { useEffect, useMemo, useState } from 'react';
 import { DefaultRootState, useDispatch, useSelector } from 'react-redux';
 
-import { logger } from '../../modules/logger';
-import { useGetSwapDetails } from '../useGetSwapDetails';
-import { actionSetSwap } from '../../modules/store/swaps';
+import { logger } from '../../logger';
+import { useSdkContext } from '../../sdk-context';
+import { actionSetSwap } from '../../store/swaps';
+import { useSwapHash } from '../useSwapHash';
 
 const MS_TILL_NEXT_TRY = 10000;
 
 type SwapDetails = { loading: boolean; swap: null | DefaultRootState['swaps'][string] };
 
 export const useSwapDetails = (): SwapDetails => {
-  const { getSwapDetails, swapHash } = useGetSwapDetails();
+  const hash = useSwapHash();
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
-  const swap = useSelector((state) => state.swaps[swapHash]);
+  const swap = useSelector((state) => state.swaps[hash]);
+  const context = useSdkContext();
 
   useEffect(() => {
     let timeoutId: number | null = null;
@@ -23,7 +26,7 @@ export const useSwapDetails = (): SwapDetails => {
       setLoading(true);
 
       try {
-        const swap = await getSwapDetails();
+        const swap = await getSwapDetails({ context, hash });
         if (cancelled) {
           return;
         }
@@ -57,7 +60,7 @@ export const useSwapDetails = (): SwapDetails => {
         timeoutId = null;
       }
     };
-  }, [dispatch, getSwapDetails]);
+  }, [dispatch, hash, context]);
 
   return useMemo(() => ({ swap: swap ?? null, loading }), [swap, loading]);
 };
