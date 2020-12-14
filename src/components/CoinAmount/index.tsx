@@ -7,6 +7,8 @@ import {
   estimateSwapAmountOut,
   getCoinsFor,
   getSwapableWith,
+  SkybridgeAction,
+  SkybridgeCoin,
 } from '@swingby-protocol/sdk';
 
 import { actionSetSwapFormData } from '../../modules/store/swapForm';
@@ -23,9 +25,9 @@ import {
 } from './styled';
 import { CurrencySelector } from './CurrencySelector';
 
-type Props = { variant: Variant } & Testable;
+type Props = { variant: Variant; action: SkybridgeAction } & Testable;
 
-export const CoinAmount = ({ variant, 'data-testid': testId }: Props) => {
+export const CoinAmount = ({ variant, action, 'data-testid': testId }: Props) => {
   const { buildTestId } = useBuildTestId({ id: testId });
   const { amountUser, currencyIn, currencyOut } = useSelector((state) => state.swapForm);
   const dispatch = useDispatch();
@@ -33,15 +35,25 @@ export const CoinAmount = ({ variant, 'data-testid': testId }: Props) => {
   const [isCalculating, setIsCalculating] = useState(false);
   const context = useSdkContext();
 
-  const coinsIn = useMemo(() => getCoinsFor({ context }), [context]);
+  console.log({ action });
 
-  const coinsOut = useMemo(() => getSwapableWith({ context, coin: currencyIn }), [
-    context,
-    currencyIn,
-  ]);
+  const coinsIn = useMemo<SkybridgeCoin[]>(
+    () => getCoinsFor({ context, action, direction: 'in' }),
+    [context, action],
+  );
+
+  const coinsOut = useMemo<SkybridgeCoin[]>(
+    () => getSwapableWith({ context, coin: currencyIn, action }).filter((it) => it !== currencyIn),
+    [context, action, currencyIn],
+  );
 
   useEffect(() => {
-    if ((coinsOut as string[]).includes(currencyOut)) return;
+    if (coinsIn.includes(currencyIn)) return;
+    dispatch(actionSetSwapFormData({ currencyOut: coinsIn[0] ?? 'BTC' }));
+  }, [coinsIn, currencyIn, dispatch]);
+
+  useEffect(() => {
+    if (coinsOut.includes(currencyOut)) return;
     dispatch(actionSetSwapFormData({ currencyOut: coinsOut[0] ?? 'BTC' }));
   }, [coinsOut, currencyOut, dispatch]);
 

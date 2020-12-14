@@ -36,7 +36,7 @@ export const Vertical = ({ action }: { action: SkybridgeAction }) => {
       data-testid={buildTestId('')}
     >
       {(step === 'step-amounts' || layout === 'widget-full' || layout === 'website') && (
-        <CoinAmount variant="vertical" data-testid={buildTestId('amounts')} />
+        <CoinAmount variant="vertical" action={action} data-testid={buildTestId('amounts')} />
       )}
 
       {(step === 'step-address' || layout === 'widget-full' || layout === 'website') && (

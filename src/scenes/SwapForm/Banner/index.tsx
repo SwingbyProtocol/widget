@@ -70,7 +70,7 @@ export const Banner = ({ action }: { action: SkybridgeAction }) => {
         </>
       ) : (
         <>
-          <CoinAmount variant="banner" data-testid={buildTestId('amounts')} />
+          <CoinAmount variant="banner" action={action} data-testid={buildTestId('amounts')} />
           <ResponsiveSpace />
           <Button
             variant="primary"
