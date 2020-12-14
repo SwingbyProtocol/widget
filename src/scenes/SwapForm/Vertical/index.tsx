@@ -14,7 +14,7 @@ import { Space } from '../../../components/Space';
 import { useWidgetLayout } from '../../../modules/layout';
 import { VerticalWidgetView } from '../../../components/VerticalWidgetView';
 import { Separator } from '../../../components/Separator';
-import { useCreateSwap } from '../../../modules/create-swap';
+import { useCreate } from '../../../modules/create-swap';
 
 export const Vertical = ({ action }: { action: SkybridgeAction }) => {
   const { buildTestId } = useBuildTestId({ id: 'vertical.form' });
@@ -24,7 +24,7 @@ export const Vertical = ({ action }: { action: SkybridgeAction }) => {
   const layout = useWidgetLayout();
   const { areCurrenciesValid: areFormAmountsValid } = useAreCurrenciesValid({ action });
   const { isReceivingAddressValid } = useIsReceivingAddressValid();
-  const { loading, createSwap } = useCreateSwap();
+  const { loading, create } = useCreate({ action });
 
   return (
     <VerticalWidgetView
@@ -67,7 +67,7 @@ export const Vertical = ({ action }: { action: SkybridgeAction }) => {
           variant="primary"
           size="state"
           disabled={!areFormAmountsValid || !isReceivingAddressValid || loading}
-          onClick={createSwap}
+          onClick={create}
           data-testid={buildTestId('swap-btn')}
         >
           {loading ? <Loading /> : formatMessage({ id: 'widget.swap-btn' })}

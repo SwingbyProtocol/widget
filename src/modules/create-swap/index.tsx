@@ -1,4 +1,4 @@
-import { createSwap as originalCreateSwap } from '@swingby-protocol/sdk';
+import { createFloat, createSwap, SkybridgeAction } from '@swingby-protocol/sdk';
 import { useRouter } from 'next/router';
 import { useCallback, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,7 +8,7 @@ import { useSdkContext } from '../sdk-context';
 import { actionClearSwapFormData } from '../store/swapForm';
 import { actionSetSwap } from '../store/swaps';
 
-export const useCreateSwap = () => {
+export const useCreate = ({ action }: { action: SkybridgeAction }) => {
   const [loading, setLoading] = useState(false);
   const context = useSdkContext();
   const addressUserIn = useSelector((state) => state.swapForm.addressUserIn);
@@ -18,9 +18,7 @@ export const useCreateSwap = () => {
   const dispatch = useDispatch();
   const { push } = useRouter();
 
-  const createSwap = useCallback(async () => {
-    if (currencyIn === 'sbBTC' || currencyOut === 'sbBTC') return;
-
+  const create = useCallback(async () => {
     setLoading(true);
 
     logger.debug('Will call createSwap()', {
@@ -31,23 +29,48 @@ export const useCreateSwap = () => {
     });
 
     try {
-      const swap = await originalCreateSwap({
-        context,
-        amountUser,
-        currencyOut,
-        currencyIn,
-        addressUserIn,
-      });
+      const { hash } = await (async () => {
+        if (action === 'swap') {
+          const swap = await createSwap({
+            context,
+            amountUser,
+            currencyOut: currencyOut as any,
+            currencyIn: currencyIn as any,
+            addressUserIn,
+          });
 
-      logger.debug('createSwap() has finished', swap);
+          logger.debug('createSwap() has finished', swap);
 
-      dispatch(actionClearSwapFormData());
-      dispatch(actionSetSwap({ ...swap, status: 'WAITING' }));
-      push(`${context.mode === 'test' ? '/test' : ''}/swap/${swap.hash}`);
+          dispatch(actionClearSwapFormData());
+          dispatch(actionSetSwap({ ...swap, status: 'WAITING' }));
+
+          return swap;
+        }
+
+        if (action === 'float') {
+          const swap = await createFloat({
+            context,
+            amountUser,
+            currencyIn: currencyIn as any,
+            addressUserIn,
+          });
+
+          logger.debug('createFloat() has finished', swap);
+
+          dispatch(actionClearSwapFormData());
+          dispatch(actionSetSwap({ ...swap, status: 'WAITING' }));
+
+          return swap;
+        }
+
+        throw new Error(`Invalid action "${action}"`);
+      })();
+
+      push(`${context.mode === 'test' ? '/test' : ''}/${action}/${hash}`);
     } finally {
       setLoading(false);
     }
-  }, [context, addressUserIn, currencyIn, currencyOut, amountUser, push, dispatch]);
+  }, [context, addressUserIn, currencyIn, currencyOut, amountUser, push, dispatch, action]);
 
-  return useMemo(() => ({ loading, createSwap }), [createSwap, loading]);
+  return useMemo(() => ({ loading, create }), [create, loading]);
 };
