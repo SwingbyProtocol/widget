@@ -1,4 +1,4 @@
-import type { Coin, SwapStatus } from '@swingby-protocol/sdk';
+import type { SkybridgeCoin, SkybridgeStatus } from '@swingby-protocol/sdk';
 import { Reducer } from 'redux';
 
 enum Actions {
@@ -13,12 +13,12 @@ type SwapData = {
   addressUserOut?: string | null;
   amountIn: string;
   amountOut?: string | null;
-  currencyIn: Coin;
-  currencyOut: Coin;
+  currencyIn: SkybridgeCoin;
+  currencyOut: SkybridgeCoin;
   timestamp: Date;
-  feeCurrency?: Coin;
+  feeCurrency?: SkybridgeCoin;
   feeTotal?: string;
-  status: SwapStatus;
+  status: SkybridgeStatus;
   transactionInId?: string | null;
   transactionOutId?: string | null;
 };

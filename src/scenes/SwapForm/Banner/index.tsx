@@ -8,6 +8,7 @@ import {
 } from '@swingby-protocol/pulsar';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
+import { SkybridgeAction } from '@swingby-protocol/sdk';
 
 import { BackButton } from '../../../components/BackButton';
 import { CoinAmount } from '../../../components/CoinAmount';
@@ -19,16 +20,15 @@ import {
 } from '../../../modules/store/swapForm';
 import { StylingConstants } from '../../../modules/styles';
 import { useCreateSwap } from '../../../modules/create-swap';
-import { WidgetActionProp } from '../../../modules/widget-action';
 
 import { BannerContainer, ResponsiveSpace, AddressInput } from './styled';
 
-export const Banner = ({ action }: WidgetActionProp) => {
+export const Banner = ({ action }: { action: SkybridgeAction }) => {
   const { buildTestId } = useBuildTestId({ id: 'banner.form' });
   const { formatMessage } = useIntl();
   const hasWideWidth = useMatchMedia({ query: StylingConstants.mediaWideWidth });
   const { currencyOut, addressUserIn, step } = useSelector((state) => state.swapForm);
-  const { areCurrenciesValid: areFormAmountsValid } = useAreCurrenciesValid();
+  const { areCurrenciesValid: areFormAmountsValid } = useAreCurrenciesValid({ action });
   const dispatch = useDispatch();
   const { isReceivingAddressValid } = useIsReceivingAddressValid();
   const { loading, createSwap } = useCreateSwap();

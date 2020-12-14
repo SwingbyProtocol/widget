@@ -1,21 +1,43 @@
 import { Big } from 'big.js';
 import { useMemo } from 'react';
 import { DefaultRootState, useSelector } from 'react-redux';
-import { getChainFor, getCoinsFor, isAddressValid, SwingbyContext } from '@swingby-protocol/sdk';
+import {
+  getChainFor,
+  getCoinsFor,
+  isAddressValid,
+  SkybridgeAction,
+  SkybridgeContext,
+} from '@swingby-protocol/sdk';
 
 import { useSdkContext } from '../../sdk-context';
 import { logger } from '../../logger';
 
 const areCurrenciesValid = ({
+  action,
   amountUser,
   currencyIn,
   currencyOut,
   context,
 }: Pick<DefaultRootState['swapForm'], 'currencyIn' | 'currencyOut' | 'amountUser'> & {
-  context: SwingbyContext;
+  action: SkybridgeAction;
+  context: SkybridgeContext;
 }): boolean => {
   const coins = getCoinsFor({ context });
-  if (!coins.includes(currencyIn) || !coins.includes(currencyOut)) {
+  if (
+    action === 'swap' &&
+    (currencyIn === 'sbBTC' ||
+      currencyOut === 'sbBTC' ||
+      !coins.includes(currencyIn) ||
+      !coins.includes(currencyOut))
+  ) {
+    return false;
+  }
+
+  if (action === 'float' && (!['BTC', 'WBTC'].includes(currencyIn) || currencyOut !== 'sbBTC')) {
+    return false;
+  }
+
+  if (action === 'withdraw' && (!['BTC', 'WBTC'].includes(currencyOut) || currencyIn !== 'sbBTC')) {
     return false;
   }
 
@@ -32,12 +54,13 @@ const areCurrenciesValid = ({
   return true;
 };
 
-export const useAreCurrenciesValid = () => {
+export const useAreCurrenciesValid = ({ action }: { action: SkybridgeAction }) => {
   const data = useSelector((state) => state.swapForm);
   const context = useSdkContext();
-  return useMemo(() => ({ areCurrenciesValid: areCurrenciesValid({ ...data, context }) }), [
+  return useMemo(() => ({ areCurrenciesValid: areCurrenciesValid({ ...data, context, action }) }), [
     data,
     context,
+    action,
   ]);
 };
 

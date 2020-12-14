@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useMemo, useState } from 'react';
 import {
   buildContext,
-  estimateAmountOut,
+  estimateSwapAmountOut,
   getCoinsFor,
   getSwapableWith,
 } from '@swingby-protocol/sdk';
@@ -41,11 +41,13 @@ export const CoinAmount = ({ variant, 'data-testid': testId }: Props) => {
   ]);
 
   useEffect(() => {
-    if (coinsOut.includes(currencyOut)) return;
+    if ((coinsOut as string[]).includes(currencyOut)) return;
     dispatch(actionSetSwapFormData({ currencyOut: coinsOut[0] ?? 'BTC' }));
   }, [coinsOut, currencyOut, dispatch]);
 
   useEffect(() => {
+    if (currencyIn === 'sbBTC' || currencyOut === 'sbBTC') return;
+
     let cancelled = false;
 
     (async () => {
@@ -57,7 +59,7 @@ export const CoinAmount = ({ variant, 'data-testid': testId }: Props) => {
         const context = await buildContext({ mode: 'test' });
 
         if (cancelled) return;
-        const { amountOut } = await estimateAmountOut({
+        const { amountOut } = await estimateSwapAmountOut({
           context,
           amountUser,
           currencyIn,
