@@ -49,7 +49,7 @@ export const CoinAmount = ({ variant, action, 'data-testid': testId }: Props) =>
 
   useEffect(() => {
     if (coinsIn.includes(currencyIn)) return;
-    dispatch(actionSetSwapFormData({ currencyOut: coinsIn[0] ?? 'BTC' }));
+    dispatch(actionSetSwapFormData({ currencyIn: coinsIn[0] ?? 'BTC' }));
   }, [coinsIn, currencyIn, dispatch]);
 
   useEffect(() => {
