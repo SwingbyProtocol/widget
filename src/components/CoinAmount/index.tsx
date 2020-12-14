@@ -35,8 +35,6 @@ export const CoinAmount = ({ variant, action, 'data-testid': testId }: Props) =>
   const [isCalculating, setIsCalculating] = useState(false);
   const context = useSdkContext();
 
-  console.log({ action });
-
   const coinsIn = useMemo<SkybridgeCoin[]>(
     () => getCoinsFor({ context, action, direction: 'in' }),
     [context, action],
