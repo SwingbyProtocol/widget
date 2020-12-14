@@ -19,6 +19,8 @@ export const useCreateSwap = () => {
   const { push } = useRouter();
 
   const createSwap = useCallback(async () => {
+    if (currencyIn === 'sbBTC' || currencyOut === 'sbBTC') return;
+
     setLoading(true);
 
     logger.debug('Will call createSwap()', {

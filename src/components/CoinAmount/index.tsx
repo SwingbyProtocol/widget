@@ -4,9 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useMemo, useState } from 'react';
 import {
   buildContext,
-  estimateAmountOut,
+  estimateSwapAmountOut,
   getCoinsFor,
   getSwapableWith,
+  SkybridgeAction,
+  SkybridgeCoin,
 } from '@swingby-protocol/sdk';
 
 import { actionSetSwapFormData } from '../../modules/store/swapForm';
@@ -23,9 +25,9 @@ import {
 } from './styled';
 import { CurrencySelector } from './CurrencySelector';
 
-type Props = { variant: Variant } & Testable;
+type Props = { variant: Variant; action: SkybridgeAction } & Testable;
 
-export const CoinAmount = ({ variant, 'data-testid': testId }: Props) => {
+export const CoinAmount = ({ variant, action, 'data-testid': testId }: Props) => {
   const { buildTestId } = useBuildTestId({ id: testId });
   const { amountUser, currencyIn, currencyOut } = useSelector((state) => state.swapForm);
   const dispatch = useDispatch();
@@ -33,12 +35,20 @@ export const CoinAmount = ({ variant, 'data-testid': testId }: Props) => {
   const [isCalculating, setIsCalculating] = useState(false);
   const context = useSdkContext();
 
-  const coinsIn = useMemo(() => getCoinsFor({ context }), [context]);
+  const coinsIn = useMemo<SkybridgeCoin[]>(
+    () => getCoinsFor({ context, action, direction: 'in' }),
+    [context, action],
+  );
 
-  const coinsOut = useMemo(() => getSwapableWith({ context, coin: currencyIn }), [
-    context,
-    currencyIn,
-  ]);
+  const coinsOut = useMemo<SkybridgeCoin[]>(
+    () => getSwapableWith({ context, coin: currencyIn, action }).filter((it) => it !== currencyIn),
+    [context, action, currencyIn],
+  );
+
+  useEffect(() => {
+    if (coinsIn.includes(currencyIn)) return;
+    dispatch(actionSetSwapFormData({ currencyIn: coinsIn[0] ?? 'BTC' }));
+  }, [coinsIn, currencyIn, dispatch]);
 
   useEffect(() => {
     if (coinsOut.includes(currencyOut)) return;
@@ -46,6 +56,8 @@ export const CoinAmount = ({ variant, 'data-testid': testId }: Props) => {
   }, [coinsOut, currencyOut, dispatch]);
 
   useEffect(() => {
+    if (currencyIn === 'sbBTC' || currencyOut === 'sbBTC') return;
+
     let cancelled = false;
 
     (async () => {
@@ -57,7 +69,7 @@ export const CoinAmount = ({ variant, 'data-testid': testId }: Props) => {
         const context = await buildContext({ mode: 'test' });
 
         if (cancelled) return;
-        const { amountOut } = await estimateAmountOut({
+        const { amountOut } = await estimateSwapAmountOut({
           context,
           amountUser,
           currencyIn,

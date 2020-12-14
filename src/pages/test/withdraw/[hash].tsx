@@ -1,12 +1,12 @@
-import { SwapForm } from '../../../scenes/SwapForm';
+import { SwapDetails } from '../../../scenes/SwapDetails';
 import { GlobalStyles } from '../../../modules/styles';
 import { SdkContextProvider } from '../../../modules/sdk-context';
 
-export default function FloatNewTest() {
+export default function WithdrawDetailsTest() {
   return (
     <SdkContextProvider mode="test">
       <GlobalStyles />
-      <SwapForm action="float" />
+      <SwapDetails />
     </SdkContextProvider>
   );
 }

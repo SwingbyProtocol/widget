@@ -1,16 +1,16 @@
-import { buildContext, Mode, SwingbyContext } from '@swingby-protocol/sdk';
+import { buildContext, SkybridgeMode, SkybridgeContext } from '@swingby-protocol/sdk';
 import React, { useContext, useEffect, useState } from 'react';
 
-const SdkContext = React.createContext<SwingbyContext>((null as unknown) as SwingbyContext);
+const SdkContext = React.createContext<SkybridgeContext>((null as unknown) as SkybridgeContext);
 
 export const SdkContextProvider = ({
   children,
   mode,
 }: {
   children?: React.ReactNode;
-  mode: Mode;
+  mode: SkybridgeMode;
 }) => {
-  const [context, setContext] = useState<SwingbyContext | null>(null);
+  const [context, setContext] = useState<SkybridgeContext | null>(null);
 
   useEffect(() => {
     (async () => {

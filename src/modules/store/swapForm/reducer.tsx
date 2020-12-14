@@ -1,4 +1,4 @@
-import { Coin } from '@swingby-protocol/sdk';
+import { SkybridgeCoin } from '@swingby-protocol/sdk';
 import { Reducer } from 'redux';
 
 enum Actions {
@@ -9,8 +9,8 @@ enum Actions {
 
 const initialState = {
   step: 'step-amounts' as 'step-amounts' | 'step-address',
-  currencyIn: 'BTC' as Coin,
-  currencyOut: 'WBTC' as Coin,
+  currencyIn: 'BTC' as SkybridgeCoin,
+  currencyOut: 'WBTC' as SkybridgeCoin,
   amountUser: '',
   addressUserIn: '',
 };

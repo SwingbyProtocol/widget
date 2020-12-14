@@ -5,7 +5,7 @@ import {
   useBuildTestId,
   useMatchMedia,
 } from '@swingby-protocol/pulsar';
-import { Coin } from '@swingby-protocol/sdk';
+import { SkybridgeCoin } from '@swingby-protocol/sdk';
 import { useEffect, useState } from 'react';
 
 import { StylingConstants } from '../../../modules/styles';
@@ -14,10 +14,10 @@ import { HorizonalList } from './HorizonalList';
 import { ButtonCoin, ButtonCoinCaret, ButtonCoinName, LonelyCoinButton, Variant } from './styled';
 
 type Props = {
-  coins: Coin[];
+  coins: SkybridgeCoin[];
   variant: Variant;
-  value: Coin;
-  onChange: (coin: Coin) => void;
+  value: SkybridgeCoin;
+  onChange: (coin: SkybridgeCoin) => void;
 } & Testable;
 
 export const CurrencySelector = ({

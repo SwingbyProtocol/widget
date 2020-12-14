@@ -1,4 +1,4 @@
-import { Mode } from '@swingby-protocol/sdk';
+import { SkybridgeMode } from '@swingby-protocol/sdk';
 import { rem } from 'polished';
 import styled, { css } from 'styled-components';
 
@@ -14,7 +14,7 @@ const chaos = css`
   color: ${({ theme }) => theme.pulsar.color.danger.text};
 `;
 
-export const ModeWarningContainer = styled.div<{ mode: Mode }>`
+export const ModeWarningContainer = styled.div<{ mode: SkybridgeMode }>`
   position: fixed;
   top: 0;
   left: 0;

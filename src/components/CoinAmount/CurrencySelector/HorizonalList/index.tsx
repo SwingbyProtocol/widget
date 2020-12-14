@@ -1,5 +1,5 @@
 import { CoinIcon, Testable, useBuildTestId } from '@swingby-protocol/pulsar';
-import { Coin } from '@swingby-protocol/sdk';
+import { SkybridgeCoin } from '@swingby-protocol/sdk';
 import { useTransition, animated } from 'react-spring';
 
 import { BackButton } from '../../../BackButton';
@@ -7,10 +7,10 @@ import { BackButton } from '../../../BackButton';
 import { HorizontalSelectorBg, Container, CoinList, CoinButton, CoinListWrapper } from './styled';
 
 type Props = {
-  coins: Coin[];
+  coins: SkybridgeCoin[];
   isOpen: boolean;
   onClose: () => void;
-  onChange: (coin: Coin) => void;
+  onChange: (coin: SkybridgeCoin) => void;
 } & Testable;
 
 export const HorizonalList = ({

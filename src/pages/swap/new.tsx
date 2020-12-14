@@ -6,7 +6,7 @@ export default function SwapNew() {
   return (
     <SdkContextProvider mode="production">
       <GlobalStyles />
-      <SwapForm />
+      <SwapForm action="swap" />
     </SdkContextProvider>
   );
 }
