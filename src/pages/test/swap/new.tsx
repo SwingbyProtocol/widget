@@ -6,7 +6,7 @@ export default function SwapNewTest() {
   return (
     <SdkContextProvider mode="test">
       <GlobalStyles />
-      <SwapForm />
+      <SwapForm action="swap" />
     </SdkContextProvider>
   );
 }

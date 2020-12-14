@@ -19,10 +19,11 @@ import {
 } from '../../../modules/store/swapForm';
 import { StylingConstants } from '../../../modules/styles';
 import { useCreateSwap } from '../../../modules/create-swap';
+import { WidgetActionProp } from '../../../modules/widget-action';
 
 import { BannerContainer, ResponsiveSpace, AddressInput } from './styled';
 
-export const Banner = () => {
+export const Banner = ({ action }: WidgetActionProp) => {
   const { buildTestId } = useBuildTestId({ id: 'banner.form' });
   const { formatMessage } = useIntl();
   const hasWideWidth = useMatchMedia({ query: StylingConstants.mediaWideWidth });

@@ -14,8 +14,9 @@ import { useWidgetLayout } from '../../../modules/layout';
 import { VerticalWidgetView } from '../../../components/VerticalWidgetView';
 import { Separator } from '../../../components/Separator';
 import { useCreateSwap } from '../../../modules/create-swap';
+import { WidgetActionProp } from '../../../modules/widget-action';
 
-export const Vertical = () => {
+export const Vertical = ({ action }: WidgetActionProp) => {
   const { buildTestId } = useBuildTestId({ id: 'vertical.form' });
   const { formatMessage } = useIntl();
   const { addressUserIn, currencyOut, step } = useSelector((state) => state.swapForm);

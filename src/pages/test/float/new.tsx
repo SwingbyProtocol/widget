@@ -6,7 +6,7 @@ export default function FloatNewTest() {
   return (
     <SdkContextProvider mode="test">
       <GlobalStyles />
-      <SwapForm />
+      <SwapForm action="float" />
     </SdkContextProvider>
   );
 }
