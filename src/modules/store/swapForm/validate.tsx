@@ -22,22 +22,9 @@ const areCurrenciesValid = ({
   action: SkybridgeAction;
   context: SkybridgeContext;
 }): boolean => {
-  const coins = getCoinsFor({ context });
-  if (
-    action === 'swap' &&
-    (currencyIn === 'sbBTC' ||
-      currencyOut === 'sbBTC' ||
-      !coins.includes(currencyIn) ||
-      !coins.includes(currencyOut))
-  ) {
-    return false;
-  }
-
-  if (action === 'float' && (!['BTC', 'WBTC'].includes(currencyIn) || currencyOut !== 'sbBTC')) {
-    return false;
-  }
-
-  if (action === 'withdraw' && (!['BTC', 'WBTC'].includes(currencyOut) || currencyIn !== 'sbBTC')) {
+  const coinsIn = getCoinsFor({ context, action, direction: 'in' });
+  const coinsOut = getCoinsFor({ context, action, direction: 'out' });
+  if (!coinsIn.includes(currencyIn) || !coinsOut.includes(currencyOut)) {
     return false;
   }
 
