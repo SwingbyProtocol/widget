@@ -19,7 +19,7 @@ import {
   useIsReceivingAddressValid,
 } from '../../../modules/store/swapForm';
 import { StylingConstants } from '../../../modules/styles';
-import { useCreateSwap } from '../../../modules/create-swap';
+import { useCreate } from '../../../modules/create-swap';
 
 import { BannerContainer, ResponsiveSpace, AddressInput } from './styled';
 
@@ -31,7 +31,7 @@ export const Banner = ({ action }: { action: SkybridgeAction }) => {
   const { areCurrenciesValid: areFormAmountsValid } = useAreCurrenciesValid({ action });
   const dispatch = useDispatch();
   const { isReceivingAddressValid } = useIsReceivingAddressValid();
-  const { loading, createSwap } = useCreateSwap();
+  const { loading, create } = useCreate({ action });
 
   return (
     <BannerContainer>
@@ -56,7 +56,7 @@ export const Banner = ({ action }: { action: SkybridgeAction }) => {
             size="state"
             shape="fit"
             disabled={!areFormAmountsValid || !isReceivingAddressValid || loading}
-            onClick={createSwap}
+            onClick={create}
             data-testid={buildTestId('swap-btn')}
           >
             {loading ? (

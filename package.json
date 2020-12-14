@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@swingby-protocol/pulsar": "^1.0.0-alpha.79",
-    "@swingby-protocol/sdk": "^1.0.0-alpha.37",
+    "@swingby-protocol/sdk": "^1.0.0-alpha.38",
     "big.js": "^6.0.2",
     "hex-to-binary": "^1.0.1",
     "isomorphic-webcrypto": "^2.3.6",
