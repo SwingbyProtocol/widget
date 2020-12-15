@@ -45,7 +45,7 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
   return (
     <BannerContainer>
       <BackButton
-        onClick={() => push(`${context.mode}/${resource}/new`)}
+        onClick={() => push(`/${context.mode}/${resource}/new`)}
         data-testid={buildTestId('back-btn')}
       />
       <ResponsiveSpace />

@@ -34,7 +34,7 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
 
   return (
     <VerticalWidgetView
-      onClickBack={() => push(`${context.mode}/${resource}/new`)}
+      onClickBack={() => push(`/${context.mode}/${resource}/new`)}
       top={<Top swap={swap} data-testid={buildTestId('')} />}
       data-testid={buildTestId('')}
     >
