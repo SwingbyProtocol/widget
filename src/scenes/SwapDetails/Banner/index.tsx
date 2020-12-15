@@ -8,7 +8,7 @@ import {
   useBuildTestId,
   Loading,
 } from '@swingby-protocol/pulsar';
-import { buildExplorerLink } from '@swingby-protocol/sdk';
+import { buildExplorerLink, SkybridgeResource } from '@swingby-protocol/sdk';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -21,7 +21,7 @@ import { useSwapDetails } from '../../../modules/swap-details';
 
 import { BannerContainer, ResponsiveSpace, SendTo, SendToLabel, SendToValue } from './styled';
 
-export const Banner = () => {
+export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
   const { buildTestId } = useBuildTestId({ id: 'banner.swap-details' });
   const { formatMessage, locale } = useIntl();
   const hasWideWidth = useMatchMedia({ query: StylingConstants.mediaWideWidth });
@@ -45,7 +45,7 @@ export const Banner = () => {
   return (
     <BannerContainer>
       <BackButton
-        onClick={() => push(`${context.mode === 'test' ? '/test' : ''}/swap/new`)}
+        onClick={() => push(`${context.mode}/${resource}/new`)}
         data-testid={buildTestId('back-btn')}
       />
       <ResponsiveSpace />

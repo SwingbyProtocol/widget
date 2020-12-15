@@ -9,14 +9,20 @@ import { useWidgetLayout } from '../../modules/layout';
 import { Banner } from './Banner';
 import { Vertical } from './Vertical';
 
-export const SwapDetails = ({ resource: _resource }: { resource: SkybridgeResource }) => {
+export const SwapDetails = ({ resource }: { resource: SkybridgeResource }) => {
   const layout = useWidgetLayout();
   return (
     <>
       <ModeWarning />
       <HeadTitle />
       <Favicon />
-      <WidgetContainer>{layout === 'widget-banner' ? <Banner /> : <Vertical />}</WidgetContainer>
+      <WidgetContainer>
+        {layout === 'widget-banner' ? (
+          <Banner resource={resource} />
+        ) : (
+          <Vertical resource={resource} />
+        )}
+      </WidgetContainer>
     </>
   );
 };
