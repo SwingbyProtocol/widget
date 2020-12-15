@@ -3,16 +3,18 @@ import { useEffect, useMemo, useState } from 'react';
 import { DefaultRootState, useDispatch, useSelector } from 'react-redux';
 
 import { logger } from '../../logger';
+import { useWidgetPathParams } from '../../path-params';
 import { useSdkContext } from '../../sdk-context';
 import { actionSetSwap } from '../../store/swaps';
-import { useSwapHash } from '../useSwapHash';
 
 const MS_TILL_NEXT_TRY = 10000;
 
 type SwapDetails = { loading: boolean; swap: null | DefaultRootState['swaps'][string] };
 
 export const useSwapDetails = (): SwapDetails => {
-  const hash = useSwapHash();
+  const { hash: hashParam } = useWidgetPathParams();
+  const hash = hashParam ?? '';
+
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const swap = useSelector((state) => state.swaps[hash]);

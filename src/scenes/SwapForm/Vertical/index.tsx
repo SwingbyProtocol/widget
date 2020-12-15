@@ -1,7 +1,7 @@
 import { Button, CoinIcon, Loading, TextInput, useBuildTestId } from '@swingby-protocol/pulsar';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { SkybridgeAction } from '@swingby-protocol/sdk';
+import { SkybridgeResource } from '@swingby-protocol/sdk';
 
 import { CoinAmount } from '../../../components/CoinAmount';
 import {
@@ -16,15 +16,15 @@ import { VerticalWidgetView } from '../../../components/VerticalWidgetView';
 import { Separator } from '../../../components/Separator';
 import { useCreate } from '../../../modules/create-swap';
 
-export const Vertical = ({ action }: { action: SkybridgeAction }) => {
+export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
   const { buildTestId } = useBuildTestId({ id: 'vertical.form' });
   const { formatMessage } = useIntl();
   const { addressUserIn, currencyOut, step } = useSelector((state) => state.swapForm);
   const dispatch = useDispatch();
   const layout = useWidgetLayout();
-  const { areCurrenciesValid: areFormAmountsValid } = useAreCurrenciesValid({ action });
+  const { areCurrenciesValid: areFormAmountsValid } = useAreCurrenciesValid({ resource });
   const { isReceivingAddressValid } = useIsReceivingAddressValid();
-  const { loading, create } = useCreate({ action });
+  const { loading, create } = useCreate({ resource });
 
   return (
     <VerticalWidgetView
@@ -36,7 +36,7 @@ export const Vertical = ({ action }: { action: SkybridgeAction }) => {
       data-testid={buildTestId('')}
     >
       {(step === 'step-amounts' || layout === 'widget-full' || layout === 'website') && (
-        <CoinAmount variant="vertical" action={action} data-testid={buildTestId('amounts')} />
+        <CoinAmount variant="vertical" resource={resource} data-testid={buildTestId('amounts')} />
       )}
 
       {(step === 'step-address' || layout === 'widget-full' || layout === 'website') && (

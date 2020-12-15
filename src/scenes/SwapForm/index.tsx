@@ -1,4 +1,4 @@
-import { SkybridgeAction } from '@swingby-protocol/sdk';
+import { SkybridgeResource } from '@swingby-protocol/sdk';
 
 import { useWidgetLayout } from '../../modules/layout';
 import { WidgetContainer } from '../../components/WidgetContainer';
@@ -9,7 +9,7 @@ import { Favicon } from '../../components/Favicon';
 import { Banner } from './Banner';
 import { Vertical } from './Vertical';
 
-export const SwapForm = ({ action }: { action: SkybridgeAction }) => {
+export const SwapForm = ({ resource }: { resource: SkybridgeResource }) => {
   const layout = useWidgetLayout();
   return (
     <>
@@ -17,7 +17,11 @@ export const SwapForm = ({ action }: { action: SkybridgeAction }) => {
       <HeadTitle />
       <Favicon />
       <WidgetContainer>
-        {layout === 'widget-banner' ? <Banner action={action} /> : <Vertical action={action} />}
+        {layout === 'widget-banner' ? (
+          <Banner resource={resource} />
+        ) : (
+          <Vertical resource={resource} />
+        )}
       </WidgetContainer>
     </>
   );

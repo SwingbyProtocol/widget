@@ -1,4 +1,4 @@
-import { createFloat, createSwap, SkybridgeAction } from '@swingby-protocol/sdk';
+import { createFloat, createSwap, SkybridgeResource } from '@swingby-protocol/sdk';
 import { useRouter } from 'next/router';
 import { useCallback, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,7 +8,7 @@ import { useSdkContext } from '../sdk-context';
 import { actionClearSwapFormData } from '../store/swapForm';
 import { actionSetSwap } from '../store/swaps';
 
-export const useCreate = ({ action }: { action: SkybridgeAction }) => {
+export const useCreate = ({ resource }: { resource: SkybridgeResource }) => {
   const [loading, setLoading] = useState(false);
   const context = useSdkContext();
   const addressUserIn = useSelector((state) => state.swapForm.addressUserIn);
@@ -30,7 +30,7 @@ export const useCreate = ({ action }: { action: SkybridgeAction }) => {
 
     try {
       const { hash } = await (async () => {
-        if (action === 'swap') {
+        if (resource === 'swap') {
           const swap = await createSwap({
             context,
             amountUser,
@@ -47,7 +47,7 @@ export const useCreate = ({ action }: { action: SkybridgeAction }) => {
           return swap;
         }
 
-        if (action === 'float') {
+        if (resource === 'pool') {
           const swap = await createFloat({
             context,
             amountUser,
@@ -63,14 +63,14 @@ export const useCreate = ({ action }: { action: SkybridgeAction }) => {
           return swap;
         }
 
-        throw new Error(`Invalid action "${action}"`);
+        throw new Error(`Invalid action "${resource}"`);
       })();
 
-      push(`${context.mode === 'test' ? '/test' : ''}/${action}/${hash}`);
+      push(`${context.mode === 'test' ? '/test' : ''}/${resource}/${hash}`);
     } finally {
       setLoading(false);
     }
-  }, [context, addressUserIn, currencyIn, currencyOut, amountUser, push, dispatch, action]);
+  }, [context, addressUserIn, currencyIn, currencyOut, amountUser, push, dispatch, resource]);
 
   return useMemo(() => ({ loading, create }), [create, loading]);
 };

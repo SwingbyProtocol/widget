@@ -8,7 +8,7 @@ import {
 } from '@swingby-protocol/pulsar';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { SkybridgeAction } from '@swingby-protocol/sdk';
+import { SkybridgeResource } from '@swingby-protocol/sdk';
 
 import { BackButton } from '../../../components/BackButton';
 import { CoinAmount } from '../../../components/CoinAmount';
@@ -23,15 +23,15 @@ import { useCreate } from '../../../modules/create-swap';
 
 import { BannerContainer, ResponsiveSpace, AddressInput } from './styled';
 
-export const Banner = ({ action }: { action: SkybridgeAction }) => {
+export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
   const { buildTestId } = useBuildTestId({ id: 'banner.form' });
   const { formatMessage } = useIntl();
   const hasWideWidth = useMatchMedia({ query: StylingConstants.mediaWideWidth });
   const { currencyOut, addressUserIn, step } = useSelector((state) => state.swapForm);
-  const { areCurrenciesValid: areFormAmountsValid } = useAreCurrenciesValid({ action });
+  const { areCurrenciesValid: areFormAmountsValid } = useAreCurrenciesValid({ resource });
   const dispatch = useDispatch();
   const { isReceivingAddressValid } = useIsReceivingAddressValid();
-  const { loading, create } = useCreate({ action });
+  const { loading, create } = useCreate({ resource });
 
   return (
     <BannerContainer>
@@ -70,7 +70,7 @@ export const Banner = ({ action }: { action: SkybridgeAction }) => {
         </>
       ) : (
         <>
-          <CoinAmount variant="banner" action={action} data-testid={buildTestId('amounts')} />
+          <CoinAmount variant="banner" resource={resource} data-testid={buildTestId('amounts')} />
           <ResponsiveSpace />
           <Button
             variant="primary"

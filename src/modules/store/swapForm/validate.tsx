@@ -5,7 +5,7 @@ import {
   getChainFor,
   getCoinsFor,
   isAddressValid,
-  SkybridgeAction,
+  SkybridgeResource,
   SkybridgeContext,
 } from '@swingby-protocol/sdk';
 
@@ -13,17 +13,17 @@ import { useSdkContext } from '../../sdk-context';
 import { logger } from '../../logger';
 
 const areCurrenciesValid = ({
-  action,
+  resource,
   amountUser,
   currencyIn,
   currencyOut,
   context,
 }: Pick<DefaultRootState['swapForm'], 'currencyIn' | 'currencyOut' | 'amountUser'> & {
-  action: SkybridgeAction;
+  resource: SkybridgeResource;
   context: SkybridgeContext;
 }): boolean => {
-  const coinsIn = getCoinsFor({ context, action, direction: 'in' });
-  const coinsOut = getCoinsFor({ context, action, direction: 'out' });
+  const coinsIn = getCoinsFor({ context, resource, direction: 'in' });
+  const coinsOut = getCoinsFor({ context, resource, direction: 'out' });
   if (!coinsIn.includes(currencyIn) || !coinsOut.includes(currencyOut)) {
     return false;
   }
@@ -41,14 +41,13 @@ const areCurrenciesValid = ({
   return true;
 };
 
-export const useAreCurrenciesValid = ({ action }: { action: SkybridgeAction }) => {
+export const useAreCurrenciesValid = ({ resource }: { resource: SkybridgeResource }) => {
   const data = useSelector((state) => state.swapForm);
   const context = useSdkContext();
-  return useMemo(() => ({ areCurrenciesValid: areCurrenciesValid({ ...data, context, action }) }), [
-    data,
-    context,
-    action,
-  ]);
+  return useMemo(
+    () => ({ areCurrenciesValid: areCurrenciesValid({ ...data, context, resource }) }),
+    [data, context, resource],
+  );
 };
 
 export const useIsReceivingAddressValid = () => {
