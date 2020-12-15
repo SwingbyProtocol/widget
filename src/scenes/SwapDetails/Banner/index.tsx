@@ -17,7 +17,7 @@ import { BackButton } from '../../../components/BackButton';
 import { Space } from '../../../components/Space';
 import { useSdkContext } from '../../../modules/sdk-context';
 import { StylingConstants } from '../../../modules/styles';
-import { useSwapDetails } from '../../../modules/swap-details';
+import { useDetails } from '../../../modules/details';
 
 import { BannerContainer, ResponsiveSpace, SendTo, SendToLabel, SendToValue } from './styled';
 
@@ -25,7 +25,7 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
   const { buildTestId } = useBuildTestId({ id: 'banner.swap-details' });
   const { formatMessage, locale } = useIntl();
   const hasWideWidth = useMatchMedia({ query: StylingConstants.mediaWideWidth });
-  const { swap } = useSwapDetails();
+  const { swap } = useDetails({ resource });
   const { push } = useRouter();
   const context = useSdkContext();
 

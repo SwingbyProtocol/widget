@@ -1,17 +1,17 @@
-import { getSwapDetails } from '@swingby-protocol/sdk';
+import { getSwapDetails, SkybridgeResource } from '@swingby-protocol/sdk';
 import { useEffect, useMemo, useState } from 'react';
 import { DefaultRootState, useDispatch, useSelector } from 'react-redux';
 
-import { logger } from '../../logger';
-import { useWidgetPathParams } from '../../path-params';
-import { useSdkContext } from '../../sdk-context';
-import { actionSetSwap } from '../../store/swaps';
+import { logger } from '../logger';
+import { useWidgetPathParams } from '../path-params';
+import { useSdkContext } from '../sdk-context';
+import { actionSetSwap } from '../store/swaps';
 
 const MS_TILL_NEXT_TRY = 10000;
 
 type SwapDetails = { loading: boolean; swap: null | DefaultRootState['swaps'][string] };
 
-export const useSwapDetails = (): SwapDetails => {
+export const useDetails = ({ resource }: { resource: SkybridgeResource }): SwapDetails => {
   const { hash: hashParam } = useWidgetPathParams();
   const hash = hashParam ?? '';
 
@@ -28,12 +28,31 @@ export const useSwapDetails = (): SwapDetails => {
       setLoading(true);
 
       try {
-        const swap = await getSwapDetails({ context, hash });
+        const swap = await (async () => {
+          if (resource === 'swap') {
+            const result = await getSwapDetails({ context, hash });
+            logger.debug('getSwapDetails() returned: %O', result);
+            return result;
+          }
+
+          if (resource === 'pool') {
+            const result = await getSwapDetails({ context, hash });
+            logger.debug('getFloatDetails() returned: %O', result);
+            return result;
+          }
+
+          if (resource === 'withdrawal') {
+            const result = await getSwapDetails({ context, hash });
+            logger.debug('getWithdrawalDetails() returned: %O', result);
+            return result;
+          }
+
+          throw new Error(`Invalid resource "${resource}"`);
+        })();
         if (cancelled) {
           return;
         }
 
-        logger.debug('getSwapDetails() returned: %O', swap);
         dispatch(actionSetSwap({ ...swap }));
 
         if (
@@ -62,7 +81,7 @@ export const useSwapDetails = (): SwapDetails => {
         timeoutId = null;
       }
     };
-  }, [dispatch, hash, context]);
+  }, [dispatch, hash, context, resource]);
 
   return useMemo(() => ({ swap: swap ?? null, loading }), [swap, loading]);
 };
