@@ -66,7 +66,7 @@ export const useCreate = ({ resource }: { resource: SkybridgeResource }) => {
         throw new Error(`Invalid action "${resource}"`);
       })();
 
-      push(`${context.mode === 'test' ? '/test' : ''}/${resource}/${hash}`);
+      push(`/${context.mode}/${resource}/${hash}`);
     } finally {
       setLoading(false);
     }

@@ -22,7 +22,7 @@ jobs:
 
       - name: UI tests
         run: |
-          yarn start & yarn wait-on http://localhost:3000/swap/new
+          yarn start & yarn wait-on http://localhost:3000/test/swap/new
           yarn percy exec -- cypress run -e CI=true
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}

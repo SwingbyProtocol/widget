@@ -1,5 +1,5 @@
 import { Loading, useBuildTestId, SwapProgress } from '@swingby-protocol/pulsar';
-import { buildExplorerLink } from '@swingby-protocol/sdk';
+import { buildExplorerLink, SkybridgeResource } from '@swingby-protocol/sdk';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -7,14 +7,14 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { Space } from '../../../components/Space';
 import { VerticalWidgetView } from '../../../components/VerticalWidgetView';
 import { useSdkContext } from '../../../modules/sdk-context';
-import { useSwapDetails } from '../../../modules/swap-details';
+import { useDetails } from '../../../modules/details';
 
 import { ExplorerLink, ExplorerLinkCaret, ProgressContainer, ExplorerContainer } from './styled';
 import { Top } from './Top';
 
-export const Vertical = () => {
+export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
   const { buildTestId } = useBuildTestId({ id: 'vertical.swap-details' });
-  const { swap } = useSwapDetails();
+  const { swap } = useDetails({ resource });
   const { push } = useRouter();
   const { locale } = useIntl();
   const context = useSdkContext();
@@ -34,7 +34,7 @@ export const Vertical = () => {
 
   return (
     <VerticalWidgetView
-      onClickBack={() => push(`${context.mode === 'test' ? '/test' : ''}/swap/new`)}
+      onClickBack={() => push(`/${context.mode}/${resource}/new`)}
       top={<Top swap={swap} data-testid={buildTestId('')} />}
       data-testid={buildTestId('')}
     >
