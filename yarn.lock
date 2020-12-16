@@ -1024,18 +1024,19 @@
   resolved "https://registry.yarnpkg.com/@swingby-protocol/prettier-config/-/prettier-config-1.0.2.tgz#ff4c03ac7ad3dab1d02a914d31debcf9441fa3e8"
   integrity sha512-ROirdMQDD6PxHTC+4J7pFH4ik8Yf3frLwf6XDBjuFKKfKCqvpqkHWHnYCJG1PS5uODmMCiH+m1JoIYr/vDfnAA==
 
-"@swingby-protocol/pulsar@^1.0.0-alpha.80":
-  version "1.0.0-alpha.80"
-  resolved "https://registry.yarnpkg.com/@swingby-protocol/pulsar/-/pulsar-1.0.0-alpha.80.tgz#df6a335b5ed9dbf02f0c60ca1137dbd8220ea21f"
-  integrity sha512-I3IWWn6WhiMChkY17HT/ugZVAbT/YwHAIpUmP0O6AFmH/r45S6bB+EdinFlPTMWu4e3mTu+N6Nlprk+93996tg==
+"@swingby-protocol/pulsar@^1.0.0-alpha.81":
+  version "1.0.0-alpha.81"
+  resolved "https://registry.yarnpkg.com/@swingby-protocol/pulsar/-/pulsar-1.0.0-alpha.81.tgz#8dd53fa7c64b18796d6cd971bf44cdadd1370e15"
+  integrity sha512-70Zox9mCma0ZJi8AeMn0KuEwRBJ1+g7xCYTvehKuTp8jKzW6414ffBn9sr3bB6RAQq9ySpDWGYniP47IKeLlmw==
   dependencies:
     "@tippyjs/react" "^4.2.0"
     nanoid "3.1.18"
+    qrcode.react "^1.0.0"
 
-"@swingby-protocol/sdk@^1.0.0-alpha.41":
-  version "1.0.0-alpha.41"
-  resolved "https://registry.yarnpkg.com/@swingby-protocol/sdk/-/sdk-1.0.0-alpha.41.tgz#7ebf2f9e0216fe19f76c2fa70e9a167eb13d7d33"
-  integrity sha512-4xXDUa1pjoygkhQp7vkUKyzN0cZ33TjBGcVInuXjOjfL8Zc48phjEK3cI1T2akyTWMl/IDfnFX2Dp/Wfp/g5vg==
+"@swingby-protocol/sdk@^1.0.0-alpha.42":
+  version "1.0.0-alpha.42"
+  resolved "https://registry.yarnpkg.com/@swingby-protocol/sdk/-/sdk-1.0.0-alpha.42.tgz#931c4c3e7b9be8872c28b530df8b66f700b68375"
+  integrity sha512-sxZHWR428j6SBfgrWANCNSZmw6R3Ir6QcDT6yj1i1+8fr1r1XpJnTn1LKl3Kr6UWZvWtkqU3Njmqm8BBKCeftQ==
   dependencies:
     bech32 "^1.1.4"
     big.js "^6.0.2"
@@ -7551,7 +7552,7 @@ prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@15.7.2, prop-types@^15.5.8, prop-types@^15.7.2:
+prop-types@15.7.2, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -7664,6 +7665,20 @@ pvutils@latest:
   version "1.0.17"
   resolved "https://registry.yarnpkg.com/pvutils/-/pvutils-1.0.17.tgz#ade3c74dfe7178944fe44806626bd2e249d996bf"
   integrity sha512-wLHYUQxWaXVQvKnwIDWFVKDJku9XDCvyhhxoq8dc5MFdIlRenyPI9eSfEtcvgHgD7FlvCyGAlWgOzRnZD99GZQ==
+
+qr.js@0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/qr.js/-/qr.js-0.0.0.tgz#cace86386f59a0db8050fa90d9b6b0e88a1e364f"
+  integrity sha1-ys6GOG9ZoNuAUPqQ2baw6IoeNk8=
+
+qrcode.react@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/qrcode.react/-/qrcode.react-1.0.0.tgz#7e8889db3b769e555e8eb463d4c6de221c36d5de"
+  integrity sha512-jBXleohRTwvGBe1ngV+62QvEZ/9IZqQivdwzo9pJM4LQMoCM2VnvNBnKdjvGnKyDZ/l0nCDgsPod19RzlPvm/Q==
+  dependencies:
+    loose-envify "^1.4.0"
+    prop-types "^15.6.0"
+    qr.js "0.0.0"
 
 qs@6.7.0:
   version "6.7.0"

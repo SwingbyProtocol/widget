@@ -1,4 +1,9 @@
-import { createFloat, createSwap, SkybridgeResource } from '@swingby-protocol/sdk';
+import {
+  createFloat,
+  createSwap,
+  createWithdrawal,
+  SkybridgeResource,
+} from '@swingby-protocol/sdk';
 import { useRouter } from 'next/router';
 import { useCallback, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -56,6 +61,22 @@ export const useCreate = ({ resource }: { resource: SkybridgeResource }) => {
           });
 
           logger.debug('createFloat() has finished', swap);
+
+          dispatch(actionClearSwapFormData());
+          dispatch(actionSetSwap({ ...swap, status: 'WAITING' }));
+
+          return swap;
+        }
+
+        if (resource === 'withdrawal') {
+          const swap = await createWithdrawal({
+            context,
+            amountUser,
+            currencyOut: currencyOut as any,
+            addressUserIn,
+          });
+
+          logger.debug('createWithdrawal() has finished', swap);
 
           dispatch(actionClearSwapFormData());
           dispatch(actionSetSwap({ ...swap, status: 'WAITING' }));

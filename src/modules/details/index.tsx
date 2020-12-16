@@ -1,4 +1,9 @@
-import { getSwapDetails, SkybridgeResource } from '@swingby-protocol/sdk';
+import {
+  getFloatDetails,
+  getSwapDetails,
+  getWithdrawalDetails,
+  SkybridgeResource,
+} from '@swingby-protocol/sdk';
 import { useEffect, useMemo, useState } from 'react';
 import { DefaultRootState, useDispatch, useSelector } from 'react-redux';
 
@@ -36,13 +41,13 @@ export const useDetails = ({ resource }: { resource: SkybridgeResource }): SwapD
           }
 
           if (resource === 'pool') {
-            const result = await getSwapDetails({ context, hash });
+            const result = await getFloatDetails({ context, hash });
             logger.debug('getFloatDetails() returned: %O', result);
             return result;
           }
 
           if (resource === 'withdrawal') {
-            const result = await getSwapDetails({ context, hash });
+            const result = await getWithdrawalDetails({ context, hash });
             logger.debug('getWithdrawalDetails() returned: %O', result);
             return result;
           }
