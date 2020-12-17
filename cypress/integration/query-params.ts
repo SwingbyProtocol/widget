@@ -82,7 +82,7 @@ describe('Query params', () => {
 
   it('fills forms correctly for withdrawals', () => {
     cy.visit(
-      '/test/withdrawal/new?defaultCurrencyIn=BTC&defaultCurrencyOut=WBTC&defaultAddressUserIn=0xaaaa&defaultAmountUser=1',
+      '/test/withdrawal/new?defaultCurrencyIn=sbBTC&defaultCurrencyOut=WBTC&defaultAddressUserIn=0xaaaa&defaultAmountUser=1',
     );
 
     cy.get('[data-testid="vertical.form.amounts.currency-from-select.target"]').should(
