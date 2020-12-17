@@ -3,6 +3,7 @@ import {
   CopyToClipboard,
   getCryptoAssetFormatter,
   Icon,
+  QRCodeButton,
   Testable,
   useBuildTestId,
 } from '@swingby-protocol/pulsar';
@@ -11,8 +12,9 @@ import { DefaultRootState } from 'react-redux';
 
 import { FancyCryptoAmount } from '../../../../components/FancyCryptoAmount';
 import { Space } from '../../../../components/Space';
+import { getTransferUriFor } from '../../../../modules/send-funds-uri';
 
-import { BigText, CoinWithText, Container } from './styled';
+import { BigText, CoinWithText, Container, AddressAndQr } from './styled';
 
 export const Top = ({
   swap,
@@ -92,12 +94,25 @@ export const Top = ({
         />
       </BigText>
       <Space size="town" />
-      <CopyToClipboard
-        value={swap.addressSwapIn}
-        left={<CoinIcon symbol={swap.currencyIn} />}
-        size="country"
-        data-testid={buildTestId('address')}
-      />
+      <AddressAndQr>
+        <CopyToClipboard
+          value={swap.addressSwapIn}
+          left={<CoinIcon symbol={swap.currencyIn} />}
+          size="country"
+          data-testid={buildTestId('address')}
+        />
+        <Space size="town" />
+        <QRCodeButton
+          variant="primary"
+          size="town"
+          shape="square"
+          value={getTransferUriFor({
+            address: swap.addressSwapIn,
+            coin: swap.currencyIn,
+            amount: swap.amountIn,
+          })}
+        />
+      </AddressAndQr>
     </>
   );
 };
