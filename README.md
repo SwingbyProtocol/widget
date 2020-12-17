@@ -14,3 +14,14 @@ The easiest way to integrate the widget into your app is
 | Banner | 320x76px  |
 | Small  | 320x375px |
 | Big    | 320x510px |
+
+## Passing in default values
+
+You may use the following query params to populate the widget’s form for the user.
+
+| Parameter              | Description                                                         |
+| ---------------------- | ------------------------------------------------------------------- |
+| `defaultCurrencyIn`    | Currency that the user will sent to Skybridge.                      |
+| `defaultCurrencyOut`   | Currency that the user will receive from Skybridge.                 |
+| `defaultAmountUser`    | Amount of the chosen “currency in” that the user wants to swap.     |
+| `defaultAddressUserIn` | The user’s address that Skybridge should send the swapped funds to. |
