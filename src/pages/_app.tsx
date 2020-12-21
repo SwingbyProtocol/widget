@@ -15,9 +15,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   const store = useStore();
   const defaultLocale = router.defaultLocale ?? 'en';
   const locale = router.locale ?? defaultLocale;
+  const theme =
+    router.query.theme === 'light' ? 'light' : router.query.theme === 'dark' ? 'dark' : undefined;
 
   return (
-    <PulsarThemeProvider>
+    <PulsarThemeProvider theme={theme}>
       <IntlProvider messages={en} locale={locale} defaultLocale={defaultLocale}>
         <PulsarGlobalStyles />
         <ReduxProvider store={store}>
