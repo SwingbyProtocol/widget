@@ -28,18 +28,18 @@ export const Top = ({
       <Container>
         <BigText data-testid={buildTestId('status-label')}>
           <CoinWithText>
-            <CoinIcon symbol={swap.currencyIn} />
+            <CoinIcon symbol={swap.currencyDeposit} />
             &nbsp;
-            {getCryptoAssetFormatter({ locale, displaySymbol: swap.currencyIn }).format(
-              +swap.amountIn,
+            {getCryptoAssetFormatter({ locale, displaySymbol: swap.currencyDeposit }).format(
+              +swap.amountDeposit,
             )}
           </CoinWithText>
           <Icon.SwapVertical />
           <CoinWithText>
-            <CoinIcon symbol={swap.currencyOut} />
+            <CoinIcon symbol={swap.currencyReceiving} />
             &nbsp;
-            {getCryptoAssetFormatter({ locale, displaySymbol: swap.currencyOut }).format(
-              +(swap.amountOut ?? 0),
+            {getCryptoAssetFormatter({ locale, displaySymbol: swap.currencyReceiving }).format(
+              +(swap.amountReceiving ?? 0),
             )}
           </CoinWithText>
         </BigText>
@@ -63,8 +63,8 @@ export const Top = ({
             values={{
               value: (
                 <FancyCryptoAmount
-                  amount={+(swap.amountOut ?? 0)}
-                  displaySymbol={swap.currencyOut}
+                  amount={+(swap.amountReceiving ?? 0)}
+                  displaySymbol={swap.currencyReceiving}
                 />
               ),
             }}
@@ -73,8 +73,8 @@ export const Top = ({
         <Space size="town" />
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <CopyToClipboard
-            value={swap.addressUserIn}
-            left={<CoinIcon symbol={swap.currencyOut} />}
+            value={swap.addressReceiving}
+            left={<CoinIcon symbol={swap.currencyReceiving} />}
             size="country"
             data-testid={buildTestId('address')}
           />
@@ -89,15 +89,20 @@ export const Top = ({
         <FormattedMessage
           id={`widget.status-label-long.${swap.status}`}
           values={{
-            value: <FancyCryptoAmount amount={+swap.amountIn} displaySymbol={swap.currencyIn} />,
+            value: (
+              <FancyCryptoAmount
+                amount={+swap.amountDeposit}
+                displaySymbol={swap.currencyDeposit}
+              />
+            ),
           }}
         />
       </BigText>
       <Space size="town" />
       <AddressAndQr>
         <CopyToClipboard
-          value={swap.addressSwapIn}
-          left={<CoinIcon symbol={swap.currencyIn} />}
+          value={swap.addressDeposit}
+          left={<CoinIcon symbol={swap.currencyDeposit} />}
           size="country"
           data-testid={buildTestId('address')}
         />
@@ -107,9 +112,9 @@ export const Top = ({
           size="town"
           shape="square"
           value={getTransferUriFor({
-            address: swap.addressSwapIn,
-            coin: swap.currencyIn,
-            amount: swap.amountIn,
+            address: swap.addressDeposit,
+            coin: swap.currencyDeposit,
+            amount: swap.amountDeposit,
           })}
         />
       </AddressAndQr>

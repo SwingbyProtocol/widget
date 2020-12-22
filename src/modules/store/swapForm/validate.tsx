@@ -14,26 +14,26 @@ import { logger } from '../../logger';
 
 const areCurrenciesValid = ({
   resource,
-  amountUser,
-  currencyIn,
-  currencyOut,
+  amountDesired,
+  currencyDeposit,
+  currencyReceiving,
   context,
-}: Pick<DefaultRootState['swapForm'], 'currencyIn' | 'currencyOut' | 'amountUser'> & {
+}: Pick<DefaultRootState['swapForm'], 'currencyDeposit' | 'currencyReceiving' | 'amountDesired'> & {
   resource: SkybridgeResource;
   context: SkybridgeContext;
 }): boolean => {
   const coinsIn = getCoinsFor({ context, resource, direction: 'in' });
   const coinsOut = getCoinsFor({ context, resource, direction: 'out' });
-  if (!coinsIn.includes(currencyIn) || !coinsOut.includes(currencyOut)) {
+  if (!coinsIn.includes(currencyDeposit) || !coinsOut.includes(currencyReceiving)) {
     return false;
   }
 
-  if (currencyIn === currencyOut) {
+  if (currencyDeposit === currencyReceiving) {
     return false;
   }
 
   try {
-    new Big(amountUser);
+    new Big(amountDesired);
   } catch (e) {
     return false;
   }
@@ -51,16 +51,16 @@ export const useAreCurrenciesValid = ({ resource }: { resource: SkybridgeResourc
 };
 
 export const useIsReceivingAddressValid = () => {
-  const addressOut = useSelector((state) => state.swapForm.addressUserIn);
-  const currencyOut = useSelector((state) => state.swapForm.currencyOut);
+  const addressOut = useSelector((state) => state.swapForm.addressReceiving);
+  const currencyReceiving = useSelector((state) => state.swapForm.currencyReceiving);
   const context = useSdkContext();
   return useMemo(() => {
     try {
-      const chain = getChainFor({ coin: currencyOut });
+      const chain = getChainFor({ coin: currencyReceiving });
       return { isReceivingAddressValid: isAddressValid({ context, address: addressOut, chain }) };
     } catch (e) {
       logger.error(e);
       return { isReceivingAddressValid: false };
     }
-  }, [context, addressOut, currencyOut]);
+  }, [context, addressOut, currencyReceiving]);
 };

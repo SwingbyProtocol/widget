@@ -9,10 +9,10 @@ enum Actions {
 
 const initialState = {
   step: 'step-amounts' as 'step-amounts' | 'step-address',
-  currencyIn: 'BTC' as SkybridgeCoin,
-  currencyOut: 'WBTC' as SkybridgeCoin,
-  amountUser: '',
-  addressUserIn: '',
+  currencyDeposit: 'BTC' as SkybridgeCoin,
+  currencyReceiving: 'WBTC' as SkybridgeCoin,
+  amountDesired: '',
+  addressReceiving: '',
 };
 
 type State = typeof initialState;

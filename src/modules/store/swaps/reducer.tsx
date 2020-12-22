@@ -8,19 +8,18 @@ enum Actions {
 
 type SwapData = {
   hash: string;
-  addressUserIn: string;
-  addressSwapIn: string;
-  addressUserOut?: string | null;
-  amountIn: string;
-  amountOut?: string | null;
-  currencyIn: SkybridgeCoin;
-  currencyOut: SkybridgeCoin;
+  addressReceiving: string;
+  addressDeposit: string;
+  amountDeposit: string;
+  amountReceiving?: string | null;
+  currencyDeposit: SkybridgeCoin;
+  currencyReceiving: SkybridgeCoin;
   timestamp: Date;
   feeCurrency?: SkybridgeCoin;
   feeTotal?: string;
   status: SkybridgeStatus;
-  transactionInId?: string | null;
-  transactionOutId?: string | null;
+  txDepositId?: string | null;
+  txReceivingId?: string | null;
 };
 
 type State = { [k: string]: undefined | SwapData };
@@ -37,7 +36,8 @@ export const swaps: Reducer<State, Action> = (state = initialState, action) => {
       [action.data.hash]: {
         ...state[action.data.hash],
         ...action.data,
-        addressSwapIn: (action.data.addressSwapIn ?? state[action.data.hash]?.addressSwapIn) || '',
+        addressDeposit:
+          (action.data.addressDeposit ?? state[action.data.hash]?.addressDeposit) || '',
       },
     };
   }
@@ -48,7 +48,7 @@ export const swaps: Reducer<State, Action> = (state = initialState, action) => {
 export const actionClearAllSwaps = () => ({ type: Actions.Clear } as const);
 
 export const actionSetSwap = (
-  data: Omit<SwapData, 'addressSwapIn'> & Partial<Pick<SwapData, 'addressSwapIn'>>,
+  data: Omit<SwapData, 'addressDeposit'> & Partial<Pick<SwapData, 'addressDeposit'>>,
 ) => ({ type: Actions.Set, data } as const);
 
 type Action = ReturnType<typeof actionSetSwap> | ReturnType<typeof actionClearAllSwaps>;

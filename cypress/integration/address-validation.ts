@@ -49,7 +49,7 @@ describe('Address validation', () => {
     cy.get('[data-testid="vertical.form.swap-btn"]').should('not.be.disabled');
   });
 
-  it('invalidates form if "currencyOut" changes', () => {
+  it('invalidates form if "currencyReceiving" changes', () => {
     cy.get('[data-testid="vertical.form.amounts.currency-to-select.target"]').click();
     cy.get('[data-testid="vertical.form.amounts.currency-to-select.content.item-WBTC"]').click();
     cy.get('[data-testid="vertical.form.swap-btn"]').should('be.disabled');

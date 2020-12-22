@@ -19,7 +19,7 @@ import { useCreate } from '../../../modules/create-swap';
 export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
   const { buildTestId } = useBuildTestId({ id: 'vertical.form' });
   const { formatMessage } = useIntl();
-  const { addressUserIn, currencyOut, step } = useSelector((state) => state.swapForm);
+  const { addressReceiving, currencyReceiving, step } = useSelector((state) => state.swapForm);
   const dispatch = useDispatch();
   const layout = useWidgetLayout();
   const { areCurrenciesValid: areFormAmountsValid } = useAreCurrenciesValid({ resource });
@@ -50,9 +50,11 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
           )}
           <TextInput
             size="state"
-            left={<CoinIcon symbol={currencyOut} />}
-            value={addressUserIn}
-            onChange={(evt) => dispatch(actionSetSwapFormData({ addressUserIn: evt.target.value }))}
+            left={<CoinIcon symbol={currencyReceiving} />}
+            value={addressReceiving}
+            onChange={(evt) =>
+              dispatch(actionSetSwapFormData({ addressReceiving: evt.target.value }))
+            }
             placeholder={formatMessage({ id: 'widget.receiving-address.placeholder' })}
             label={formatMessage({ id: 'widget.receiving-address.label' })}
             data-testid={buildTestId('receiving-address')}

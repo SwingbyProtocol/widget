@@ -58,7 +58,7 @@ export const SwapHorizontal = styled(Icon.SwapHorizontal)`
   ${swap};
 `;
 
-export const AmountOut = styled.span`
+export const AmountReceiving = styled.span`
   font-size: ${({ theme }) => rem(theme.pulsar.size.room)};
   font-weight: 700;
   color: ${({ theme }) => theme.pulsar.color.text.accent};

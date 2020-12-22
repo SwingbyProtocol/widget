@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useMemo, useState } from 'react';
 import {
   buildContext,
-  estimateSwapAmountOut,
+  estimateSwapAmountReceiving,
   getCoinsFor,
   getSwapableWith,
   SkybridgeResource,
@@ -21,7 +21,7 @@ import {
   SwapVertical,
   SwapHorizontal,
   Variant,
-  AmountOut,
+  AmountReceiving,
 } from './styled';
 import { CurrencySelector } from './CurrencySelector';
 
@@ -29,9 +29,11 @@ type Props = { variant: Variant; resource: SkybridgeResource } & Testable;
 
 export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) => {
   const { buildTestId } = useBuildTestId({ id: testId });
-  const { amountUser, currencyIn, currencyOut } = useSelector((state) => state.swapForm);
+  const { amountDesired, currencyDeposit, currencyReceiving } = useSelector(
+    (state) => state.swapForm,
+  );
   const dispatch = useDispatch();
-  const [amountOut, setAmountOut] = useState('0');
+  const [amountReceiving, setAmountReceiving] = useState('0');
   const [isCalculating, setIsCalculating] = useState(false);
   const context = useSdkContext();
 
@@ -42,22 +44,24 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
 
   const coinsOut = useMemo<SkybridgeCoin[]>(
     () =>
-      getSwapableWith({ context, coin: currencyIn, resource }).filter((it) => it !== currencyIn),
-    [context, resource, currencyIn],
+      getSwapableWith({ context, coin: currencyDeposit, resource }).filter(
+        (it) => it !== currencyDeposit,
+      ),
+    [context, resource, currencyDeposit],
   );
 
   useEffect(() => {
-    if (coinsIn.includes(currencyIn)) return;
-    dispatch(actionSetSwapFormData({ currencyIn: coinsIn[0] ?? 'BTC' }));
-  }, [coinsIn, currencyIn, dispatch]);
+    if (coinsIn.includes(currencyDeposit)) return;
+    dispatch(actionSetSwapFormData({ currencyDeposit: coinsIn[0] ?? 'BTC' }));
+  }, [coinsIn, currencyDeposit, dispatch]);
 
   useEffect(() => {
-    if (coinsOut.includes(currencyOut)) return;
-    dispatch(actionSetSwapFormData({ currencyOut: coinsOut[0] ?? 'BTC' }));
-  }, [coinsOut, currencyOut, dispatch]);
+    if (coinsOut.includes(currencyReceiving)) return;
+    dispatch(actionSetSwapFormData({ currencyReceiving: coinsOut[0] ?? 'BTC' }));
+  }, [coinsOut, currencyReceiving, dispatch]);
 
   useEffect(() => {
-    if (currencyIn === 'sbBTC' || currencyOut === 'sbBTC') return;
+    if (currencyDeposit === 'sbBTC' || currencyReceiving === 'sbBTC') return;
 
     let cancelled = false;
 
@@ -70,20 +74,20 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
         const context = await buildContext({ mode: 'test' });
 
         if (cancelled) return;
-        const { amountOut } = await estimateSwapAmountOut({
+        const { amountReceiving } = await estimateSwapAmountReceiving({
           context,
-          amountUser,
-          currencyIn,
-          currencyOut,
+          amountDesired,
+          currencyDeposit,
+          currencyReceiving,
         });
 
         if (cancelled) return;
-        setAmountOut(amountOut);
+        setAmountReceiving(amountReceiving);
       } catch (e) {
         logger.error(e);
 
         if (cancelled) return;
-        setAmountOut('0');
+        setAmountReceiving('0');
       } finally {
         setIsCalculating(false);
       }
@@ -92,7 +96,7 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
     return () => {
       cancelled = true;
     };
-  }, [amountUser, currencyIn, currencyOut]);
+  }, [amountDesired, currencyDeposit, currencyReceiving]);
 
   return (
     <CoinAmountContainer variant={variant} data-testid={buildTestId('')}>
@@ -104,14 +108,14 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
       <CurrencySelector
         coins={coinsIn}
         variant={variant}
-        value={currencyIn}
-        onChange={(currencyIn) => dispatch(actionSetSwapFormData({ currencyIn }))}
+        value={currencyDeposit}
+        onChange={(currencyDeposit) => dispatch(actionSetSwapFormData({ currencyDeposit }))}
         data-testid={buildTestId('currency-from-select')}
       />
       <TextInput
         size="state"
-        value={amountUser}
-        onChange={(evt) => dispatch(actionSetSwapFormData({ amountUser: evt.target.value }))}
+        value={amountDesired}
+        onChange={(evt) => dispatch(actionSetSwapFormData({ amountDesired: evt.target.value }))}
         data-testid={buildTestId('amount-from')}
       />
       {variant === 'vertical' && <Label />}
@@ -123,14 +127,14 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
       )}
       <CurrencySelector
         variant={variant}
-        value={currencyOut}
+        value={currencyReceiving}
         coins={coinsOut}
-        onChange={(currencyOut) => dispatch(actionSetSwapFormData({ currencyOut }))}
+        onChange={(currencyReceiving) => dispatch(actionSetSwapFormData({ currencyReceiving }))}
         data-testid={buildTestId('currency-to-select')}
       />
-      <AmountOut data-testid={buildTestId('amount-to')}>
-        {isCalculating ? <Loading /> : amountOut}
-      </AmountOut>
+      <AmountReceiving data-testid={buildTestId('amount-to')}>
+        {isCalculating ? <Loading /> : amountReceiving}
+      </AmountReceiving>
     </CoinAmountContainer>
   );
 };
