@@ -19,9 +19,9 @@ The easiest way to integrate the widget into your app is
 
 You may use the following query params to populate the widget’s form for the user.
 
-| Parameter              | Description                                                         |
-| ---------------------- | ------------------------------------------------------------------- |
-| `defaultCurrencyIn`    | Currency that the user will send to Skybridge.                      |
-| `defaultCurrencyOut`   | Currency that the user will receive from Skybridge.                 |
-| `defaultAmountUser`    | Amount of the chosen “currency in” that the user wants to swap.     |
-| `defaultAddressUserIn` | The user’s address that Skybridge should send the swapped funds to. |
+| Parameter                  | Description                                                         |
+| -------------------------- | ------------------------------------------------------------------- |
+| `defaultCurrencyDeposit`   | Currency that the user will send to Skybridge.                      |
+| `defaultCurrencyReceiving` | Currency that the user will receive from Skybridge.                 |
+| `defaultAmountDesired`     | Amount of the chosen “currency in” that the user wants to swap.     |
+| `defaultAddressReceiving`  | The user’s address that Skybridge should send the swapped funds to. |

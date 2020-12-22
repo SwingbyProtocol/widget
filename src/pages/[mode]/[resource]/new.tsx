@@ -12,28 +12,33 @@ export default function ResourceNew() {
   const dispatch = useDispatch();
   const { resource, mode } = useWidgetPathParams();
   const {
-    query: { defaultCurrencyIn, defaultCurrencyOut, defaultAddressUserIn, defaultAmountUser },
+    query: {
+      defaultCurrencyDeposit,
+      defaultCurrencyReceiving,
+      defaultAddressReceiving,
+      defaultAmountDesired,
+    },
   } = useRouter();
 
   useEffect(() => {
-    if (typeof defaultCurrencyIn !== 'string' || !defaultCurrencyIn) return;
-    dispatch(actionSetSwapFormData({ currencyIn: defaultCurrencyIn as any }));
-  }, [dispatch, defaultCurrencyIn]);
+    if (typeof defaultCurrencyDeposit !== 'string' || !defaultCurrencyDeposit) return;
+    dispatch(actionSetSwapFormData({ currencyIn: defaultCurrencyDeposit as any }));
+  }, [dispatch, defaultCurrencyDeposit]);
 
   useEffect(() => {
-    if (typeof defaultCurrencyOut !== 'string' || !defaultCurrencyOut) return;
-    dispatch(actionSetSwapFormData({ currencyOut: defaultCurrencyOut as any }));
-  }, [dispatch, defaultCurrencyOut]);
+    if (typeof defaultCurrencyReceiving !== 'string' || !defaultCurrencyReceiving) return;
+    dispatch(actionSetSwapFormData({ currencyOut: defaultCurrencyReceiving as any }));
+  }, [dispatch, defaultCurrencyReceiving]);
 
   useEffect(() => {
-    if (typeof defaultAddressUserIn !== 'string' || !defaultAddressUserIn) return;
-    dispatch(actionSetSwapFormData({ addressUserIn: defaultAddressUserIn as any }));
-  }, [dispatch, defaultAddressUserIn]);
+    if (typeof defaultAddressReceiving !== 'string' || !defaultAddressReceiving) return;
+    dispatch(actionSetSwapFormData({ addressUserIn: defaultAddressReceiving as any }));
+  }, [dispatch, defaultAddressReceiving]);
 
   useEffect(() => {
-    if (typeof defaultAmountUser !== 'string' || !defaultAmountUser) return;
-    dispatch(actionSetSwapFormData({ amountUser: defaultAmountUser as any }));
-  }, [dispatch, defaultAmountUser]);
+    if (typeof defaultAmountDesired !== 'string' || !defaultAmountDesired) return;
+    dispatch(actionSetSwapFormData({ amountUser: defaultAmountDesired as any }));
+  }, [dispatch, defaultAmountDesired]);
 
   if (!mode) return <></>;
   if (!resource) return <></>;
