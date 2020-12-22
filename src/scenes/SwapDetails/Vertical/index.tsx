@@ -20,11 +20,11 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
   const context = useSdkContext();
 
   const explorerLink = useMemo(() => {
-    if (!swap || !swap.transactionOutId) return undefined;
+    if (!swap || !swap.txReceivingId) return undefined;
     return buildExplorerLink({
       context,
-      coin: swap.currencyOut,
-      transactionId: swap.transactionOutId,
+      coin: swap.currencyReceiving,
+      transactionId: swap.txReceivingId,
     });
   }, [context, swap]);
 
@@ -42,8 +42,8 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
         <SwapProgress
           messages={SwapProgress.defaultMessages({ locale })}
           status={swap.status}
-          currencyIn={swap.currencyIn}
-          currencyOut={swap.currencyOut}
+          currencyIn={swap.currencyDeposit}
+          currencyOut={swap.currencyReceiving}
           data-testid={buildTestId('bottom.step-indicator')}
         />
       </ProgressContainer>

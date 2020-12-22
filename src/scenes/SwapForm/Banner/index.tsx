@@ -27,8 +27,8 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
   const { buildTestId } = useBuildTestId({ id: 'banner.form' });
   const { formatMessage } = useIntl();
   const hasWideWidth = useMatchMedia({ query: StylingConstants.mediaWideWidth });
-  const { currencyOut, addressUserIn, step } = useSelector((state) => state.swapForm);
-  const { areCurrenciesValid: areFormAmountsValid } = useAreCurrenciesValid({ resource });
+  const { currencyReceiving, addressReceiving, step } = useSelector((state) => state.swapForm);
+  const { areCurrenciesValid } = useAreCurrenciesValid({ resource });
   const dispatch = useDispatch();
   const { isReceivingAddressValid } = useIsReceivingAddressValid();
   const { loading, create } = useCreate({ resource });
@@ -44,9 +44,11 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
           <ResponsiveSpace />
           <AddressInput
             size="state"
-            left={<CoinIcon symbol={currencyOut} />}
-            value={addressUserIn}
-            onChange={(evt) => dispatch(actionSetSwapFormData({ addressUserIn: evt.target.value }))}
+            left={<CoinIcon symbol={currencyReceiving} />}
+            value={addressReceiving}
+            onChange={(evt) =>
+              dispatch(actionSetSwapFormData({ addressReceiving: evt.target.value }))
+            }
             placeholder={formatMessage({ id: 'widget.receiving-address.placeholder' })}
             data-testid={buildTestId('receiving-address')}
           />
@@ -55,7 +57,7 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
             variant="primary"
             size="state"
             shape="fit"
-            disabled={!areFormAmountsValid || !isReceivingAddressValid || loading}
+            disabled={!areCurrenciesValid || !isReceivingAddressValid || loading}
             onClick={create}
             data-testid={buildTestId('swap-btn')}
           >
@@ -76,7 +78,7 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
             variant="primary"
             size="state"
             shape="fit"
-            disabled={!areFormAmountsValid}
+            disabled={!areCurrenciesValid}
             onClick={() => dispatch(actionSetSwapFormStep('step-address'))}
             data-testid={buildTestId('next-btn')}
           >

@@ -22,22 +22,22 @@ export default function ResourceNew() {
 
   useEffect(() => {
     if (typeof defaultCurrencyDeposit !== 'string' || !defaultCurrencyDeposit) return;
-    dispatch(actionSetSwapFormData({ currencyIn: defaultCurrencyDeposit as any }));
+    dispatch(actionSetSwapFormData({ currencyDeposit: defaultCurrencyDeposit as any }));
   }, [dispatch, defaultCurrencyDeposit]);
 
   useEffect(() => {
     if (typeof defaultCurrencyReceiving !== 'string' || !defaultCurrencyReceiving) return;
-    dispatch(actionSetSwapFormData({ currencyOut: defaultCurrencyReceiving as any }));
+    dispatch(actionSetSwapFormData({ currencyReceiving: defaultCurrencyReceiving as any }));
   }, [dispatch, defaultCurrencyReceiving]);
 
   useEffect(() => {
     if (typeof defaultAddressReceiving !== 'string' || !defaultAddressReceiving) return;
-    dispatch(actionSetSwapFormData({ addressUserIn: defaultAddressReceiving as any }));
+    dispatch(actionSetSwapFormData({ addressReceiving: defaultAddressReceiving as any }));
   }, [dispatch, defaultAddressReceiving]);
 
   useEffect(() => {
     if (typeof defaultAmountDesired !== 'string' || !defaultAmountDesired) return;
-    dispatch(actionSetSwapFormData({ amountUser: defaultAmountDesired as any }));
+    dispatch(actionSetSwapFormData({ amountDesired: defaultAmountDesired as any }));
   }, [dispatch, defaultAmountDesired]);
 
   if (!mode) return <></>;

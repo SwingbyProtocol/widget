@@ -30,11 +30,11 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
   const context = useSdkContext();
 
   const explorerLink = useMemo(() => {
-    if (!swap || !swap.transactionOutId) return undefined;
+    if (!swap || !swap.txReceivingId) return undefined;
     return buildExplorerLink({
       context,
-      coin: swap.currencyOut,
-      transactionId: swap.transactionOutId,
+      coin: swap.currencyReceiving,
+      transactionId: swap.txReceivingId,
     });
   }, [context, swap]);
 
@@ -66,8 +66,11 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
             <SendToValue>
               {getCryptoAssetFormatter({
                 locale,
-                displaySymbol: swap.status === 'WAITING' ? swap.currencyIn : swap.currencyOut,
-              }).format(+(swap.status === 'WAITING' ? swap.amountIn : swap.amountOut ?? 0))}
+                displaySymbol:
+                  swap.status === 'WAITING' ? swap.currencyDeposit : swap.currencyReceiving,
+              }).format(
+                +(swap.status === 'WAITING' ? swap.amountDeposit : swap.amountReceiving ?? 0),
+              )}
             </SendToValue>
           </>
         )}
@@ -80,10 +83,12 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
             size="state"
             left={
               hasWideWidth ? (
-                <CoinIcon symbol={swap.status === 'WAITING' ? swap.currencyIn : swap.currencyOut} />
+                <CoinIcon
+                  symbol={swap.status === 'WAITING' ? swap.currencyDeposit : swap.currencyReceiving}
+                />
               ) : undefined
             }
-            value={swap.status === 'WAITING' ? swap.addressSwapIn : swap.addressUserIn}
+            value={swap.status === 'WAITING' ? swap.addressDeposit : swap.addressReceiving}
             data-testid={buildTestId(`address`)}
           />
         </>

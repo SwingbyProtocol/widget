@@ -16,10 +16,10 @@ import { actionSetSwap } from '../store/swaps';
 export const useCreate = ({ resource }: { resource: SkybridgeResource }) => {
   const [loading, setLoading] = useState(false);
   const context = useSdkContext();
-  const addressUserIn = useSelector((state) => state.swapForm.addressUserIn);
-  const currencyIn = useSelector((state) => state.swapForm.currencyIn);
-  const currencyOut = useSelector((state) => state.swapForm.currencyOut);
-  const amountUser = useSelector((state) => state.swapForm.amountUser);
+  const addressReceiving = useSelector((state) => state.swapForm.addressReceiving);
+  const currencyDeposit = useSelector((state) => state.swapForm.currencyDeposit);
+  const currencyReceiving = useSelector((state) => state.swapForm.currencyReceiving);
+  const amountDesired = useSelector((state) => state.swapForm.amountDesired);
   const dispatch = useDispatch();
   const { push } = useRouter();
 
@@ -27,10 +27,10 @@ export const useCreate = ({ resource }: { resource: SkybridgeResource }) => {
     setLoading(true);
 
     logger.debug('Will call createSwap()', {
-      addressUserIn,
-      currencyIn,
-      currencyOut,
-      amountUser,
+      addressReceiving,
+      currencyDeposit,
+      currencyReceiving,
+      amountDesired,
     });
 
     try {
@@ -38,10 +38,10 @@ export const useCreate = ({ resource }: { resource: SkybridgeResource }) => {
         if (resource === 'swap') {
           const swap = await createSwap({
             context,
-            amountUser,
-            currencyOut: currencyOut as any,
-            currencyIn: currencyIn as any,
-            addressUserIn,
+            amountDesired,
+            currencyReceiving: currencyReceiving as any,
+            currencyDeposit: currencyDeposit as any,
+            addressReceiving,
           });
 
           logger.debug('createSwap() has finished', swap);
@@ -55,9 +55,9 @@ export const useCreate = ({ resource }: { resource: SkybridgeResource }) => {
         if (resource === 'pool') {
           const swap = await createFloat({
             context,
-            amountUser,
-            currencyIn: currencyIn as any,
-            addressUserIn,
+            amountDesired,
+            currencyDeposit: currencyDeposit as any,
+            addressReceiving,
           });
 
           logger.debug('createFloat() has finished', swap);
@@ -71,9 +71,9 @@ export const useCreate = ({ resource }: { resource: SkybridgeResource }) => {
         if (resource === 'withdrawal') {
           const swap = await createWithdrawal({
             context,
-            amountUser,
-            currencyOut: currencyOut as any,
-            addressUserIn,
+            amountDesired,
+            currencyReceiving: currencyReceiving as any,
+            addressReceiving,
           });
 
           logger.debug('createWithdrawal() has finished', swap);
@@ -91,7 +91,16 @@ export const useCreate = ({ resource }: { resource: SkybridgeResource }) => {
     } finally {
       setLoading(false);
     }
-  }, [context, addressUserIn, currencyIn, currencyOut, amountUser, push, dispatch, resource]);
+  }, [
+    context,
+    addressReceiving,
+    currencyDeposit,
+    currencyReceiving,
+    amountDesired,
+    push,
+    dispatch,
+    resource,
+  ]);
 
   return useMemo(() => ({ loading, create }), [create, loading]);
 };
