@@ -11,6 +11,7 @@ import { DefaultRootState } from 'react-redux';
 
 import { FancyCryptoAmount } from '../../../../components/FancyCryptoAmount';
 import { Space } from '../../../../components/Space';
+import { useWidgetLayout } from '../../../../modules/layout';
 
 import { BigText, CoinWithText, Container } from './styled';
 
@@ -20,6 +21,9 @@ export const Top = ({
 }: Testable & { swap: NonNullable<DefaultRootState['swaps'][string]> }) => {
   const { buildTestId } = useBuildTestId({ id: testId });
   const { locale } = useIntl();
+  const layout = useWidgetLayout();
+  const spaceSize = layout === 'widget-full' || layout === 'website' ? 'town' : 'house';
+  const copyToClipboardSize = layout === 'widget-full' || layout === 'website' ? 'country' : 'town';
 
   if (swap.status === 'COMPLETED' || swap.status === 'EXPIRED') {
     return (
@@ -68,7 +72,7 @@ export const Top = ({
             }}
           />
         </BigText>
-        <Space size="town" />
+        <Space size={spaceSize} />
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <CopyToClipboard
             value={swap.addressReceiving}
@@ -96,11 +100,11 @@ export const Top = ({
           }}
         />
       </BigText>
-      <Space size="town" />
+      <Space size={spaceSize} />
       <CopyToClipboard
         value={swap.addressDeposit}
         left={<CoinIcon symbol={swap.currencyDeposit} />}
-        size="country"
+        size={copyToClipboardSize}
         data-testid={buildTestId('address')}
       />
     </>
