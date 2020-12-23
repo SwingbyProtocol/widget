@@ -67,7 +67,7 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
       )}
       {explorerLink && (
         <>
-          <Space size="box" shape="fill" />
+          <Space size="town" shape="fill" />
           <ExplorerContainer>
             <ExplorerLink
               href={explorerLink}

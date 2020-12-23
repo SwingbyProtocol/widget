@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { rem } from 'polished';
 import { logos } from '@swingby-protocol/pulsar';
 
@@ -46,20 +46,41 @@ export const FancyTopContainer = styled.div`
   background-repeat: no-repeat;
   padding: 0 ${rem(StylingConstants.widgetVerticalPadding)};
   width: 100%;
+  flex-grow: 1;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
 `;
 
-export const TopContent = styled.div``;
-
-export const LightTopContainer = styled.div`
-  padding: 0 ${rem(StylingConstants.widgetVerticalPadding)};
-`;
-
-export const BottomContainer = styled.div`
-  padding: 0 ${rem(StylingConstants.widgetVerticalPadding)};
-  width: 100%;
+export const TopContent = styled.div`
   flex-grow: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+`;
+
+export const LightTopContainer = styled.div`
+  padding: 0 ${rem(StylingConstants.widgetVerticalPadding)};
+  flex-grow: 1;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+`;
+
+const noTop = css`
+  flex-grow: 1;
+`;
+
+export const BottomContainer = styled.div<{ hasNoTop: boolean }>`
+  padding: 0 ${rem(StylingConstants.widgetVerticalPadding)};
+  width: 100%;
+  flex-grow: 0;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  ${({ hasNoTop }) => hasNoTop && noTop};
 `;
