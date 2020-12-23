@@ -1,4 +1,4 @@
-import { Icon } from '@swingby-protocol/pulsar';
+import { Icon, QRCode } from '@swingby-protocol/pulsar';
 import { rem } from 'polished';
 import styled from 'styled-components';
 
@@ -43,4 +43,8 @@ export const ExplorerContainer = styled.div`
   margin-left: ${rem(-StylingConstants.widgetVerticalPadding)};
   margin-right: ${rem(-StylingConstants.widgetVerticalPadding)};
   margin-bottom: ${rem(-StylingConstants.widgetVerticalPadding)};
+`;
+
+export const StyledQRCode = styled(QRCode)`
+  font-size: ${rem(185)};
 `;
