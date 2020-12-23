@@ -73,14 +73,12 @@ export const Top = ({
           />
         </BigText>
         <Space size={spaceSize} />
-        <div style={{ display: 'flex', flexDirection: 'row' }}>
-          <CopyToClipboard
-            value={swap.addressReceiving}
-            left={<CoinIcon symbol={swap.currencyReceiving} />}
-            size="country"
-            data-testid={buildTestId('address')}
-          />
-        </div>
+        <CopyToClipboard
+          value={swap.addressReceiving}
+          left={<CoinIcon symbol={swap.currencyReceiving} />}
+          size="country"
+          data-testid={buildTestId('address')}
+        />
       </>
     );
   }
