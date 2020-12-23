@@ -34,6 +34,7 @@
   "widget.status-label-long.SIGNING_REFUND": "Refunding {value} to",
   "widget.status-label-long.SENDING_REFUND": "Refunding {value} to",
   "widget.status-label-long.REFUNDED": "Refunded {value} to",
+  "widget.will-send-back": "Skybridge will send {value} to {address}. Please confirm that you control this address!",
   "widget.explorer-btn": "Explorer",
   "widget.explorer-link": "Explorer",
   "widget.explorer-link-long": "View on explorer",

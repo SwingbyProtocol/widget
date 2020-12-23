@@ -14,6 +14,17 @@ export const BigText = styled.span`
   }
 `;
 
+export const SmallText = styled.span`
+  display: block;
+  text-align: center;
+  font-weight: 600;
+  font-size: ${({ theme }) => rem(theme.pulsar.size.closet)};
+
+  @media ${StylingConstants.mediaLayout.widgetFull} {
+    font-size: ${({ theme }) => rem(theme.pulsar.size.closet)};
+  }
+`;
+
 export const CoinWithText = styled.span`
   display: flex;
   align-items: center;

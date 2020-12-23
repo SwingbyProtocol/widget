@@ -43,7 +43,7 @@ export const FancyTopContainer = styled.div`
   background-image: url(${logos.StarsBg});
   background-position: top right;
   background-size: 100%;
-  background-repeat: no-repeat;
+  background-repeat: repeat;
   padding: 0 ${rem(StylingConstants.widgetVerticalPadding)};
   width: 100%;
   flex-grow: 1;

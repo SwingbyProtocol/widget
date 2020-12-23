@@ -46,9 +46,9 @@ export const ExplorerContainer = styled.div`
 `;
 
 export const StyledQRCode = styled(QRCode)`
-  font-size: ${rem(145)};
+  font-size: ${rem(95)};
 
   @media ${StylingConstants.mediaLayout.widgetFull} {
-    font-size: ${rem(185)};
+    font-size: ${rem(150)};
   }
 `;

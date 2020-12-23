@@ -4,6 +4,7 @@ import {
   getCryptoAssetFormatter,
   Icon,
   Testable,
+  Tooltip,
   useBuildTestId,
 } from '@swingby-protocol/pulsar';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -13,7 +14,7 @@ import { FancyCryptoAmount } from '../../../../components/FancyCryptoAmount';
 import { Space } from '../../../../components/Space';
 import { useWidgetLayout } from '../../../../modules/layout';
 
-import { BigText, CoinWithText, Container } from './styled';
+import { BigText, SmallText, CoinWithText, Container } from './styled';
 
 export const Top = ({
   swap,
@@ -22,8 +23,9 @@ export const Top = ({
   const { buildTestId } = useBuildTestId({ id: testId });
   const { locale } = useIntl();
   const layout = useWidgetLayout();
-  const spaceSize = layout === 'widget-full' || layout === 'website' ? 'town' : 'house';
-  const copyToClipboardSize = layout === 'widget-full' || layout === 'website' ? 'country' : 'town';
+  const spaceSize = layout === 'widget-full' || layout === 'website' ? 'house' : 'room';
+  const smallSpaceSize = layout === 'widget-full' || layout === 'website' ? 'closet' : 'drawer';
+  const copyToClipboardSize = layout === 'widget-full' || layout === 'website' ? 'city' : 'town';
 
   if (swap.status === 'COMPLETED' || swap.status === 'EXPIRED') {
     return (
@@ -72,11 +74,11 @@ export const Top = ({
             }}
           />
         </BigText>
-        <Space size={spaceSize} />
+        <Space size={smallSpaceSize} />
         <CopyToClipboard
           value={swap.addressReceiving}
           left={<CoinIcon symbol={swap.currencyReceiving} />}
-          size="country"
+          size={copyToClipboardSize}
           data-testid={buildTestId('address')}
         />
       </>
@@ -98,13 +100,39 @@ export const Top = ({
           }}
         />
       </BigText>
-      <Space size={spaceSize} />
+      <Space size={smallSpaceSize} />
       <CopyToClipboard
+        variant="accent"
         value={swap.addressDeposit}
         left={<CoinIcon symbol={swap.currencyDeposit} />}
         size={copyToClipboardSize}
         data-testid={buildTestId('address')}
       />
+      {typeof swap.amountReceiving === 'string' && (
+        <>
+          <Space size={spaceSize} />
+          <SmallText>
+            <FormattedMessage
+              id="widget.will-send-back"
+              values={{
+                value: (
+                  <FancyCryptoAmount
+                    amount={+swap.amountReceiving}
+                    displaySymbol={swap.currencyReceiving}
+                  />
+                ),
+                address: (
+                  <Tooltip content={swap.addressReceiving} targetHtmlTag="span">
+                    {`${swap.addressReceiving.substr(0, 6)}…${swap.addressReceiving.substr(
+                      swap.addressReceiving.length - 4,
+                    )}`}
+                  </Tooltip>
+                ),
+              }}
+            />
+          </SmallText>
+        </>
+      )}
     </>
   );
 };
