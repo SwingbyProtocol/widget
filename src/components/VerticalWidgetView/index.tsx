@@ -55,7 +55,9 @@ export const VerticalWidgetView = ({
         )}
         <Space size="widgetVerticalPadding" />
         {children && (
-          <BottomContainer data-testid={buildTestId('bottom')}>{children}</BottomContainer>
+          <BottomContainer data-testid={buildTestId('bottom')} hasNoTop={!top}>
+            {children}
+          </BottomContainer>
         )}
         <Space size="widgetVerticalPadding" />
       </StepViewContainer>

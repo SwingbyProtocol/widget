@@ -8,8 +8,15 @@ import { Space } from '../../../components/Space';
 import { VerticalWidgetView } from '../../../components/VerticalWidgetView';
 import { useSdkContext } from '../../../modules/sdk-context';
 import { useDetails } from '../../../modules/details';
+import { getTransferUriFor } from '../../../modules/send-funds-uri';
 
-import { ExplorerLink, ExplorerLinkCaret, ProgressContainer, ExplorerContainer } from './styled';
+import {
+  ExplorerLink,
+  ExplorerLinkCaret,
+  ProgressContainer,
+  ExplorerContainer,
+  StyledQRCode,
+} from './styled';
 import { Top } from './Top';
 
 export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
@@ -38,18 +45,29 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
       top={<Top swap={swap} data-testid={buildTestId('')} />}
       data-testid={buildTestId('')}
     >
-      <ProgressContainer>
-        <SwapProgress
-          messages={SwapProgress.defaultMessages({ locale })}
-          status={swap.status}
-          currencyIn={swap.currencyDeposit}
-          currencyOut={swap.currencyReceiving}
-          data-testid={buildTestId('bottom.step-indicator')}
+      {swap.status === 'WAITING' && (
+        <StyledQRCode
+          value={getTransferUriFor({
+            address: swap.addressDeposit,
+            coin: swap.currencyDeposit,
+            amount: swap.amountDeposit,
+          })}
         />
-      </ProgressContainer>
+      )}
+      {swap.status !== 'WAITING' && (
+        <ProgressContainer>
+          <SwapProgress
+            messages={SwapProgress.defaultMessages({ locale })}
+            status={swap.status}
+            currencyIn={swap.currencyDeposit}
+            currencyOut={swap.currencyReceiving}
+            data-testid={buildTestId('bottom.step-indicator')}
+          />
+        </ProgressContainer>
+      )}
       {explorerLink && (
         <>
-          <Space size="box" shape="fill" />
+          <Space size="town" shape="fill" />
           <ExplorerContainer>
             <ExplorerLink
               href={explorerLink}

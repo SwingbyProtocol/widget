@@ -1,11 +1,17 @@
 import { rem } from 'polished';
 import styled from 'styled-components';
 
+import { StylingConstants } from '../../../../modules/styles';
+
 export const BigText = styled.span`
   display: block;
   text-align: center;
   font-weight: 800;
-  font-size: ${({ theme }) => rem(theme.pulsar.size.street)};
+  font-size: ${({ theme }) => rem(theme.pulsar.size.house)};
+
+  @media ${StylingConstants.mediaLayout.widgetFull} {
+    font-size: ${({ theme }) => rem(theme.pulsar.size.street)};
+  }
 `;
 
 export const CoinWithText = styled.span`
@@ -17,13 +23,6 @@ export const CoinWithText = styled.span`
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
-
-export const AddressAndQr = styled.div`
-  display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: center;
 `;

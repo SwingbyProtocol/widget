@@ -3,7 +3,6 @@ import {
   CopyToClipboard,
   getCryptoAssetFormatter,
   Icon,
-  QRCodeButton,
   Testable,
   useBuildTestId,
 } from '@swingby-protocol/pulsar';
@@ -12,9 +11,9 @@ import { DefaultRootState } from 'react-redux';
 
 import { FancyCryptoAmount } from '../../../../components/FancyCryptoAmount';
 import { Space } from '../../../../components/Space';
-import { getTransferUriFor } from '../../../../modules/send-funds-uri';
+import { useWidgetLayout } from '../../../../modules/layout';
 
-import { BigText, CoinWithText, Container, AddressAndQr } from './styled';
+import { BigText, CoinWithText, Container } from './styled';
 
 export const Top = ({
   swap,
@@ -22,6 +21,9 @@ export const Top = ({
 }: Testable & { swap: NonNullable<DefaultRootState['swaps'][string]> }) => {
   const { buildTestId } = useBuildTestId({ id: testId });
   const { locale } = useIntl();
+  const layout = useWidgetLayout();
+  const spaceSize = layout === 'widget-full' || layout === 'website' ? 'town' : 'house';
+  const copyToClipboardSize = layout === 'widget-full' || layout === 'website' ? 'country' : 'town';
 
   if (swap.status === 'COMPLETED' || swap.status === 'EXPIRED') {
     return (
@@ -70,15 +72,13 @@ export const Top = ({
             }}
           />
         </BigText>
-        <Space size="town" />
-        <div style={{ display: 'flex', flexDirection: 'row' }}>
-          <CopyToClipboard
-            value={swap.addressReceiving}
-            left={<CoinIcon symbol={swap.currencyReceiving} />}
-            size="country"
-            data-testid={buildTestId('address')}
-          />
-        </div>
+        <Space size={spaceSize} />
+        <CopyToClipboard
+          value={swap.addressReceiving}
+          left={<CoinIcon symbol={swap.currencyReceiving} />}
+          size="country"
+          data-testid={buildTestId('address')}
+        />
       </>
     );
   }
@@ -98,26 +98,13 @@ export const Top = ({
           }}
         />
       </BigText>
-      <Space size="town" />
-      <AddressAndQr>
-        <CopyToClipboard
-          value={swap.addressDeposit}
-          left={<CoinIcon symbol={swap.currencyDeposit} />}
-          size="country"
-          data-testid={buildTestId('address')}
-        />
-        <Space size="town" />
-        <QRCodeButton
-          variant="primary"
-          size="town"
-          shape="square"
-          value={getTransferUriFor({
-            address: swap.addressDeposit,
-            coin: swap.currencyDeposit,
-            amount: swap.amountDeposit,
-          })}
-        />
-      </AddressAndQr>
+      <Space size={spaceSize} />
+      <CopyToClipboard
+        value={swap.addressDeposit}
+        left={<CoinIcon symbol={swap.currencyDeposit} />}
+        size={copyToClipboardSize}
+        data-testid={buildTestId('address')}
+      />
     </>
   );
 };
