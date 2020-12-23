@@ -61,7 +61,7 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
   }, [coinsOut, currencyReceiving, dispatch]);
 
   useEffect(() => {
-    if (currencyDeposit === 'sbBTC' || currencyReceiving === 'sbBTC') return;
+    if (currencyReceiving === 'sbBTC') return;
 
     let cancelled = false;
 
