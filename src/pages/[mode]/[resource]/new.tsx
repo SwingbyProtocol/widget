@@ -10,10 +10,10 @@ import { SdkContextProvider } from '../../../modules/sdk-context';
 import { useWidgetPathParams } from '../../../modules/path-params';
 import { actionSetSwapFormData } from '../../../modules/store/swapForm';
 
-type Props = { blockRegion: boolean; ipInfo: any };
+type Props = { blockRegion: boolean; ipInfo: any; ip: string };
 
-export default function ResourceNew({ blockRegion, ipInfo }: Props) {
-  console.log({ ipInfo });
+export default function ResourceNew({ blockRegion, ipInfo, ip }: Props) {
+  console.log({ ip, ipInfo });
   const dispatch = useDispatch();
   const { resource, mode } = useWidgetPathParams();
   const {
@@ -74,5 +74,5 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ req }) => 
     }
   })();
 
-  return { props: { blockRegion, ipInfo } };
+  return { props: { blockRegion, ipInfo, ip: req.connection.remoteAddress ?? '' } };
 };
