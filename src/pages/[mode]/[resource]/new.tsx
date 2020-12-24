@@ -10,10 +10,9 @@ import { SdkContextProvider } from '../../../modules/sdk-context';
 import { useWidgetPathParams } from '../../../modules/path-params';
 import { actionSetSwapFormData } from '../../../modules/store/swapForm';
 
-type Props = { blockRegion: boolean; ipInfo: any; ip: string; headers: any };
+type Props = { blockRegion: boolean };
 
-export default function ResourceNew({ blockRegion, ipInfo, ip, headers }: Props) {
-  console.log({ headers, ip, ipInfo });
+export default function ResourceNew({ blockRegion }: Props) {
   const dispatch = useDispatch();
   const { resource, mode } = useWidgetPathParams();
   const {
@@ -61,11 +60,13 @@ export default function ResourceNew({ blockRegion, ipInfo, ip, headers }: Props)
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async ({ req }) => {
-  let ipInfo: any;
   const blockRegion = await (async () => {
     try {
-      ipInfo = await getIpInfo({
-        ip: req.connection.remoteAddress ?? '',
+      const ipInfo = await getIpInfo({
+        ip:
+          (typeof req.headers['x-real-ip'] === 'string' ? req.headers['x-real-ip'] : undefined) ??
+          req.connection.remoteAddress ??
+          '',
         ipstackApiKey: process.env.IPSTACK_API_KEY ?? '',
       });
       return shouldBlockRegion(ipInfo);
@@ -75,6 +76,6 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ req }) => 
   })();
 
   return {
-    props: { blockRegion, ipInfo, ip: req.connection.remoteAddress ?? '', headers: req.headers },
+    props: { blockRegion },
   };
 };
