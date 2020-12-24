@@ -12,8 +12,8 @@ import { actionSetSwapFormData } from '../../../modules/store/swapForm';
 
 type Props = { blockRegion: boolean; clientIp: string; ipInfo: any };
 
-export default function ResourceNew({ blockRegion, clientIp }: Props) {
-  console.log({ blockRegion, clientIp });
+export default function ResourceNew({ blockRegion, clientIp, ipInfo }: Props) {
+  console.log({ blockRegion, clientIp, ipInfo });
   const dispatch = useDispatch();
   const { resource, mode } = useWidgetPathParams();
   const {
