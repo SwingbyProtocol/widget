@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { GetServerSideProps } from 'next';
+import { getIpInfo, shouldBlockRegion } from '@swingby-protocol/ip-check';
 
 import { SwapForm } from '../../../scenes/SwapForm';
 import { GlobalStyles } from '../../../modules/styles';
@@ -8,7 +10,9 @@ import { SdkContextProvider } from '../../../modules/sdk-context';
 import { useWidgetPathParams } from '../../../modules/path-params';
 import { actionSetSwapFormData } from '../../../modules/store/swapForm';
 
-export default function ResourceNew() {
+type Props = { blockRegion: boolean };
+
+export default function ResourceNew({ blockRegion }: Props) {
   const dispatch = useDispatch();
   const { resource, mode } = useWidgetPathParams();
   const {
@@ -40,6 +44,10 @@ export default function ResourceNew() {
     dispatch(actionSetSwapFormData({ amountDesired: defaultAmountDesired as any }));
   }, [dispatch, defaultAmountDesired]);
 
+  if (blockRegion) {
+    return <>You cannot access this product from your country.</>;
+  }
+
   if (!mode) return <></>;
   if (!resource) return <></>;
 
@@ -50,3 +58,19 @@ export default function ResourceNew() {
     </SdkContextProvider>
   );
 }
+
+export const getServerSideProps: GetServerSideProps<Props> = async ({ req }) => {
+  const blockRegion = await (async () => {
+    try {
+      const ipInfo = await getIpInfo({
+        ip: req.connection.remoteAddress ?? '',
+        ipstackApiKey: process.env.IPSTACK_API_KEY ?? '',
+      });
+      return shouldBlockRegion(ipInfo);
+    } catch (e) {
+      return false;
+    }
+  })();
+
+  return { props: { blockRegion } };
+};

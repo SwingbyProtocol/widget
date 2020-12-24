@@ -1019,6 +1019,13 @@
     eslint-plugin-react "^7.21.5"
     eslint-plugin-react-hooks "^4.2.0"
 
+"@swingby-protocol/ip-check@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@swingby-protocol/ip-check/-/ip-check-1.0.0.tgz#5cefd588df47b890a1775f3272e31653d3595916"
+  integrity sha512-tzFExJTgPrhEqO2H01qp1LNF3K08eCxJHPXsZqcrFTq96fJxbNDC1eDt/juRAhhSRjJa5Z3Q8A8SdgW+q1JIhQ==
+  dependencies:
+    isomorphic-unfetch "^3.1.0"
+
 "@swingby-protocol/prettier-config@^1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@swingby-protocol/prettier-config/-/prettier-config-1.0.2.tgz#ff4c03ac7ad3dab1d02a914d31debcf9441fa3e8"
