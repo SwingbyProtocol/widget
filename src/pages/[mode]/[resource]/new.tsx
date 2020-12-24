@@ -73,7 +73,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ req }) => 
         ipstackApiKey: process.env.IPSTACK_API_KEY ?? '',
       });
     } catch (e) {
-      return null;
+      return e.message;
     }
   })();
 
