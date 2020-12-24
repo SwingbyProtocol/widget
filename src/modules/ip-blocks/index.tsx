@@ -4,11 +4,15 @@ import React, { useContext } from 'react';
 type ThenArg<T> = T extends PromiseLike<infer U> ? U : T;
 export type IpInfoContextValue = {
   blockRegion: boolean;
-  clientIp: string;
-  ipInfo: ThenArg<ReturnType<typeof getIpInfo>>;
+  clientIp: string | null;
+  ipInfo: ThenArg<ReturnType<typeof getIpInfo>> | null;
 };
 
-const Context = React.createContext<IpInfoContextValue>((null as unknown) as IpInfoContextValue);
+const Context = React.createContext<IpInfoContextValue>({
+  blockRegion: false,
+  clientIp: null,
+  ipInfo: null,
+});
 
 export const useIpInfo = () => useContext(Context);
 
