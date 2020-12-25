@@ -26,7 +26,7 @@ export const useDetails = ({ resource }: { resource: SkybridgeResource }): SwapD
   const context = useSdkContext();
 
   useEffect(() => {
-    let timeoutId: number | null = null;
+    let timeoutId: NodeJS.Timeout | null = null;
     let cancelled = false;
 
     const doStuff = async () => {
