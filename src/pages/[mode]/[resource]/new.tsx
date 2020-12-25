@@ -9,10 +9,11 @@ import { GlobalStyles } from '../../../modules/styles';
 import { SdkContextProvider } from '../../../modules/sdk-context';
 import { useWidgetPathParams } from '../../../modules/path-params';
 import { actionSetSwapFormData } from '../../../modules/store/swapForm';
+import { IpInfoContextValue, IpInfoProvider } from '../../../modules/ip-blocks';
 
-type Props = { blockRegion: boolean };
+type Props = { ipInfo: IpInfoContextValue };
 
-export default function ResourceNew({ blockRegion }: Props) {
+export default function ResourceNew({ ipInfo }: Props) {
   const dispatch = useDispatch();
   const { resource, mode } = useWidgetPathParams();
   const {
@@ -44,33 +45,45 @@ export default function ResourceNew({ blockRegion }: Props) {
     dispatch(actionSetSwapFormData({ amountDesired: defaultAmountDesired as any }));
   }, [dispatch, defaultAmountDesired]);
 
-  if (blockRegion) {
-    return <>You cannot access this product from your country.</>;
-  }
-
   if (!mode) return <></>;
   if (!resource) return <></>;
 
   return (
-    <SdkContextProvider mode={mode}>
-      <GlobalStyles />
-      <SwapForm resource={resource} />
-    </SdkContextProvider>
+    <IpInfoProvider value={ipInfo}>
+      <SdkContextProvider mode={mode}>
+        <GlobalStyles />
+        <SwapForm resource={resource} />
+      </SdkContextProvider>
+    </IpInfoProvider>
   );
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async ({ req }) => {
-  const blockRegion = await (async () => {
+  const clientIp =
+    (typeof req.headers['x-real-ip'] === 'string' ? req.headers['x-real-ip'] : null) ??
+    req.connection.remoteAddress ??
+    null;
+
+  const ipInfo = await (async () => {
     try {
-      const ipInfo = await getIpInfo({
-        ip: req.connection.remoteAddress ?? '',
-        ipstackApiKey: process.env.IPSTACK_API_KEY ?? '',
+      if (!clientIp || !process.env.IPSTACK_API_KEY) return null;
+      return await getIpInfo({
+        ip: clientIp,
+        ipstackApiKey: process.env.IPSTACK_API_KEY,
       });
+    } catch (e) {
+      return null;
+    }
+  })();
+
+  const blockRegion = (() => {
+    try {
+      if (!ipInfo) return false;
       return shouldBlockRegion(ipInfo);
     } catch (e) {
       return false;
     }
   })();
 
-  return { props: { blockRegion } };
+  return { props: { ipInfo: { ipInfo, clientIp, blockRegion } } };
 };
