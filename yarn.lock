@@ -1059,10 +1059,10 @@
     nanoid "3.1.18"
     qrcode.react "^1.0.0"
 
-"@swingby-protocol/sdk@^1.0.0-alpha.50":
-  version "1.0.0-alpha.50"
-  resolved "https://registry.yarnpkg.com/@swingby-protocol/sdk/-/sdk-1.0.0-alpha.50.tgz#b8d7cfbea4c4dfffa0e1579b000af03369459687"
-  integrity sha512-uWHG8rpvInug+3u69kRu/pcguVQoxOjP/5R3KjD5lOK+6ZwLjgsfIEzjUm/MQYpPEvr0+/PpCaSmZuOs/rvEjw==
+"@swingby-protocol/sdk@^1.0.0-alpha.52":
+  version "1.0.0-alpha.52"
+  resolved "https://registry.yarnpkg.com/@swingby-protocol/sdk/-/sdk-1.0.0-alpha.52.tgz#3b53a84a98c067628f937233999fee664efce03a"
+  integrity sha512-jr5i9/5QsYJr1L1asS86+K/KbYFRsUcrVauI2ur3Hm9iIOz0k5yIEQG9efrksdcW0lxwIXsbZSoR6IUFaM3ynw==
   dependencies:
     bech32 "^1.1.4"
     big.js "^6.0.2"

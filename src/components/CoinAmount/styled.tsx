@@ -63,4 +63,13 @@ export const AmountReceiving = styled.span`
   font-weight: 700;
   color: ${({ theme }) => theme.pulsar.color.text.accent};
   padding: 0 ${({ theme }) => rem(theme.pulsar.size.room)};
+  position: relative;
+`;
+
+export const EstLabel = styled.span`
+  position: absolute;
+  left: ${({ theme }) => rem(theme.pulsar.size.room)};
+  bottom: ${({ theme }) => rem(-theme.pulsar.size.room)};
+  font-size: ${({ theme }) => rem(theme.pulsar.size.closet)};
+  font-weight: 600;
 `;
