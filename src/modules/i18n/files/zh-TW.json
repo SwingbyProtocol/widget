@@ -14,7 +14,7 @@
   "widget.tab-title.withdrawal.production.details": "Withdrawal: {hash} | Skybridge Swap Widget",
   "widget.from": "發送方",
   "widget.to": "接收方",
-  "widget.amount-receiving-estimation-label": "(估算)",
+  "widget.amount-receiving-estimation-label": "(預估)",
   "widget.receiving-address.label": "收款地址",
   "widget.receiving-address.placeholder": "您的收款地址",
   "widget.next-btn": "下一步",
@@ -40,6 +40,6 @@
   "widget.explorer-link": "Explorer",
   "widget.explorer-link-long": "去explorer查看",
   "widget.warning-test": "您正在使用“測試網”模式。請不要發送主網的資金。",
-  "widget.warning-production": "此Beta版連接到主網",
+  "widget.warning-production": "此產品為連接至主網的Beta版本",
   "widget.warning.learn-more": "了解更多"
 }
