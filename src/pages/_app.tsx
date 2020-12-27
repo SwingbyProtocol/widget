@@ -5,7 +5,7 @@ import { IntlProvider } from 'react-intl';
 import { Provider as ReduxProvider } from 'react-redux';
 import Head from 'next/head';
 
-import { en } from '../modules/i18n';
+import { languages } from '../modules/i18n';
 import { WidgetLayoutProvider } from '../modules/layout';
 import { useStore } from '../modules/store';
 import { Favicon } from '../components/Favicon';
@@ -20,13 +20,13 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <PulsarThemeProvider theme={theme}>
-      <IntlProvider messages={en} locale={locale} defaultLocale={defaultLocale}>
+      <IntlProvider messages={languages.en} locale={locale} defaultLocale={defaultLocale}>
         <PulsarGlobalStyles />
         <ReduxProvider store={store}>
           <WidgetLayoutProvider>
             <Favicon />
             <Head>
-              <title>{en['widget.tab-title.generic']}</title>
+              <title>{languages.en['widget.tab-title.generic']}</title>
             </Head>
             <Component {...pageProps} />
           </WidgetLayoutProvider>
