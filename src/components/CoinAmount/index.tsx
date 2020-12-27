@@ -1,10 +1,11 @@
 import { Loading, Testable, TextInput, useBuildTestId } from '@swingby-protocol/pulsar';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
+import { Big } from 'big.js';
 import { useEffect, useMemo, useState } from 'react';
 import {
   buildContext,
-  estimateSwapAmountReceiving,
+  estimateAmountReceiving,
   getCoinsFor,
   getSwapableWith,
   SkybridgeResource,
@@ -22,6 +23,7 @@ import {
   SwapHorizontal,
   Variant,
   AmountReceiving,
+  EstLabel,
 } from './styled';
 import { CurrencySelector } from './CurrencySelector';
 
@@ -33,7 +35,7 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
     (state) => state.swapForm,
   );
   const dispatch = useDispatch();
-  const [amountReceiving, setAmountReceiving] = useState('0');
+  const [amountReceiving, setAmountReceiving] = useState('');
   const [isCalculating, setIsCalculating] = useState(false);
   const context = useSdkContext();
 
@@ -61,8 +63,6 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
   }, [coinsOut, currencyReceiving, dispatch]);
 
   useEffect(() => {
-    if (currencyReceiving === 'sbBTC') return;
-
     let cancelled = false;
 
     (async () => {
@@ -74,7 +74,7 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
         const context = await buildContext({ mode: 'test' });
 
         if (cancelled) return;
-        const { amountReceiving } = await estimateSwapAmountReceiving({
+        const { amountReceiving } = await estimateAmountReceiving({
           context,
           amountDesired,
           currencyDeposit,
@@ -87,7 +87,7 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
         logger.error(e);
 
         if (cancelled) return;
-        setAmountReceiving('0');
+        setAmountReceiving('');
       } finally {
         setIsCalculating(false);
       }
@@ -97,6 +97,15 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
       cancelled = true;
     };
   }, [amountDesired, currencyDeposit, currencyReceiving]);
+
+  const isAmountReceivingValid = useMemo(() => {
+    try {
+      new Big(amountReceiving);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }, [amountReceiving]);
 
   return (
     <CoinAmountContainer variant={variant} data-testid={buildTestId('')}>
@@ -133,7 +142,16 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
         data-testid={buildTestId('currency-to-select')}
       />
       <AmountReceiving data-testid={buildTestId('amount-to')}>
-        {isCalculating ? <Loading /> : amountReceiving}
+        {isCalculating ? (
+          <Loading />
+        ) : isAmountReceivingValid ? (
+          <>
+            {amountReceiving}
+            <EstLabel>
+              <FormattedMessage id="widget.amount-receiving-estimation-label" />
+            </EstLabel>
+          </>
+        ) : null}
       </AmountReceiving>
     </CoinAmountContainer>
   );

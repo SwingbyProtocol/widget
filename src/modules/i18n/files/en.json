@@ -14,6 +14,7 @@
   "widget.tab-title.withdrawal.production.details": "Withdrawal: {hash} | Skybridge Swap Widget",
   "widget.from": "From",
   "widget.to": "To",
+  "widget.amount-receiving-estimation-label": "(est.)",
   "widget.receiving-address.label": "Receiving Address",
   "widget.receiving-address.placeholder": "Your receiving address…",
   "widget.next-btn": "Next",

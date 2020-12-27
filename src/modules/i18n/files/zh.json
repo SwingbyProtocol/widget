@@ -14,6 +14,7 @@
   "widget.tab-title.withdrawal.production.details": "Withdrawal: {hash} | Skybridge Swap Widget",
   "widget.from": "发送方",
   "widget.to": "接收方",
+  "widget.amount-receiving-estimation-label": "(估算)",
   "widget.receiving-address.label": "收款地址",
   "widget.receiving-address.placeholder": "您的收款地址",
   "widget.next-btn": "下一步",
