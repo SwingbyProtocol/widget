@@ -9,6 +9,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { logger } from '../logger';
+import { usePushWithSearchParams } from '../push-keeping-search';
 import { useSdkContext } from '../sdk-context';
 import { actionClearSwapFormData } from '../store/swapForm';
 import { actionSetSwap } from '../store/swaps';
@@ -21,7 +22,7 @@ export const useCreate = ({ resource }: { resource: SkybridgeResource }) => {
   const currencyReceiving = useSelector((state) => state.swapForm.currencyReceiving);
   const amountDesired = useSelector((state) => state.swapForm.amountDesired);
   const dispatch = useDispatch();
-  const { push } = useRouter();
+  const { push } = usePushWithSearchParams();
 
   const create = useCallback(async () => {
     setLoading(true);

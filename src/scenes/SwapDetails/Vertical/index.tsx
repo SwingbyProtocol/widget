@@ -1,6 +1,5 @@
 import { Loading, useBuildTestId, SwapProgress } from '@swingby-protocol/pulsar';
 import { buildExplorerLink, SkybridgeResource } from '@swingby-protocol/sdk';
-import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
@@ -9,6 +8,7 @@ import { VerticalWidgetView } from '../../../components/VerticalWidgetView';
 import { useSdkContext } from '../../../modules/sdk-context';
 import { useDetails } from '../../../modules/details';
 import { getTransferUriFor } from '../../../modules/send-funds-uri';
+import { usePushWithSearchParams } from '../../../modules/push-keeping-search';
 
 import {
   ExplorerLink,
@@ -22,7 +22,7 @@ import { Top } from './Top';
 export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
   const { buildTestId } = useBuildTestId({ id: 'vertical.swap-details' });
   const { swap } = useDetails({ resource });
-  const { push } = useRouter();
+  const { push } = usePushWithSearchParams();
   const { locale } = useIntl();
   const context = useSdkContext();
 

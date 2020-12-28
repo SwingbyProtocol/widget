@@ -9,7 +9,6 @@ import {
   Loading,
 } from '@swingby-protocol/pulsar';
 import { buildExplorerLink, SkybridgeResource } from '@swingby-protocol/sdk';
-import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
@@ -18,6 +17,7 @@ import { Space } from '../../../components/Space';
 import { useSdkContext } from '../../../modules/sdk-context';
 import { StylingConstants } from '../../../modules/styles';
 import { useDetails } from '../../../modules/details';
+import { usePushWithSearchParams } from '../../../modules/push-keeping-search';
 
 import { BannerContainer, ResponsiveSpace, SendTo, SendToLabel, SendToValue } from './styled';
 
@@ -26,7 +26,7 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
   const { formatMessage, locale } = useIntl();
   const hasWideWidth = useMatchMedia({ query: StylingConstants.mediaWideWidth });
   const { swap } = useDetails({ resource });
-  const { push } = useRouter();
+  const { push } = usePushWithSearchParams();
   const context = useSdkContext();
 
   const explorerLink = useMemo(() => {
