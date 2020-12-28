@@ -28,7 +28,7 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
   const { formatMessage } = useIntl();
   const hasWideWidth = useMatchMedia({ query: StylingConstants.mediaWideWidth });
   const { currencyReceiving, addressReceiving, step } = useSelector((state) => state.swapForm);
-  const { areCurrenciesValid } = useAreCurrenciesValid({ resource });
+  const { areCurrenciesAndAmountValid } = useAreCurrenciesValid({ resource });
   const dispatch = useDispatch();
   const { isReceivingAddressValid } = useIsReceivingAddressValid();
   const { loading, create } = useCreate({ resource });
@@ -57,7 +57,7 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
             variant="primary"
             size="state"
             shape="fit"
-            disabled={!areCurrenciesValid || !isReceivingAddressValid || loading}
+            disabled={!areCurrenciesAndAmountValid || !isReceivingAddressValid || loading}
             onClick={create}
             data-testid={buildTestId('swap-btn')}
           >
@@ -78,7 +78,7 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
             variant="primary"
             size="state"
             shape="fit"
-            disabled={!areCurrenciesValid}
+            disabled={!areCurrenciesAndAmountValid}
             onClick={() => dispatch(actionSetSwapFormStep('step-address'))}
             data-testid={buildTestId('next-btn')}
           >

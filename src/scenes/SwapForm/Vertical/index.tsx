@@ -22,7 +22,7 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
   const { addressReceiving, currencyReceiving, step } = useSelector((state) => state.swapForm);
   const dispatch = useDispatch();
   const layout = useWidgetLayout();
-  const { areCurrenciesValid: areFormAmountsValid } = useAreCurrenciesValid({ resource });
+  const { areCurrenciesAndAmountValid } = useAreCurrenciesValid({ resource });
   const { isReceivingAddressValid } = useIsReceivingAddressValid();
   const { loading, create } = useCreate({ resource });
 
@@ -68,7 +68,7 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
         <Button
           variant="primary"
           size="state"
-          disabled={!areFormAmountsValid || !isReceivingAddressValid || loading}
+          disabled={!areCurrenciesAndAmountValid || !isReceivingAddressValid || loading}
           onClick={create}
           data-testid={buildTestId('swap-btn')}
         >
@@ -80,7 +80,7 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
         <Button
           variant="primary"
           size="state"
-          disabled={!areFormAmountsValid}
+          disabled={!areCurrenciesAndAmountValid}
           onClick={() => dispatch(actionSetSwapFormStep('step-address'))}
           data-testid={buildTestId('next-btn')}
         >
