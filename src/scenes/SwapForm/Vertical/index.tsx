@@ -15,6 +15,7 @@ import { useWidgetLayout } from '../../../modules/layout';
 import { VerticalWidgetView } from '../../../components/VerticalWidgetView';
 import { Separator } from '../../../components/Separator';
 import { useCreate } from '../../../modules/create-swap';
+
 import { StakeEarn } from './styled';
 
 export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
