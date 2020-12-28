@@ -13,16 +13,16 @@ export const useAreCurrenciesValid = ({ resource }: { resource: SkybridgeResourc
   const context = useSdkContext();
   return useMemo((): {
     areCurrenciesAndAmountValid: boolean;
-    isCurrencyInValid: boolean;
-    isCurrencyOutValid: boolean;
+    isCurrencyDepositValid: boolean;
+    isCurrencyReceivingValid: boolean;
     isAmountDesiredValid: boolean;
   } => {
     const coinsIn = getCoinsFor({ context, resource, direction: 'in' });
     const coinsOut = getCoinsFor({ context, resource, direction: 'out' });
 
-    const isCurrencyInValid = !coinsIn.includes(currencyDeposit);
-    const isCurrencyOutValid =
-      !coinsOut.includes(currencyReceiving) && currencyDeposit !== currencyReceiving;
+    const isCurrencyDepositValid = coinsIn.includes(currencyDeposit);
+    const isCurrencyReceivingValid =
+      coinsOut.includes(currencyReceiving) && currencyDeposit !== currencyReceiving;
     const isAmountDesiredValid = (() => {
       try {
         return new Big(amountDesired).gte('0.01');
@@ -32,9 +32,10 @@ export const useAreCurrenciesValid = ({ resource }: { resource: SkybridgeResourc
     })();
 
     return {
-      areCurrenciesAndAmountValid: isCurrencyInValid && isCurrencyOutValid && isAmountDesiredValid,
-      isCurrencyInValid,
-      isCurrencyOutValid,
+      areCurrenciesAndAmountValid:
+        isCurrencyDepositValid && isCurrencyReceivingValid && isAmountDesiredValid,
+      isCurrencyDepositValid,
+      isCurrencyReceivingValid,
       isAmountDesiredValid,
     };
   }, [currencyDeposit, currencyReceiving, amountDesired, context, resource]);
