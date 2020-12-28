@@ -8,7 +8,7 @@ export default function Index() {
   const { locale, mode, resource, hashOrNew } = (() => {
     const queryParams = (() => {
       try {
-        const { query } = parseUrl(`https://fake.com${router.asPath}`);
+        const { query } = parseUrl(router.asPath);
         return query;
       } catch (e) {
         return {};
