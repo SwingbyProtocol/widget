@@ -15,14 +15,14 @@ const wideSpace = css`
 const vertical = css`
   grid-template-columns: 1fr 1fr;
 
-  @media (${StylingConstants.mediaVerticalWideWidth}) {
+  @media ${StylingConstants.mediaVerticalWideWidth} {
     grid-template-columns: auto 1fr 1fr;
     ${wideSpace};
   }
 `;
 
 const wideBanner = css`
-  @media (${StylingConstants.mediaWideWidth}) {
+  @media ${StylingConstants.mediaWideWidth} {
     grid-template-columns: 1fr 1fr auto 1fr 1fr;
     ${wideSpace};
   }
@@ -61,7 +61,7 @@ export const SwapVertical = styled(Icon.SwapVertical)`
   ${swap};
   grid-column: 1 / 3;
 
-  @media (${StylingConstants.mediaVerticalWideWidth}) {
+  @media ${StylingConstants.mediaVerticalWideWidth} {
     grid-column: 2 / 4;
   }
 `;

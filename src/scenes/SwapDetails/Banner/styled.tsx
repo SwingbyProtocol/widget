@@ -34,7 +34,7 @@ export const ResponsiveSpace = styled.div`
   flex-basis: ${({ theme }) => rem(theme.pulsar.size.drawer)};
   flex-shrink: 0;
 
-  @media (${StylingConstants.mediaWideWidth}) {
+  @media ${StylingConstants.mediaWideWidth} {
     margin-left: ${({ theme }) => rem(theme.pulsar.size.street)};
   }
 `;
