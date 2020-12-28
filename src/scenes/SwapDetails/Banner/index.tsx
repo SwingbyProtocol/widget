@@ -98,18 +98,20 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
         <Space size="box" shape="fill" />
       )}
 
-      <ResponsiveSpace />
       {explorerLink && (
-        <Button
-          variant="tertiary"
-          size={hasWideWidth ? 'state' : 'town'}
-          shape={hasWideWidth ? 'fit' : 'square'}
-          data-testid={buildTestId('explorer-link')}
-          href={explorerLink}
-          target="_blank"
-        >
-          {hasWideWidth ? formatMessage({ id: 'widget.explorer-btn' }) : <Icon.ExternalLink />}
-        </Button>
+        <>
+          <ResponsiveSpace />
+          <Button
+            variant="tertiary"
+            size={hasWideWidth ? 'state' : 'town'}
+            shape={hasWideWidth ? 'fit' : 'square'}
+            data-testid={buildTestId('explorer-link')}
+            href={explorerLink}
+            target="_blank"
+          >
+            {hasWideWidth ? formatMessage({ id: 'widget.explorer-btn' }) : <Icon.ExternalLink />}
+          </Button>
+        </>
       )}
     </BannerContainer>
   );
