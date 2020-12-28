@@ -143,7 +143,7 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
       />
       <AmountReceiving data-testid={buildTestId('amount-to')}>
         {isCalculating ? (
-          <Loading />
+          <Loading data-testid={buildTestId('amount-to.loading')} />
         ) : isAmountReceivingValid ? (
           <>
             {amountReceiving}

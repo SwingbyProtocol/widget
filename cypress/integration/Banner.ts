@@ -9,6 +9,8 @@ import { testStatuses } from '../utils';
     it('renders correctly', () => {
       cy.visit('/test/swap/new');
       cy.get('[data-testid="banner.form.amounts.currency-from-select"]').should('be.visible');
+      cy.wait('@fees');
+      cy.get('[data-testid="banner.form.amounts.amount-to.loading"]').should('not.exist');
       cy.percySnapshot(`${name}: after loading`, { widths: [width], minHeight: height });
     });
 
