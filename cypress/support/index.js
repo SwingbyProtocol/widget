@@ -5,7 +5,7 @@ import './commands';
 beforeEach(() => {
   cy.server();
   cy.route('**/network', 'fixture:network.json');
-  cy.route('**/fees', 'fixture:fees.json');
+  cy.route('**/fees', 'fixture:fees.json').as('fees');
   cy.route('POST', '**/swaps/create', 'fixture:create-swap.json');
   cy.route('**/api/v2', 'fixture:indexer.json');
   cy.route('**/swaps/query?hash=fake-hash-waiting', 'fixture:fake-swap-waiting.json');
