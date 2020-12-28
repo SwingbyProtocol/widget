@@ -1,11 +1,11 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { parseUrl } from 'query-string';
+import { parseUrl, stringifyUrl } from 'query-string';
 
 export default function Index() {
   const router = useRouter();
 
-  const { locale, mode, resource, hashOrNew } = (() => {
+  const { locale, mode, resource, hashOrNew, ...queryRest } = (() => {
     const queryParams = (() => {
       try {
         const { query } = parseUrl(router.asPath);
@@ -16,6 +16,7 @@ export default function Index() {
     })();
 
     return {
+      ...queryParams,
       locale:
         typeof queryParams.locale === 'string' && router.locales?.includes(queryParams.locale)
           ? queryParams.locale
@@ -34,7 +35,13 @@ export default function Index() {
 
   return (
     <Head>
-      <meta httpEquiv="refresh" content={`0; URL='/${locale}/${mode}/${resource}/${hashOrNew}'`} />
+      <meta
+        httpEquiv="refresh"
+        content={`0; URL='${stringifyUrl({
+          url: `/${locale}/${mode}/${resource}/${hashOrNew}`,
+          query: queryRest as any,
+        })}'`}
+      />
     </Head>
   );
 }
