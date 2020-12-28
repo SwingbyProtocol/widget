@@ -33,7 +33,9 @@ const areCurrenciesValid = ({
   }
 
   try {
-    new Big(amountDesired);
+    if (new Big(amountDesired).lt('0.01')) {
+      return false;
+    }
   } catch (e) {
     return false;
   }
