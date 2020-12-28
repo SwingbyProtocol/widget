@@ -11,8 +11,6 @@ import { testStatuses } from '../utils';
       cy.get('[data-testid="vertical.form.amounts.currency-from-select.target"]').should(
         'be.visible',
       );
-      cy.wait('@fees');
-      cy.get('[data-testid="banner.form.amounts.amount-to.loading"]').should('not.exist');
       cy.percySnapshot(`${name}: after loading`, { widths: [width], minHeight: height });
     });
 
@@ -39,6 +37,10 @@ import { testStatuses } from '../utils';
       cy.get('[data-testid="vertical.form.swap-btn"]').should('be.disabled');
 
       cy.get('[data-testid="vertical.form.amounts.amount-from"]').type('1');
+      cy.wait('@fees');
+      cy.get('[data-testid="banner.form.amounts.amount-to.loading"]').should('not.exist');
+
+      cy.percySnapshot(`${name}: with amount`, { widths: [width], minHeight: height });
 
       cy.get('[data-testid="vertical.form.swap-btn"]').should('be.disabled');
     });

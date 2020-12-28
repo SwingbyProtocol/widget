@@ -1,53 +1,44 @@
 import { Big } from 'big.js';
 import { useMemo } from 'react';
-import { DefaultRootState, useSelector } from 'react-redux';
-import {
-  getChainFor,
-  getCoinsFor,
-  isAddressValid,
-  SkybridgeResource,
-  SkybridgeContext,
-} from '@swingby-protocol/sdk';
+import { useSelector } from 'react-redux';
+import { getChainFor, getCoinsFor, isAddressValid, SkybridgeResource } from '@swingby-protocol/sdk';
 
 import { useSdkContext } from '../../sdk-context';
 import { logger } from '../../logger';
 
-const areCurrenciesValid = ({
-  resource,
-  amountDesired,
-  currencyDeposit,
-  currencyReceiving,
-  context,
-}: Pick<DefaultRootState['swapForm'], 'currencyDeposit' | 'currencyReceiving' | 'amountDesired'> & {
-  resource: SkybridgeResource;
-  context: SkybridgeContext;
-}): boolean => {
-  const coinsIn = getCoinsFor({ context, resource, direction: 'in' });
-  const coinsOut = getCoinsFor({ context, resource, direction: 'out' });
-  if (!coinsIn.includes(currencyDeposit) || !coinsOut.includes(currencyReceiving)) {
-    return false;
-  }
-
-  if (currencyDeposit === currencyReceiving) {
-    return false;
-  }
-
-  try {
-    new Big(amountDesired);
-  } catch (e) {
-    return false;
-  }
-
-  return true;
-};
-
 export const useAreCurrenciesValid = ({ resource }: { resource: SkybridgeResource }) => {
-  const data = useSelector((state) => state.swapForm);
+  const currencyDeposit = useSelector((state) => state.swapForm.currencyDeposit);
+  const currencyReceiving = useSelector((state) => state.swapForm.currencyReceiving);
+  const amountDesired = useSelector((state) => state.swapForm.amountDesired);
   const context = useSdkContext();
-  return useMemo(
-    () => ({ areCurrenciesValid: areCurrenciesValid({ ...data, context, resource }) }),
-    [data, context, resource],
-  );
+  return useMemo((): {
+    areCurrenciesAndAmountValid: boolean;
+    isCurrencyDepositValid: boolean;
+    isCurrencyReceivingValid: boolean;
+    isAmountDesiredValid: boolean;
+  } => {
+    const coinsIn = getCoinsFor({ context, resource, direction: 'in' });
+    const coinsOut = getCoinsFor({ context, resource, direction: 'out' });
+
+    const isCurrencyDepositValid = coinsIn.includes(currencyDeposit);
+    const isCurrencyReceivingValid =
+      coinsOut.includes(currencyReceiving) && currencyDeposit !== currencyReceiving;
+    const isAmountDesiredValid = (() => {
+      try {
+        return new Big(amountDesired).gte('0.01');
+      } catch (e) {
+        return false;
+      }
+    })();
+
+    return {
+      areCurrenciesAndAmountValid:
+        isCurrencyDepositValid && isCurrencyReceivingValid && isAmountDesiredValid,
+      isCurrencyDepositValid,
+      isCurrencyReceivingValid,
+      isAmountDesiredValid,
+    };
+  }, [currencyDeposit, currencyReceiving, amountDesired, context, resource]);
 };
 
 export const useIsReceivingAddressValid = () => {

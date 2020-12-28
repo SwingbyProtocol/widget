@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Big } from 'big.js';
 import { useEffect, useMemo, useState } from 'react';
 import {
-  buildContext,
   estimateAmountReceiving,
   getCoinsFor,
   getSwapableWith,
@@ -12,7 +11,7 @@ import {
   SkybridgeCoin,
 } from '@swingby-protocol/sdk';
 
-import { actionSetSwapFormData } from '../../modules/store/swapForm';
+import { actionSetSwapFormData, useAreCurrenciesValid } from '../../modules/store/swapForm';
 import { logger } from '../../modules/logger';
 import { useSdkContext } from '../../modules/sdk-context';
 
@@ -38,6 +37,7 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
   const [amountReceiving, setAmountReceiving] = useState('');
   const [isCalculating, setIsCalculating] = useState(false);
   const context = useSdkContext();
+  const { areCurrenciesAndAmountValid, isAmountDesiredValid } = useAreCurrenciesValid({ resource });
 
   const coinsIn = useMemo<SkybridgeCoin[]>(
     () => getCoinsFor({ context, resource, direction: 'in' }),
@@ -63,15 +63,17 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
   }, [coinsOut, currencyReceiving, dispatch]);
 
   useEffect(() => {
+    if (!areCurrenciesAndAmountValid) {
+      setAmountReceiving('');
+      setIsCalculating(false);
+      return;
+    }
+
     let cancelled = false;
 
     (async () => {
       try {
-        if (cancelled) return;
         setIsCalculating(true);
-
-        if (cancelled) return;
-        const context = await buildContext({ mode: 'test' });
 
         if (cancelled) return;
         const { amountReceiving } = await estimateAmountReceiving({
@@ -96,7 +98,7 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
     return () => {
       cancelled = true;
     };
-  }, [amountDesired, currencyDeposit, currencyReceiving]);
+  }, [areCurrenciesAndAmountValid, context, amountDesired, currencyDeposit, currencyReceiving]);
 
   const isAmountReceivingValid = useMemo(() => {
     try {
@@ -126,6 +128,7 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
         value={amountDesired}
         onChange={(evt) => dispatch(actionSetSwapFormData({ amountDesired: evt.target.value }))}
         data-testid={buildTestId('amount-from')}
+        state={isAmountDesiredValid ? 'normal' : 'danger'}
       />
       {variant === 'vertical' && <Label />}
       {variant === 'banner' ? <SwapHorizontal /> : <SwapVertical />}
