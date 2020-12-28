@@ -4,6 +4,7 @@ export const StylingConstants = {
   widgetBannerPadding: 14,
   widgetVerticalPadding: 40,
   mediaWideWidth: `(min-width: ${rem(600)})`,
+  mediaVerticalWideWidth: `(min-width: ${rem(400)})`,
   mediaLayout: {
     widgetSmall: `(min-height: ${rem(375)})`,
     widgetFull: `(min-height: ${rem(510)})`,

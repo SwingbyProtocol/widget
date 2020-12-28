@@ -6,6 +6,7 @@ import {
   useMatchMedia,
 } from '@swingby-protocol/pulsar';
 import { SkybridgeCoin } from '@swingby-protocol/sdk';
+import { rem } from 'polished';
 import { useEffect, useState } from 'react';
 
 import { StylingConstants } from '../../../modules/styles';
@@ -29,6 +30,7 @@ export const CurrencySelector = ({
 }: Props) => {
   const { buildTestId } = useBuildTestId({ id: testId });
   const hasWideWidth = useMatchMedia({ query: StylingConstants.mediaWideWidth });
+  const hasVerticalSymbol = useMatchMedia({ query: `(min-width: ${rem(480)})` });
   const [isHorizontalSelectorOpen, setHorizontalSelectorOpen] = useState(false);
 
   useEffect(() => {
@@ -43,7 +45,7 @@ export const CurrencySelector = ({
         target={
           <Dropdown.DefaultTarget variant="input" size="state">
             <CoinIcon symbol={value} />
-            &nbsp;{value}
+            {hasVerticalSymbol && <>&nbsp;{value}</>}
           </Dropdown.DefaultTarget>
         }
         data-testid={buildTestId('')}
