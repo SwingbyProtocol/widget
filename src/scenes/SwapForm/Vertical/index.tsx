@@ -1,5 +1,5 @@
 import { Button, CoinIcon, Loading, TextInput, useBuildTestId } from '@swingby-protocol/pulsar';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { SkybridgeResource } from '@swingby-protocol/sdk';
 
@@ -15,6 +15,8 @@ import { useWidgetLayout } from '../../../modules/layout';
 import { VerticalWidgetView } from '../../../components/VerticalWidgetView';
 import { Separator } from '../../../components/Separator';
 import { useCreate } from '../../../modules/create-swap';
+
+import { StakeEarn } from './styled';
 
 export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
   const { buildTestId } = useBuildTestId({ id: 'vertical.form' });
@@ -87,6 +89,10 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
           {formatMessage({ id: 'widget.next-btn' })}
         </Button>
       )}
+
+      <StakeEarn as="a" target="_blank" href="https://skybridge.info/pool">
+        <FormattedMessage id="widget.stake-btc-earn-rewards" />
+      </StakeEarn>
     </VerticalWidgetView>
   );
 };

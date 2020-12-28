@@ -6,7 +6,7 @@ import {
   useBuildTestId,
   Loading,
 } from '@swingby-protocol/pulsar';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { SkybridgeResource } from '@swingby-protocol/sdk';
 
@@ -21,7 +21,7 @@ import {
 import { StylingConstants } from '../../../modules/styles';
 import { useCreate } from '../../../modules/create-swap';
 
-import { BannerContainer, ResponsiveSpace, AddressInput } from './styled';
+import { BannerContainer, ResponsiveSpace, AddressInput, StakeEarn } from './styled';
 
 export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
   const { buildTestId } = useBuildTestId({ id: 'banner.form' });
@@ -86,6 +86,9 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
           </Button>
         </>
       )}
+      <StakeEarn as="a" target="_blank" href="https://skybridge.info/pool">
+        <FormattedMessage id="widget.stake-btc-earn-rewards" />
+      </StakeEarn>
     </BannerContainer>
   );
 };

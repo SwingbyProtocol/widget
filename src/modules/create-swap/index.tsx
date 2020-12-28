@@ -4,7 +4,6 @@ import {
   createWithdrawal,
   SkybridgeResource,
 } from '@swingby-protocol/sdk';
-import { useRouter } from 'next/router';
 import { useCallback, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 

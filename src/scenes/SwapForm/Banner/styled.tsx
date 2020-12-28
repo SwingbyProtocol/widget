@@ -26,3 +26,21 @@ export const ResponsiveSpace = styled.div`
     margin-left: ${({ theme }) => rem(theme.pulsar.size.street)};
   }
 `;
+
+export const StakeEarn = styled.span`
+  position: fixed;
+  bottom: 0;
+  left: ${rem(StylingConstants.widgetBannerPadding)};
+  font-size: ${({ theme }) => rem(theme.pulsar.size.drawer)};
+  height: ${rem(StylingConstants.widgetBannerPadding)};
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  &,
+  &:visited {
+    color: ${({ theme }) => theme.pulsar.color.text.normal};
+    text-decoration: underline;
+    text-decoration-color: ${({ theme }) => theme.pulsar.color.primary.normal};
+  }
+`;
