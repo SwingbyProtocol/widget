@@ -11,7 +11,7 @@ export const WidgetContainer = styled.div`
   justify-content: center;
   overflow: hidden;
 
-  @media ${StylingConstants.mediaLayout.widgetFull} {
+  @media ${StylingConstants.mediaLayout.website} {
     padding: ${({ theme }) => rem(theme.pulsar.size.drawer)};
   }
 
