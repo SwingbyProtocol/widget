@@ -44,5 +44,6 @@
   "widget.warning.learn-more": "Learn more.",
   "widget.ip-block": "You appear to be accessing this app from a country or region where its usage is not permitted.",
   "widget.blocked-countries": "Algeria, Bangladesh, Bolivia, Belarus, Burundi, Burma, Cote D’Ivoire (Ivory Coast), Crimea and Sevastopol, Cuba, Democratic Republic of Congo, Ecuador, Iran, Iraq, Libya, Mali, Morocco, Liberia, North Korea, Nepal, Somalia, Sudan, Syria, Venezuela, Zimbabwe and United States.",
-  "widget.stake-btc-earn-rewards": "Stake your BTC, earn rewards."
+  "widget.stake-btc-earn-rewards": "Stake your BTC, earn rewards.",
+  "widget.swap-error-title": "An unexpected error occurred."
 }
