@@ -21,7 +21,7 @@ import {
 import { StylingConstants } from '../../../modules/styles';
 import { useCreate } from '../../../modules/create-swap';
 
-import { BannerContainer, ResponsiveSpace, AddressInput, StakeEarn } from './styled';
+import { BannerContainer, ResponsiveSpace, AddressInput, StakeEarn, ErrorBox } from './styled';
 
 export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
   const { buildTestId } = useBuildTestId({ id: 'banner.form' });
@@ -31,10 +31,11 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
   const { areCurrenciesAndAmountValid } = useAreCurrenciesValid({ resource });
   const dispatch = useDispatch();
   const { isReceivingAddressValid } = useIsReceivingAddressValid();
-  const { loading, create } = useCreate({ resource });
+  const { loading, create, error } = useCreate({ resource });
 
   return (
     <BannerContainer>
+      {error && <ErrorBox>{error}</ErrorBox>}
       {step === 'step-address' ? (
         <>
           <BackButton

@@ -16,7 +16,7 @@ import { VerticalWidgetView } from '../../../components/VerticalWidgetView';
 import { Separator } from '../../../components/Separator';
 import { useCreate } from '../../../modules/create-swap';
 
-import { StakeEarn } from './styled';
+import { ErrorContainer, StakeEarn, ErrorBox, ErrorTitle } from './styled';
 
 export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
   const { buildTestId } = useBuildTestId({ id: 'vertical.form' });
@@ -26,7 +26,7 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
   const layout = useWidgetLayout();
   const { areCurrenciesAndAmountValid } = useAreCurrenciesValid({ resource });
   const { isReceivingAddressValid } = useIsReceivingAddressValid();
-  const { loading, create } = useCreate({ resource });
+  const { loading, create, error } = useCreate({ resource });
 
   return (
     <VerticalWidgetView
@@ -65,6 +65,15 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
       )}
 
       <Space size="street" shape="fill" />
+
+      {error && (
+        <ErrorContainer>
+          <ErrorTitle>
+            <FormattedMessage id="widget.swap-error-title" />
+          </ErrorTitle>
+          <ErrorBox>{error}</ErrorBox>
+        </ErrorContainer>
+      )}
 
       {(step === 'step-address' || layout === 'widget-full' || layout === 'website') && (
         <Button

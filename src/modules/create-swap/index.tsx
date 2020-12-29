@@ -15,6 +15,7 @@ import { actionSetSwap } from '../store/swaps';
 
 export const useCreate = ({ resource }: { resource: SkybridgeResource }) => {
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const context = useSdkContext();
   const addressReceiving = useSelector((state) => state.swapForm.addressReceiving);
   const currencyDeposit = useSelector((state) => state.swapForm.currencyDeposit);
@@ -25,6 +26,7 @@ export const useCreate = ({ resource }: { resource: SkybridgeResource }) => {
 
   const create = useCallback(async () => {
     setLoading(true);
+    setError(null);
 
     logger.debug('Will call createSwap()', {
       addressReceiving,
@@ -88,6 +90,8 @@ export const useCreate = ({ resource }: { resource: SkybridgeResource }) => {
       })();
 
       push(`/${context.mode}/${resource}/${hash}`);
+    } catch (e) {
+      setError(e.message);
     } finally {
       setLoading(false);
     }
@@ -102,5 +106,5 @@ export const useCreate = ({ resource }: { resource: SkybridgeResource }) => {
     resource,
   ]);
 
-  return useMemo(() => ({ loading, create }), [create, loading]);
+  return useMemo(() => ({ loading, create, error }), [create, loading, error]);
 };

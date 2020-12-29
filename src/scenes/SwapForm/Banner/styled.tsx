@@ -5,13 +5,14 @@ import { TextInput } from '@swingby-protocol/pulsar';
 import { StylingConstants } from '../../../modules/styles';
 
 export const BannerContainer = styled.div`
+  position: relative;
   flex-grow: 1;
   flex-shrink: 1;
   background: ${({ theme }) => theme.pulsar.color.bg.normal};
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: ${rem(StylingConstants.widgetBannerPadding)};
+  margin: ${rem(StylingConstants.widgetBannerPadding)};
 `;
 
 export const AddressInput = styled(TextInput)`
@@ -44,4 +45,20 @@ export const StakeEarn = styled.span`
     text-decoration: underline;
     text-decoration-color: ${({ theme }) => theme.pulsar.color.primary.normal};
   }
+`;
+
+export const ErrorBox = styled.div`
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  z-index: 1;
+  border-radius: ${({ theme }) => rem(theme.pulsar.size.box)};
+  font-size: ${({ theme }) => rem(theme.pulsar.size.drawer)};
+  color: ${({ theme }) => theme.pulsar.color.danger.normal};
+  background: ${({ theme }) => theme.pulsar.color.border.danger};
+  padding: ${rem(1)} ${({ theme }) => rem(theme.pulsar.size.drawer)};
 `;
