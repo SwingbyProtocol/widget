@@ -8,6 +8,7 @@ import {
 import { SkybridgeCoin } from '@swingby-protocol/sdk';
 import { rem } from 'polished';
 import { useEffect, useState } from 'react';
+import { useWidgetLayout } from '../../../modules/layout';
 
 import { StylingConstants } from '../../../modules/styles';
 
@@ -30,8 +31,9 @@ export const CurrencySelector = ({
 }: Props) => {
   const { buildTestId } = useBuildTestId({ id: testId });
   const hasWideWidth = useMatchMedia({ query: StylingConstants.mediaWideWidth });
-  const hasVerticalSymbol = useMatchMedia({ query: `(min-width: ${rem(480)})` });
+  const hasSymbolWebsite = useMatchMedia({ query: `(min-width: ${rem(400)})` });
   const [isHorizontalSelectorOpen, setHorizontalSelectorOpen] = useState(false);
+  const layout = useWidgetLayout();
 
   useEffect(() => {
     if (variant === 'vertical') {
@@ -45,7 +47,7 @@ export const CurrencySelector = ({
         target={
           <Dropdown.DefaultTarget variant="input" size="state">
             <CoinIcon symbol={value} />
-            {hasVerticalSymbol && <>&nbsp;{value}</>}
+            {(layout !== 'website' || hasSymbolWebsite) && <>&nbsp;{value}</>}
           </Dropdown.DefaultTarget>
         }
         data-testid={buildTestId('')}
