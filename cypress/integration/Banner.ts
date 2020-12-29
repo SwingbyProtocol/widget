@@ -9,7 +9,6 @@ import { testStatuses } from '../utils';
     it('renders correctly', () => {
       cy.visit('/test/swap/new');
       cy.get('[data-testid="banner.form.amounts.currency-from-select"]').should('be.visible');
-      cy.percySnapshot(`${name}: after loading`, { widths: [width], minHeight: height });
     });
 
     it('can switch coins', () => {
@@ -73,11 +72,11 @@ import { testStatuses } from '../utils';
     testStatuses({ name, width, height, testId: 'banner' });
   };
 
-  describe('Narrow banner', () => {
-    testCases({ width: 320, height: 76, name: 'Narrow banner' });
+  describe('Banner (narrow)', () => {
+    testCases({ width: 320, height: 76, name: 'Banner (narrow)' });
   });
 
-  describe('Wide banner', () => {
-    testCases({ width: 650, height: 76, name: 'Wide banner' });
+  describe('Banner (wide)', () => {
+    testCases({ width: 650, height: 76, name: 'Banner (wide)' });
   });
 })();

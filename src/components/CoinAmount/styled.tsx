@@ -19,6 +19,15 @@ const vertical = css`
     grid-template-columns: auto 1fr 1fr;
     ${wideSpace};
   }
+
+  @media ${StylingConstants.mediaLayout.widgetFull} {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media ${StylingConstants.mediaWebsiteWideWidth} {
+    grid-template-columns: auto 1fr 1fr;
+    ${wideSpace};
+  }
 `;
 
 const wideBanner = css`
@@ -49,6 +58,14 @@ export const Label = styled.span`
   @media ${StylingConstants.mediaVerticalWideWidth} {
     display: block;
   }
+
+  @media ${StylingConstants.mediaLayout.widgetFull} {
+    display: none;
+  }
+
+  @media ${StylingConstants.mediaWebsiteWideWidth} {
+    display: block;
+  }
 `;
 
 const swap = css`
@@ -62,6 +79,14 @@ export const SwapVertical = styled(Icon.SwapVertical)`
   grid-column: 1 / 3;
 
   @media ${StylingConstants.mediaVerticalWideWidth} {
+    grid-column: 2 / 4;
+  }
+
+  @media ${StylingConstants.mediaLayout.widgetFull} {
+    grid-column: 1 / 3;
+  }
+
+  @media ${StylingConstants.mediaWebsiteWideWidth} {
     grid-column: 2 / 4;
   }
 `;

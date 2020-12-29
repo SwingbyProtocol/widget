@@ -11,7 +11,6 @@ import { testStatuses } from '../utils';
       cy.get('[data-testid="vertical.form.amounts.currency-from-select.target"]').should(
         'be.visible',
       );
-      cy.percySnapshot(`${name}: after loading`, { widths: [width], minHeight: height });
     });
 
     it('can switch coins', () => {
@@ -27,20 +26,22 @@ import { testStatuses } from '../utils';
       cy.get('[data-testid="vertical.form.amounts.currency-to-select.target"]').click();
       cy.tick(10000);
 
-      cy.percySnapshot(`${name}: switch coin`, { widths: [width], minHeight: height });
-
       cy.get('[data-testid="vertical.form.amounts.currency-to-select.content.item-BTC"]').click();
       cy.tick(10000);
     });
 
     it('can input amounts', () => {
+      cy.clock();
       cy.get('[data-testid="vertical.form.swap-btn"]').should('be.disabled');
 
       cy.get('[data-testid="vertical.form.amounts.amount-from"]').type('1');
       cy.wait('@fees');
       cy.get('[data-testid="banner.form.amounts.amount-to.loading"]').should('not.exist');
 
-      cy.percySnapshot(`${name}: with amount`, { widths: [width], minHeight: height });
+      cy.get('[data-testid="vertical.form.amounts.currency-to-select.target"]').click();
+      cy.tick(10000);
+
+      cy.percySnapshot(`${name}: with amount and dropdown`, { widths: [width], minHeight: height });
 
       cy.get('[data-testid="vertical.form.swap-btn"]').should('be.disabled');
     });
@@ -59,11 +60,23 @@ import { testStatuses } from '../utils';
     testStatuses({ name, width, height, testId: 'vertical' });
   };
 
-  describe('Full vertical', () => {
-    testCases({ width: 445, height: 510, name: 'Full vertical' });
+  describe('Full vertical (narrow)', () => {
+    testCases({ width: 320, height: 510, name: 'Full vertical (narrow)' });
   });
 
-  describe('Website', () => {
-    testCases({ width: 600, height: 600, name: 'Website' });
+  describe('Full vertical (wide)', () => {
+    testCases({ width: 445, height: 510, name: 'Full vertical (wide)' });
+  });
+
+  describe('Website (narrow)', () => {
+    testCases({ width: 320, height: 600, name: 'Website (narrow)' });
+  });
+
+  describe('Website (medium)', () => {
+    testCases({ width: 400, height: 600, name: 'Website (medium)' });
+  });
+
+  describe('Website (wide)', () => {
+    testCases({ width: 500, height: 600, name: 'Website (wide)' });
   });
 })();

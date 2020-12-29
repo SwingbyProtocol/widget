@@ -56,6 +56,7 @@ export const HorizonalList = ({
                             <CoinButton
                               variant="tertiary"
                               size="state"
+                              shape="fit"
                               onClick={() => {
                                 onChange(coin);
                                 onClose();
