@@ -15,7 +15,7 @@ import { actionSetSwap } from '../store/swaps';
 
 export const useCreate = ({ resource }: { resource: SkybridgeResource }) => {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>('test error');
+  const [error, setError] = useState<string | null>(null);
   const context = useSdkContext();
   const addressReceiving = useSelector((state) => state.swapForm.addressReceiving);
   const currencyDeposit = useSelector((state) => state.swapForm.currencyDeposit);
