@@ -12,6 +12,10 @@ export const WidgetContainer = styled.div`
   overflow: hidden;
 
   @media ${StylingConstants.mediaLayout.website} {
+    padding: ${({ theme }) => rem(theme.pulsar.size.drawer)};
+  }
+
+  @media ${StylingConstants.mediaWebsiteWideWidth} {
     padding: ${({ theme }) => rem(theme.pulsar.size.city)};
   }
 `;

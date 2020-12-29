@@ -31,9 +31,7 @@ export const CurrencySelector = ({
 }: Props) => {
   const { buildTestId } = useBuildTestId({ id: testId });
   const hasWideWidth = useMatchMedia({ query: StylingConstants.mediaWideWidth });
-  const hasSymbolWebsite = useMatchMedia({ query: `(min-width: ${rem(400)})` });
   const [isHorizontalSelectorOpen, setHorizontalSelectorOpen] = useState(false);
-  const layout = useWidgetLayout();
 
   useEffect(() => {
     if (variant === 'vertical') {
@@ -47,7 +45,7 @@ export const CurrencySelector = ({
         target={
           <Dropdown.DefaultTarget variant="input" size="state">
             <CoinIcon symbol={value} />
-            {(layout !== 'website' || hasSymbolWebsite) && <>&nbsp;{value}</>}
+            <>&nbsp;{value}</>
           </Dropdown.DefaultTarget>
         }
         data-testid={buildTestId('')}
