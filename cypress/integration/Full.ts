@@ -59,11 +59,23 @@ import { testStatuses } from '../utils';
     testStatuses({ name, width, height, testId: 'vertical' });
   };
 
-  describe('Full vertical', () => {
-    testCases({ width: 445, height: 510, name: 'Full vertical' });
+  describe('Full vertical (narrow)', () => {
+    testCases({ width: 320, height: 510, name: 'Full vertical (narrow)' });
   });
 
-  describe('Website', () => {
-    testCases({ width: 600, height: 600, name: 'Website' });
+  describe('Full vertical (wide)', () => {
+    testCases({ width: 445, height: 510, name: 'Full vertical (wide)' });
+  });
+
+  describe('Website (narrow)', () => {
+    testCases({ width: 320, height: 600, name: 'Website (narrow)' });
+  });
+
+  describe('Website (medium)', () => {
+    testCases({ width: 400, height: 600, name: 'Website (medium)' });
+  });
+
+  describe('Website (wide)', () => {
+    testCases({ width: 500, height: 600, name: 'Website (wide)' });
   });
 })();

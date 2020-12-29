@@ -62,7 +62,11 @@ import { testStatuses } from '../utils';
     testStatuses({ name, width, height, testId: 'vertical' });
   };
 
-  describe('Small vertical', () => {
-    testCases({ width: 445, height: 375, name: 'Small vertical' });
+  describe('Small vertical (narrow)', () => {
+    testCases({ width: 320, height: 375, name: 'Small vertical (narrow)' });
+  });
+
+  describe('Small vertical (wide)', () => {
+    testCases({ width: 445, height: 375, name: 'Small vertical (wide)' });
   });
 })();
