@@ -36,6 +36,7 @@ export const StakeEarn = styled.span`
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  font-weight: 600;
 
   &,
   &:visited {

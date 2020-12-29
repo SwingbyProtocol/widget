@@ -2,8 +2,9 @@ import { rem } from 'polished';
 import styled from 'styled-components';
 
 export const StakeEarn = styled.span`
-  font-size: ${({ theme }) => rem(theme.pulsar.size.drawer)};
+  font-size: ${({ theme }) => rem(theme.pulsar.size.closet)};
   margin-top: ${({ theme }) => rem(theme.pulsar.size.box)};
+  font-weight: 600;
 
   &,
   &:visited {
