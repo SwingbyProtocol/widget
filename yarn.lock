@@ -1050,10 +1050,10 @@
   resolved "https://registry.yarnpkg.com/@swingby-protocol/prettier-config/-/prettier-config-1.0.2.tgz#ff4c03ac7ad3dab1d02a914d31debcf9441fa3e8"
   integrity sha512-ROirdMQDD6PxHTC+4J7pFH4ik8Yf3frLwf6XDBjuFKKfKCqvpqkHWHnYCJG1PS5uODmMCiH+m1JoIYr/vDfnAA==
 
-"@swingby-protocol/pulsar@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@swingby-protocol/pulsar/-/pulsar-1.0.2.tgz#a9a231a8123d344bde9cc926d568cbee5c26994a"
-  integrity sha512-t+L9J4pclVO/J/kvhDmfDHeYZ2NQNclNdkEepYzTzCIodObjZ34Bl+knV7hiXTuZsxACFp0j4yUkNy/x+ATL6Q==
+"@swingby-protocol/pulsar@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@swingby-protocol/pulsar/-/pulsar-1.0.3.tgz#ce24f6ccc8022ac48ad2519760098dea5340a2e9"
+  integrity sha512-ZR0G8gn9a4rM1iQ+7jbxrW3gBbTmHiGAyW5h2H81yUMmmkkxfdYdp+DroA85P14+pI25uVaDniL5LnDOftGOWw==
   dependencies:
     "@tippyjs/react" "^4.2.0"
     nanoid "3.1.18"
