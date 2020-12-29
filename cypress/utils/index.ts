@@ -81,10 +81,6 @@ export const testStatuses = ({
         ? `Sending 0.99999612${NON_BREAKING_SPACE}WBTC`
         : `Sending 0.99999612${NON_BREAKING_SPACE}WBTC to`,
     );
-    cy.percySnapshot(`${name}: sending, with explorer link`, {
-      widths: [width],
-      minHeight: height,
-    });
   });
 
   it('renders "COMPLETED" status correctly', () => {
@@ -106,7 +102,6 @@ export const testStatuses = ({
         ? 'Refunded 0.99999854 BTC'
         : `Refunded 0.99999854${NON_BREAKING_SPACE}BTC to`,
     );
-    cy.percySnapshot(`${name}: refunded`, { widths: [width], minHeight: height });
   });
 
   it('renders "EXPIRED" status correctly', () => {
