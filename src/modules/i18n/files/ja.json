@@ -1,17 +1,4 @@
 {
-  "widget.tab-title.generic": "Skybridge Widget",
-  "widget.tab-title.swap.test.form": "[Test] Skybridge Swap Widget",
-  "widget.tab-title.swap.test.details": "[Test] Swap: {hash} | Skybridge Swap Widget",
-  "widget.tab-title.swap.production.form": "Skybridge Swap Widget",
-  "widget.tab-title.swap.production.details": "Swap: {hash} | Skybridge Swap Widget",
-  "widget.tab-title.pool.test.form": "[Test] Skybridge Swap Widget",
-  "widget.tab-title.pool.test.details": "[Test] Pool: {hash} | Skybridge Swap Widget",
-  "widget.tab-title.pool.production.form": "Skybridge Swap Widget",
-  "widget.tab-title.pool.production.details": "Pool: {hash} | Skybridge Swap Widget",
-  "widget.tab-title.withdrawal.test.form": "[Test] Skybridge Swap Widget",
-  "widget.tab-title.withdrawal.test.details": "[Test] Withdrawal: {hash} | Skybridge Swap Widget",
-  "widget.tab-title.withdrawal.production.form": "Skybridge Swap Widget",
-  "widget.tab-title.withdrawal.production.details": "Withdrawal: {hash} | Skybridge Swap Widget",
   "widget.from": "From",
   "widget.to": "To",
   "widget.amount-receiving-estimation-label": "(概算)",
@@ -43,6 +30,5 @@
   "widget.warning-production": "スワップサービスはメインネットに接続されています。",
   "widget.warning.learn-more": "詳しくはこちら。",
   "widget.ip-block": "使用が許可されていない国または地域からこのアプリにアクセスしているようです。",
-  "widget.blocked-countries": "Algeria, Bangladesh, Bolivia, Belarus, Burundi, Burma, Cote D’Ivoire (Ivory Coast), Crimea and Sevastopol, Cuba, Democratic Republic of Congo, Ecuador, Iran, Iraq, Libya, Mali, Morocco, Liberia, North Korea, Nepal, Somalia, Sudan, Syria, Venezuela, Zimbabwe and United States.",
   "widget.stake-btc-earn-rewards": "BTCをステークしてリワードを受け取る"
 }

@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { IntlProvider } from 'react-intl';
 import { Provider as ReduxProvider } from 'react-redux';
 import Head from 'next/head';
+import { useMemo } from 'react';
 
 import { languages } from '../modules/i18n';
 import { WidgetLayoutProvider } from '../modules/layout';
@@ -25,15 +26,17 @@ function MyApp({ Component, pageProps }: AppProps) {
   const theme =
     router.query.theme === 'light' ? 'light' : router.query.theme === 'dark' ? 'dark' : undefined;
 
+  const messages = useMemo(() => ({ ...languages.en, ...languages[locale] }), [locale]);
+
   return (
     <PulsarThemeProvider theme={theme}>
-      <IntlProvider messages={languages[locale]} locale={locale} defaultLocale={defaultLocale}>
+      <IntlProvider messages={messages} locale={locale} defaultLocale={defaultLocale}>
         <PulsarGlobalStyles />
         <ReduxProvider store={store}>
           <WidgetLayoutProvider>
             <Favicon />
             <Head>
-              <title>{languages[locale]['widget.tab-title.generic']}</title>
+              <title>{messages['widget.tab-title.generic']}</title>
             </Head>
             <Component {...pageProps} />
           </WidgetLayoutProvider>
