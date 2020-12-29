@@ -38,8 +38,11 @@
   "widget.will-send-back": "Skybridge 準備發送{value}至{address}。 請確認這是您的錢包地址!",
   "widget.explorer-btn": "Explorer",
   "widget.explorer-link": "Explorer",
-  "widget.explorer-link-long": "去explorer查看",
+  "widget.explorer-link-long": "移至Explorer了解更多",
   "widget.warning-test": "您正在使用“測試網”模式。請不要發送主網的資金。",
-  "widget.warning-production": "此產品為連接至主網的Beta版本",
-  "widget.warning.learn-more": "了解更多"
+  "widget.warning-production": "應用程序為連接至主網的Beta版本。",
+  "widget.warning.learn-more": "了解更多。",
+  "widget.ip-block": "此應用在妳所在國家地區無法使用",
+  "widget.blocked-countries": "Algeria, Bangladesh, Bolivia, Belarus, Burundi, Burma, Cote D’Ivoire (Ivory Coast), Crimea and Sevastopol, Cuba, Democratic Republic of Congo, Ecuador, Iran, Iraq, Libya, Mali, Morocco, Liberia, North Korea, Nepal, Somalia, Sudan, Syria, Venezuela, Zimbabwe and United States.",
+  "widget.stake-btc-earn-rewards": "質押您的BTC, 賺取獎勵"
 }
