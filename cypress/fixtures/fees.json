@@ -1,7 +1,7 @@
-[
-  { "bridgeFeePercent": "0.1", "currency": "BTC", "minerFee": "30000" },
-  { "bridgeFeePercent": "0.1", "currency": "BNB", "minerFee": "500" },
-  { "bridgeFeePercent": "0.1", "currency": "BTCB", "minerFee": "500" },
-  { "bridgeFeePercent": "0.1", "currency": "ETH", "minerFee": "0" },
-  { "bridgeFeePercent": "0.1", "currency": "WBTC", "minerFee": "0" }
-]
+{
+  "feeBridgeFraction": "0.005",
+  "feeCurrency": "WBTC",
+  "feeMiner": "0.00015",
+  "feeTotal": "0.00515",
+  "estimatedAmountReceiving": "0.99485"
+}

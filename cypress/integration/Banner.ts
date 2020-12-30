@@ -27,7 +27,7 @@ import { testStatuses } from '../utils';
       cy.get('[data-testid="banner.form.amounts.currency-from-select"]').click();
       cy.tick(10000);
 
-      cy.get('[data-testid="banner.form.amounts.currency-from-select.coin-list.item-BTCB"]')
+      cy.get('[data-testid="banner.form.amounts.currency-from-select.coin-list.item-WBTC"]')
         .scrollIntoView()
         .should('be.visible')
         .click();
