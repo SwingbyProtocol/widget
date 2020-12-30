@@ -11,7 +11,7 @@ describe('Address validation', () => {
     cy.get('[data-testid="vertical.form.amounts.currency-from-select.target"]').click();
     cy.get('[data-testid="vertical.form.amounts.currency-from-select.content.item-BTC"]').click();
     cy.get('[data-testid="vertical.form.amounts.currency-to-select.target"]').click();
-    cy.get('[data-testid="vertical.form.amounts.currency-to-select.content.item-WBTC"]').click();
+    cy.get('[data-testid="vertical.form.amounts.currency-to-select.content.item-BTCB"]').click();
     cy.get('[data-testid="vertical.form.amounts.amount-from"]').type('1');
   });
 
