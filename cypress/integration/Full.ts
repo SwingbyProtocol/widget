@@ -18,7 +18,7 @@ import { testStatuses } from '../utils';
       cy.get('[data-testid="vertical.form.amounts.currency-from-select.target"]').click();
       cy.tick(10000);
 
-      cy.get('[data-testid="vertical.form.amounts.currency-from-select.content.item-BTCB"]')
+      cy.get('[data-testid="vertical.form.amounts.currency-from-select.content.item-WBTC"]')
         .should('be.visible')
         .click();
       cy.tick(10000);

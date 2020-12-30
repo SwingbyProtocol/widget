@@ -34,7 +34,7 @@ describe('Query params', () => {
 
   it('fills form correctly for swap with valid defaults', () => {
     cy.visit(
-      '/test/swap/new?defaultCurrencyDeposit=BTC&defaultCurrencyReceiving=BTCB&defaultAddressReceiving=tbnb1k3cp6jl7z757hewt30nfvr97uywlxeap69glam&defaultAmountDesired=1',
+      '/test/swap/new?defaultCurrencyDeposit=BTC&defaultCurrencyReceiving=WBTC&defaultAddressReceiving=tbnb1k3cp6jl7z757hewt30nfvr97uywlxeap69glam&defaultAmountDesired=1',
     );
 
     cy.get('[data-testid="vertical.form.amounts.currency-from-select.target"]').should(
@@ -43,7 +43,7 @@ describe('Query params', () => {
     );
     cy.get('[data-testid="vertical.form.amounts.currency-to-select.target"]').should(
       'have.text',
-      `${NON_BREAKING_SPACE}BTCB`,
+      `${NON_BREAKING_SPACE}WBTC`,
     );
     cy.get('[data-testid="vertical.form.amounts.amount-from.native-input"]').should(
       'have.value',
@@ -58,7 +58,7 @@ describe('Query params', () => {
 
   it('fills forms correctly for pooling', () => {
     cy.visit(
-      '/test/pool/new?defaultCurrencyDeposit=WBTC&defaultCurrencyReceiving=BTCB&defaultAddressReceiving=0xaaaa&defaultAmountDesired=1',
+      '/test/pool/new?defaultCurrencyDeposit=WBTC&defaultCurrencyReceiving=sbBTC&defaultAddressReceiving=0xaaaa&defaultAmountDesired=1',
     );
 
     cy.get('[data-testid="vertical.form.amounts.currency-from-select.target"]').should(
