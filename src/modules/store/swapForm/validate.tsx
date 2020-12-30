@@ -25,7 +25,7 @@ export const useAreCurrenciesValid = ({ resource }: { resource: SkybridgeResourc
       coinsOut.includes(currencyReceiving) && currencyDeposit !== currencyReceiving;
     const isAmountDesiredValid = (() => {
       try {
-        return new Big(amountDesired).gte('0.01');
+        return new Big(amountDesired).gte('0.0004');
       } catch (e) {
         return false;
       }
