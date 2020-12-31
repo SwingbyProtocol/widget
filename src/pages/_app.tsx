@@ -1,5 +1,9 @@
 import { AppProps } from 'next/app';
-import { PulsarGlobalStyles, PulsarThemeProvider } from '@swingby-protocol/pulsar';
+import {
+  PulsarGlobalStyles,
+  PulsarThemeProvider,
+  PULSAR_GLOBAL_FONT_HREF,
+} from '@swingby-protocol/pulsar';
 import { useRouter } from 'next/router';
 import { IntlProvider } from 'react-intl';
 import { Provider as ReduxProvider } from 'react-redux';
@@ -36,6 +40,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <WidgetLayoutProvider>
             <Favicon />
             <Head>
+              <link rel="stylesheet" href={PULSAR_GLOBAL_FONT_HREF} />
               <title>{messages['widget.tab-title.generic']}</title>
             </Head>
             <Component {...pageProps} />
