@@ -16,6 +16,7 @@
   "widget.status-label-short.REFUNDED": "Reembolsados",
   "widget.status-label-short.EXPIRED": "Este cambio ha expirado",
   "widget.status-label-long.WAITING": "Envía {value} exactos a",
+  "widget.status-label-long.WAITING.note": " ",
   "widget.status-label-long.PENDING": "Enviando {value} a",
   "widget.status-label-long.SIGNING": "Enviando {value} a",
   "widget.status-label-long.SENDING": "Enviando {value} a",
