@@ -21,11 +21,12 @@ export const Top = ({
   'data-testid': testId,
 }: Testable & { swap: NonNullable<DefaultRootState['swaps'][string]> }) => {
   const { buildTestId } = useBuildTestId({ id: testId });
-  const { locale } = useIntl();
+  const { locale, formatMessage } = useIntl();
   const layout = useWidgetLayout();
   const spaceSize = layout === 'widget-full' || layout === 'website' ? 'house' : 'room';
   const smallSpaceSize = layout === 'widget-full' || layout === 'website' ? 'closet' : 'drawer';
   const copyToClipboardSize = layout === 'widget-full' || layout === 'website' ? 'city' : 'town';
+  const sendExactlyNote = formatMessage({ id: 'widget.status-label-long.WAITING.note' });
 
   if (swap.status === 'COMPLETED' || swap.status === 'EXPIRED') {
     return (
@@ -100,6 +101,7 @@ export const Top = ({
           }}
         />
       </BigText>
+      {!!sendExactlyNote && <SmallText>{sendExactlyNote}</SmallText>}
       <Space size={smallSpaceSize} />
       <CopyToClipboard
         variant="accent"

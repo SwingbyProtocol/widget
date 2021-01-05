@@ -29,6 +29,7 @@
   "widget.status-label-short.REFUNDED": "Refunded",
   "widget.status-label-short.EXPIRED": "This swap has expired",
   "widget.status-label-long.WAITING": "Send exactly {value} to",
+  "widget.status-label-long.WAITING.note": " ",
   "widget.status-label-long.PENDING": "Sending {value} to",
   "widget.status-label-long.SIGNING": "Sending {value} to",
   "widget.status-label-long.SENDING": "Sending {value} to",
