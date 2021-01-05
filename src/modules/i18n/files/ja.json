@@ -16,6 +16,7 @@
   "widget.status-label-short.REFUNDED": "返金済",
   "widget.status-label-short.EXPIRED": "一定期間内にて入金が確認されなかった為、当スワップは失効されました。",
   "widget.status-label-long.WAITING": "{value}のデポジット先",
+  "widget.status-label-long.WAITING.note": "(送金額は上記丁度でお願いします)",
   "widget.status-label-long.PENDING": "{value}を送信中",
   "widget.status-label-long.SIGNING": "{value}を署名中",
   "widget.status-label-long.SENDING": "{value}を送信中",

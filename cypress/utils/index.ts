@@ -17,7 +17,7 @@ export const testStatuses = ({
       'have.text',
       testId === 'banner'
         ? `Send 0.99999854${NON_BREAKING_SPACE}BTC`
-        : `Send 0.99999854${NON_BREAKING_SPACE}BTC to`,
+        : `Send exactly 0.99999854${NON_BREAKING_SPACE}BTC to`,
     );
     cy.percySnapshot(`${name}: waiting`, { widths: [width], minHeight: height });
   });
