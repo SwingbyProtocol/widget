@@ -133,6 +133,9 @@ export const Top = ({
               }}
             />
           </SmallText>
+          <SmallText>
+            <FormattedMessage id="widget.confirm-address" />
+          </SmallText>
         </>
       )}
     </>
