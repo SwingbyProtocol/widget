@@ -40,7 +40,7 @@ export const StyledBackButton = styled(BackButton)`
 export const FancyTopContainer = styled.div`
   background: ${({ theme }) => theme.pulsar.color.bg.normal};
   color: ${({ theme }) => theme.pulsar.color.text.normal};
-  background-image: url(${logos.StarsBg});
+  background-image: url(${logos.StarsBgAnimated});
   background-position: top right;
   background-size: 100%;
   background-repeat: repeat;
