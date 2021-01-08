@@ -6,10 +6,8 @@ import {
   useMatchMedia,
 } from '@swingby-protocol/pulsar';
 import { SkybridgeCoin } from '@swingby-protocol/sdk';
-import { rem } from 'polished';
 import { useEffect, useState } from 'react';
 
-import { useWidgetLayout } from '../../../modules/layout';
 import { StylingConstants } from '../../../modules/styles';
 
 import { HorizonalList } from './HorizonalList';

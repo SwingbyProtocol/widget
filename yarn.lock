@@ -1038,12 +1038,13 @@
     eslint-plugin-react "^7.21.5"
     eslint-plugin-react-hooks "^4.2.0"
 
-"@swingby-protocol/ip-check@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@swingby-protocol/ip-check/-/ip-check-1.0.0.tgz#5cefd588df47b890a1775f3272e31653d3595916"
-  integrity sha512-tzFExJTgPrhEqO2H01qp1LNF3K08eCxJHPXsZqcrFTq96fJxbNDC1eDt/juRAhhSRjJa5Z3Q8A8SdgW+q1JIhQ==
+"@swingby-protocol/ip-check@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@swingby-protocol/ip-check/-/ip-check-2.1.0.tgz#fb6589eac95093793cf4ba39c51cf9e736c01aaa"
+  integrity sha512-KaRRXqcbUCpv25KzIOG4p9A5a76qhscY53HB0cWl4oA+gkG3zcZNKzAZ7CS1bPEJaJ0BIsfdU2TuTyNZWBElvg==
   dependencies:
     isomorphic-unfetch "^3.1.0"
+    query-string "^6.13.8"
 
 "@swingby-protocol/prettier-config@^1.0.2":
   version "1.0.2"
@@ -7803,6 +7804,15 @@ query-string@^6.13.7:
   version "6.13.7"
   resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.13.7.tgz#af53802ff6ed56f3345f92d40a056f93681026ee"
   integrity sha512-CsGs8ZYb39zu0WLkeOhe0NMePqgYdAuCqxOYKDR5LVCytDZYMGx3Bb+xypvQvPHVPijRXB0HZNFllCzHRe4gEA==
+  dependencies:
+    decode-uri-component "^0.2.0"
+    split-on-first "^1.0.0"
+    strict-uri-encode "^2.0.0"
+
+query-string@^6.13.8:
+  version "6.13.8"
+  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.13.8.tgz#8cf231759c85484da3cf05a851810d8e825c1159"
+  integrity sha512-jxJzQI2edQPE/NPUOusNjO/ZOGqr1o2OBa/3M00fU76FsLXDVbJDv/p7ng5OdQyorKrkRz1oqfwmbe5MAMePQg==
   dependencies:
     decode-uri-component "^0.2.0"
     split-on-first "^1.0.0"

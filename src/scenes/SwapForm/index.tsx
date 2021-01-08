@@ -13,10 +13,10 @@ import { Vertical } from './Vertical';
 
 export const SwapForm = ({ resource }: { resource: SkybridgeResource }) => {
   const layout = useWidgetLayout();
-  const { blockRegion } = useIpInfo();
+  const { shouldBlockRegion } = useIpInfo();
   return (
     <>
-      {blockRegion && <IpBlockWarning />}
+      {shouldBlockRegion && <IpBlockWarning />}
       <ModeWarning />
       <HeadTitle />
       <Favicon />
