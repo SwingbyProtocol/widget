@@ -2,16 +2,16 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { GetServerSideProps } from 'next';
-import { getIpInfo, shouldBlockRegion } from '@swingby-protocol/ip-check';
+import { getIpInfoFromRequest, IpInfoFromRequest } from '@swingby-protocol/ip-check';
 
 import { SwapForm } from '../../../scenes/SwapForm';
 import { GlobalStyles } from '../../../modules/styles';
 import { SdkContextProvider } from '../../../modules/sdk-context';
 import { useWidgetPathParams } from '../../../modules/path-params';
 import { actionSetSwapFormData } from '../../../modules/store/swapForm';
-import { IpInfoContextValue, IpInfoProvider } from '../../../modules/ip-blocks';
+import { IpInfoProvider } from '../../../modules/ip-blocks';
 
-type Props = { ipInfo: IpInfoContextValue };
+type Props = { ipInfo: IpInfoFromRequest };
 
 export default function ResourceNew({ ipInfo }: Props) {
   const dispatch = useDispatch();
@@ -59,31 +59,7 @@ export default function ResourceNew({ ipInfo }: Props) {
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async ({ req }) => {
-  const clientIp =
-    (typeof req.headers['x-real-ip'] === 'string' ? req.headers['x-real-ip'] : null) ??
-    req.connection.remoteAddress ??
-    null;
-
-  const ipInfo = await (async () => {
-    try {
-      if (!clientIp || !process.env.IPSTACK_API_KEY) return null;
-      return await getIpInfo({
-        ip: clientIp,
-        ipstackApiKey: process.env.IPSTACK_API_KEY,
-      });
-    } catch (e) {
-      return null;
-    }
-  })();
-
-  const blockRegion = (() => {
-    try {
-      if (!ipInfo) return false;
-      return shouldBlockRegion(ipInfo);
-    } catch (e) {
-      return false;
-    }
-  })();
-
-  return { props: { ipInfo: { ipInfo, clientIp, blockRegion } } };
+  return {
+    props: { ipInfo: await getIpInfoFromRequest({ req, ipApiKey: process.env.IPAPI_API_KEY }) },
+  };
 };

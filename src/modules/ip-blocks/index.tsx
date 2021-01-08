@@ -1,17 +1,10 @@
-import { getIpInfo } from '@swingby-protocol/ip-check';
+import { IpInfoFromRequest } from '@swingby-protocol/ip-check';
 import React, { useContext } from 'react';
 
-type ThenArg<T> = T extends PromiseLike<infer U> ? U : T;
-export type IpInfoContextValue = {
-  blockRegion: boolean;
-  clientIp: string | null;
-  ipInfo: ThenArg<ReturnType<typeof getIpInfo>> | null;
-};
-
-const Context = React.createContext<IpInfoContextValue>({
-  blockRegion: false,
-  clientIp: null,
-  ipInfo: null,
+const Context = React.createContext<IpInfoFromRequest>({
+  shouldBlockRegion: false,
+  ip: null,
+  info: null,
 });
 
 export const useIpInfo = () => useContext(Context);
@@ -21,7 +14,7 @@ export const IpInfoProvider = ({
   value,
 }: {
   children: React.ReactNode;
-  value: IpInfoContextValue;
+  value: IpInfoFromRequest;
 }) => {
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };
