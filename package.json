@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@swingby-protocol/ip-check": "^2.1.0",
-    "@swingby-protocol/pulsar": "^3.2.0",
+    "@swingby-protocol/pulsar": "^3.3.1",
     "@swingby-protocol/sdk": "^1.0.0-alpha.58",
     "big.js": "6.0.3",
     "hex-to-binary": "^1.0.1",
