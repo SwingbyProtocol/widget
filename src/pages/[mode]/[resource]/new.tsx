@@ -22,6 +22,7 @@ export default function ResourceNew({ ipInfo }: Props) {
       defaultCurrencyReceiving,
       defaultAddressReceiving,
       defaultAmountDesired,
+      aff: affiliateCode,
     },
   } = useRouter();
 
@@ -42,8 +43,13 @@ export default function ResourceNew({ ipInfo }: Props) {
 
   useEffect(() => {
     if (typeof defaultAmountDesired !== 'string' || !defaultAmountDesired) return;
-    dispatch(actionSetSwapFormData({ amountDesired: defaultAmountDesired as any }));
+    dispatch(actionSetSwapFormData({ amountDesired: defaultAmountDesired }));
   }, [dispatch, defaultAmountDesired]);
+
+  useEffect(() => {
+    if (typeof affiliateCode !== 'string' || !affiliateCode) return;
+    dispatch(actionSetSwapFormData({ affiliateCode }));
+  }, [dispatch, affiliateCode]);
 
   if (!mode) return <></>;
   if (!resource) return <></>;

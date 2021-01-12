@@ -21,6 +21,7 @@ export const useCreate = ({ resource }: { resource: SkybridgeResource }) => {
   const currencyDeposit = useSelector((state) => state.swapForm.currencyDeposit);
   const currencyReceiving = useSelector((state) => state.swapForm.currencyReceiving);
   const amountDesired = useSelector((state) => state.swapForm.amountDesired);
+  const affiliateCode = useSelector((state) => state.swapForm.affiliateCode);
   const dispatch = useDispatch();
   const { push } = usePushWithSearchParams();
 
@@ -33,6 +34,7 @@ export const useCreate = ({ resource }: { resource: SkybridgeResource }) => {
       currencyDeposit,
       currencyReceiving,
       amountDesired,
+      affiliateCode,
     });
 
     try {
@@ -44,6 +46,7 @@ export const useCreate = ({ resource }: { resource: SkybridgeResource }) => {
             currencyReceiving: currencyReceiving as any,
             currencyDeposit: currencyDeposit as any,
             addressReceiving,
+            affiliateCode,
           });
 
           logger.debug('createSwap() has finished', swap);

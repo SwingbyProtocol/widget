@@ -13,6 +13,7 @@ const initialState = {
   currencyReceiving: 'WBTC' as SkybridgeCoin,
   amountDesired: '',
   addressReceiving: '',
+  affiliateCode: null as string | null,
 };
 
 type State = typeof initialState;
