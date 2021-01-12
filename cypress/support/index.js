@@ -8,6 +8,7 @@ beforeEach(() => {
   cy.route('**/fees**', 'fixture:fees.json').as('fees');
   cy.route('POST', '**/swaps/create', 'fixture:create-swap.json');
   cy.route('**/api/v2', 'fixture:indexer.json');
+  cy.route('**/floats/balances', 'fixture:float-balances.json');
   cy.route('**/swaps/query?hash=fake-hash-waiting', 'fixture:fake-swap-waiting.json');
   cy.route('**/swaps/query?hash=fake-hash-pending', 'fixture:fake-swap-pending.json');
   cy.route('**/swaps/query?hash=fake-hash-signing', 'fixture:fake-swap-signing.json');
