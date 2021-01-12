@@ -6,6 +6,8 @@ export const logger = pino({ level: logLevel });
 
 (() => {
   try {
+    if (typeof window === 'undefined') return;
+
     const values = (localStorage.getItem('debug') || '').split(',').map((it) => it.trim());
     if (values.includes('*') || values.includes('swingby')) return;
 
