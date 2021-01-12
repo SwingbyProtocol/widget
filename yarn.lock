@@ -1051,19 +1051,19 @@
   resolved "https://registry.yarnpkg.com/@swingby-protocol/prettier-config/-/prettier-config-1.0.2.tgz#ff4c03ac7ad3dab1d02a914d31debcf9441fa3e8"
   integrity sha512-ROirdMQDD6PxHTC+4J7pFH4ik8Yf3frLwf6XDBjuFKKfKCqvpqkHWHnYCJG1PS5uODmMCiH+m1JoIYr/vDfnAA==
 
-"@swingby-protocol/pulsar@^3.3.1":
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/@swingby-protocol/pulsar/-/pulsar-3.3.1.tgz#fc73029201c0b690cf20ef807753b51f427b3af7"
-  integrity sha512-203NYeohxOMW0nAOJBXpqE879pzg4G2x6vzHNnUq9+GmRKTJZ8BQCyl1HaIyK7REJH/5eNZzXiS+d35Wq8cgQg==
+"@swingby-protocol/pulsar@^3.4.0":
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/@swingby-protocol/pulsar/-/pulsar-3.4.0.tgz#d0640304b6de071d080a14c3a4592438f376deb6"
+  integrity sha512-TuTC4dRlbVH/xB5EvG+kXTKtpuIflM4nqdtSLyDiuUnoLDNO3VUwgFLjSJFOLb5J20a0HL5IMaEdG6vp/Lur4w==
   dependencies:
     "@tippyjs/react" "^4.2.0"
     nanoid "3.1.18"
     qrcode.react "^1.0.0"
 
-"@swingby-protocol/sdk@^1.0.0-alpha.58":
-  version "1.0.0-alpha.58"
-  resolved "https://registry.yarnpkg.com/@swingby-protocol/sdk/-/sdk-1.0.0-alpha.58.tgz#d9c49556ce0603a0cd25250a3213ef6ee3e30a5b"
-  integrity sha512-pFGGk17B2BRaa57AV/VtS/FGfMmbUtw2zPabmbN+o/kVggsUw/ngM0bZn5WEIfBz94YOUEoIZGozigUqrNUVIg==
+"@swingby-protocol/sdk@^1.0.0-alpha.59":
+  version "1.0.0-alpha.59"
+  resolved "https://registry.yarnpkg.com/@swingby-protocol/sdk/-/sdk-1.0.0-alpha.59.tgz#fbb7e2a20dfdbeacfdc81c51ba8b0a7509d2f875"
+  integrity sha512-//et3iXdMoXGK3GZYVoPQ2sQyR/r9xbRsFHg29lv+vqSm3ARR8ST3sBcIJ0hwelmwo1ZvZAgQFf/QLORK7Z8ng==
   dependencies:
     bech32 "^1.1.4"
     big.js "^6.0.2"
