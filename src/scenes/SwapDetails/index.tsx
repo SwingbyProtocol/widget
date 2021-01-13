@@ -21,7 +21,7 @@ export const SwapDetails = ({ resource }: { resource: SkybridgeResource }) => {
     if (swap?.status !== 'WAITING') return;
     createToast({
       type: 'warning',
-      content: formatMessage({ id: 'widget.warning-do-use-exchange-addresses' }),
+      content: formatMessage({ id: 'widget.warning-do-not-use-exchange-addresses' }),
     });
   }, [swap?.status, formatMessage]);
 
