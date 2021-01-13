@@ -3,6 +3,8 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { GetServerSideProps } from 'next';
 import { getIpInfoFromRequest, IpInfoFromRequest } from '@swingby-protocol/ip-check';
+import { useIntl } from 'react-intl';
+import { createToast } from '@swingby-protocol/pulsar';
 
 import { SwapForm } from '../../../scenes/SwapForm';
 import { GlobalStyles } from '../../../modules/styles';
@@ -15,6 +17,7 @@ type Props = { ipInfo: IpInfoFromRequest };
 
 export default function ResourceNew({ ipInfo }: Props) {
   const dispatch = useDispatch();
+  const { formatMessage } = useIntl();
   const { resource, mode } = useWidgetPathParams();
   const {
     query: {
@@ -50,6 +53,12 @@ export default function ResourceNew({ ipInfo }: Props) {
     if (typeof affiliateCode !== 'string' || !affiliateCode) return;
     dispatch(actionSetSwapFormData({ affiliateCode }));
   }, [dispatch, affiliateCode]);
+
+  useEffect(() => {
+    if (mode === 'test') {
+      createToast({ content: formatMessage({ id: 'widget.warning-test' }), type: 'info' });
+    }
+  }, [mode, formatMessage]);
 
   if (!mode) return <></>;
   if (!resource) return <></>;

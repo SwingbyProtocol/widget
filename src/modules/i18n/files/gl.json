@@ -29,8 +29,6 @@
   "widget.explorer-link": "Explorador",
   "widget.explorer-link-long": "Ver no explorador",
   "widget.warning-test": "Estás usando o modo “test”. Non envíes diñeiro real.",
-  "widget.warning-production": "Este é un produto en beta conectado a mainnets reais.",
-  "widget.warning.learn-more": "Saber máis.",
   "widget.ip-block": "Pareces estar accedendo a esta app desde un país ou rexión na que o seu uso non está permitido.",
   "widget.stake-btc-earn-rewards": "Fai staking con BTC, gana recompensas.",
   "widget.swap-error-title": "Ocorreu un error inesperado."

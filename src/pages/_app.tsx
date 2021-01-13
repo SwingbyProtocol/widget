@@ -3,6 +3,7 @@ import {
   PulsarGlobalStyles,
   PulsarThemeProvider,
   PULSAR_GLOBAL_FONT_HREF,
+  PulsarToastContainer,
 } from '@swingby-protocol/pulsar';
 import { useRouter } from 'next/router';
 import { IntlProvider } from 'react-intl';
@@ -44,6 +45,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               <title>{messages['widget.tab-title.generic']}</title>
             </Head>
             <Component {...pageProps} />
+            <PulsarToastContainer />
           </WidgetLayoutProvider>
         </ReduxProvider>
       </IntlProvider>

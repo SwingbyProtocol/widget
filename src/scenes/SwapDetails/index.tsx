@@ -2,7 +2,6 @@ import { SkybridgeResource } from '@swingby-protocol/sdk';
 
 import { Favicon } from '../../components/Favicon';
 import { HeadTitle } from '../../components/HeadTitle';
-import { ModeWarning } from '../../components/ModeWarning';
 import { WidgetContainer } from '../../components/WidgetContainer';
 import { useWidgetLayout } from '../../modules/layout';
 
@@ -13,7 +12,6 @@ export const SwapDetails = ({ resource }: { resource: SkybridgeResource }) => {
   const layout = useWidgetLayout();
   return (
     <>
-      <ModeWarning />
       <HeadTitle />
       <Favicon />
       <WidgetContainer>
