@@ -29,8 +29,6 @@
   "widget.explorer-link": "Explorer",
   "widget.explorer-link-long": "Explorerで確認する",
   "widget.warning-test": "ご使用中のネットワークはテストネットです。メインネット用の資産を送信しないで下さい。",
-  "widget.warning-production": "スワップサービスはメインネットに接続されています。",
-  "widget.warning.learn-more": "詳しくはこちら。",
   "widget.ip-block": "使用が許可されていない国または地域からこのアプリにアクセスしているようです。",
   "widget.stake-btc-earn-rewards": "BTCをステークしてリワードを受け取る"
 }

@@ -29,8 +29,7 @@
   "widget.explorer-link": "Explorador",
   "widget.explorer-link-long": "Ver en explorador",
   "widget.warning-test": "Estás usando el modo “test”. No envíes dinero real.",
-  "widget.warning-production": "Este es un producto en beta conectado a mainnets reales.",
-  "widget.warning.learn-more": "Saber más.",
+  "widget.warning-do-not-use-exchange-addresses": "Por favor, envía dinero solo desde direcciones que te pertenezcan. No envíes dinero desde exchanges.",
   "widget.ip-block": "Pareces estar accediendo a esta app desde un país o región en el que su uso no está permitido.",
   "widget.stake-btc-earn-rewards": "Haz staking con BTC, gana recompensas.",
   "widget.swap-error-title": "Ha ocurrido un error inesperado."

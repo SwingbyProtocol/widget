@@ -2,7 +2,6 @@ import { SkybridgeResource } from '@swingby-protocol/sdk';
 
 import { useWidgetLayout } from '../../modules/layout';
 import { WidgetContainer } from '../../components/WidgetContainer';
-import { ModeWarning } from '../../components/ModeWarning';
 import { HeadTitle } from '../../components/HeadTitle';
 import { Favicon } from '../../components/Favicon';
 import { useIpInfo } from '../../modules/ip-blocks';
@@ -17,7 +16,6 @@ export const SwapForm = ({ resource }: { resource: SkybridgeResource }) => {
   return (
     <>
       {shouldBlockRegion && <IpBlockWarning />}
-      <ModeWarning />
       <HeadTitle />
       <Favicon />
       <WidgetContainer>
