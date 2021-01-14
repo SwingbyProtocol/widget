@@ -1,6 +1,19 @@
 {
-  "widget.from": "From",
-  "widget.to": "To",
+  "widget.tab-title.generic": "Skybridge Widget",
+  "widget.tab-title.swap.test.form": "[テストネット] Skybridge Swap Widget",
+  "widget.tab-title.swap.test.details": "[テストネット] Swap: {hash} | Skybridge Swap Widget",
+  "widget.tab-title.swap.production.form": "Skybridge Swap Widget",
+  "widget.tab-title.swap.production.details": "Swap: {hash} | Skybridge Swap Widget",
+  "widget.tab-title.pool.test.form": "[テストネット] Skybridge Swap Widget",
+  "widget.tab-title.pool.test.details": "[テストネット] Pool: {hash} | Skybridge Swap Widget",
+  "widget.tab-title.pool.production.form": "Skybridge Swap Widget",
+  "widget.tab-title.pool.production.details": "Pool: {hash} | Skybridge Swap Widget",
+  "widget.tab-title.withdrawal.test.form": "[テストネット] Skybridge Swap Widget",
+  "widget.tab-title.withdrawal.test.details": "[テストネット] Withdrawal: {hash} | Skybridge Swap Widget",
+  "widget.tab-title.withdrawal.production.form": "Skybridge Swap Widget",
+  "widget.tab-title.withdrawal.production.details": "Withdrawal: {hash} | Skybridge Swap Widget",
+  "widget.from": "送信元",
+  "widget.to": "送信先",
   "widget.amount-receiving-estimation-label": "(概算)",
   "widget.receiving-address.label": "受取アドレス",
   "widget.receiving-address.placeholder": "受取アドレスを入力",
@@ -29,6 +42,9 @@
   "widget.explorer-link": "Explorer",
   "widget.explorer-link-long": "Explorerで確認する",
   "widget.warning-test": "ご使用中のネットワークはテストネットです。メインネット用の資産を送信しないで下さい。",
+  "widget.warning-do-not-use-exchange-addresses": "仮想通貨交換所ウォレットアドレスからの送信は行わないようお願い致します。",
   "widget.ip-block": "使用が許可されていない国または地域からこのアプリにアクセスしているようです。",
-  "widget.stake-btc-earn-rewards": "BTCをステークしてリワードを受け取る"
+  "widget.blocked-countries": "アルジェリア、バングラデシュ、ボリビア、ベラルーシ、ブルンジ、ビルマ、コートジボワール（アイボリーコースト）、クリミアとセバストポール、キューバ、コンゴ民主共和国、エクアドル、イラン、イラク、リビア、マリ、モロッコ、リベリア、北朝鮮、ネパール 、ソマリア、スーダン、シリア、ベネズエラ、ジンバブエ、米国。",
+  "widget.stake-btc-earn-rewards": "BTCをステークしてリワードを受け取る",
+  "widget.swap-error-title": "予期せぬエラーが発生しました。"
 }
