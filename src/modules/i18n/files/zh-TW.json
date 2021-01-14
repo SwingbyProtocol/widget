@@ -42,6 +42,9 @@
   "widget.explorer-link": "Explorer",
   "widget.explorer-link-long": "移至Explorer了解更多",
   "widget.warning-test": "您正在使用“測試網”模式。請不要發送主網的資金。",
-  "widget.ip-block": "此應用在妳所在國家地區無法使用",
-  "widget.stake-btc-earn-rewards": "質押您的BTC, 賺取獎勵"
+  "widget.warning-do-not-use-exchange-addresses": "請只從您所擁有的錢包地址發送資金。請不要使用交易所錢包地址來兌換。 ",
+  "widget.ip-block": "此應用在妳所在國家地區無法使用。",
+  "widget.blocked-countries": "阿爾及利亞，孟加拉國，玻利維亞，白俄羅斯，布隆迪，緬甸，科特迪瓦（科特迪瓦），克里米亞和塞瓦斯托波爾，古巴，剛果民主共和國，厄瓜多爾，伊朗，伊拉克，利比亞，馬里，摩洛哥，利比里亞，朝鮮，尼泊爾 ，索馬里，蘇丹，敘利亞，委內瑞拉，津巴布韋和美國。",
+  "widget.stake-btc-earn-rewards": "質押您的BTC, 賺取獎勵",
+  "widget.swap-error-title": "發生意外的錯誤。"
 }
