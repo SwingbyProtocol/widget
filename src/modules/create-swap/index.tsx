@@ -107,6 +107,7 @@ export const useCreate = ({ resource }: { resource: SkybridgeResource }) => {
     push,
     dispatch,
     resource,
+    affiliateCode,
   ]);
 
   return useMemo(() => ({ loading, create, error }), [create, loading, error]);
