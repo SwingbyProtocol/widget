@@ -1051,20 +1051,21 @@
   resolved "https://registry.yarnpkg.com/@swingby-protocol/prettier-config/-/prettier-config-1.0.2.tgz#ff4c03ac7ad3dab1d02a914d31debcf9441fa3e8"
   integrity sha512-ROirdMQDD6PxHTC+4J7pFH4ik8Yf3frLwf6XDBjuFKKfKCqvpqkHWHnYCJG1PS5uODmMCiH+m1JoIYr/vDfnAA==
 
-"@swingby-protocol/pulsar@^3.5.0-alpha.3":
-  version "3.5.0-alpha.3"
-  resolved "https://registry.yarnpkg.com/@swingby-protocol/pulsar/-/pulsar-3.5.0-alpha.3.tgz#8a0f10d031d6b64b7061824ef5240e43fc134d28"
-  integrity sha512-X5nc64OPPKVrlZH2qxGetcki7kwzpa8pMwrDgZZpINLsCH0WWbP2IF8DAO06DEO+cyggQ6lvDnT74wU/UMWTUw==
+"@swingby-protocol/pulsar@^3.7.0":
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/@swingby-protocol/pulsar/-/pulsar-3.7.0.tgz#238d77f336977ba59c5b108c81abcf41b949567f"
+  integrity sha512-IJrGBld+Lhu2Udrc25MR5UOPzJ544qCaE6/FhsS71t5e3d2YTDd15hPj6WgRGDnLgoOM7P9DNpuDTbVOyvKFoA==
   dependencies:
     "@tippyjs/react" "^4.2.0"
+    crypto-js "^4.0.0"
     nanoid "3.1.18"
     qrcode.react "^1.0.0"
     react-toastify "^6.2.0"
 
-"@swingby-protocol/sdk@^1.0.0-alpha.62":
-  version "1.0.0-alpha.62"
-  resolved "https://registry.yarnpkg.com/@swingby-protocol/sdk/-/sdk-1.0.0-alpha.62.tgz#e44eea4dca3c9eaaa4df1be37a39e3c88ec2cbec"
-  integrity sha512-qw4Xe42fisaM9OmVpm3bDyCNLskWhmgTRxDQRF966Dmr5c5H3FI6nNZqvoTVnKkITp2THx/ThoQ6cQpuYo8xPQ==
+"@swingby-protocol/sdk@^1.0.0-alpha.63":
+  version "1.0.0-alpha.63"
+  resolved "https://registry.yarnpkg.com/@swingby-protocol/sdk/-/sdk-1.0.0-alpha.63.tgz#1e11c603ee82e9581267e97ff3f5c5a26a9c724e"
+  integrity sha512-WbAYyi9YyejisJrIXdh8hqYmN6y5yhz/1U122KPEeGpEBOAPQUlkwJMLrYsjzhKEZCUGM8VJ98X/BckHl2rXag==
   dependencies:
     bech32 "^1.1.4"
     big.js "^6.0.2"
@@ -3057,6 +3058,11 @@ crypto-browserify@3.12.0, crypto-browserify@^3.11.0:
     public-encrypt "^4.0.0"
     randombytes "^2.0.0"
     randomfill "^1.0.3"
+
+crypto-js@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-4.0.0.tgz#2904ab2677a9d042856a2ea2ef80de92e4a36dcc"
+  integrity sha512-bzHZN8Pn+gS7DQA6n+iUmBfl0hO5DJq++QP3U6uTucDtk/0iGpXd/Gg7CGR0p8tJhofJyaKoWBuJI4eAO00BBg==
 
 css-color-keywords@^1.0.0:
   version "1.0.0"

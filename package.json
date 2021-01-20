@@ -20,8 +20,8 @@
   },
   "dependencies": {
     "@swingby-protocol/ip-check": "^2.1.0",
-    "@swingby-protocol/pulsar": "^3.5.0-alpha.3",
-    "@swingby-protocol/sdk": "^1.0.0-alpha.62",
+    "@swingby-protocol/pulsar": "^3.7.0",
+    "@swingby-protocol/sdk": "^1.0.0-alpha.63",
     "big.js": "6.0.3",
     "hex-to-binary": "^1.0.1",
     "isomorphic-webcrypto": "^2.3.6",
