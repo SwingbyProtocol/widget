@@ -14,7 +14,8 @@ export const SdkContextProvider = ({
 
   useEffect(() => {
     (async () => {
-      setContext(await buildContext({ mode }));
+      const context = await buildContext({ mode });
+      setContext({ ...context, affiliateApi: window.location.origin });
     })();
   }, [mode]);
 
