@@ -91,6 +91,16 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
             value={swap.status === 'WAITING' ? swap.addressDeposit : swap.addressReceiving}
             data-testid={buildTestId(`address`)}
           />
+          <ResponsiveSpace />
+          <Button
+            variant="secondary"
+            size={hasWideWidth ? 'state' : 'town'}
+            shape={hasWideWidth ? 'fit' : 'square'}
+            href={`${typeof window !== 'undefined' && window.location.href}`}
+            target="_blank"
+          >
+            <Icon.QR />
+          </Button>
         </>
       )}
 
