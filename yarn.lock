@@ -1062,10 +1062,10 @@
     qrcode.react "^1.0.0"
     react-toastify "^6.2.0"
 
-"@swingby-protocol/sdk@^1.0.0-alpha.71":
-  version "1.0.0-alpha.71"
-  resolved "https://registry.yarnpkg.com/@swingby-protocol/sdk/-/sdk-1.0.0-alpha.71.tgz#b9110611474299fa1db446b7c969090dc1415097"
-  integrity sha512-iLKVpZYQTC+RmH95ZyUrQtoXXMpgJJsFVaUkvzvYbiIlBEgvsIIPubdWntGrhg3ep9GeKEzAszEHYtmx8W58dQ==
+"@swingby-protocol/sdk@^1.0.0-alpha.73":
+  version "1.0.0-alpha.73"
+  resolved "https://registry.yarnpkg.com/@swingby-protocol/sdk/-/sdk-1.0.0-alpha.73.tgz#d0745d3d91194f4944ae9d31001ab7d2321cdd78"
+  integrity sha512-3XuIuAaBG9gYXR3YpNGJAf36zjbnoZENkHqMCupGyRs9xdZvUFdTh0BnPTvNl1JotCzIFSb4+eQftxg5BLIyeQ==
   dependencies:
     bech32 "^1.1.4"
     big.js "^6.0.2"
