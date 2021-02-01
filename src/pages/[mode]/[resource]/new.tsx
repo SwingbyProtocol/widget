@@ -56,7 +56,11 @@ export default function ResourceNew({ ipInfo }: Props) {
 
   useEffect(() => {
     if (mode === 'test') {
-      createToast({ content: formatMessage({ id: 'widget.warning-test' }), type: 'info' });
+      createToast({
+        content: formatMessage({ id: 'widget.warning-test' }),
+        type: 'info',
+        toastId: 'testnet',
+      });
     }
   }, [mode, formatMessage]);
 

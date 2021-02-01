@@ -22,6 +22,7 @@ export const SwapDetails = ({ resource }: { resource: SkybridgeResource }) => {
     createToast({
       type: 'warning',
       content: formatMessage({ id: 'widget.warning-do-not-use-exchange-addresses' }),
+      toastId: 'wallet-address-warning',
     });
   }, [swap?.status, formatMessage]);
 
