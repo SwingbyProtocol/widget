@@ -15,6 +15,7 @@ import { useWidgetLayout } from '../../../modules/layout';
 import { VerticalWidgetView } from '../../../components/VerticalWidgetView';
 import { Separator } from '../../../components/Separator';
 import { useCreate } from '../../../modules/create-swap';
+import { NodeSelector } from '../../../components/NodeSelector';
 
 import { ErrorContainer, StakeEarn, ErrorBox, ErrorTitle } from './styled';
 
@@ -37,6 +38,8 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
       }
       data-testid={buildTestId('')}
     >
+      {layout === 'website' && <NodeSelector />}
+
       {(step === 'step-amounts' || layout === 'widget-full' || layout === 'website') && (
         <CoinAmount variant="vertical" resource={resource} data-testid={buildTestId('amounts')} />
       )}

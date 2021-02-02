@@ -9,6 +9,8 @@ import { useSdkContext } from '../../../modules/sdk-context';
 import { useDetails } from '../../../modules/details';
 import { getTransferUriFor } from '../../../modules/send-funds-uri';
 import { usePushWithSearchParams } from '../../../modules/push-keeping-search';
+import { NodeSelector } from '../../../components/NodeSelector';
+import { useWidgetLayout } from '../../../modules/layout';
 
 import {
   ExplorerLink,
@@ -25,6 +27,7 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
   const { push } = usePushWithSearchParams();
   const { locale } = useIntl();
   const context = useSdkContext();
+  const layout = useWidgetLayout();
 
   const explorerLink = useMemo(() => {
     if (!swap || !swap.txReceivingId) return undefined;
@@ -45,6 +48,8 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
       top={<Top swap={swap} data-testid={buildTestId('')} />}
       data-testid={buildTestId('')}
     >
+      {layout === 'website' && <NodeSelector />}
+
       {swap.status === 'WAITING' && (
         <StyledQRCode
           value={getTransferUriFor({

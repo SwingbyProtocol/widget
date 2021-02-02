@@ -1,55 +1,66 @@
-import { Dropdown } from '@swingby-protocol/pulsar';
+import { Dropdown, Button } from '@swingby-protocol/pulsar';
 import { getBridgeFor, getNetworkDetails } from '@swingby-protocol/sdk';
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { useSdkContext } from '../../modules/sdk-context';
 
-import { DropTargetNode, NodeSelectorView, TextNode } from './styled';
+import { getNodeDisplayName } from './getNodeDisplayName';
+import { NodeSelectorContainer } from './styled';
+
+const UPDATE_LIST_INTERVAL_MS = 30000;
 
 export const NodeSelector = () => {
   const context = useSdkContext();
-  const mode = context.mode;
   const currencyDeposit = useSelector((state) => state.swapForm.currencyDeposit);
   const currencyReceiving = useSelector((state) => state.swapForm.currencyDeposit);
 
-  const bridgeFor = getBridgeFor({ context, currencyDeposit, currencyReceiving });
-
-  const [nodes, setNodes] = useState([context.servers.swapNode[bridgeFor]]);
-  const [selectedNode, setSelectedNode] = useState(nodes[0]);
-
-  getNetworkDetails().then((networkDetails) => {
-    const bridge = networkDetails[mode].swapNodes[bridgeFor];
-    setNodes(bridge);
-  });
-
-  const nodeItems = (
-    <>
-      {nodes.map((node) => (
-        <Dropdown.Item
-          key={node}
-          selected={node === selectedNode}
-          onClick={() => {
-            setSelectedNode(node);
-            // Todo: Add logic for change the node
-          }}
-        >
-          {node}
-        </Dropdown.Item>
-      ))}
-    </>
+  const currentBridge = useMemo(
+    () => getBridgeFor({ context, currencyDeposit, currencyReceiving }),
+    [context, currencyDeposit, currencyReceiving],
   );
+
+  const [nodes, setNodes] = useState([context.servers.swapNode[currentBridge]]);
+  const selectedNode = useMemo(() => context.servers.swapNode[currentBridge], [
+    context,
+    currentBridge,
+  ]);
+
+  useEffect(() => {
+    let cancelled = false;
+    const updateList = async () => {
+      const result = await getNetworkDetails();
+      if (cancelled) {
+        return;
+      }
+
+      setNodes(result[context.mode].swapNodes[currentBridge]);
+    };
+
+    const id = setInterval(updateList, UPDATE_LIST_INTERVAL_MS);
+    updateList();
+
+    return () => {
+      cancelled = true;
+      clearInterval(id);
+    };
+  }, [context.mode, currentBridge]);
+
   return (
-    <NodeSelectorView>
+    <NodeSelectorContainer>
       <Dropdown
         target={
-          <DropTargetNode size="city">
-            <TextNode>{selectedNode}</TextNode>
-          </DropTargetNode>
+          <Button variant="secondary" size="street">
+            {getNodeDisplayName(selectedNode)}
+          </Button>
         }
       >
-        {nodeItems}
+        {nodes.map((node) => (
+          <Dropdown.Item key={node} selected={node === selectedNode}>
+            {getNodeDisplayName(node)}
+          </Dropdown.Item>
+        ))}
       </Dropdown>
-    </NodeSelectorView>
+    </NodeSelectorContainer>
   );
 };
