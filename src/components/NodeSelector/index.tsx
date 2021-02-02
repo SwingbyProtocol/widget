@@ -5,11 +5,11 @@ import { DefaultRootState, useSelector } from 'react-redux';
 
 import { useSdkContext, useUpdateSdkContext } from '../../modules/store/sdkContext';
 import { fetch } from '../../modules/fetch';
+import { logger } from '../../modules/logger';
 
 import { getNodeDisplayName } from './getNodeDisplayName';
 import { NodeSelectorContainer } from './styled';
 import { NodeName } from './NodeName';
-import { logger } from '../../modules/logger';
 
 const UPDATE_LIST_INTERVAL_MS = 30000;
 const PING_INTERVAL_MS = 15000;
