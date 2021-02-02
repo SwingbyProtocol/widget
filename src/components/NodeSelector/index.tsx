@@ -1,7 +1,7 @@
 import { Dropdown, Button } from '@swingby-protocol/pulsar';
 import { buildContext, getBridgeFor, getNetworkDetails } from '@swingby-protocol/sdk';
 import { useEffect, useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { DefaultRootState, useSelector } from 'react-redux';
 
 import { useSdkContext, useUpdateSdkContext } from '../../modules/store/sdkContext';
 
@@ -10,16 +10,21 @@ import { NodeSelectorContainer } from './styled';
 
 const UPDATE_LIST_INTERVAL_MS = 30000;
 
-export const NodeSelector = () => {
+type Props = { swap?: DefaultRootState['swaps'][string] };
+
+export const NodeSelector = ({ swap }: Props) => {
   const context = useSdkContext();
   const currencyDeposit = useSelector((state) => state.swapForm.currencyDeposit);
-  const currencyReceiving = useSelector((state) => state.swapForm.currencyDeposit);
+  const currencyReceiving = useSelector((state) => state.swapForm.currencyReceiving);
   const { updateSdkContext } = useUpdateSdkContext();
 
-  const currentBridge = useMemo(
-    () => getBridgeFor({ context, currencyDeposit, currencyReceiving }),
-    [context, currencyDeposit, currencyReceiving],
-  );
+  const currentBridge = useMemo(() => {
+    if (swap) {
+      return getBridgeFor({ ...swap, context });
+    }
+
+    return getBridgeFor({ context, currencyDeposit, currencyReceiving });
+  }, [context, swap, currencyDeposit, currencyReceiving]);
 
   const [nodes, setNodes] = useState([context.servers.swapNode[currentBridge]]);
   const selectedNode = useMemo(() => context.servers.swapNode[currentBridge], [

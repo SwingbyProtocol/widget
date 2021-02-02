@@ -48,7 +48,7 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
       top={<Top swap={swap} data-testid={buildTestId('')} />}
       data-testid={buildTestId('')}
     >
-      {layout === 'website' && <NodeSelector />}
+      {layout === 'website' && <NodeSelector swap={swap} />}
 
       {swap.status === 'WAITING' && (
         <StyledQRCode

@@ -9,7 +9,7 @@ import { IntlProvider } from 'react-intl';
 import { Provider as ReduxProvider } from 'react-redux';
 import Head from 'next/head';
 import { useMemo } from 'react';
-import { SkybridgeMode } from '@swingby-protocol/sdk';
+import { isSkybridgeMode } from '@swingby-protocol/sdk';
 
 import { languages } from '../modules/i18n';
 import { WidgetLayoutProvider } from '../modules/layout';
@@ -34,13 +34,17 @@ function MyApp({ Component, pageProps, router }: AppProps) {
 
   const messages = useMemo(() => ({ ...languages.en, ...languages[locale] }), [locale]);
 
+  if (!isSkybridgeMode(router.query.mode)) {
+    return <>{null}</>;
+  }
+
   return (
     <PulsarThemeProvider theme={theme}>
       <IntlProvider messages={messages} locale={locale} defaultLocale={defaultLocale}>
         <PulsarGlobalStyles />
         <GlobalStyles />
         <ReduxProvider store={store}>
-          <SdkContextGateKeeper mode={router.query.mode as SkybridgeMode}>
+          <SdkContextGateKeeper mode={router.query.mode}>
             <WidgetLayoutProvider>
               <Favicon />
               <Head>
