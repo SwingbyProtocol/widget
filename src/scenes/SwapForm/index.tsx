@@ -9,6 +9,7 @@ import { IpBlockWarning } from '../../components/IpBlockWarning';
 
 import { Banner } from './Banner';
 import { Vertical } from './Vertical';
+import { NodeSelector } from './NodeSelector';
 
 export const SwapForm = ({ resource }: { resource: SkybridgeResource }) => {
   const layout = useWidgetLayout();
@@ -22,7 +23,10 @@ export const SwapForm = ({ resource }: { resource: SkybridgeResource }) => {
         {layout === 'widget-banner' ? (
           <Banner resource={resource} />
         ) : (
-          <Vertical resource={resource} />
+          <>
+            <NodeSelector />
+            <Vertical resource={resource} />
+          </>
         )}
       </WidgetContainer>
     </>
