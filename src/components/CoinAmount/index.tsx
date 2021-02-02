@@ -13,7 +13,7 @@ import {
 
 import { actionSetSwapFormData, useAreCurrenciesValid } from '../../modules/store/swapForm';
 import { logger } from '../../modules/logger';
-import { useSdkContext } from '../../modules/sdk-context';
+import { useSdkContext } from '../../modules/store/sdkContext';
 
 import {
   CoinAmountContainer,

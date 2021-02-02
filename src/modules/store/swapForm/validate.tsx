@@ -3,8 +3,8 @@ import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { getChainFor, getCoinsFor, isAddressValid, SkybridgeResource } from '@swingby-protocol/sdk';
 
-import { useSdkContext } from '../../sdk-context';
 import { logger } from '../../logger';
+import { useSdkContext } from '../sdkContext';
 
 export const useAreCurrenciesValid = ({ resource }: { resource: SkybridgeResource }) => {
   const currencyDeposit = useSelector((state) => state.swapForm.currencyDeposit);

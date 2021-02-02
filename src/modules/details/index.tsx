@@ -9,7 +9,7 @@ import { DefaultRootState, useDispatch, useSelector } from 'react-redux';
 
 import { logger } from '../logger';
 import { useWidgetPathParams } from '../path-params';
-import { useSdkContext } from '../sdk-context';
+import { useSdkContext } from '../store/sdkContext';
 import { actionSetSwap } from '../store/swaps';
 
 const MS_TILL_NEXT_TRY = 10000;

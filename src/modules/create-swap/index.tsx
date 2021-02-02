@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { logger } from '../logger';
 import { usePushWithSearchParams } from '../push-keeping-search';
-import { useSdkContext } from '../sdk-context';
+import { useSdkContext } from '../store/sdkContext';
 import { actionClearSwapFormData } from '../store/swapForm';
 import { actionSetSwap } from '../store/swaps';
 

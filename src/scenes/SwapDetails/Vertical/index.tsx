@@ -5,12 +5,12 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import { Space } from '../../../components/Space';
 import { VerticalWidgetView } from '../../../components/VerticalWidgetView';
-import { useSdkContext } from '../../../modules/sdk-context';
 import { useDetails } from '../../../modules/details';
 import { getTransferUriFor } from '../../../modules/send-funds-uri';
 import { usePushWithSearchParams } from '../../../modules/push-keeping-search';
 import { NodeSelector } from '../../../components/NodeSelector';
 import { useWidgetLayout } from '../../../modules/layout';
+import { useSdkContext } from '../../../modules/store/sdkContext';
 
 import {
   ExplorerLink,

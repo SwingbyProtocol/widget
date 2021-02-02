@@ -1,9 +1,9 @@
 import { Dropdown, Button } from '@swingby-protocol/pulsar';
-import { getBridgeFor, getNetworkDetails } from '@swingby-protocol/sdk';
+import { buildContext, getBridgeFor, getNetworkDetails } from '@swingby-protocol/sdk';
 import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { useSdkContext } from '../../modules/sdk-context';
+import { useSdkContext, useUpdateSdkContext } from '../../modules/store/sdkContext';
 
 import { getNodeDisplayName } from './getNodeDisplayName';
 import { NodeSelectorContainer } from './styled';
@@ -14,6 +14,7 @@ export const NodeSelector = () => {
   const context = useSdkContext();
   const currencyDeposit = useSelector((state) => state.swapForm.currencyDeposit);
   const currencyReceiving = useSelector((state) => state.swapForm.currencyDeposit);
+  const { updateSdkContext } = useUpdateSdkContext();
 
   const currentBridge = useMemo(
     () => getBridgeFor({ context, currencyDeposit, currencyReceiving }),
@@ -56,7 +57,18 @@ export const NodeSelector = () => {
         }
       >
         {nodes.map((node) => (
-          <Dropdown.Item key={node} selected={node === selectedNode}>
+          <Dropdown.Item
+            key={node}
+            selected={node === selectedNode}
+            onClick={async () => {
+              updateSdkContext(
+                await buildContext({
+                  mode: context.mode,
+                  servers: { swapNode: { [currentBridge]: node } },
+                }),
+              );
+            }}
+          >
             {getNodeDisplayName(node)}
           </Dropdown.Item>
         ))}
