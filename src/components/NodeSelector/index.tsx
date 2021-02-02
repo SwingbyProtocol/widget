@@ -1,6 +1,6 @@
-import { Dropdown, Button } from '@swingby-protocol/pulsar';
+import { Dropdown, Button, Modal } from '@swingby-protocol/pulsar';
 import { buildContext, getBridgeFor, getNetworkDetails } from '@swingby-protocol/sdk';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { DefaultRootState, useSelector } from 'react-redux';
 
 import { useSdkContext, useUpdateSdkContext } from '../../modules/store/sdkContext';
@@ -17,6 +17,10 @@ export const NodeSelector = ({ swap }: Props) => {
   const currencyDeposit = useSelector((state) => state.swapForm.currencyDeposit);
   const currencyReceiving = useSelector((state) => state.swapForm.currencyReceiving);
   const { updateSdkContext } = useUpdateSdkContext();
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const closeModal = useCallback(() => setModalOpen(false), []);
+  const openModal = useCallback(() => setModalOpen(true), []);
 
   const currentBridge = useMemo(() => {
     if (swap) {
@@ -40,7 +44,10 @@ export const NodeSelector = ({ swap }: Props) => {
         return;
       }
 
-      setNodes(result[context.mode].swapNodes[currentBridge]);
+      const nodes = [...result[context.mode].swapNodes[currentBridge]];
+      nodes.sort();
+
+      setNodes(nodes);
     };
 
     const id = setInterval(updateList, UPDATE_LIST_INTERVAL_MS);
@@ -54,30 +61,30 @@ export const NodeSelector = ({ swap }: Props) => {
 
   return (
     <NodeSelectorContainer>
-      <Dropdown
-        target={
-          <Button variant="secondary" size="street">
-            {getNodeDisplayName(selectedNode)}
-          </Button>
-        }
-      >
-        {nodes.map((node) => (
-          <Dropdown.Item
-            key={node}
-            selected={node === selectedNode}
-            onClick={async () => {
-              updateSdkContext(
-                await buildContext({
-                  mode: context.mode,
-                  servers: { swapNode: { [currentBridge]: node } },
-                }),
-              );
-            }}
-          >
-            {getNodeDisplayName(node)}
-          </Dropdown.Item>
-        ))}
-      </Dropdown>
+      <Button variant="secondary" size="street" onClick={openModal}>
+        {getNodeDisplayName(selectedNode)}
+      </Button>
+
+      <Modal open={isModalOpen} onClose={closeModal}>
+        <Modal.Content>
+          {nodes.map((node) => (
+            <Dropdown.Item
+              key={node}
+              selected={node === selectedNode}
+              onClick={async () => {
+                updateSdkContext(
+                  await buildContext({
+                    mode: context.mode,
+                    servers: { swapNode: { [currentBridge]: node } },
+                  }),
+                );
+              }}
+            >
+              {getNodeDisplayName(node)}
+            </Dropdown.Item>
+          ))}
+        </Modal.Content>
+      </Modal>
     </NodeSelectorContainer>
   );
 };
