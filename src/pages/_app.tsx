@@ -5,19 +5,20 @@ import {
   PULSAR_GLOBAL_FONT_HREF,
   PulsarToastContainer,
 } from '@swingby-protocol/pulsar';
-import { useRouter } from 'next/router';
 import { IntlProvider } from 'react-intl';
 import { Provider as ReduxProvider } from 'react-redux';
 import Head from 'next/head';
 import { useMemo } from 'react';
+import { isSkybridgeMode } from '@swingby-protocol/sdk';
 
 import { languages } from '../modules/i18n';
 import { WidgetLayoutProvider } from '../modules/layout';
 import { useStore } from '../modules/store';
 import { Favicon } from '../components/Favicon';
+import { GlobalStyles } from '../modules/styles';
+import { SdkContextGateKeeper } from '../modules/store/sdkContext';
 
-function MyApp({ Component, pageProps }: AppProps) {
-  const router = useRouter();
+function MyApp({ Component, pageProps, router }: AppProps) {
   const store = useStore();
   const defaultLocale = router.defaultLocale ?? 'en';
   const locale = (() => {
@@ -33,20 +34,27 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   const messages = useMemo(() => ({ ...languages.en, ...languages[locale] }), [locale]);
 
+  if (!isSkybridgeMode(router.query.mode)) {
+    return <>{null}</>;
+  }
+
   return (
     <PulsarThemeProvider theme={theme}>
       <IntlProvider messages={messages} locale={locale} defaultLocale={defaultLocale}>
         <PulsarGlobalStyles />
+        <GlobalStyles />
         <ReduxProvider store={store}>
-          <WidgetLayoutProvider>
-            <Favicon />
-            <Head>
-              <link rel="stylesheet" href={PULSAR_GLOBAL_FONT_HREF} />
-              <title>{messages['widget.tab-title.generic']}</title>
-            </Head>
-            <Component {...pageProps} />
-            <PulsarToastContainer />
-          </WidgetLayoutProvider>
+          <SdkContextGateKeeper mode={router.query.mode}>
+            <WidgetLayoutProvider>
+              <Favicon />
+              <Head>
+                <link rel="stylesheet" href={PULSAR_GLOBAL_FONT_HREF} />
+                <title>{messages['widget.tab-title.generic']}</title>
+              </Head>
+              <Component {...pageProps} />
+              <PulsarToastContainer />
+            </WidgetLayoutProvider>
+          </SdkContextGateKeeper>
         </ReduxProvider>
       </IntlProvider>
     </PulsarThemeProvider>

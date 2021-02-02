@@ -8,7 +8,6 @@ import { createToast } from '@swingby-protocol/pulsar';
 
 import { SwapForm } from '../../../scenes/SwapForm';
 import { GlobalStyles } from '../../../modules/styles';
-import { SdkContextProvider } from '../../../modules/sdk-context';
 import { useWidgetPathParams } from '../../../modules/path-params';
 import { actionSetSwapFormData } from '../../../modules/store/swapForm';
 import { IpInfoProvider } from '../../../modules/ip-blocks';
@@ -69,10 +68,8 @@ export default function ResourceNew({ ipInfo }: Props) {
 
   return (
     <IpInfoProvider value={ipInfo}>
-      <SdkContextProvider mode={mode}>
-        <GlobalStyles />
-        <SwapForm resource={resource} />
-      </SdkContextProvider>
+      <GlobalStyles />
+      <SwapForm resource={resource} />
     </IpInfoProvider>
   );
 }

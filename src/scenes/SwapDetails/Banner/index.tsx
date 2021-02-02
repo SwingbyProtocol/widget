@@ -14,10 +14,10 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import { BackButton } from '../../../components/BackButton';
 import { Space } from '../../../components/Space';
-import { useSdkContext } from '../../../modules/sdk-context';
 import { StylingConstants } from '../../../modules/styles';
 import { useDetails } from '../../../modules/details';
 import { usePushWithSearchParams } from '../../../modules/push-keeping-search';
+import { useSdkContext } from '../../../modules/store/sdkContext';
 
 import { BannerContainer, ResponsiveSpace, SendTo, SendToLabel, SendToValue } from './styled';
 

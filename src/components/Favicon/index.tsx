@@ -1,6 +1,6 @@
 import Head from 'next/head';
 
-import { useSdkContext } from '../../modules/sdk-context';
+import { useSdkContext } from '../../modules/store/sdkContext';
 
 export const Favicon = () => {
   const context = useSdkContext();
