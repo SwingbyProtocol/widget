@@ -6,10 +6,10 @@ import { HeadTitle } from '../../components/HeadTitle';
 import { Favicon } from '../../components/Favicon';
 import { useIpInfo } from '../../modules/ip-blocks';
 import { IpBlockWarning } from '../../components/IpBlockWarning';
+import { NodeSelector } from '../../components/NodeSelector';
 
 import { Banner } from './Banner';
 import { Vertical } from './Vertical';
-import { NodeSelector } from './NodeSelector';
 
 export const SwapForm = ({ resource }: { resource: SkybridgeResource }) => {
   const layout = useWidgetLayout();

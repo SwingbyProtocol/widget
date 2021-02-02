@@ -2,7 +2,7 @@ import { Dropdown, Text } from '@swingby-protocol/pulsar';
 import { rem } from 'polished';
 import styled from 'styled-components';
 
-import { StylingConstants } from '../../../modules/styles';
+import { StylingConstants } from '../../modules/styles';
 
 export const NodeSelectorView = styled.div`
   display: none;
@@ -13,8 +13,6 @@ export const NodeSelectorView = styled.div`
     right: ${({ theme }) => rem(theme.pulsar.size.country)};
   }
 `;
-
-export const DropDownNode = styled(Dropdown)``;
 
 export const TextNode = styled(Text)`
   font-size: ${({ theme }) => rem(theme.pulsar.size.closet)};

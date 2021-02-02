@@ -5,6 +5,7 @@ import { useIntl } from 'react-intl';
 
 import { Favicon } from '../../components/Favicon';
 import { HeadTitle } from '../../components/HeadTitle';
+import { NodeSelector } from '../../components/NodeSelector';
 import { WidgetContainer } from '../../components/WidgetContainer';
 import { useDetails } from '../../modules/details';
 import { useWidgetLayout } from '../../modules/layout';
@@ -34,7 +35,10 @@ export const SwapDetails = ({ resource }: { resource: SkybridgeResource }) => {
         {layout === 'widget-banner' ? (
           <Banner resource={resource} />
         ) : (
-          <Vertical resource={resource} />
+          <>
+            <NodeSelector />
+            <Vertical resource={resource} />
+          </>
         )}
       </WidgetContainer>
     </>

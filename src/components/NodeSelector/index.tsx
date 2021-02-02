@@ -3,9 +3,9 @@ import { getBridgeFor, getNetworkDetails } from '@swingby-protocol/sdk';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { useSdkContext } from '../../../modules/sdk-context';
+import { useSdkContext } from '../../modules/sdk-context';
 
-import { DropDownNode, DropTargetNode, NodeSelectorView, TextNode } from './styled';
+import { DropTargetNode, NodeSelectorView, TextNode } from './styled';
 
 export const NodeSelector = () => {
   const context = useSdkContext();
@@ -27,11 +27,12 @@ export const NodeSelector = () => {
     <>
       {nodes.map((node) => (
         <Dropdown.Item
+          key={node}
           selected={node === selectedNode}
           onClick={() => {
             setSelectedNode(node);
+            // Todo: Add logic for change the node
           }}
-          key={node}
         >
           {node}
         </Dropdown.Item>
@@ -40,16 +41,15 @@ export const NodeSelector = () => {
   );
   return (
     <NodeSelectorView>
-      <DropDownNode
+      <Dropdown
         target={
           <DropTargetNode size="city">
             <TextNode>{selectedNode}</TextNode>
           </DropTargetNode>
         }
-        data-testid="dropdown"
       >
         {nodeItems}
-      </DropDownNode>
+      </Dropdown>
     </NodeSelectorView>
   );
 };
