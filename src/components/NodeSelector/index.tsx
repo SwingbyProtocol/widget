@@ -121,6 +121,7 @@ export const NodeSelector = ({ swap }: Props) => {
                     servers: { swapNode: { [currentBridge]: node } },
                   }),
                 );
+                closeModal();
               }}
             >
               {getNodeDisplayName(node)}
