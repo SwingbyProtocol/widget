@@ -1,6 +1,7 @@
 import { Dropdown } from '@swingby-protocol/pulsar';
-import { getNetworkDetails } from '@swingby-protocol/sdk';
+import { getBridgeFor, getNetworkDetails } from '@swingby-protocol/sdk';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import { useSdkContext } from '../../../modules/sdk-context';
 
@@ -9,13 +10,16 @@ import { DropDownNode, DropTargetNode, NodeSelectorView, TextNode } from './styl
 export const NodeSelector = () => {
   const context = useSdkContext();
   const mode = context.mode;
-  const bridge = context.servers.swapNode.btc_erc;
+  const currencyDeposit = useSelector((state) => state.swapForm.currencyDeposit);
+  const currencyReceiving = useSelector((state) => state.swapForm.currencyDeposit);
 
-  const [nodes, setNodes] = useState([bridge]);
+  const bridgeFor = getBridgeFor({ context, currencyDeposit, currencyReceiving });
+
+  const [nodes, setNodes] = useState([context.servers.swapNode[bridgeFor]]);
   const [selectedNode, setSelectedNode] = useState(nodes[0]);
 
   getNetworkDetails().then((networkDetails) => {
-    const bridge = networkDetails[mode].swapNodes.btc_erc;
+    const bridge = networkDetails[mode].swapNodes[bridgeFor];
     setNodes(bridge);
   });
 
