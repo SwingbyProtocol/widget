@@ -9,6 +9,7 @@ import { fetch } from '../../modules/fetch';
 import { getNodeDisplayName } from './getNodeDisplayName';
 import { NodeSelectorContainer } from './styled';
 import { NodeName } from './NodeName';
+import { logger } from '../../modules/logger';
 
 const UPDATE_LIST_INTERVAL_MS = 30000;
 const PING_INTERVAL_MS = 15000;
@@ -21,7 +22,7 @@ export const NodeSelector = ({ swap }: Props) => {
   const currencyReceiving = useSelector((state) => state.swapForm.currencyReceiving);
   const { updateSdkContext } = useUpdateSdkContext();
   const [isModalOpen, setModalOpen] = useState(false);
-  const [pings, setPings] = useState<Record<string, number>>({});
+  const [pings, setPings] = useState<Record<string, number | null>>({});
 
   const closeModal = useCallback(() => setModalOpen(false), []);
   const openModal = useCallback(() => setModalOpen(true), []);
@@ -68,14 +69,28 @@ export const NodeSelector = ({ swap }: Props) => {
     let cancelled = false;
 
     const doPing = async () => {
-      const startedAt = Date.now();
-      await fetch(`${selectedNode}/api/v1/status`);
-      if (cancelled) {
-        return;
-      }
+      try {
+        const startedAt = Date.now();
+        const result = await fetch(`${selectedNode}/api/v1/status`);
+        if (!result.ok) {
+          throw new Error(`Failed to ping node: ${result.status}: ${result.response}`);
+        }
 
-      const finishedAt = Date.now();
-      setPings((pings) => ({ ...pings, [selectedNode]: (finishedAt - startedAt) / 1000 }));
+        if (cancelled) {
+          return;
+        }
+
+        const finishedAt = Date.now();
+        setPings((pings) => ({ ...pings, [selectedNode]: (finishedAt - startedAt) / 1000 }));
+      } catch (e) {
+        logger.warn(e, 'Failed to ping node');
+
+        if (cancelled) {
+          return;
+        }
+
+        setPings((pings) => ({ ...pings, [selectedNode]: null }));
+      }
     };
 
     const id = setInterval(doPing, PING_INTERVAL_MS);
