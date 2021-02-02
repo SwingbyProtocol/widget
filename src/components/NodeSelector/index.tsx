@@ -1,4 +1,4 @@
-import { Dropdown, Button, Modal } from '@swingby-protocol/pulsar';
+import { Dropdown, Modal } from '@swingby-protocol/pulsar';
 import { buildContext, getBridgeFor, getNetworkDetails } from '@swingby-protocol/sdk';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { DefaultRootState, useSelector } from 'react-redux';
@@ -8,7 +8,7 @@ import { fetch } from '../../modules/fetch';
 import { logger } from '../../modules/logger';
 
 import { getNodeDisplayName } from './getNodeDisplayName';
-import { NodeSelectorContainer } from './styled';
+import { NodeSelectorContainer, StyledButton } from './styled';
 import { NodeName } from './NodeName';
 
 const UPDATE_LIST_INTERVAL_MS = 30000;
@@ -104,9 +104,9 @@ export const NodeSelector = ({ swap }: Props) => {
 
   return (
     <NodeSelectorContainer>
-      <Button variant="secondary" size="street" onClick={openModal}>
+      <StyledButton variant="secondary" size="street" onClick={openModal}>
         <NodeName node={selectedNode} ping={pings[selectedNode ?? '']} />
-      </Button>
+      </StyledButton>
 
       <Modal open={isModalOpen} onClose={closeModal}>
         <Modal.Content>
