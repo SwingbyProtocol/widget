@@ -4,11 +4,14 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { DefaultRootState, useSelector } from 'react-redux';
 
 import { useSdkContext, useUpdateSdkContext } from '../../modules/store/sdkContext';
+import { fetch } from '../../modules/fetch';
 
 import { getNodeDisplayName } from './getNodeDisplayName';
 import { NodeSelectorContainer } from './styled';
+import { NodeName } from './NodeName';
 
 const UPDATE_LIST_INTERVAL_MS = 30000;
+const PING_INTERVAL_MS = 15000;
 
 type Props = { swap?: DefaultRootState['swaps'][string] };
 
@@ -18,6 +21,7 @@ export const NodeSelector = ({ swap }: Props) => {
   const currencyReceiving = useSelector((state) => state.swapForm.currencyReceiving);
   const { updateSdkContext } = useUpdateSdkContext();
   const [isModalOpen, setModalOpen] = useState(false);
+  const [pings, setPings] = useState<Record<string, number>>({});
 
   const closeModal = useCallback(() => setModalOpen(false), []);
   const openModal = useCallback(() => setModalOpen(true), []);
@@ -59,10 +63,34 @@ export const NodeSelector = ({ swap }: Props) => {
     };
   }, [context.mode, currentBridge]);
 
+  useEffect(() => {
+    if (!selectedNode) return;
+    let cancelled = false;
+
+    const doPing = async () => {
+      const startedAt = Date.now();
+      await fetch(`${selectedNode}/api/v1/status`);
+      if (cancelled) {
+        return;
+      }
+
+      const finishedAt = Date.now();
+      setPings((pings) => ({ ...pings, [selectedNode]: (finishedAt - startedAt) / 1000 }));
+    };
+
+    const id = setInterval(doPing, PING_INTERVAL_MS);
+    doPing();
+
+    return () => {
+      cancelled = true;
+      clearInterval(id);
+    };
+  }, [selectedNode]);
+
   return (
     <NodeSelectorContainer>
       <Button variant="secondary" size="street" onClick={openModal}>
-        {getNodeDisplayName(selectedNode)}
+        <NodeName node={selectedNode} ping={pings[selectedNode ?? '']} />
       </Button>
 
       <Modal open={isModalOpen} onClose={closeModal}>
