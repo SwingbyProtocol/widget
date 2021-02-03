@@ -20,7 +20,7 @@ export const SdkContextGateKeeper = ({
     }
 
     (async () => {
-      updateSdkContext(await buildContext({ mode }));
+      updateSdkContext(await buildContext({ mode, affiliateApi: '' }));
     })();
   }, [currentContext, updateSdkContext, mode]);
 

@@ -127,7 +127,7 @@ export const NodeSelector = ({ swap }: Props) => {
               onClick={async () => {
                 updateSdkContext(
                   await buildContext({
-                    mode: context.mode,
+                    ...context,
                     servers: { swapNode: { [currentBridge]: node } },
                   }),
                 );
