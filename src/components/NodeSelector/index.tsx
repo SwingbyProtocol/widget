@@ -81,7 +81,7 @@ export const NodeSelector = ({ swap }: Props) => {
         }
 
         const finishedAt = Date.now();
-        setPings((pings) => ({ ...pings, [selectedNode]: (finishedAt - startedAt) / 1000 }));
+        setPings((pings) => ({ ...pings, [selectedNode]: finishedAt - startedAt }));
       } catch (e) {
         logger.warn(e, 'Failed to ping node');
 
@@ -105,7 +105,7 @@ export const NodeSelector = ({ swap }: Props) => {
   return (
     <NodeSelectorContainer>
       <StyledButton variant="secondary" size="street" onClick={openModal}>
-        <NodeName node={selectedNode} ping={pings[selectedNode ?? '']} />
+        <NodeName node={selectedNode} pingMs={pings[selectedNode ?? '']} />
       </StyledButton>
 
       <Modal open={isModalOpen} onClose={closeModal}>

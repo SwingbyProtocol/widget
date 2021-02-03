@@ -1,3 +1,4 @@
+import { Duration } from 'luxon';
 import { useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useTheme } from 'styled-components';
@@ -5,33 +6,44 @@ import { useTheme } from 'styled-components';
 import { getNodeDisplayName } from './getNodeDisplayName';
 import { FancyDot } from './styled';
 
-type Props = { node: string | null; ping: number | null | undefined };
+type Props = { node: string | null; pingMs: number | null | undefined };
 
-export const NodeName = ({ node, ping }: Props) => {
+export const NodeName = ({ node, pingMs }: Props) => {
   const { formatNumber } = useIntl();
   const theme = useTheme();
-  const pingString = useMemo(
-    () =>
-      !ping ? null : (
-        <>
-          &nbsp;(
-          {formatNumber(ping, {
-            style: 'unit',
-            unit: 'second',
-            maximumSignificantDigits: 2,
-          })}
-          )
-        </>
-      ),
-    [ping, formatNumber],
-  );
+
+  const ping = useMemo(() => {
+    if (!pingMs || !Number.isFinite(pingMs) || Number.isNaN(pingMs)) {
+      return null;
+    }
+
+    return Duration.fromObject({ milliseconds: pingMs });
+  }, [pingMs]);
+
+  const pingString = useMemo(() => {
+    if (!ping) return null;
+    const unit = ping.as('seconds') < 1 ? 'millisecond' : 'second';
+    return (
+      <>
+        &nbsp;(
+        {formatNumber(ping.as(unit), {
+          style: 'unit',
+          unit,
+          maximumFractionDigits: 1,
+          maximumSignificantDigits: 2,
+          notation: 'compact',
+        })}
+        )
+      </>
+    );
+  }, [ping, formatNumber]);
 
   const dotColor = (() => {
-    if (!ping || !Number.isFinite(ping) || Number.isNaN(ping)) {
+    if (!ping) {
       return theme.pulsar.color.danger.normal;
     }
 
-    if (ping > 1) {
+    if (ping.as('seconds') >= 1) {
       return theme.pulsar.color.warning.normal;
     }
 
