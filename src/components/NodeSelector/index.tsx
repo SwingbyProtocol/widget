@@ -1,16 +1,16 @@
 import { Dropdown, Modal } from '@swingby-protocol/pulsar';
 import { buildContext, getBridgeFor, getNetworkDetails } from '@swingby-protocol/sdk';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { DefaultRootState, useSelector } from 'react-redux';
 
 import { useSdkContext, useUpdateSdkContext } from '../../modules/store/sdkContext';
 
 import { NodeSelectorContainer, StyledButton, StyledModalContent } from './styled';
 import { NodeName } from './NodeName';
-import { pingNode } from './pingNode';
 
-const UPDATE_LIST_INTERVAL_MS = 30000;
-const PING_INTERVAL_MS = 15000;
+const UPDATE_LIST_INTERVAL_MS = 60000;
+const PING_LIST_INTERVAL_MS = 15000;
+const PING_INTERVAL_MS = 5000;
 
 type Props = { swap?: DefaultRootState['swaps'][string] };
 
@@ -21,6 +21,7 @@ export const NodeSelector = ({ swap }: Props) => {
   const { updateSdkContext } = useUpdateSdkContext();
   const [isModalOpen, setModalOpen] = useState(false);
   const [pings, setPings] = useState<Record<string, number | null>>({});
+  const worker = useRef<Worker | null>(null);
 
   const closeModal = useCallback(() => setModalOpen(false), []);
   const openModal = useCallback(() => setModalOpen(true), []);
@@ -43,6 +44,24 @@ export const NodeSelector = ({ swap }: Props) => {
     array.sort((a, b) => (pings[a] ?? Infinity) - (pings[b] ?? Infinity));
     return array;
   }, [nodes, pings]);
+
+  useEffect(() => {
+    if (!worker.current) {
+      worker.current = new Worker('/ping-node.js', { type: 'module' });
+    }
+
+    let cancelled = false;
+    const listener = ({ data: { node, pingMs } }: WorkerEventMap['message']) => {
+      if (cancelled) return;
+      setPings((pings) => ({ ...pings, [node]: pingMs }));
+    };
+
+    worker.current?.addEventListener('message', listener);
+    return () => {
+      cancelled = true;
+      worker.current?.removeEventListener('message', listener);
+    };
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -68,45 +87,29 @@ export const NodeSelector = ({ swap }: Props) => {
   }, [context.mode, currentBridge]);
 
   useEffect(() => {
-    if (!selectedNode) return;
-    let cancelled = false;
-
-    const doPing = async () => {
-      const ping = await pingNode(selectedNode);
-      if (cancelled) return;
-      setPings((pings) => ({ ...pings, [selectedNode]: ping }));
+    const doPing = () => {
+      worker.current?.postMessage({ node: selectedNode });
     };
 
     const id = setInterval(doPing, PING_INTERVAL_MS);
     doPing();
 
-    return () => {
-      cancelled = true;
-      clearInterval(id);
-    };
+    return () => clearInterval(id);
   }, [selectedNode]);
 
   useEffect(() => {
     if (!isModalOpen) return;
-    let cancelled = false;
 
-    const doPingAll = async () => {
-      await Promise.all(
-        nodes.map(async (it) => {
-          const ping = await pingNode(it);
-          if (cancelled) return;
-          setPings((pings) => ({ ...pings, [it]: ping }));
-        }),
-      );
+    const doPingAll = () => {
+      nodes.forEach((it) => {
+        worker.current?.postMessage({ node: it });
+      });
     };
 
-    const id = setInterval(doPingAll, PING_INTERVAL_MS);
+    const id = setInterval(doPingAll, PING_LIST_INTERVAL_MS);
     doPingAll();
 
-    return () => {
-      cancelled = true;
-      clearInterval(id);
-    };
+    return () => clearInterval(id);
   }, [isModalOpen, nodes]);
 
   return (
