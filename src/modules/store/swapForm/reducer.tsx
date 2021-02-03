@@ -11,7 +11,47 @@ enum Actions {
   Clear = 'SwapForm/CLEAR',
 }
 
-const storedAffiliateCode = ((): string | null => {
+const initialState = {
+  step: 'step-amounts' as 'step-amounts' | 'step-address',
+  currencyDeposit: 'BTC' as SkybridgeCoin,
+  currencyReceiving: 'WBTC' as SkybridgeCoin,
+  amountDesired: '',
+  addressReceiving: '',
+  affiliateCode: getStoredAffiliateCode() as string | null,
+};
+
+type State = typeof initialState;
+
+export const swapForm: Reducer<State, Action> = (state = initialState, action) => {
+  if (action.type === Actions.Clear) {
+    return initialState;
+  }
+
+  if (action.type === Actions.Set) {
+    return { ...state, ...action.data };
+  }
+
+  if (action.type === Actions.SetStep) {
+    return { ...state, step: action.data };
+  }
+
+  return state;
+};
+
+export const actionClearSwapFormData = () => ({ type: Actions.Clear } as const);
+
+export const actionSetSwapFormData = (data: Partial<Omit<State, 'step'>>) =>
+  ({ type: Actions.Set, data } as const);
+
+export const actionSetSwapFormStep = (data: State['step']) =>
+  ({ type: Actions.SetStep, data } as const);
+
+type Action =
+  | ReturnType<typeof actionSetSwapFormData>
+  | ReturnType<typeof actionClearSwapFormData>
+  | ReturnType<typeof actionSetSwapFormStep>;
+
+function getStoredAffiliateCode(): string | null {
   try {
     if (typeof localStorage === 'undefined') {
       return null;
@@ -48,44 +88,4 @@ const storedAffiliateCode = ((): string | null => {
     logger.error(e, 'Could not read stored affiliate code');
     return null;
   }
-})();
-
-const initialState = {
-  step: 'step-amounts' as 'step-amounts' | 'step-address',
-  currencyDeposit: 'BTC' as SkybridgeCoin,
-  currencyReceiving: 'WBTC' as SkybridgeCoin,
-  amountDesired: '',
-  addressReceiving: '',
-  affiliateCode: storedAffiliateCode as string | null,
-};
-
-type State = typeof initialState;
-
-export const swapForm: Reducer<State, Action> = (state = initialState, action) => {
-  if (action.type === Actions.Clear) {
-    return initialState;
-  }
-
-  if (action.type === Actions.Set) {
-    return { ...state, ...action.data };
-  }
-
-  if (action.type === Actions.SetStep) {
-    return { ...state, step: action.data };
-  }
-
-  return state;
-};
-
-export const actionClearSwapFormData = () => ({ type: Actions.Clear } as const);
-
-export const actionSetSwapFormData = (data: Partial<Omit<State, 'step'>>) =>
-  ({ type: Actions.Set, data } as const);
-
-export const actionSetSwapFormStep = (data: State['step']) =>
-  ({ type: Actions.SetStep, data } as const);
-
-type Action =
-  | ReturnType<typeof actionSetSwapFormData>
-  | ReturnType<typeof actionClearSwapFormData>
-  | ReturnType<typeof actionSetSwapFormStep>;
+}
