@@ -4,12 +4,10 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { DefaultRootState, useSelector } from 'react-redux';
 
 import { useSdkContext, useUpdateSdkContext } from '../../modules/store/sdkContext';
-import { fetch } from '../../modules/fetch';
-import { logger } from '../../modules/logger';
 
-import { getNodeDisplayName } from './getNodeDisplayName';
-import { NodeSelectorContainer, StyledButton } from './styled';
+import { NodeSelectorContainer, StyledButton, StyledModalContent } from './styled';
 import { NodeName } from './NodeName';
+import { pingNode } from './pingNode';
 
 const UPDATE_LIST_INTERVAL_MS = 30000;
 const PING_INTERVAL_MS = 15000;
@@ -35,11 +33,16 @@ export const NodeSelector = ({ swap }: Props) => {
     return getBridgeFor({ context, currencyDeposit, currencyReceiving });
   }, [context, swap, currencyDeposit, currencyReceiving]);
 
-  const [nodes, setNodes] = useState([context.servers.swapNode[currentBridge]]);
-  const selectedNode = useMemo(() => context.servers.swapNode[currentBridge], [
+  const [nodes, setNodes] = useState<string[]>([context.servers.swapNode[currentBridge] ?? '']);
+  const selectedNode = useMemo(() => context.servers.swapNode[currentBridge] ?? '', [
     context,
     currentBridge,
   ]);
+  const sortedNodes = useMemo(() => {
+    const array = [...nodes];
+    array.sort((a, b) => (pings[a] ?? Infinity) - (pings[b] ?? Infinity));
+    return array;
+  }, [nodes, pings]);
 
   useEffect(() => {
     let cancelled = false;
@@ -49,7 +52,7 @@ export const NodeSelector = ({ swap }: Props) => {
         return;
       }
 
-      const nodes = [...result[context.mode].swapNodes[currentBridge]];
+      const nodes = [...result[context.mode].swapNodes[currentBridge]].filter((it) => !!it);
       nodes.sort();
 
       setNodes(nodes);
@@ -69,28 +72,9 @@ export const NodeSelector = ({ swap }: Props) => {
     let cancelled = false;
 
     const doPing = async () => {
-      try {
-        const startedAt = Date.now();
-        const result = await fetch(`${selectedNode}/api/v1/status`);
-        if (!result.ok) {
-          throw new Error(`Failed to ping node: ${result.status}: ${result.response}`);
-        }
-
-        if (cancelled) {
-          return;
-        }
-
-        const finishedAt = Date.now();
-        setPings((pings) => ({ ...pings, [selectedNode]: finishedAt - startedAt }));
-      } catch (e) {
-        logger.warn(e, 'Failed to ping node');
-
-        if (cancelled) {
-          return;
-        }
-
-        setPings((pings) => ({ ...pings, [selectedNode]: null }));
-      }
+      const ping = await pingNode(selectedNode);
+      if (cancelled) return;
+      setPings((pings) => ({ ...pings, [selectedNode]: ping }));
     };
 
     const id = setInterval(doPing, PING_INTERVAL_MS);
@@ -102,15 +86,38 @@ export const NodeSelector = ({ swap }: Props) => {
     };
   }, [selectedNode]);
 
+  useEffect(() => {
+    if (!isModalOpen) return;
+    let cancelled = false;
+
+    const doPingAll = async () => {
+      await Promise.all(
+        nodes.map(async (it) => {
+          const ping = await pingNode(it);
+          if (cancelled) return;
+          setPings((pings) => ({ ...pings, [it]: ping }));
+        }),
+      );
+    };
+
+    const id = setInterval(doPingAll, PING_INTERVAL_MS);
+    doPingAll();
+
+    return () => {
+      cancelled = true;
+      clearInterval(id);
+    };
+  }, [isModalOpen, nodes]);
+
   return (
     <NodeSelectorContainer>
       <StyledButton variant="secondary" size="street" onClick={openModal}>
-        <NodeName node={selectedNode} pingMs={pings[selectedNode ?? '']} />
+        <NodeName node={selectedNode} pingMs={pings[selectedNode]} />
       </StyledButton>
 
       <Modal open={isModalOpen} onClose={closeModal}>
-        <Modal.Content>
-          {nodes.map((node) => (
+        <StyledModalContent>
+          {sortedNodes.map((node) => (
             <Dropdown.Item
               key={node}
               selected={node === selectedNode}
@@ -124,10 +131,10 @@ export const NodeSelector = ({ swap }: Props) => {
                 closeModal();
               }}
             >
-              {getNodeDisplayName(node)}
+              <NodeName node={node} pingMs={pings[node]} />
             </Dropdown.Item>
           ))}
-        </Modal.Content>
+        </StyledModalContent>
       </Modal>
     </NodeSelectorContainer>
   );

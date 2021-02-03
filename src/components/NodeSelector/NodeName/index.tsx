@@ -4,7 +4,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { useTheme } from 'styled-components';
 
 import { getNodeDisplayName } from './getNodeDisplayName';
-import { FancyDot } from './styled';
+import { NodeNameContainer, FancyDot } from './styled';
 
 type Props = { node: string | null; pingMs: number | null | undefined };
 
@@ -51,7 +51,8 @@ export const NodeName = ({ node, pingMs }: Props) => {
   })();
 
   return (
-    <>
+    <NodeNameContainer>
+      <FancyDot bg={dotColor} />
       <FormattedMessage
         id="widget.node-selector.node-name"
         values={{
@@ -59,7 +60,6 @@ export const NodeName = ({ node, pingMs }: Props) => {
           ping: pingString,
         }}
       />
-      <FancyDot bg={dotColor} />
-    </>
+    </NodeNameContainer>
   );
 };
