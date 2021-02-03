@@ -1,47 +1,37 @@
-import Head from 'next/head';
-import { useRouter } from 'next/router';
-import { parseUrl, stringifyUrl } from 'query-string';
+import { GetServerSideProps } from 'next';
+import { stringifyUrl } from 'query-string';
 
 export default function Index() {
-  const router = useRouter();
+  return <></>;
+}
 
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const { locale, mode, resource, hashOrNew, ...queryRest } = (() => {
-    const queryParams = (() => {
-      try {
-        const { query } = parseUrl(router.asPath);
-        return query;
-      } catch (e) {
-        return {};
-      }
-    })();
-
     return {
-      ...queryParams,
+      ...context.query,
       locale:
-        typeof queryParams.locale === 'string' && router.locales?.includes(queryParams.locale)
-          ? queryParams.locale
-          : router.locale ?? router.defaultLocale ?? 'en',
-      mode: queryParams.mode === 'test' ? 'test' : 'production',
+        typeof context.query.locale === 'string' && context.locales?.includes(context.query.locale)
+          ? context.query.locale
+          : context.locale ?? context.defaultLocale ?? 'en',
+      mode: context.query.mode === 'test' ? 'test' : 'production',
       resource:
-        queryParams.resource === 'pool'
+        context.query.resource === 'pool'
           ? 'pool'
-          : queryParams.resource === 'withdrawal'
+          : context.query.resource === 'withdrawal'
           ? 'withdrawal'
           : 'swap',
       hashOrNew:
-        typeof queryParams.hash === 'string' && queryParams.hash ? queryParams.hash : 'new',
+        typeof context.query.hash === 'string' && context.query.hash ? context.query.hash : 'new',
     };
   })();
 
-  return (
-    <Head>
-      <meta
-        httpEquiv="refresh"
-        content={`0; URL='${stringifyUrl({
-          url: `/${locale}/${mode}/${resource}/${hashOrNew}`,
-          query: queryRest as any,
-        })}'`}
-      />
-    </Head>
-  );
-}
+  return {
+    redirect: {
+      permanent: false,
+      destination: stringifyUrl({
+        url: `/${locale}/${mode}/${resource}/${hashOrNew}`,
+        query: queryRest as any,
+      }),
+    },
+  };
+};
