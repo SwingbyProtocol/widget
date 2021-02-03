@@ -5,12 +5,15 @@ import { GetServerSideProps } from 'next';
 import { getIpInfoFromRequest, IpInfoFromRequest } from '@swingby-protocol/ip-check';
 import { useIntl } from 'react-intl';
 import { createToast } from '@swingby-protocol/pulsar';
+import { DateTime } from 'luxon';
 
 import { SwapForm } from '../../../scenes/SwapForm';
 import { GlobalStyles } from '../../../modules/styles';
 import { useWidgetPathParams } from '../../../modules/path-params';
 import { actionSetSwapFormData } from '../../../modules/store/swapForm';
 import { IpInfoProvider } from '../../../modules/ip-blocks';
+import { LocalStorage } from '../../../modules/env';
+import { logger } from '../../../modules/logger';
 
 type Props = { ipInfo: IpInfoFromRequest };
 
@@ -50,6 +53,13 @@ export default function ResourceNew({ ipInfo }: Props) {
 
   useEffect(() => {
     if (typeof affiliateCode !== 'string' || !affiliateCode) return;
+
+    if (typeof localStorage !== 'undefined') {
+      logger.debug('New affiliate code "%s" saved into local storage', affiliateCode);
+      localStorage.setItem(LocalStorage.AffiliateCode, affiliateCode);
+      localStorage.setItem(LocalStorage.AffiliateCodeSavedAt, DateTime.local().toUTC().toISO());
+    }
+
     dispatch(actionSetSwapFormData({ affiliateCode }));
   }, [dispatch, affiliateCode]);
 
