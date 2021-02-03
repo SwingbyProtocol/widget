@@ -5,7 +5,7 @@
   "widget.receiving-address.label": "Enviar a",
   "widget.receiving-address.placeholder": "O teu enderezo de destino…",
   "widget.next-btn": "Seguinte",
-  "widget.swap-btn": "Cambiar",
+  "widget.swap-btn": "Intercambiar",
   "widget.status-label-short.WAITING": "Envía",
   "widget.status-label-short.PENDING": "Detectados",
   "widget.status-label-short.SIGNING": "Enviando",
@@ -14,7 +14,7 @@
   "widget.status-label-short.SENDING_REFUND": "Reembolsando",
   "widget.status-label-short.COMPLETED": "Enviados",
   "widget.status-label-short.REFUNDED": "Reembolsados",
-  "widget.status-label-short.EXPIRED": "Este cambio expirou",
+  "widget.status-label-short.EXPIRED": "Este intercambio expirou",
   "widget.status-label-long.WAITING": "Envía {value} exactos a",
   "widget.status-label-long.WAITING.note": " ",
   "widget.status-label-long.PENDING": "Enviando {value} a",
@@ -31,6 +31,6 @@
   "widget.warning-test": "Estás usando o modo “test”. Non envíes diñeiro real.",
   "widget.warning-do-not-use-exchange-addresses": "Por favor, envía diñeiro só desde enderezos que che pertenzan. Non envíes diñeiro desde exchanges.",
   "widget.ip-block": "Pareces estar accedendo a esta app desde un país ou rexión na que o seu uso non está permitido.",
-  "widget.stake-btc-earn-rewards": "Fai staking con BTC, gana recompensas.",
+  "widget.stake-btc-earn-rewards": "Estaca BTC, gana recompensas.",
   "widget.swap-error-title": "Ocorreu un error inesperado."
 }
