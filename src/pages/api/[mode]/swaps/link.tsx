@@ -9,10 +9,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       throw new Error(`"${req.method}" is not allowed. Must use "POST".`);
     }
 
-    const result = await fetch('https://affiliate.swingby.network/api/MODE/swaps/link', {
-      method: 'POST',
-      body: JSON.stringify(req.body),
-    });
+    const result = await fetch(
+      `https://affiliate.swingby.network/api/${req.query.mode}/swaps/link`,
+      {
+        method: 'POST',
+        body: JSON.stringify(req.body),
+      },
+    );
 
     if (result.ok) {
       res.status(result.status).json(result.response);
