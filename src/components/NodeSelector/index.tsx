@@ -9,10 +9,13 @@ import { NodeSelectorContainer, StyledButton, StyledModalContent } from './style
 import { NodeName } from './NodeName';
 import { pingNode } from './pingNode';
 
-const UPDATE_LIST_INTERVAL_MS = 30000;
-const PING_INTERVAL_MS = 15000;
+const UPDATE_LIST_INTERVAL_MS = 60000;
+const PING_LIST_INTERVAL_MS = 15000;
+const PING_INTERVAL_MS = 5000;
 
 type Props = { swap?: DefaultRootState['swaps'][string] };
+
+const worker = typeof Worker !== 'undefined' ? new Worker('/ping-node.js') : null;
 
 export const NodeSelector = ({ swap }: Props) => {
   const context = useSdkContext();
@@ -68,46 +71,42 @@ export const NodeSelector = ({ swap }: Props) => {
   }, [context.mode, currentBridge]);
 
   useEffect(() => {
-    if (!selectedNode) return;
-    let cancelled = false;
-
-    const doPing = async () => {
-      const ping = await pingNode(selectedNode);
-      if (cancelled) return;
-      setPings((pings) => ({ ...pings, [selectedNode]: ping }));
+    const doPing = () => {
+      worker?.postMessage({ node: selectedNode });
     };
 
     const id = setInterval(doPing, PING_INTERVAL_MS);
     doPing();
 
-    return () => {
-      cancelled = true;
-      clearInterval(id);
-    };
+    return () => clearInterval(id);
   }, [selectedNode]);
 
   useEffect(() => {
     if (!isModalOpen) return;
-    let cancelled = false;
 
-    const doPingAll = async () => {
-      await Promise.all(
-        nodes.map(async (it) => {
-          const ping = await pingNode(it);
-          if (cancelled) return;
-          setPings((pings) => ({ ...pings, [it]: ping }));
-        }),
-      );
+    const doPingAll = () => {
+      nodes.forEach((it) => {
+        worker?.postMessage({ node: it });
+      });
     };
 
-    const id = setInterval(doPingAll, PING_INTERVAL_MS);
+    const id = setInterval(doPingAll, PING_LIST_INTERVAL_MS);
     doPingAll();
+
+    return () => clearInterval(id);
+  }, [isModalOpen, nodes]);
+
+  useEffect(() => {
+    let cancelled = false;
+    worker?.addEventListener('message', ({ data: { node, pingMs } }) => {
+      if (cancelled) return;
+      setPings((pings) => ({ ...pings, [node]: pingMs }));
+    });
 
     return () => {
       cancelled = true;
-      clearInterval(id);
     };
-  }, [isModalOpen, nodes]);
+  }, []);
 
   return (
     <NodeSelectorContainer>
