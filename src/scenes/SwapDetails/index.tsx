@@ -9,6 +9,7 @@ import { WidgetContainer } from '../../components/WidgetContainer';
 import { useDetails } from '../../modules/details';
 import { useWidgetLayout } from '../../modules/layout';
 
+import { ConnectWallet } from './ConnectWallet';
 import { Banner } from './Banner';
 import { Vertical } from './Vertical';
 
@@ -34,7 +35,10 @@ export const SwapDetails = ({ resource }: { resource: SkybridgeResource }) => {
         {layout === 'widget-banner' ? (
           <Banner resource={resource} />
         ) : (
-          <Vertical resource={resource} />
+          <>
+            <ConnectWallet />
+            <Vertical resource={resource} />
+          </>
         )}
       </WidgetContainer>
     </>
