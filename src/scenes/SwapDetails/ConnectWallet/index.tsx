@@ -7,7 +7,7 @@ import { useDetails } from '../../../modules/details';
 import { useSdkContext } from '../../../modules/store/sdkContext';
 import {
   ellipseAddress,
-  ethereumToken,
+  erc20Token,
   getOnboard,
   login,
   mode,
@@ -26,7 +26,7 @@ export const ConnectWallet = ({ resource }: { resource: SkybridgeResource }) => 
   const context = useSdkContext();
   const mode = context.mode as mode;
   const addressReceiving = swap?.addressReceiving;
-  const depositToken = swap?.currencyDeposit as ethereumToken;
+  const depositToken = swap?.currencyDeposit as erc20Token;
   const amountDeposit = String(swap?.amountDeposit);
   const addressDeposit = swap?.addressDeposit;
 

@@ -5,10 +5,11 @@ import Web3 from 'web3';
 import { initNotify, initOnboard } from '../onboard';
 
 export type mode = 'test' | 'production';
-export type ethereumToken = 'WBTC' | 'sbBTC';
+export type erc20Token = 'WBTC' | 'sbBTC';
+export const erc20Tokens = ['WBTC', 'sbBTC'];
 export interface IWeb3Arg {
   wallet: any;
-  depositToken: ethereumToken;
+  depositToken: erc20Token;
   mode: mode;
   setContract: (arg: any) => void;
   setWeb3: (arg: any) => void;
@@ -21,7 +22,7 @@ export interface IInitOnboardArg {
 
 export interface IGetOnboardArg {
   setAddress: (address: string) => void;
-  depositToken: ethereumToken;
+  depositToken: erc20Token;
   mode: mode;
   setContract: (arg: any) => void;
   setOnboard: (arg: any) => void;
