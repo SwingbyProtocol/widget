@@ -21,4 +21,4 @@ export const getEtherNetwork = (mode: mode): IEtherNetwork => {
 export const getRpcUrl = (etherNetwork: IEtherNetwork) =>
   `https://${etherNetwork.network}.infura.io/v3/${infuraApiKey}`;
 
-export const infuraAppName = 'Swingby Widget';
+export const appName = 'Swingby Widget';
