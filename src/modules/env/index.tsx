@@ -1,5 +1,3 @@
-import { IEtherNetwork, mode } from '../web3';
-
 export const logLevel =
   process.env.NEXT_PUBLIC_LOG_LEVEL || (process.env.NODE_ENV === 'production' ? 'info' : 'trace');
 
@@ -13,12 +11,3 @@ export const blocknativeApiKey =
 
 export const infuraApiKey =
   process.env.NEXT_PUBLIC_INFURA_KEY || 'f35c2a4f3d0941a38a3edb62ed10c847';
-
-export const getEtherNetwork = (mode: mode): IEtherNetwork => {
-  return mode === 'production' ? { id: 1, network: 'mainnet' } : { id: 5, network: 'goerli' };
-};
-
-export const getRpcUrl = (etherNetwork: IEtherNetwork) =>
-  `https://${etherNetwork.network}.infura.io/v3/${infuraApiKey}`;
-
-export const appName = 'Swingby Widget';

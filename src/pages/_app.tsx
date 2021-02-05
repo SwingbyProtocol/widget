@@ -17,6 +17,7 @@ import { useStore } from '../modules/store';
 import { Favicon } from '../components/Favicon';
 import { GlobalStyles } from '../modules/styles';
 import { SdkContextGateKeeper } from '../modules/store/sdkContext';
+import { OnboardProvider } from '../modules/web3';
 
 function MyApp({ Component, pageProps, router }: AppProps) {
   const store = useStore();
@@ -45,15 +46,17 @@ function MyApp({ Component, pageProps, router }: AppProps) {
         <GlobalStyles />
         <ReduxProvider store={store}>
           <SdkContextGateKeeper mode={router.query.mode}>
-            <WidgetLayoutProvider>
-              <Favicon />
-              <Head>
-                <link rel="stylesheet" href={PULSAR_GLOBAL_FONT_HREF} />
-                <title>{messages['widget.tab-title.generic']}</title>
-              </Head>
-              <Component {...pageProps} />
-              <PulsarToastContainer />
-            </WidgetLayoutProvider>
+            <OnboardProvider>
+              <WidgetLayoutProvider>
+                <Favicon />
+                <Head>
+                  <link rel="stylesheet" href={PULSAR_GLOBAL_FONT_HREF} />
+                  <title>{messages['widget.tab-title.generic']}</title>
+                </Head>
+                <Component {...pageProps} />
+                <PulsarToastContainer />
+              </WidgetLayoutProvider>
+            </OnboardProvider>
           </SdkContextGateKeeper>
         </ReduxProvider>
       </IntlProvider>

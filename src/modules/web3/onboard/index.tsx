@@ -1,15 +1,24 @@
 import Onboard from 'bnc-onboard';
-import Notify from 'bnc-notify';
+import { SkybridgeMode } from '@swingby-protocol/sdk';
+import type { Subscriptions } from 'bnc-onboard/dist/src/interfaces'; // eslint-disable-line import/no-internal-modules
 
-import { blocknativeApiKey, getEtherNetwork, getRpcUrl, infuraApiKey, appName } from '../../env';
-import { IInitOnboardArg, mode } from '../../web3';
+import { blocknativeApiKey, infuraApiKey } from '../../env';
 
-// Ref: https://github.com/blocknative/react-demo/blob/master/src/services.js
+const APP_NAME = 'Skybridge Widget';
 
-export const initOnboard = (data: IInitOnboardArg) => {
-  const { subscriptions, mode } = data;
-  const etherNetwork = getEtherNetwork(mode);
-  const rpcUrl = getRpcUrl(etherNetwork);
+const getEtherNetwork = ({ mode }: { mode: SkybridgeMode }) =>
+  mode === 'production' ? { id: 1, network: 'mainnet' } : { id: 5, network: 'goerli' };
+
+export const initOnboard = ({
+  subscriptions,
+  mode,
+}: {
+  mode: SkybridgeMode;
+  subscriptions: Subscriptions;
+}) => {
+  const etherNetwork = getEtherNetwork({ mode });
+  const rpcUrl = `https://${etherNetwork.network}.infura.io/v3/${infuraApiKey}`;
+
   return Onboard({
     dappId: blocknativeApiKey,
     networkId: etherNetwork.id,
@@ -28,16 +37,16 @@ export const initOnboard = (data: IInitOnboardArg) => {
           infuraKey: infuraApiKey,
           preferred: true,
         },
-        { walletName: 'walletLink', rpcUrl, appName, preferred: true },
+        { walletName: 'walletLink', rpcUrl, appName: APP_NAME, preferred: true },
         { walletName: 'authereum' },
-        { walletName: 'lattice', rpcUrl, appName },
+        { walletName: 'lattice', rpcUrl, appName: APP_NAME },
         { walletName: 'torus' },
         { walletName: 'opera' },
         {
           walletName: 'trezor',
           // Memo: Not sure if it is necessary to set the email
           // email: CONTACT_EMAIL,
-          appUrl: appName,
+          appUrl: APP_NAME,
           rpcUrl,
         },
       ],
@@ -49,14 +58,5 @@ export const initOnboard = (data: IInitOnboardArg) => {
       { checkName: 'network' },
       { checkName: 'balance', minimumBalance: '100000' },
     ],
-  });
-};
-
-export const initNotify = (mode: mode) => {
-  const etherNetwork = getEtherNetwork(mode);
-  return Notify({
-    dappId: blocknativeApiKey,
-    networkId: etherNetwork.id,
-    desktopPosition: 'topRight',
   });
 };

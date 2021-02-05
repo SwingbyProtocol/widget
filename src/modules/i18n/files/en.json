@@ -48,5 +48,11 @@
   "widget.stake-btc-earn-rewards": "Stake your BTC, earn rewards.",
   "widget.swap-error-title": "An unexpected error occurred.",
   "widget.node-selector.node-name": "{nodeName}{ping}",
-  "widget.connect-wallet-btn": "Connect Wallet"
+  "widget.onboard.connect-btn": "Connect Wallet",
+  "widget.onboard.transfer-btn": "Transfer with {name}",
+  "widget.onboard.transaction-sent": "Transaction sent!",
+  "widget.onboard.transaction-confirmed-by": "Transaction succeeded! ({value} confirmations)",
+  "widget.onboard.transaction-result-ok": "Transaction succeeded!",
+  "widget.onboard.transaction-result-bad": "Transaction failed!",
+  "widget.onboard.explorer": "Explorer"
 }

@@ -1,6 +1,6 @@
-import { Loading, useBuildTestId, SwapProgress } from '@swingby-protocol/pulsar';
-import { buildExplorerLink, SkybridgeResource } from '@swingby-protocol/sdk';
-import { useMemo } from 'react';
+import { Loading, useBuildTestId, SwapProgress, Button } from '@swingby-protocol/pulsar';
+import { buildExplorerLink, SkybridgeResource, getChainFor } from '@swingby-protocol/sdk';
+import { useCallback, useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { Space } from '../../../components/Space';
@@ -11,6 +11,9 @@ import { usePushWithSearchParams } from '../../../modules/push-keeping-search';
 import { NodeSelector } from '../../../components/NodeSelector';
 import { useWidgetLayout } from '../../../modules/layout';
 import { useSdkContext } from '../../../modules/store/sdkContext';
+import { ConnectWallet } from '../ConnectWallet';
+import { useOnboard, useOnboardTransfer } from '../../../modules/web3';
+import { logger } from '../../../modules/logger';
 
 import {
   ExplorerLink,
@@ -28,6 +31,8 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
   const { locale } = useIntl();
   const context = useSdkContext();
   const layout = useWidgetLayout();
+  const { address, wallet } = useOnboard();
+  const { transfer, isTransferring, transactionSucceeded } = useOnboardTransfer();
 
   const explorerLink = useMemo(() => {
     if (!swap || !swap.txReceivingId) return undefined;
@@ -37,6 +42,14 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
       transactionId: swap.txReceivingId,
     });
   }, [context, swap]);
+
+  const doTransfer = useCallback(async () => {
+    try {
+      await transfer({ swap });
+    } catch (e) {
+      logger.error(e);
+    }
+  }, [transfer, swap]);
 
   if (!swap) {
     return <Loading data-testid={buildTestId('loading')} />;
@@ -49,8 +62,22 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
       data-testid={buildTestId('')}
     >
       {layout === 'website' && <NodeSelector swap={swap} />}
+      {layout === 'website' &&
+        swap.status === 'WAITING' &&
+        getChainFor({ coin: swap.currencyDeposit }) === 'ethereum' && <ConnectWallet />}
 
-      {swap.status === 'WAITING' && (
+      {address && swap.status === 'WAITING' && (isTransferring || transactionSucceeded) && (
+        <Loading />
+      )}
+      {address && swap.status === 'WAITING' && !isTransferring && !transactionSucceeded && (
+        <>
+          <Button variant="primary" size="city" shape="fit" onClick={doTransfer}>
+            <FormattedMessage id="widget.onboard.transfer-btn" values={{ name: wallet?.name }} />
+          </Button>
+          <Space size="house" />
+        </>
+      )}
+      {!address && swap.status === 'WAITING' && !isTransferring && !transactionSucceeded && (
         <StyledQRCode
           value={getTransferUriFor({
             address: swap.addressDeposit,

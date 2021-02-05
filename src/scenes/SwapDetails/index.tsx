@@ -8,11 +8,10 @@ import { HeadTitle } from '../../components/HeadTitle';
 import { WidgetContainer } from '../../components/WidgetContainer';
 import { useDetails } from '../../modules/details';
 import { useWidgetLayout } from '../../modules/layout';
-import { erc20Tokens } from '../../modules/web3';
 
-import { ConnectWallet } from './ConnectWallet';
 import { Banner } from './Banner';
 import { Vertical } from './Vertical';
+
 export const SwapDetails = ({ resource }: { resource: SkybridgeResource }) => {
   const layout = useWidgetLayout();
   const { swap } = useDetails({ resource });
@@ -35,12 +34,7 @@ export const SwapDetails = ({ resource }: { resource: SkybridgeResource }) => {
         {layout === 'widget-banner' ? (
           <Banner resource={resource} />
         ) : (
-          <>
-            {swap?.status === 'WAITING' && erc20Tokens.includes(swap?.currencyDeposit) && (
-              <ConnectWallet resource={resource} />
-            )}
-            <Vertical resource={resource} />
-          </>
+          <Vertical resource={resource} />
         )}
       </WidgetContainer>
     </>
