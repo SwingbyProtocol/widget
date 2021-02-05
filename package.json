@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@swingby-protocol/ip-check": "^2.1.0",
-    "@swingby-protocol/pulsar": "^3.7.0",
+    "@swingby-protocol/pulsar": "^3.7.1",
     "@swingby-protocol/sdk": "^1.0.0-alpha.77",
     "big.js": "6.0.3",
     "bnc-notify": "^1.5.1",
