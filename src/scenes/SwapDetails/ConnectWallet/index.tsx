@@ -21,6 +21,7 @@ export const ConnectWallet = ({ resource }: { resource: SkybridgeResource }) => 
   const [onboard, setOnboard] = useState<API | null>(null);
   const [contract, setContract] = useState<any>(null);
   const [notify, setNotify] = useState<any>(null);
+  const [web3, setWeb3] = useState<any>(null);
   const { swap } = useDetails({ resource });
   const context = useSdkContext();
   const mode = context.mode as mode;
@@ -38,6 +39,7 @@ export const ConnectWallet = ({ resource }: { resource: SkybridgeResource }) => 
         setContract,
         setOnboard,
         setNotify,
+        setWeb3,
       });
     }
   }, [depositToken, mode]);
@@ -51,10 +53,11 @@ export const ConnectWallet = ({ resource }: { resource: SkybridgeResource }) => 
           contract,
           address,
           notify,
+          web3,
         });
       })();
     }
-  }, [address, contract, addressReceiving, addressDeposit, amountDeposit, notify]);
+  }, [address, contract, addressReceiving, addressDeposit, amountDeposit, notify, web3]);
 
   return (
     <ConnectWalletView>

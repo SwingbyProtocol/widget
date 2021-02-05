@@ -11,6 +11,7 @@ export interface IWeb3Arg {
   depositToken: ethereumToken;
   mode: mode;
   setContract: (arg: any) => void;
+  setWeb3: (arg: any) => void;
 }
 
 export interface IInitOnboardArg {
@@ -25,6 +26,7 @@ export interface IGetOnboardArg {
   setContract: (arg: any) => void;
   setOnboard: (arg: any) => void;
   setNotify: (arg: any) => void;
+  setWeb3: (arg: any) => void;
 }
 
 export interface ITransferArg {
@@ -33,6 +35,7 @@ export interface ITransferArg {
   address: string;
   contract: any;
   notify: any;
+  web3: any;
 }
 
 export interface IEtherNetwork {
@@ -44,15 +47,16 @@ export const TRANSFER_ABI = CONTRACTS.WBTC.production.abi;
 const TOKEN_DECIMALS = 8;
 
 export const initWeb3 = (data: IWeb3Arg) => {
-  const { wallet, depositToken, mode, setContract } = data;
+  const { wallet, depositToken, mode, setContract, setWeb3 } = data;
   const web3: any = new Web3(wallet.provider);
   const contract = CONTRACTS[depositToken][mode].address;
   const smartContract = new web3.eth.Contract(TRANSFER_ABI, contract, wallet.provider);
   setContract(smartContract);
+  setWeb3(web3);
 };
 
 export const getOnboard = (data: IGetOnboardArg) => {
-  const { setAddress, depositToken, mode, setContract, setOnboard, setNotify } = data;
+  const { setAddress, depositToken, mode, setContract, setOnboard, setNotify, setWeb3 } = data;
   const onboardData = initOnboard({
     mode,
     subscriptions: {
@@ -62,7 +66,7 @@ export const getOnboard = (data: IGetOnboardArg) => {
       wallet: (wallet: any) => {
         if (wallet.provider) {
           const provider = wallet.provider;
-          provider && initWeb3({ wallet, depositToken, mode, setContract });
+          provider && initWeb3({ wallet, depositToken, mode, setContract, setWeb3 });
         }
       },
     },
@@ -86,19 +90,21 @@ export const ellipseAddress = (address: string, width: number = 5): string => {
 };
 
 export const transferERC20 = async (data: ITransferArg) => {
-  const { amountDeposit, addressDeposit, contract, address, notify } = data;
+  const { amountDeposit, addressDeposit, contract, address, notify, web3 } = data;
   const fromAddress = address;
   const amountReceiving = await (async () => {
     return new Big(amountDeposit);
   })();
-
+  const gasPrice = await web3.eth.getGasPrice();
+  console.log('web3.utils.fromWei(gasPrice)', web3.utils.fromWei(gasPrice));
   await contract.methods
     .transfer(
       addressDeposit,
-      Web3.utils.toHex(amountReceiving.times(`1e${TOKEN_DECIMALS}`).toFixed(0)),
+      web3.utils.toHex(amountReceiving.times(`1e${TOKEN_DECIMALS}`).toFixed(0)),
     )
     .send({
       from: fromAddress,
+      gasPrice: web3.utils.toHex(gasPrice),
     })
     .on('transactionHash', (hash: string) => {
       notify.hash(hash);
