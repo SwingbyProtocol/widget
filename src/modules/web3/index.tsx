@@ -1,7 +1,8 @@
 import { CONTRACTS } from '@swingby-protocol/sdk';
+import Big from 'big.js';
 import Web3 from 'web3';
 
-import { initOnboard, initNotify } from '../onboard';
+import { initNotify, initOnboard } from '../onboard';
 
 export type mode = 'test' | 'production';
 export type ethereumToken = 'WBTC' | 'sbBTC';
@@ -39,29 +40,8 @@ export interface IEtherNetwork {
   network: string;
 }
 
-export const TRANSFER_ABI = [
-  {
-    constant: false,
-    inputs: [
-      {
-        name: '_to',
-        type: 'address',
-      },
-      {
-        name: '_value',
-        type: 'uint256',
-      },
-    ],
-    name: 'transfer',
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
-    type: 'function',
-  },
-];
+export const TRANSFER_ABI = CONTRACTS.WBTC.production.abi;
+const TOKEN_DECIMALS = 8;
 
 export const initWeb3 = (data: IWeb3Arg) => {
   const { wallet, depositToken, mode, setContract } = data;
@@ -105,19 +85,18 @@ export const ellipseAddress = (address: string, width: number = 5): string => {
   return address && `${address.slice(0, width)}...${address.slice(-width)}`;
 };
 
-export const getHexValue = (num: string): string => {
-  const numberOfTokens = 8;
-  const calculatedValue = Number(num) * Math.pow(10, numberOfTokens);
-  const numAsHex = '0x' + calculatedValue.toString(16);
-  return numAsHex;
-};
-
 export const transferERC20 = async (data: ITransferArg) => {
   const { amountDeposit, addressDeposit, contract, address, notify } = data;
   const fromAddress = address;
-  const numberOfTokens = getHexValue(amountDeposit);
+  const amountReceiving = await (async () => {
+    return new Big(amountDeposit);
+  })();
+
   await contract.methods
-    .transfer(addressDeposit, numberOfTokens)
+    .transfer(
+      addressDeposit,
+      Web3.utils.toHex(amountReceiving.times(`1e${TOKEN_DECIMALS}`).toFixed(0)),
+    )
     .send({
       from: fromAddress,
     })

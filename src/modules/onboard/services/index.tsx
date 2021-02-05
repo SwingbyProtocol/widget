@@ -6,7 +6,6 @@ import { IInitOnboardArg, mode } from '../../web3';
 
 // Ref: https://github.com/blocknative/react-demo/blob/master/src/services.js
 
-// export const initOnboard = ({ subscriptions, mode }) => {
 export const initOnboard = (data: IInitOnboardArg) => {
   const { subscriptions, mode } = data;
   const etherNetwork = getEtherNetwork(mode);
