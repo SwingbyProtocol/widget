@@ -36,7 +36,7 @@ export const SwapDetails = ({ resource }: { resource: SkybridgeResource }) => {
           <Banner resource={resource} />
         ) : (
           <>
-            <ConnectWallet />
+            {swap?.status === 'WAITING' && <ConnectWallet resource={resource} />}
             <Vertical resource={resource} />
           </>
         )}

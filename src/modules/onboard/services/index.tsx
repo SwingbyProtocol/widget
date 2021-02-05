@@ -1,12 +1,25 @@
 import Onboard from 'bnc-onboard';
+import Notify from 'bnc-notify';
 
-import { blocknativeApiKey, ETHER_NETWORK, infuraApiKey, infuraAppName, RPC_URL } from '../../env';
+import {
+  blocknativeApiKey,
+  getEtherNetwork,
+  getRpcUrl,
+  infuraApiKey,
+  infuraAppName,
+} from '../../env';
+import { IInitOnboardArg, mode } from '../../web3';
 
 // Ref: https://github.com/blocknative/react-demo/blob/master/src/services.js
-export const initOnboard = ({ subscriptions }) => {
+
+// export const initOnboard = ({ subscriptions, mode }) => {
+export const initOnboard = (data: IInitOnboardArg) => {
+  const { subscriptions, mode } = data;
+  const etherNetwork = getEtherNetwork(mode);
+  const rpcUrl = getRpcUrl(etherNetwork);
   return Onboard({
     dappId: blocknativeApiKey,
-    networkId: ETHER_NETWORK.id,
+    networkId: etherNetwork.id,
     hideBranding: true,
     subscriptions,
     walletSelect: {
@@ -14,7 +27,7 @@ export const initOnboard = ({ subscriptions }) => {
         { walletName: 'metamask', preferred: true },
         {
           walletName: 'ledger',
-          rpcUrl: RPC_URL,
+          rpcUrl,
           preferred: true,
         },
         {
@@ -22,7 +35,7 @@ export const initOnboard = ({ subscriptions }) => {
           infuraKey: infuraApiKey,
           preferred: true,
         },
-        { walletName: 'walletLink', rpcUrl: RPC_URL, appName: infuraAppName, preferred: true },
+        { walletName: 'walletLink', rpcUrl, appName: infuraAppName, preferred: true },
       ],
     },
     walletCheck: [
@@ -32,5 +45,14 @@ export const initOnboard = ({ subscriptions }) => {
       { checkName: 'network' },
       { checkName: 'balance', minimumBalance: '100000' },
     ],
+  });
+};
+
+export const initNotify = (mode: mode) => {
+  const etherNetwork = getEtherNetwork(mode);
+  return Notify({
+    dappId: blocknativeApiKey,
+    networkId: etherNetwork.id,
+    desktopPosition: 'topRight',
   });
 };
