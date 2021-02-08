@@ -52,6 +52,7 @@ export const useTransferToken = () => {
         const tokenDecimals = await contract.methods.decimals().call();
         const gasPrice = await web3.eth.getGasPrice();
         const rawTx: TransactionConfig = {
+          chain: context.mode === 'production' ? 'mainnet' : 'goerli',
           nonce: await web3.eth.getTransactionCount(address),
           gasPrice: web3.utils.toHex(gasPrice),
           from: address,
@@ -65,20 +66,18 @@ export const useTransferToken = () => {
             .encodeABI(),
         };
 
-        const estimatedGas = await web3.eth.estimateGas({ ...rawTx, from: address });
-        logger.debug(
-          'Estimated gas that will be spent %s (price: %s ETH)',
-          estimatedGas,
-          web3.utils.fromWei(gasPrice, 'ether'),
-        );
+        const estimatedGas = await web3.eth.estimateGas(rawTx);
+        if (!estimatedGas) {
+          logger.warn('Did not get any value from estimateGas(): %s', estimatedGas);
+        } else {
+          logger.debug(
+            'Estimated gas that will be spent %s (price: %s ETH)',
+            estimatedGas,
+            web3.utils.fromWei(gasPrice, 'ether'),
+          );
+        }
 
-        return watchTransaction(
-          web3.eth.sendTransaction({
-            ...rawTx,
-            gas: estimatedGas,
-            chain: context.mode === 'production' ? 'mainnet' : 'goerli',
-          }),
-        )
+        return watchTransaction(web3.eth.sendTransaction({ ...rawTx, gas: estimatedGas }))
           .on('error', (error) => {
             setLoading(false);
             setError(error);
