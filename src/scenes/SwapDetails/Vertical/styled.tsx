@@ -45,6 +45,16 @@ export const ExplorerContainer = styled.div`
   margin-bottom: ${rem(-StylingConstants.widgetVerticalPadding)};
 `;
 
+export const TransferButtonsContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: ${({ theme }) => rem(theme.pulsar.size.house)};
+
+  > * {
+    width: auto;
+  }
+`;
+
 export const StyledQRCode = styled(QRCode)`
   font-size: ${rem(95)};
 

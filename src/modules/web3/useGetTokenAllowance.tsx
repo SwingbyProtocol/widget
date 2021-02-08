@@ -4,6 +4,7 @@ import { Big } from 'big.js';
 import Web3 from 'web3';
 
 import { useSdkContext } from '../store/sdkContext';
+import { logger } from '../logger';
 
 import { useOnboard } from './context';
 
@@ -33,9 +34,16 @@ export const useGetTokenAllowance = () => {
         wallet.provider,
       );
 
-      return new Big(await contract.methods.allowance(address, spenderAddress).call()).div(
-        `1e${await contract.methods.decimals().call()}`,
-      );
+      const allowance = await contract.methods.allowance(address, spenderAddress).call();
+      logger.debug('Allowance call returned: %s', allowance);
+
+      const decimals = await contract.methods.decimals().call();
+      logger.debug('Decimals call returned: %s', decimals);
+
+      const result = new Big(allowance).div(`1e${decimals}`).toFixed();
+      logger.debug('%s %s allowance for %s', result, currency, spenderAddress);
+
+      return result;
     },
     [onboard, context, address, wallet],
   );
