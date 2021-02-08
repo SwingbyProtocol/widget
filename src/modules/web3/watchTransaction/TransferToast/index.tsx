@@ -1,23 +1,32 @@
 import { PulsarThemeProvider } from '@swingby-protocol/pulsar';
-import { buildExplorerLink, SkybridgeCoin } from '@swingby-protocol/sdk';
+import { buildExplorerLink } from '@swingby-protocol/sdk';
 import { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { useSdkContext } from '../../store/sdkContext';
+import { useSdkContext } from '../../../store/sdkContext';
 
 import { SuccessToastContainer, StyledToastButton } from './styled';
 
 type Props = {
-  coin: SkybridgeCoin;
   transactionId?: string | null;
   confirmations?: number | null;
   transactionStatus?: boolean | null;
+  error?: Error | null;
 };
 
-export const TransferToast = ({ coin, transactionId, confirmations, transactionStatus }: Props) => {
+export const TransferToast = ({
+  transactionId,
+  confirmations,
+  transactionStatus,
+  error,
+}: Props) => {
   const context = useSdkContext();
 
   const text = useMemo(() => {
+    if (error) {
+      return <FormattedMessage id="widget.onboard.transaction-result-bad" />;
+    }
+
     if (confirmations) {
       return (
         <FormattedMessage
@@ -36,7 +45,7 @@ export const TransferToast = ({ coin, transactionId, confirmations, transactionS
     }
 
     return <FormattedMessage id="widget.onboard.transaction-sent" />;
-  }, [confirmations, transactionStatus]);
+  }, [confirmations, transactionStatus, error]);
 
   return (
     <PulsarThemeProvider>
@@ -47,7 +56,7 @@ export const TransferToast = ({ coin, transactionId, confirmations, transactionS
             variant="secondary"
             size="street"
             shape="fit"
-            href={buildExplorerLink({ context, coin, transactionId })}
+            href={buildExplorerLink({ context, coin: 'WBTC', transactionId })}
             target="_blank"
           >
             <FormattedMessage id="widget.onboard.explorer" />

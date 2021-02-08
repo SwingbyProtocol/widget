@@ -4,13 +4,12 @@ import { Big } from 'big.js';
 import type { DefaultRootState } from 'react-redux';
 import Web3 from 'web3';
 import { TransactionConfig } from 'web3-eth';
-import { createOrUpdateToast, updateToast } from '@swingby-protocol/pulsar';
 
 import { logger } from '../logger';
 import { useSdkContext } from '../store/sdkContext';
 
 import { useOnboard } from './context';
-import { TransferToast } from './TransferToast';
+import { watchTransaction } from './watchTransaction';
 
 export const useTransferToken = () => {
   const context = useSdkContext();
@@ -73,57 +72,19 @@ export const useTransferToken = () => {
           web3.utils.fromWei(gasPrice, 'ether'),
         );
 
-        let transactionHash: string | null = null;
-        let transactionConfirmed: boolean = false;
-
-        return web3.eth
-          .sendTransaction({
+        return watchTransaction(
+          web3.eth.sendTransaction({
             ...rawTx,
             gas: estimatedGas,
             chain: context.mode === 'production' ? 'mainnet' : 'goerli',
-          })
-          .on('transactionHash', (hash) => {
-            transactionHash = hash;
-
-            createOrUpdateToast({
-              content: <TransferToast coin={currencyDeposit} transactionId={hash} />,
-              type: 'default',
-              toastId: 'transaction-result',
-            });
-          })
-          .on('confirmation', (confirmations) => {
-            updateToast({
-              content: (
-                <TransferToast
-                  coin={currencyDeposit}
-                  transactionId={transactionHash}
-                  confirmations={confirmations}
-                />
-              ),
-              type: 'success',
-              toastId: 'transaction-result',
-            });
-          })
+          }),
+        )
           .on('error', (error) => {
             setLoading(false);
             setError(error);
-            logger.error(error);
           })
-          .on('receipt', (receipt) => {
-            transactionConfirmed = receipt.status;
+          .on('receipt', () => {
             setLoading(false);
-
-            createOrUpdateToast({
-              content: (
-                <TransferToast
-                  coin={currencyDeposit}
-                  transactionId={transactionHash}
-                  transactionStatus={receipt.status}
-                />
-              ),
-              type: transactionConfirmed ? 'success' : 'danger',
-              toastId: 'transaction-result',
-            });
           });
       } catch (e) {
         setLoading(false);

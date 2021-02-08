@@ -8,6 +8,7 @@ import { useSdkContext } from '../store/sdkContext';
 import { logger } from '../logger';
 
 import { useOnboard } from './context';
+import { watchTransaction } from './watchTransaction';
 
 export const useApproveTokenAllowance = () => {
   const context = useSdkContext();
@@ -69,17 +70,19 @@ export const useApproveTokenAllowance = () => {
           web3.utils.fromWei(gasPrice, 'ether'),
         );
 
-        return web3.eth
-          .sendTransaction({
+        return watchTransaction(
+          web3.eth.sendTransaction({
             ...rawTx,
             gas: estimatedGas,
             chain: context.mode === 'production' ? 'mainnet' : 'goerli',
+          }),
+        )
+          .on('error', (error) => {
+            setLoading(false);
+            setError(error);
           })
           .on('receipt', () => {
             setLoading(false);
-          })
-          .on('error', (error) => {
-            setError(error);
           });
       } catch (e) {
         setLoading(false);
