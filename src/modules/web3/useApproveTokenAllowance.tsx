@@ -66,9 +66,10 @@ export const useApproveTokenAllowance = () => {
 
         const estimatedGas = await web3.eth.estimateGas(rawTx);
         if (!estimatedGas) {
-          logger.warn('Did not get any value from estimateGas(): %s', estimatedGas);
+          logger.warn(rawTx, 'Did not get any value from estimateGas(): %s', estimatedGas);
         } else {
           logger.debug(
+            rawTx,
             'Estimated gas that will be spent %s (price: %s ETH)',
             estimatedGas,
             web3.utils.fromWei(gasPrice, 'ether'),
