@@ -1,22 +1,16 @@
 import { useCallback, useMemo, useState } from 'react';
-import { buildExplorerLink, CONTRACTS } from '@swingby-protocol/sdk';
+import { CONTRACTS } from '@swingby-protocol/sdk';
 import { Big } from 'big.js';
 import type { DefaultRootState } from 'react-redux';
 import Web3 from 'web3';
 import { TransactionConfig } from 'web3-eth';
-import {
-  createOrUpdateToast,
-  Icon,
-  PulsarThemeProvider,
-  updateToast,
-} from '@swingby-protocol/pulsar';
-import { FormattedMessage } from 'react-intl';
+import { createOrUpdateToast, updateToast } from '@swingby-protocol/pulsar';
 
 import { logger } from '../logger';
 import { useSdkContext } from '../store/sdkContext';
 
 import { useOnboard } from './context';
-import { StyledToastButton, SuccessToastContainer } from './styled';
+import { TransferToast } from './TransferToast';
 
 export const useTransferToken = () => {
   const context = useSdkContext();
@@ -92,26 +86,7 @@ export const useTransferToken = () => {
             transactionHash = hash;
 
             createOrUpdateToast({
-              content: (
-                <PulsarThemeProvider>
-                  <SuccessToastContainer>
-                    <FormattedMessage id="widget.onboard.transaction-sent" />
-                    <StyledToastButton
-                      variant="secondary"
-                      size="street"
-                      shape="fit"
-                      href={buildExplorerLink({
-                        context,
-                        coin: currencyDeposit,
-                        transactionId: hash,
-                      })}
-                      target="_blank"
-                    >
-                      <FormattedMessage id="widget.onboard.explorer" />
-                    </StyledToastButton>
-                  </SuccessToastContainer>
-                </PulsarThemeProvider>
-              ),
+              content: <TransferToast coin={currencyDeposit} transactionId={hash} />,
               type: 'default',
               toastId: 'transaction-result',
             });
@@ -119,29 +94,11 @@ export const useTransferToken = () => {
           .on('confirmation', (confirmations) => {
             updateToast({
               content: (
-                <PulsarThemeProvider>
-                  <SuccessToastContainer>
-                    <FormattedMessage
-                      id="widget.onboard.transaction-confirmed-by"
-                      values={{ value: confirmations }}
-                    />
-                    {transactionHash && (
-                      <StyledToastButton
-                        variant="secondary"
-                        size="street"
-                        shape="square"
-                        href={buildExplorerLink({
-                          context,
-                          coin: currencyDeposit,
-                          transactionId: transactionHash,
-                        })}
-                        target="_blank"
-                      >
-                        <Icon.ExternalLink />
-                      </StyledToastButton>
-                    )}
-                  </SuccessToastContainer>
-                </PulsarThemeProvider>
+                <TransferToast
+                  coin={currencyDeposit}
+                  transactionId={transactionHash}
+                  confirmations={confirmations}
+                />
               ),
               type: 'success',
               toastId: 'transaction-result',
@@ -158,28 +115,11 @@ export const useTransferToken = () => {
 
             createOrUpdateToast({
               content: (
-                <PulsarThemeProvider>
-                  <SuccessToastContainer>
-                    {transactionConfirmed ? (
-                      <FormattedMessage id="widget.onboard.transaction-result-ok" />
-                    ) : (
-                      <FormattedMessage id="widget.onboard.transaction-result-bad" />
-                    )}
-                    <StyledToastButton
-                      variant="secondary"
-                      size="street"
-                      shape="fit"
-                      href={buildExplorerLink({
-                        context,
-                        coin: currencyDeposit,
-                        transactionId: receipt.transactionHash,
-                      })}
-                      target="_blank"
-                    >
-                      <FormattedMessage id="widget.onboard.explorer" />
-                    </StyledToastButton>
-                  </SuccessToastContainer>
-                </PulsarThemeProvider>
+                <TransferToast
+                  coin={currencyDeposit}
+                  transactionId={transactionHash}
+                  transactionStatus={receipt.status}
+                />
               ),
               type: transactionConfirmed ? 'success' : 'danger',
               toastId: 'transaction-result',
