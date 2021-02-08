@@ -1,6 +1,6 @@
 import { Loading, useBuildTestId, SwapProgress, Button } from '@swingby-protocol/pulsar';
 import { buildExplorerLink, SkybridgeResource, getChainFor } from '@swingby-protocol/sdk';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { Space } from '../../../components/Space';
@@ -32,7 +32,8 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
   const context = useSdkContext();
   const layout = useWidgetLayout();
   const { address, wallet } = useOnboard();
-  const { transfer, isTransferring, transactionSucceeded } = useOnboardTransfer();
+  const { transfer, loading: isTransferring } = useOnboardTransfer();
+  const [hasTransactionSucceeded, setTransactionSucceded] = useState(false);
 
   const explorerLink = useMemo(() => {
     if (!swap || !swap.txReceivingId) return undefined;
@@ -45,7 +46,8 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
 
   const doTransfer = useCallback(async () => {
     try {
-      await transfer({ swap });
+      const result = await transfer({ swap });
+      setTransactionSucceded(result.status);
     } catch (e) {
       logger.error(e);
     }
@@ -66,10 +68,10 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
         swap.status === 'WAITING' &&
         getChainFor({ coin: swap.currencyDeposit }) === 'ethereum' && <ConnectWallet />}
 
-      {address && swap.status === 'WAITING' && (isTransferring || transactionSucceeded) && (
+      {address && swap.status === 'WAITING' && (isTransferring || hasTransactionSucceeded) && (
         <Loading />
       )}
-      {address && swap.status === 'WAITING' && !isTransferring && !transactionSucceeded && (
+      {address && swap.status === 'WAITING' && !isTransferring && !hasTransactionSucceeded && (
         <>
           <Button variant="primary" size="city" shape="fit" onClick={doTransfer}>
             <FormattedMessage id="widget.onboard.transfer-btn" values={{ name: wallet?.name }} />
@@ -77,7 +79,7 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
           <Space size="house" />
         </>
       )}
-      {!address && swap.status === 'WAITING' && !isTransferring && !transactionSucceeded && (
+      {!address && swap.status === 'WAITING' && !isTransferring && !hasTransactionSucceeded && (
         <StyledQRCode
           value={getTransferUriFor({
             address: swap.addressDeposit,

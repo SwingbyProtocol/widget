@@ -18,11 +18,11 @@ import { useSdkContext } from '../store/sdkContext';
 import { useOnboard } from './context';
 import { StyledToastButton, SuccessToastContainer } from './styled';
 
-export const useOnboardTransfer = () => {
+export const useTransferToken = () => {
   const context = useSdkContext();
   const { onboard, wallet, address } = useOnboard();
-  const [isTransferring, setTransferring] = useState(false);
-  const [transactionSucceeded, setTransactionSucceeded] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
 
   const transfer = useCallback(
     async ({ swap }: { swap: null | DefaultRootState['swaps'][string] }) => {
@@ -43,8 +43,8 @@ export const useOnboardTransfer = () => {
           throw new Error(`Invalid "currencyDeposit": "${swap.currencyDeposit}"`);
         }
 
-        setTransferring(true);
-        setTransactionSucceeded(false);
+        setLoading(true);
+        setError(null);
 
         const { currencyDeposit, addressDeposit, amountDeposit } = swap;
 
@@ -148,13 +148,13 @@ export const useOnboardTransfer = () => {
             });
           })
           .on('error', (error) => {
-            setTransferring(false);
+            setLoading(false);
+            setError(error);
             logger.error(error);
           })
           .on('receipt', (receipt) => {
             transactionConfirmed = receipt.status;
-            setTransactionSucceeded(receipt.status);
-            setTransferring(false);
+            setLoading(false);
 
             createOrUpdateToast({
               content: (
@@ -186,16 +186,13 @@ export const useOnboardTransfer = () => {
             });
           });
       } catch (e) {
-        setTransferring(false);
+        setLoading(false);
+        setError(e);
         throw e;
       }
     },
     [address, context, onboard, wallet],
   );
 
-  return useMemo(() => ({ isTransferring, transactionSucceeded, transfer }), [
-    isTransferring,
-    transactionSucceeded,
-    transfer,
-  ]);
+  return useMemo(() => ({ loading, error, transfer }), [loading, error, transfer]);
 };

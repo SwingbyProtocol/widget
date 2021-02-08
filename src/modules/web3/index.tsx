@@ -1,3 +1,5 @@
 export { OnboardProvider, useOnboard } from './context';
-export { useOnboardTransfer } from './useOnboardTransfer';
+export { useTransferToken } from './useTransferToken';
+export { useApproveTokenAllowance } from './useApproveTokenAllowance';
+export { useGetTokenAllowance } from './useGetTokenAllowance';
 export { buildShortAddress } from './buildShortAddress';
