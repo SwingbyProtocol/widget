@@ -4,6 +4,7 @@ import { Big } from 'big.js';
 import type { DefaultRootState } from 'react-redux';
 import Web3 from 'web3';
 import { TransactionConfig } from 'web3-eth';
+import { createToast } from '@swingby-protocol/pulsar';
 
 import { logger } from '../logger';
 import { useSdkContext } from '../store/sdkContext';
@@ -89,6 +90,12 @@ export const useTransferToken = () => {
       } catch (e) {
         setLoading(false);
         setError(e);
+
+        logger.error(e, 'Something went wrong trying to send the transaction');
+        if (e?.message) {
+          createToast({ content: e?.message, type: 'danger' });
+        }
+
         throw e;
       }
     },

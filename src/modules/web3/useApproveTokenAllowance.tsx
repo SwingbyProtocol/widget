@@ -3,6 +3,7 @@ import { CONTRACTS, SkybridgeCoin } from '@swingby-protocol/sdk';
 import { Big } from 'big.js';
 import Web3 from 'web3';
 import { TransactionConfig } from 'web3-eth';
+import { createToast } from '@swingby-protocol/pulsar';
 
 import { useSdkContext } from '../store/sdkContext';
 import { logger } from '../logger';
@@ -87,6 +88,12 @@ export const useApproveTokenAllowance = () => {
       } catch (e) {
         setLoading(false);
         setError(e);
+
+        logger.error(e, 'Something went wrong trying to send the approval transaction');
+        if (e?.message) {
+          createToast({ content: e?.message, type: 'danger' });
+        }
+
         throw e;
       }
     },
