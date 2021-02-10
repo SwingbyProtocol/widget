@@ -1,5 +1,4 @@
 {
   "baseUrl": "http://localhost:3000",
-  "defaultCommandTimeout": 30000,
-  "experimentalFetchPolyfill": true
+  "defaultCommandTimeout": 30000
 }

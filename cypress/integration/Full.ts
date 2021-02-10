@@ -7,10 +7,14 @@ import { testStatuses } from '../utils';
     });
 
     it('renders correctly', () => {
+      cy.clock();
       cy.visit('/test/swap/new');
+      cy.tick(10000);
       cy.get('[data-testid="vertical.form.amounts.currency-from-select.target"]').should(
         'be.visible',
       );
+      cy.tick(10000);
+      cy.get('#testnet').should('be.visible');
     });
 
     it('can switch coins', () => {

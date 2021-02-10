@@ -3,23 +3,52 @@
 import './commands';
 
 beforeEach(() => {
-  cy.server();
-  cy.route('**/network', 'fixture:network.json');
-  cy.route('**/fees**', 'fixture:fees.json').as('fees');
-  cy.route('POST', '**/swaps/create', 'fixture:create-swap.json');
-  cy.route('**/api/v2', 'fixture:indexer.json');
-  cy.route('**/floats/balances', 'fixture:float-balances.json');
-  cy.route('**/swaps/query?hash=fake-hash-waiting', 'fixture:fake-swap-waiting.json');
-  cy.route('**/swaps/query?hash=fake-hash-pending', 'fixture:fake-swap-pending.json');
-  cy.route('**/swaps/query?hash=fake-hash-signing', 'fixture:fake-swap-signing.json');
-  cy.route('**/swaps/query?hash=fake-hash-signing-refund', 'fixture:fake-swap-signing-refund.json');
-  cy.route('**/swaps/query?hash=fake-hash-sending', 'fixture:fake-swap-sending.json');
-  cy.route('**/swaps/query?hash=fake-hash-sending-refund', 'fixture:fake-swap-sending-refund.json');
-  cy.route(
-    '**/swaps/query?hash=fake-hash-sending-with-txout',
-    'fixture:fake-swap-sending-with-txout.json',
+  cy.intercept({ pathname: /\/status$/ }, { statusCode: 500 }).as('ping');
+  cy.intercept({ pathname: /\/network$/ }, { fixture: 'network.json' }).as('network');
+  cy.intercept({ pathname: /\/fees$/ }, { fixture: 'fees.json' }).as('fees');
+  cy.intercept({ pathname: /\/swaps\/create$/ }, { fixture: 'create-swap.json' }).as('create-swap');
+  cy.intercept({ pathname: /\/api\/v2$/ }, { fixture: 'indexer.json' }).as('indexer');
+  cy.intercept({ pathname: /\/floats\/balances$/ }, { fixture: 'float-balances.json' }).as(
+    'floats-balance',
   );
-  cy.route('**/swaps/query?hash=fake-hash-completed', 'fixture:fake-swap-completed.json');
-  cy.route('**/swaps/query?hash=fake-hash-refunded', 'fixture:fake-swap-refunded.json');
-  cy.route('**/swaps/query?hash=fake-hash-expired', 'fixture:fake-swap-expired.json');
+  cy.intercept(
+    { pathname: /\/swaps\/query$/, query: { hash: 'fake-hash-waiting' } },
+    { fixture: 'fake-swap-waiting.json' },
+  ).as('fake-hash-waiting');
+  cy.intercept(
+    { pathname: /\/swaps\/query$/, query: { hash: 'fake-hash-pending' } },
+    { fixture: 'fake-swap-pending.json' },
+  ).as('fake-hash-pending');
+  cy.intercept(
+    { pathname: /\/swaps\/query$/, query: { hash: 'fake-hash-signing' } },
+    { fixture: 'fake-swap-signing.json' },
+  ).as('fake-hash-signing');
+  cy.intercept(
+    { pathname: /\/swaps\/query$/, query: { hash: 'fake-hash-signing-refund' } },
+    { fixture: 'fake-swap-signing-refund.json' },
+  ).as('fake-hash-signing-refund');
+  cy.intercept(
+    { pathname: /\/swaps\/query$/, query: { hash: 'fake-hash-sending' } },
+    { fixture: 'fake-swap-sending.json' },
+  ).as('fake-hash-sending');
+  cy.intercept(
+    { pathname: /\/swaps\/query$/, query: { hash: 'fake-hash-sending-refund' } },
+    { fixture: 'fake-swap-sending-refund.json' },
+  ).as('fake-hash-sending-refund');
+  cy.intercept(
+    { pathname: /\/swaps\/query$/, query: { hash: 'fake-hash-sending-with-txout' } },
+    { fixture: 'fake-swap-sending-with-txout.json' },
+  ).as('fake-hash-sending-with-txout');
+  cy.intercept(
+    { pathname: /\/swaps\/query$/, query: { hash: 'fake-hash-completed' } },
+    { fixture: 'fake-swap-completed.json' },
+  ).as('fake-hash-completed');
+  cy.intercept(
+    { pathname: /\/swaps\/query$/, query: { hash: 'fake-hash-refunded' } },
+    { fixture: 'fake-swap-refunded.json' },
+  ).as('fake-hash-refunded');
+  cy.intercept(
+    { pathname: /\/swaps\/query$/, query: { hash: 'fake-hash-expired' } },
+    { fixture: 'fake-swap-expired.json' },
+  ).as('fake-hash-expired');
 });

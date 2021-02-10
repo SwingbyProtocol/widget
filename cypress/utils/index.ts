@@ -12,13 +12,17 @@ export const testStatuses = ({
   height: number;
 }) => {
   it('renders "WAITING" status correctly', () => {
+    cy.clock();
     cy.visit('/test/swap/fake-hash-waiting');
+    cy.tick(10000);
     cy.get(`[data-testid="${testId}.swap-details.status-label"`).should(
       'have.text',
       testId === 'banner'
         ? `Send 0.99999854${NON_BREAKING_SPACE}BTC`
         : `Send exactly 0.99999854${NON_BREAKING_SPACE}BTC to`,
     );
+    cy.tick(10000);
+    cy.get('#wallet-address-warning').should('be.visible');
     cy.percySnapshot(`${name}: waiting`, { widths: [width], minHeight: height });
   });
 
