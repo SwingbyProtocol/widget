@@ -1,6 +1,8 @@
 export const logLevel =
   process.env.NEXT_PUBLIC_LOG_LEVEL || (process.env.NODE_ENV === 'production' ? 'info' : 'trace');
 
+export const server__ipCheckSecret = process.env.IP_CHECK_SECRET || undefined;
+
 export enum LocalStorage {
   AffiliateCode = 'affiliateCode',
   AffiliateCodeSavedAt = 'affiliateCodeSavedAt',

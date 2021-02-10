@@ -2,7 +2,6 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { GetServerSideProps } from 'next';
-import { getIpInfoFromRequest, IpInfoFromRequest } from '@swingby-protocol/ip-check';
 import { useIntl } from 'react-intl';
 import { createToast } from '@swingby-protocol/pulsar';
 import { DateTime } from 'luxon';
@@ -12,10 +11,11 @@ import { GlobalStyles } from '../../../modules/styles';
 import { useWidgetPathParams } from '../../../modules/path-params';
 import { actionSetSwapFormData } from '../../../modules/store/swapForm';
 import { IpInfoProvider } from '../../../modules/ip-blocks';
-import { LocalStorage } from '../../../modules/env';
+import { LocalStorage, server__ipCheckSecret } from '../../../modules/env';
 import { logger } from '../../../modules/logger';
+import { fetch } from '../../../modules/fetch';
 
-type Props = { ipInfo: IpInfoFromRequest };
+type Props = { ipInfo: { ip: string | null; shouldBlockIp: boolean } };
 
 export default function ResourceNew({ ipInfo }: Props) {
   const dispatch = useDispatch();
@@ -85,7 +85,31 @@ export default function ResourceNew({ ipInfo }: Props) {
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async ({ req }) => {
+  const ip =
+    (typeof req.headers['x-real-ip'] === 'string' ? req.headers['x-real-ip'] : null) ??
+    req.connection.remoteAddress ??
+    null;
+
   return {
-    props: { ipInfo: await getIpInfoFromRequest({ req, ipApiKey: process.env.IPAPI_API_KEY }) },
+    props: {
+      ipInfo: {
+        ip,
+        shouldBlockIp: await (async () => {
+          try {
+            const result = await fetch<{ shouldBlock: boolean }>(
+              `https://ip-check.swingby.network/api/v1/ip/${ip}/check?secret=${server__ipCheckSecret}`,
+            );
+
+            if (!result.ok) {
+              return false;
+            }
+
+            return result.response.shouldBlock;
+          } catch (e) {
+            return false;
+          }
+        })(),
+      },
+    },
   };
 };

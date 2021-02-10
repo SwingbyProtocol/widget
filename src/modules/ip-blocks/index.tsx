@@ -1,10 +1,10 @@
-import { IpInfoFromRequest } from '@swingby-protocol/ip-check';
 import React, { useContext } from 'react';
 
-const Context = React.createContext<IpInfoFromRequest>({
-  shouldBlockRegion: false,
+type ContextType = { shouldBlockIp: boolean; ip: string | null };
+
+const Context = React.createContext<ContextType>({
+  shouldBlockIp: false,
   ip: null,
-  info: null,
 });
 
 export const useIpInfo = () => useContext(Context);
@@ -14,7 +14,7 @@ export const IpInfoProvider = ({
   value,
 }: {
   children: React.ReactNode;
-  value: IpInfoFromRequest;
+  value: ContextType;
 }) => {
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };
