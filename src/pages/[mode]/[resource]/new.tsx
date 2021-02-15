@@ -84,7 +84,7 @@ export default function ResourceNew({ ipInfo }: Props) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps<Props> = async ({ req, query }) => {
+export const getServerSideProps: GetServerSideProps<Props> = async ({ req }) => {
   const ip = (() => {
     try {
       const value =
