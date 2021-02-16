@@ -1,6 +1,9 @@
 import originalFetch from 'isomorphic-unfetch';
+import { AbortController as AbortControllerPonyfill } from 'abortcontroller-polyfill/dist/cjs-ponyfill'; // eslint-disable-line import/no-internal-modules
 
 import { logger } from '../logger';
+
+export const AbortController = AbortControllerPonyfill as typeof window.AbortController;
 
 export const fetch = async <
   SuccessResponse extends unknown,

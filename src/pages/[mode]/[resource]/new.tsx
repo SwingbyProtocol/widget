@@ -13,7 +13,7 @@ import { actionSetSwapFormData } from '../../../modules/store/swapForm';
 import { IpInfoProvider } from '../../../modules/ip-blocks';
 import { LocalStorage, server__ipCheckSecret } from '../../../modules/env';
 import { logger } from '../../../modules/logger';
-import { fetch } from '../../../modules/fetch';
+import { AbortController, fetch } from '../../../modules/fetch';
 
 type Props = { ipInfo: { ip: string | null; shouldBlockIp: boolean } };
 

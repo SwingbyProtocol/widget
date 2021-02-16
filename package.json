@@ -21,6 +21,7 @@
   "dependencies": {
     "@swingby-protocol/pulsar": "^3.8.2",
     "@swingby-protocol/sdk": "^1.0.0-alpha.77",
+    "abortcontroller-polyfill": "^1.7.1",
     "big.js": "6.0.3",
     "bnc-onboard": "^1.19.1",
     "hex-to-binary": "^1.0.1",
