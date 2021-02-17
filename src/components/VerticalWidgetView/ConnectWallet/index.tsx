@@ -4,8 +4,6 @@ import { FormattedMessage } from 'react-intl';
 
 import { buildShortAddress, useOnboard } from '../../../modules/web3';
 
-import { ConnectWalletView } from './styled';
-
 export const ConnectWallet = () => {
   const { address, onboard } = useOnboard();
 
@@ -21,18 +19,17 @@ export const ConnectWallet = () => {
   }, [onboard]);
 
   return (
-    <ConnectWalletView>
-      <Button
-        variant={address ? 'secondary' : 'primary'}
-        size="city"
-        onClick={address ? logOut : logIn}
-      >
-        {address ? (
-          buildShortAddress({ address })
-        ) : (
-          <FormattedMessage id="widget.onboard.connect-btn" />
-        )}
-      </Button>
-    </ConnectWalletView>
+    <Button
+      variant={address ? 'secondary' : 'primary'}
+      size="street"
+      onClick={address ? logOut : logIn}
+      shape="fit"
+    >
+      {address ? (
+        buildShortAddress({ address })
+      ) : (
+        <FormattedMessage id="widget.onboard.connect-btn" />
+      )}
+    </Button>
   );
 };

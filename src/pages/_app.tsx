@@ -17,7 +17,7 @@ import { useStore } from '../modules/store';
 import { Favicon } from '../components/Favicon';
 import { GlobalStyles } from '../modules/styles';
 import { SdkContextGateKeeper } from '../modules/store/sdkContext';
-import { OnboardProvider } from '../modules/web3';
+import { OnboardProvider, OnboardGlobalStyles } from '../modules/web3';
 
 function MyApp({ Component, pageProps, router }: AppProps) {
   const store = useStore();
@@ -44,6 +44,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
       <IntlProvider messages={messages} locale={locale} defaultLocale={defaultLocale}>
         <PulsarGlobalStyles />
         <GlobalStyles />
+        <OnboardGlobalStyles />
         <ReduxProvider store={store}>
           <SdkContextGateKeeper mode={router.query.mode}>
             <OnboardProvider>

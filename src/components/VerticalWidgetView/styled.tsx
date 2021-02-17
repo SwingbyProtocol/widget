@@ -33,7 +33,11 @@ export const StepViewContainer = styled.div`
   width: 100%;
 `;
 
-export const StyledBackButton = styled(BackButton)`
+export const NavBarContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
   margin-bottom: ${({ theme }) => rem(theme.pulsar.size.room)};
 `;
 

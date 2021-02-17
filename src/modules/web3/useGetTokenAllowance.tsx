@@ -26,7 +26,10 @@ export const useGetTokenAllowance = () => {
         throw new Error(`Invalid "currency": "${currency}"`);
       }
 
-      await onboard.walletCheck();
+      if (!(await onboard.walletCheck())) {
+        throw new Error('Invalid wallet/network selected');
+      }
+
       const web3 = new Web3(wallet.provider);
       const contract = new web3.eth.Contract(
         CONTRACTS[currency][context.mode].abi,

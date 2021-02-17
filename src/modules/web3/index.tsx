@@ -4,3 +4,4 @@ export { useApproveTokenAllowance } from './useApproveTokenAllowance';
 export { useGetTokenAllowance } from './useGetTokenAllowance';
 export { useTokenAllowance } from './useTokenAllowance';
 export { buildShortAddress } from './buildShortAddress';
+export { OnboardGlobalStyles } from './OnboardGlobalStyles';
