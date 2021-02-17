@@ -102,44 +102,51 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
       {address && swap.status === 'WAITING' && (isTransferring || hasTransactionSucceeded) && (
         <Loading />
       )}
-      {address && swap.status === 'WAITING' && !isTransferring && !hasTransactionSucceeded && (
-        <TransferButtonsContainer>
-          <Button
-            variant={!needsApproval ? 'secondary' : 'primary'}
-            size="city"
-            shape="fit"
-            onClick={doApprove}
-            disabled={isApproving || !needsApproval}
-          >
-            {isApproving ? (
-              <Loading />
-            ) : (
-              <FormattedMessage
-                id="widget.onboard.approve-btn"
-                values={{ symbol: swap.currencyDeposit }}
-              />
-            )}
-          </Button>
-          <Button
-            variant="primary"
-            size="city"
-            shape="fit"
-            onClick={doTransfer}
-            disabled={needsApproval}
-          >
-            <FormattedMessage id="widget.onboard.transfer-btn" />
-          </Button>
-        </TransferButtonsContainer>
-      )}
-      {!address && swap.status === 'WAITING' && !isTransferring && !hasTransactionSucceeded && (
-        <StyledQRCode
-          value={getTransferUriFor({
-            address: swap.addressDeposit,
-            coin: swap.currencyDeposit,
-            amount: swap.amountDeposit,
-          })}
-        />
-      )}
+      {address &&
+        getChainFor({ coin: swap.currencyDeposit }) === 'ethereum' &&
+        swap.status === 'WAITING' &&
+        !isTransferring &&
+        !hasTransactionSucceeded && (
+          <TransferButtonsContainer>
+            <Button
+              variant={!needsApproval ? 'secondary' : 'primary'}
+              size="city"
+              shape="fit"
+              onClick={doApprove}
+              disabled={isApproving || !needsApproval}
+            >
+              {isApproving ? (
+                <Loading />
+              ) : (
+                <FormattedMessage
+                  id="widget.onboard.approve-btn"
+                  values={{ symbol: swap.currencyDeposit }}
+                />
+              )}
+            </Button>
+            <Button
+              variant="primary"
+              size="city"
+              shape="fit"
+              onClick={doTransfer}
+              disabled={needsApproval}
+            >
+              <FormattedMessage id="widget.onboard.transfer-btn" />
+            </Button>
+          </TransferButtonsContainer>
+        )}
+      {(!address || getChainFor({ coin: swap.currencyDeposit }) !== 'ethereum') &&
+        swap.status === 'WAITING' &&
+        !isTransferring &&
+        !hasTransactionSucceeded && (
+          <StyledQRCode
+            value={getTransferUriFor({
+              address: swap.addressDeposit,
+              coin: swap.currencyDeposit,
+              amount: swap.amountDeposit,
+            })}
+          />
+        )}
       {swap.status !== 'WAITING' && (
         <ProgressContainer>
           <SwapProgress
