@@ -12,7 +12,6 @@ import { usePushWithSearchParams } from '../../../modules/push-keeping-search';
 import { NodeSelector } from '../../../components/NodeSelector';
 import { useWidgetLayout } from '../../../modules/layout';
 import { useSdkContext } from '../../../modules/store/sdkContext';
-import { ConnectWallet } from '../ConnectWallet';
 import {
   useTokenAllowance,
   useOnboard,
@@ -99,9 +98,6 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
       data-testid={buildTestId('')}
     >
       {layout === 'website' && <NodeSelector swap={swap} />}
-      {layout === 'website' &&
-        swap.status === 'WAITING' &&
-        getChainFor({ coin: swap.currencyDeposit }) === 'ethereum' && <ConnectWallet />}
 
       {address && swap.status === 'WAITING' && (isTransferring || hasTransactionSucceeded) && (
         <Loading />
