@@ -2,7 +2,6 @@ import styled, { css } from 'styled-components';
 import { rem } from 'polished';
 import { logos } from '@swingby-protocol/pulsar';
 
-import { BackButton } from '../BackButton';
 import { StylingConstants } from '../../modules/styles';
 
 export const Container = styled.div`
