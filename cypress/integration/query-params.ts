@@ -34,16 +34,16 @@ describe('Query params', () => {
 
   it('fills form correctly for swap with valid defaults', () => {
     cy.visit(
-      '/test/swap/new?defaultCurrencyDeposit=BTC&defaultCurrencyReceiving=BTCB&defaultAddressReceiving=tbnb1k3cp6jl7z757hewt30nfvr97uywlxeap69glam&defaultAmountDesired=1',
+      '/test/swap/new?defaultCurrencyDeposit=sbBTC&defaultCurrencyReceiving=WBTC&defaultAddressReceiving=0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc&defaultAmountDesired=1',
     );
 
     cy.get('[data-testid="vertical.form.amounts.currency-from-select.target"]').should(
       'have.text',
-      `${NON_BREAKING_SPACE}BTC`,
+      `${NON_BREAKING_SPACE}sbBTC`,
     );
     cy.get('[data-testid="vertical.form.amounts.currency-to-select.target"]').should(
       'have.text',
-      `${NON_BREAKING_SPACE}BTCB`,
+      `${NON_BREAKING_SPACE}WBTC`,
     );
     cy.get('[data-testid="vertical.form.amounts.amount-from.native-input"]').should(
       'have.value',
@@ -51,7 +51,7 @@ describe('Query params', () => {
     );
     cy.get('[data-testid="vertical.form.receiving-address.native-input"]').should(
       'have.value',
-      'tbnb1k3cp6jl7z757hewt30nfvr97uywlxeap69glam',
+      '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
     );
     cy.get('[data-testid="vertical.form.swap-btn"]').should('not.be.disabled');
   });
