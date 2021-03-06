@@ -5,15 +5,15 @@ import { GetServerSideProps } from 'next';
 import { useIntl } from 'react-intl';
 import { createToast } from '@swingby-protocol/pulsar';
 import { DateTime } from 'luxon';
+import { shouldBlockRegion } from '@swingby-protocol/ip-check';
 
 import { SwapForm } from '../../../scenes/SwapForm';
 import { GlobalStyles } from '../../../modules/styles';
 import { useWidgetPathParams } from '../../../modules/path-params';
 import { actionSetSwapFormData } from '../../../modules/store/swapForm';
 import { IpInfoProvider } from '../../../modules/ip-blocks';
-import { LocalStorage, server__ipCheckSecret } from '../../../modules/env';
+import { LocalStorage } from '../../../modules/env';
 import { logger } from '../../../modules/logger';
-import { AbortController, fetch } from '../../../modules/fetch';
 
 type Props = { ipInfo: { ip: string | null; shouldBlockIp: boolean } };
 
@@ -85,45 +85,18 @@ export default function ResourceNew({ ipInfo }: Props) {
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async ({ req }) => {
-  const ip = (() => {
-    try {
-      const value =
-        (typeof req.headers['x-real-ip'] === 'string' ? req.headers['x-real-ip'] : null) ??
-        req.connection.remoteAddress;
-
-      if (!value) {
-        return null;
-      }
-
-      return value;
-    } catch (e) {
-      logger.error(e, 'Error getting IP');
-      return null;
-    }
-  })();
-
   return {
     props: {
       ipInfo: {
-        ip,
-        shouldBlockIp: await (async () => {
+        ip: typeof req.headers['x-real-ip'] === 'string' ? req.headers['x-real-ip'] : null,
+        shouldBlockIp: (() => {
           try {
-            const controller = new AbortController();
-            const signal = controller.signal;
-
-            setTimeout(() => controller.abort(), 3000);
-            const result = await fetch<{ shouldBlock: boolean }>(
-              `https://ip-check.swingby.network/api/v1/ip/${ip}/check?secret=${server__ipCheckSecret}`,
-              { signal },
-            );
-
-            if (!result.ok) {
-              return false;
-            }
-
-            return result.response.shouldBlock;
+            return shouldBlockRegion({
+              regionCode: `${req.headers['x-vercel-ip-country']}`,
+              innerRegionCode: `${req.headers['x-vercel-ip-country-region']}`,
+            });
           } catch (e) {
-            logger.error(e, 'Error locating IP');
+            logger.error(e, 'Error checking whether region should be blocked');
             return false;
           }
         })(),
