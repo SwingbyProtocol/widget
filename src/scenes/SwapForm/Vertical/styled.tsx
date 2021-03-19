@@ -14,6 +14,21 @@ export const StakeEarn = styled.span`
   }
 `;
 
+export const RowAcceptTerms = styled.div`
+  font-size: ${({ theme }) => rem(theme.pulsar.size.closet)};
+  margin-bottom: ${({ theme }) => rem(theme.pulsar.size.drawer)};
+  font-weight: 400;
+`;
+
+export const AcceptTerms = styled.span`
+  &,
+  &:visited {
+    color: ${({ theme }) => theme.pulsar.color.text.normal};
+    text-decoration: underline;
+    text-decoration-color: ${({ theme }) => theme.pulsar.color.primary.normal};
+  }
+`;
+
 export const ErrorContainer = styled.div`
   display: flex;
   flex-direction: column;

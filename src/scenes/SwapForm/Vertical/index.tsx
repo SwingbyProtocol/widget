@@ -1,4 +1,11 @@
-import { Button, CoinIcon, Loading, TextInput, useBuildTestId } from '@swingby-protocol/pulsar';
+import {
+  Button,
+  CoinIcon,
+  Loading,
+  Text,
+  TextInput,
+  useBuildTestId,
+} from '@swingby-protocol/pulsar';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { SkybridgeResource } from '@swingby-protocol/sdk';
@@ -17,7 +24,14 @@ import { Separator } from '../../../components/Separator';
 import { useCreate } from '../../../modules/create-swap';
 import { NodeSelector } from '../../../components/NodeSelector';
 
-import { ErrorContainer, StakeEarn, ErrorBox, ErrorTitle } from './styled';
+import {
+  ErrorContainer,
+  StakeEarn,
+  AcceptTerms,
+  ErrorBox,
+  ErrorTitle,
+  RowAcceptTerms,
+} from './styled';
 
 export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
   const { buildTestId } = useBuildTestId({ id: 'vertical.form' });
@@ -76,6 +90,19 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
           </ErrorTitle>
           <ErrorBox>{error}</ErrorBox>
         </ErrorContainer>
+      )}
+      {(step === 'step-address' || layout === 'widget-full' || layout === 'website') && (
+        <RowAcceptTerms>
+          <Text>
+            <FormattedMessage id="widget.click-swap-to-accept-1" />
+          </Text>{' '}
+          <AcceptTerms as="a" target="_blank" href="https://docs.swingby.network/terms.pdf">
+            <FormattedMessage id="widget.accept-terms" />
+          </AcceptTerms>{' '}
+          <Text>
+            <FormattedMessage id="widget.click-swap-to-accept-2" />
+          </Text>
+        </RowAcceptTerms>
       )}
 
       {(step === 'step-address' || layout === 'widget-full' || layout === 'website') && (

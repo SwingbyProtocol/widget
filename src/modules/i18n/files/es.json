@@ -32,5 +32,8 @@
   "widget.warning-do-not-use-exchange-addresses": "Por favor, envía dinero solo desde direcciones que te pertenezcan. No envíes dinero desde plataformas de intercambio.",
   "widget.ip-block": "Pareces estar accediendo a esta app desde un país o región en el que su uso no está permitido.",
   "widget.stake-btc-earn-rewards": "Estaca BTC, gana recompensas.",
-  "widget.swap-error-title": "Ha ocurrido un error inesperado."
+  "widget.swap-error-title": "Ha ocurrido un error inesperado.",
+  "widget.click-swap-to-accept-1": "Al hacer clic en 'Intercambiar', aceptas nuestras",
+  "widget.accept-terms": "condiciones.",
+  "widget.click-swap-to-accept-2": " "
 }
