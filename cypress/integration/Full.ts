@@ -14,7 +14,7 @@ import { testStatuses } from '../utils';
         'be.visible',
       );
       cy.tick(10000);
-      cy.get('#testnet').should('be.visible');
+      cy.get('#mode-warning').should('be.visible');
     });
 
     it('can switch coins', () => {
