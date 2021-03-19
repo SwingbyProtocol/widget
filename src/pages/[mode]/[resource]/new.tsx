@@ -1,27 +1,26 @@
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { GetServerSideProps } from 'next';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { shouldBlockRegion } from '@swingby-protocol/ip-check';
 import { createToast, Text } from '@swingby-protocol/pulsar';
 import { DateTime } from 'luxon';
-import { shouldBlockRegion } from '@swingby-protocol/ip-check';
+import { GetServerSideProps } from 'next';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { useDispatch } from 'react-redux';
 
-import { SwapForm } from '../../../scenes/SwapForm';
-import { GlobalStyles } from '../../../modules/styles';
+import { LocalStorage } from '../../../modules/env';
+import { IpInfoProvider } from '../../../modules/ip-blocks';
+import { logger } from '../../../modules/logger';
 import { useWidgetPathParams } from '../../../modules/path-params';
 import { actionSetSwapFormData } from '../../../modules/store/swapForm';
-import { IpInfoProvider } from '../../../modules/ip-blocks';
-import { LocalStorage } from '../../../modules/env';
-import { logger } from '../../../modules/logger';
+import { GlobalStyles } from '../../../modules/styles';
+import { SwapForm } from '../../../scenes/SwapForm';
 
-import { TextTutorial } from './styled';
+import TextTutorial from './styled';
 
 type Props = { ipInfo: { ip: string | null; shouldBlockIp: boolean } };
 
 export default function ResourceNew({ ipInfo }: Props) {
   const dispatch = useDispatch();
-  const { formatMessage } = useIntl();
   const { resource, mode } = useWidgetPathParams();
   const {
     query: {

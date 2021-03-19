@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const TextTutorial = styled.span`
+const TextTutorial = styled.span`
   &,
   &:visited {
     color: ${({ theme }) => theme.pulsar.color.text.normal};
@@ -8,3 +8,6 @@ export const TextTutorial = styled.span`
     text-decoration-color: ${({ theme }) => theme.pulsar.color.primary.normal};
   }
 `;
+
+// Memo: Facing build error if 'export const TextTutorial ='
+export default TextTutorial;

@@ -50,6 +50,6 @@ export const ErrorBox = styled.div`
   font-size: ${({ theme }) => rem(theme.pulsar.size.drawer)};
   color: ${({ theme }) => theme.pulsar.color.danger.normal};
   background: ${({ theme }) => theme.pulsar.color.border.danger};
-  padding: ${({ theme }) => rem(theme.pulsar.size.box)}
-    ${({ theme }) => rem(theme.pulsar.size.drawer)};
+  padding: ${({ theme }) => rem(theme.pulsar.size.box)};
+  /* ${({ theme }) => rem(theme.pulsar.size.drawer)}; */
 `;
