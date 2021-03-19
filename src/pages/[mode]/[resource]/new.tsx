@@ -1,5 +1,5 @@
 import { shouldBlockRegion } from '@swingby-protocol/ip-check';
-import { createToast, Text } from '@swingby-protocol/pulsar';
+import { createOrUpdateToast } from '@swingby-protocol/pulsar';
 import { DateTime } from 'luxon';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
@@ -14,8 +14,6 @@ import { useWidgetPathParams } from '../../../modules/path-params';
 import { actionSetSwapFormData } from '../../../modules/store/swapForm';
 import { GlobalStyles } from '../../../modules/styles';
 import { SwapForm } from '../../../scenes/SwapForm';
-
-import TextTutorial from './styled';
 
 type Props = { ipInfo: { ip: string | null; shouldBlockIp: boolean } };
 
@@ -65,25 +63,28 @@ export default function ResourceNew({ ipInfo }: Props) {
   }, [dispatch, affiliateCode]);
 
   useEffect(() => {
-    createToast({
-      content: (
-        <>
-          <Text>
-            <FormattedMessage
-              id={mode === 'test' ? 'widget.warning-test' : 'widget.warning-production'}
-            />
-          </Text>{' '}
-          <TextTutorial
-            as="a"
-            target="_blank"
-            href="https://swingby.medium.com/how-to-convert-your-wbtc-into-btc-with-skybridge-8eebe2b711ad"
-          >
-            <FormattedMessage id="widget.tutorial" />
-          </TextTutorial>
-        </>
-      ),
-      type: 'info',
-      toastId: 'testnet',
+    createOrUpdateToast({
+      content:
+        mode === 'test' ? (
+          <FormattedMessage id="widget.warning-test" />
+        ) : (
+          <FormattedMessage
+            id="widget.warning-production"
+            values={{
+              readTutorial: (
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href="https://swingby.medium.com/how-to-convert-your-wbtc-into-btc-with-skybridge-8eebe2b711ad"
+                >
+                  <FormattedMessage id="widget.warning-production.tutorial" />
+                </a>
+              ),
+            }}
+          />
+        ),
+      type: mode === 'test' ? 'info' : 'warning',
+      toastId: 'mode-warning',
     });
   }, [mode]);
 

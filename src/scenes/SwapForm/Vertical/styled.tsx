@@ -14,19 +14,15 @@ export const StakeEarn = styled.span`
   }
 `;
 
-export const RowAcceptTerms = styled.div`
+export const TermsOfUseContainer = styled.div`
   font-size: ${({ theme }) => rem(theme.pulsar.size.closet)};
-  margin-bottom: ${({ theme }) => rem(theme.pulsar.size.drawer)};
+  margin-bottom: ${({ theme }) => rem(theme.pulsar.size.box)};
+  text-align: center;
   font-weight: 400;
 `;
 
-export const AcceptTerms = styled.span`
-  &,
-  &:visited {
-    color: ${({ theme }) => theme.pulsar.color.text.normal};
-    text-decoration: underline;
-    text-decoration-color: ${({ theme }) => theme.pulsar.color.primary.normal};
-  }
+export const TermsOfUseLink = styled.a`
+  white-space: nowrap;
 `;
 
 export const ErrorContainer = styled.div`
@@ -50,6 +46,6 @@ export const ErrorBox = styled.div`
   font-size: ${({ theme }) => rem(theme.pulsar.size.drawer)};
   color: ${({ theme }) => theme.pulsar.color.danger.normal};
   background: ${({ theme }) => theme.pulsar.color.border.danger};
-  padding: ${({ theme }) => rem(theme.pulsar.size.box)};
-  /* ${({ theme }) => rem(theme.pulsar.size.drawer)}; */
+  padding: ${({ theme }) => rem(theme.pulsar.size.box)}
+    ${({ theme }) => rem(theme.pulsar.size.drawer)};
 `;

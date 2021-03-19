@@ -54,25 +54,17 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
         <SendToLabel>
           <FormattedMessage id={`widget.status-label-short.${swap.status}`} />
         </SendToLabel>
-        {swap.status === 'PENDING' && (
-          <>
-            {' '}
-            <SendToValue>Waiting for confirmations…</SendToValue>
-          </>
-        )}
+        {swap.status === 'PENDING' && <SendToValue>Waiting for confirmations…</SendToValue>}
         {swap.status !== 'EXPIRED' && swap.status !== 'PENDING' && (
-          <>
-            {' '}
-            <SendToValue>
-              {getCryptoAssetFormatter({
-                locale,
-                displaySymbol:
-                  swap.status === 'WAITING' ? swap.currencyDeposit : swap.currencyReceiving,
-              }).format(
-                +(swap.status === 'WAITING' ? swap.amountDeposit : swap.amountReceiving ?? 0),
-              )}
-            </SendToValue>
-          </>
+          <SendToValue>
+            {getCryptoAssetFormatter({
+              locale,
+              displaySymbol:
+                swap.status === 'WAITING' ? swap.currencyDeposit : swap.currencyReceiving,
+            }).format(
+              +(swap.status === 'WAITING' ? swap.amountDeposit : swap.amountReceiving ?? 0),
+            )}
+          </SendToValue>
         )}
       </SendTo>
 

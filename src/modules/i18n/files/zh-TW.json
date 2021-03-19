@@ -48,7 +48,6 @@
   "widget.stake-btc-earn-rewards": "質押您的BTC, 賺取獎勵",
   "widget.swap-error-title": "發生意外的錯誤。",
   "widget.onboard.connect-btn": "連接錢包",
-  "widget.click-swap-to-accept-1": "點擊兌換，即表示你同意接受我們的",
-  "widget.accept-terms": "Terms of Use(使用條款)。",
-  "widget.click-swap-to-accept-2": " "
+  "widget.terms-of-use-warning": "點擊兌換，即表示你同意接受我們的{termsOfUse}。",
+  "widget.terms-of-use-warning.link": "使用條款"
 }

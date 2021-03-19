@@ -1,11 +1,4 @@
-import {
-  Button,
-  CoinIcon,
-  Loading,
-  Text,
-  TextInput,
-  useBuildTestId,
-} from '@swingby-protocol/pulsar';
+import { Button, CoinIcon, Loading, TextInput, useBuildTestId } from '@swingby-protocol/pulsar';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { SkybridgeResource } from '@swingby-protocol/sdk';
@@ -27,10 +20,10 @@ import { NodeSelector } from '../../../components/NodeSelector';
 import {
   ErrorContainer,
   StakeEarn,
-  AcceptTerms,
   ErrorBox,
   ErrorTitle,
-  RowAcceptTerms,
+  TermsOfUseContainer,
+  TermsOfUseLink,
 } from './styled';
 
 export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
@@ -92,17 +85,22 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
         </ErrorContainer>
       )}
       {(step === 'step-address' || layout === 'widget-full' || layout === 'website') && (
-        <RowAcceptTerms>
-          <Text>
-            <FormattedMessage id="widget.click-swap-to-accept-1" />
-          </Text>{' '}
-          <AcceptTerms as="a" target="_blank" href="https://docs.swingby.network/terms.pdf">
-            <FormattedMessage id="widget.accept-terms" />
-          </AcceptTerms>{' '}
-          <Text>
-            <FormattedMessage id="widget.click-swap-to-accept-2" />
-          </Text>
-        </RowAcceptTerms>
+        <TermsOfUseContainer>
+          <FormattedMessage
+            id="widget.terms-of-use-warning"
+            values={{
+              termsOfUse: (
+                <TermsOfUseLink
+                  rel="noreferrer"
+                  target="_blank"
+                  href="https://docs.swingby.network/terms.pdf"
+                >
+                  <FormattedMessage id="widget.terms-of-use-warning.link" />
+                </TermsOfUseLink>
+              ),
+            }}
+          />
+        </TermsOfUseContainer>
       )}
 
       {(step === 'step-address' || layout === 'widget-full' || layout === 'website') && (
