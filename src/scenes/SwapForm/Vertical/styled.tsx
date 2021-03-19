@@ -14,6 +14,17 @@ export const StakeEarn = styled.span`
   }
 `;
 
+export const TermsOfUseContainer = styled.div`
+  font-size: ${({ theme }) => rem(theme.pulsar.size.closet)};
+  margin-bottom: ${({ theme }) => rem(theme.pulsar.size.box)};
+  text-align: center;
+  font-weight: 400;
+`;
+
+export const TermsOfUseLink = styled.a`
+  white-space: nowrap;
+`;
+
 export const ErrorContainer = styled.div`
   display: flex;
   flex-direction: column;

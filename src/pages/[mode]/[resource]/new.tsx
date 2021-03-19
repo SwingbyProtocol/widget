@@ -1,25 +1,24 @@
+import { shouldBlockRegion } from '@swingby-protocol/ip-check';
+import { createOrUpdateToast } from '@swingby-protocol/pulsar';
+import { DateTime } from 'luxon';
+import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import { FormattedMessage } from 'react-intl';
 import { useDispatch } from 'react-redux';
-import { GetServerSideProps } from 'next';
-import { useIntl } from 'react-intl';
-import { createToast } from '@swingby-protocol/pulsar';
-import { DateTime } from 'luxon';
-import { shouldBlockRegion } from '@swingby-protocol/ip-check';
 
-import { SwapForm } from '../../../scenes/SwapForm';
-import { GlobalStyles } from '../../../modules/styles';
+import { LocalStorage } from '../../../modules/env';
+import { IpInfoProvider } from '../../../modules/ip-blocks';
+import { logger } from '../../../modules/logger';
 import { useWidgetPathParams } from '../../../modules/path-params';
 import { actionSetSwapFormData } from '../../../modules/store/swapForm';
-import { IpInfoProvider } from '../../../modules/ip-blocks';
-import { LocalStorage } from '../../../modules/env';
-import { logger } from '../../../modules/logger';
+import { GlobalStyles } from '../../../modules/styles';
+import { SwapForm } from '../../../scenes/SwapForm';
 
 type Props = { ipInfo: { ip: string | null; shouldBlockIp: boolean } };
 
 export default function ResourceNew({ ipInfo }: Props) {
   const dispatch = useDispatch();
-  const { formatMessage } = useIntl();
   const { resource, mode } = useWidgetPathParams();
   const {
     query: {
@@ -64,14 +63,30 @@ export default function ResourceNew({ ipInfo }: Props) {
   }, [dispatch, affiliateCode]);
 
   useEffect(() => {
-    if (mode === 'test') {
-      createToast({
-        content: formatMessage({ id: 'widget.warning-test' }),
-        type: 'info',
-        toastId: 'testnet',
-      });
-    }
-  }, [mode, formatMessage]);
+    createOrUpdateToast({
+      content:
+        mode === 'test' ? (
+          <FormattedMessage id="widget.warning-test" />
+        ) : (
+          <FormattedMessage
+            id="widget.warning-production"
+            values={{
+              readTutorial: (
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href="https://swingby.medium.com/how-to-convert-your-wbtc-into-btc-with-skybridge-8eebe2b711ad"
+                >
+                  <FormattedMessage id="widget.warning-production.tutorial" />
+                </a>
+              ),
+            }}
+          />
+        ),
+      type: mode === 'test' ? 'info' : 'warning',
+      toastId: 'mode-warning',
+    });
+  }, [mode]);
 
   if (!mode) return <></>;
   if (!resource) return <></>;

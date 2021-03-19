@@ -17,7 +17,14 @@ import { Separator } from '../../../components/Separator';
 import { useCreate } from '../../../modules/create-swap';
 import { NodeSelector } from '../../../components/NodeSelector';
 
-import { ErrorContainer, StakeEarn, ErrorBox, ErrorTitle } from './styled';
+import {
+  ErrorContainer,
+  StakeEarn,
+  ErrorBox,
+  ErrorTitle,
+  TermsOfUseContainer,
+  TermsOfUseLink,
+} from './styled';
 
 export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
   const { buildTestId } = useBuildTestId({ id: 'vertical.form' });
@@ -76,6 +83,24 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
           </ErrorTitle>
           <ErrorBox>{error}</ErrorBox>
         </ErrorContainer>
+      )}
+      {(step === 'step-address' || layout === 'widget-full' || layout === 'website') && (
+        <TermsOfUseContainer>
+          <FormattedMessage
+            id="widget.terms-of-use-warning"
+            values={{
+              termsOfUse: (
+                <TermsOfUseLink
+                  rel="noreferrer"
+                  target="_blank"
+                  href="https://docs.swingby.network/terms.pdf"
+                >
+                  <FormattedMessage id="widget.terms-of-use-warning.link" />
+                </TermsOfUseLink>
+              ),
+            }}
+          />
+        </TermsOfUseContainer>
       )}
 
       {(step === 'step-address' || layout === 'widget-full' || layout === 'website') && (

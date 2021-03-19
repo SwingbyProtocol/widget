@@ -28,9 +28,13 @@
   "widget.explorer-btn": "Explorador",
   "widget.explorer-link": "Explorador",
   "widget.explorer-link-long": "Ver en explorador",
+  "widget.warning-production": "Este producto está en beta. No intercambies grandes cantidades que no te puedas permitir perder. {readTutorial}.",
+  "widget.warning-production.tutorial": "Leer tutorial",
   "widget.warning-test": "Estás usando el modo “test”. No envíes dinero real.",
   "widget.warning-do-not-use-exchange-addresses": "Por favor, envía dinero solo desde direcciones que te pertenezcan. No envíes dinero desde plataformas de intercambio.",
   "widget.ip-block": "Pareces estar accediendo a esta app desde un país o región en el que su uso no está permitido.",
   "widget.stake-btc-earn-rewards": "Estaca BTC, gana recompensas.",
-  "widget.swap-error-title": "Ha ocurrido un error inesperado."
+  "widget.swap-error-title": "Ha ocurrido un error inesperado.",
+  "widget.terms-of-use-warning": "Al clicar en «Intercambiar», aceptas nuestros {termsOfUse}.",
+  "widget.terms-of-use-warning.link": "Términos de Uso"
 }
