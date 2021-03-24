@@ -1,9 +1,4 @@
-import {
-  getFloatDetails,
-  getSwapDetails,
-  getWithdrawalDetails,
-  SkybridgeResource,
-} from '@swingby-protocol/sdk';
+import { getFloatDetails, getSwapDetails, getWithdrawalDetails } from '@swingby-protocol/sdk';
 import { useEffect, useMemo, useState } from 'react';
 import { DefaultRootState, useDispatch, useSelector } from 'react-redux';
 
@@ -16,8 +11,8 @@ const MS_TILL_NEXT_TRY = 10000;
 
 type SwapDetails = { loading: boolean; swap: null | DefaultRootState['swaps'][string] };
 
-export const useDetails = ({ resource }: { resource: SkybridgeResource }): SwapDetails => {
-  const { hash: hashParam } = useWidgetPathParams();
+export const useDetails = (): SwapDetails => {
+  const { hash: hashParam, resource } = useWidgetPathParams();
   const hash = hashParam ?? '';
 
   const [loading, setLoading] = useState(false);

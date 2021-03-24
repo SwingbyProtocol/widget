@@ -32,7 +32,7 @@ import { Top } from './Top';
 
 export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
   const { buildTestId } = useBuildTestId({ id: 'vertical.swap-details' });
-  const { swap } = useDetails({ resource });
+  const { swap } = useDetails();
   const { push } = usePushWithSearchParams();
   const { locale } = useIntl();
   const context = useSdkContext();
@@ -91,6 +91,9 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
     return <Loading data-testid={buildTestId('loading')} />;
   }
 
+  const chain = getChainFor({ coin: swap.currencyDeposit });
+  const supportsWeb3 = chain === 'ethereum' || chain === 'binance-smart';
+
   return (
     <VerticalWidgetView
       onClickBack={() => push(`/${context.mode}/${resource}/new`)}
@@ -103,7 +106,7 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
         <Loading />
       )}
       {address &&
-        getChainFor({ coin: swap.currencyDeposit }) === 'ethereum' &&
+        supportsWeb3 &&
         swap.status === 'WAITING' &&
         !isTransferring &&
         !hasTransactionSucceeded && (
@@ -135,7 +138,7 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
             </Button>
           </TransferButtonsContainer>
         )}
-      {(!address || getChainFor({ coin: swap.currencyDeposit }) !== 'ethereum') &&
+      {(!address || !supportsWeb3) &&
         swap.status === 'WAITING' &&
         !isTransferring &&
         !hasTransactionSucceeded && (

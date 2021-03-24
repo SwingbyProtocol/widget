@@ -1,15 +1,19 @@
 import { useCallback, useMemo, useState } from 'react';
-import { CONTRACTS, SkybridgeCoin } from '@swingby-protocol/sdk';
+import { CONTRACTS, getChainFor, SkybridgeCoin } from '@swingby-protocol/sdk';
 import { Big } from 'big.js';
 import Web3 from 'web3';
 import { TransactionConfig } from 'web3-eth';
 import { createToast } from '@swingby-protocol/pulsar';
+import { Except } from 'type-fest';
 
 import { useSdkContext } from '../store/sdkContext';
 import { logger } from '../logger';
 
 import { useOnboard } from './context';
 import { watchTransaction } from './watchTransaction';
+
+const isValidCurrency = (coin: any): coin is keyof Except<typeof CONTRACTS.coins, 'BTC'> =>
+  ['ethereum', 'binance-smart'].includes(getChainFor({ coin }));
 
 export const useApproveTokenAllowance = () => {
   const context = useSdkContext();
@@ -36,7 +40,7 @@ export const useApproveTokenAllowance = () => {
           throw new Error('No wallet has been connected');
         }
 
-        if (currency !== 'WBTC' && currency !== 'sbBTC') {
+        if (!isValidCurrency(currency)) {
           throw new Error(`Invalid "currency": "${currency}"`);
         }
 
