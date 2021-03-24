@@ -49,8 +49,8 @@ export const useApproveTokenAllowance = () => {
 
         const web3 = new Web3(wallet.provider);
         const contract = new web3.eth.Contract(
-          CONTRACTS[currency][context.mode].abi,
-          CONTRACTS[currency][context.mode].address,
+          CONTRACTS.coins[currency][context.mode].abi,
+          CONTRACTS.coins[currency][context.mode].address,
           wallet.provider,
         );
 
@@ -61,7 +61,7 @@ export const useApproveTokenAllowance = () => {
           nonce: await web3.eth.getTransactionCount(address),
           gasPrice: web3.utils.toHex(gasPrice),
           from: address,
-          to: CONTRACTS[currency][context.mode].address,
+          to: CONTRACTS.coins[currency][context.mode].address,
           value: '0x0',
           data: contract.methods
             .approve(spenderAddress, new Big(amount).times(`1e${decimals}`).toFixed())

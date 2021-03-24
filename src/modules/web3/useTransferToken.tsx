@@ -48,8 +48,8 @@ export const useTransferToken = () => {
 
         const web3 = new Web3(wallet.provider);
         const contract = new web3.eth.Contract(
-          CONTRACTS[currencyDeposit][context.mode].abi,
-          CONTRACTS[currencyDeposit][context.mode].address,
+          CONTRACTS.coins[currencyDeposit][context.mode].abi,
+          CONTRACTS.coins[currencyDeposit][context.mode].address,
           wallet.provider,
         );
 
@@ -60,7 +60,7 @@ export const useTransferToken = () => {
           nonce: await web3.eth.getTransactionCount(address),
           gasPrice: web3.utils.toHex(gasPrice),
           from: address,
-          to: CONTRACTS[currencyDeposit][context.mode].address,
+          to: CONTRACTS.coins[currencyDeposit][context.mode].address,
           value: '0x0',
           data: contract.methods
             .transfer(

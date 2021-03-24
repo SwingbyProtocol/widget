@@ -32,8 +32,8 @@ export const useGetTokenAllowance = () => {
 
       const web3 = new Web3(wallet.provider);
       const contract = new web3.eth.Contract(
-        CONTRACTS[currency][context.mode].abi,
-        CONTRACTS[currency][context.mode].address,
+        CONTRACTS.coins[currency][context.mode].abi,
+        CONTRACTS.coins[currency][context.mode].address,
         wallet.provider,
       );
 

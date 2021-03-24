@@ -62,6 +62,7 @@ export const useCreate = ({ resource }: { resource: SkybridgeResource }) => {
             context,
             amountDesired,
             currencyDeposit: currencyDeposit as any,
+            currencyReceiving: currencyDeposit as any,
             addressReceiving,
           });
 
@@ -77,6 +78,7 @@ export const useCreate = ({ resource }: { resource: SkybridgeResource }) => {
           const swap = await createWithdrawal({
             context,
             amountDesired,
+            currencyDeposit: currencyDeposit as any,
             currencyReceiving: currencyReceiving as any,
             addressReceiving,
           });

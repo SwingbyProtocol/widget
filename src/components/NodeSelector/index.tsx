@@ -66,12 +66,12 @@ export const NodeSelector = ({ swap }: Props) => {
   useEffect(() => {
     let cancelled = false;
     const updateList = async () => {
-      const result = await getNetworkDetails();
+      const result = await getNetworkDetails({ mode: context.mode, bridge: currentBridge });
       if (cancelled) {
         return;
       }
 
-      const nodes = [...result[context.mode].swapNodes[currentBridge]].filter((it) => !!it);
+      const nodes = [...result.swapNodes].filter((it) => !!it);
       nodes.sort();
 
       setNodes(nodes);
