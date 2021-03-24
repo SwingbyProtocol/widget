@@ -62,7 +62,7 @@ export const useCreate = ({ resource }: { resource: SkybridgeResource }) => {
             context,
             amountDesired,
             currencyDeposit: currencyDeposit as any,
-            currencyReceiving: currencyDeposit as any,
+            currencyReceiving: currencyReceiving as any,
             addressReceiving,
           });
 
