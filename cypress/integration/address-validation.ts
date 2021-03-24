@@ -11,7 +11,9 @@ describe('Address validation', () => {
     cy.get('[data-testid="vertical.form.amounts.currency-from-select.target"]').click();
     cy.get('[data-testid="vertical.form.amounts.currency-from-select.content.item-BTC"]').click();
     cy.get('[data-testid="vertical.form.amounts.currency-to-select.target"]').click();
-    cy.get('[data-testid="vertical.form.amounts.currency-to-select.content.item-BTCB"]').click();
+    cy.get(
+      '[data-testid="vertical.form.amounts.currency-to-select.content.item-BTCB.BEP20"]',
+    ).click();
     cy.get('[data-testid="vertical.form.amounts.amount-from"]').type('1');
   });
 
@@ -29,11 +31,6 @@ describe('Address validation', () => {
     cy.get('[data-testid="vertical.form.swap-btn"]').should('be.disabled');
 
     cy.get('[data-testid="vertical.form.receiving-address.native-input"]').type(
-      '{selectall}0x38a3234377f7d3c749c8d7d02c9962eaa6800541',
-    );
-    cy.get('[data-testid="vertical.form.swap-btn"]').should('be.disabled');
-
-    cy.get('[data-testid="vertical.form.receiving-address.native-input"]').type(
       '{selectall}bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh',
     );
     cy.get('[data-testid="vertical.form.swap-btn"]').should('be.disabled');
@@ -46,12 +43,25 @@ describe('Address validation', () => {
     cy.get('[data-testid="vertical.form.receiving-address.native-input"]').type(
       '{selectall}tbnb1k3cp6jl7z757hewt30nfvr97uywlxeap69glam',
     );
+    cy.get('[data-testid="vertical.form.swap-btn"]').should('be.disabled');
+
+    cy.get('[data-testid="vertical.form.receiving-address.native-input"]').type(
+      '{selectall}0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
+    );
     cy.get('[data-testid="vertical.form.swap-btn"]').should('not.be.disabled');
   });
 
   it('invalidates form if "currencyReceiving" changes', () => {
+    cy.get('[data-testid="vertical.form.amounts.currency-from-select.target"]').click();
+    cy.get('[data-testid="vertical.form.amounts.currency-from-select.content.item-WBTC"]').click();
+    cy.get('[data-testid="vertical.form.amounts.currency-to-select.target"]').click();
+    cy.get('[data-testid="vertical.form.amounts.currency-to-select.content.item-BTC"]').click();
+    cy.get('[data-testid="vertical.form.swap-btn"]').should('be.disabled');
+
+    cy.get('[data-testid="vertical.form.amounts.currency-from-select.target"]').click();
+    cy.get('[data-testid="vertical.form.amounts.currency-from-select.content.item-BTC"]').click();
     cy.get('[data-testid="vertical.form.amounts.currency-to-select.target"]').click();
     cy.get('[data-testid="vertical.form.amounts.currency-to-select.content.item-WBTC"]').click();
-    cy.get('[data-testid="vertical.form.swap-btn"]').should('be.disabled');
+    cy.get('[data-testid="vertical.form.swap-btn"]').should('not.be.disabled');
   });
 });

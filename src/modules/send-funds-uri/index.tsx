@@ -14,8 +14,7 @@ export const getTransferUriFor = ({
   switch (chain) {
     case 'bitcoin':
       return `bitcoin:${address}${amount ? `?amount=${amount}` : ''}`;
-    case 'binance':
-      return `${address}${amount ? `?amount=${amount}` : ''}`;
+    case 'binance-smart':
     case 'ethereum':
       return `${address}`;
   }

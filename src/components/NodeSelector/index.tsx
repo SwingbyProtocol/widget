@@ -31,14 +31,20 @@ export const NodeSelector = ({ swap }: Props) => {
       return getBridgeFor({ ...swap, context });
     }
 
-    return getBridgeFor({ context, currencyDeposit, currencyReceiving });
+    try {
+      return getBridgeFor({ context, currencyDeposit, currencyReceiving });
+    } catch (e) {
+      return null;
+    }
   }, [context, swap, currencyDeposit, currencyReceiving]);
 
-  const [nodes, setNodes] = useState<string[]>([context.servers.swapNode[currentBridge] ?? '']);
-  const selectedNode = useMemo(() => context.servers.swapNode[currentBridge] ?? '', [
-    context,
-    currentBridge,
+  const [nodes, setNodes] = useState<string[]>([
+    (currentBridge ? context.servers.swapNode[currentBridge] : null) ?? '',
   ]);
+  const selectedNode = useMemo(
+    () => (currentBridge ? context.servers.swapNode[currentBridge] : null) ?? '',
+    [context, currentBridge],
+  );
   const sortedNodes = useMemo(() => {
     const array = [...nodes];
     array.sort((a, b) => (pings[a] ?? Infinity) - (pings[b] ?? Infinity));
@@ -66,12 +72,14 @@ export const NodeSelector = ({ swap }: Props) => {
   useEffect(() => {
     let cancelled = false;
     const updateList = async () => {
-      const result = await getNetworkDetails();
+      if (!currentBridge) return;
+
+      const result = await getNetworkDetails({ mode: context.mode, bridge: currentBridge });
       if (cancelled) {
         return;
       }
 
-      const nodes = [...result[context.mode].swapNodes[currentBridge]].filter((it) => !!it);
+      const nodes = [...result.swapNodes].filter((it) => !!it);
       nodes.sort();
 
       setNodes(nodes);
@@ -125,6 +133,8 @@ export const NodeSelector = ({ swap }: Props) => {
               key={node}
               selected={node === selectedNode}
               onClick={async () => {
+                if (!currentBridge) return;
+
                 updateSdkContext(
                   await buildContext({
                     ...context,
