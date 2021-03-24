@@ -14,7 +14,7 @@ import { Vertical } from './Vertical';
 
 export const SwapDetails = ({ resource }: { resource: SkybridgeResource }) => {
   const layout = useWidgetLayout();
-  const { swap } = useDetails({ resource });
+  const { swap } = useDetails();
   const { formatMessage } = useIntl();
 
   useEffect(() => {

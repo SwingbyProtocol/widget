@@ -25,7 +25,7 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
   const { buildTestId } = useBuildTestId({ id: 'banner.swap-details' });
   const { formatMessage, locale } = useIntl();
   const hasWideWidth = useMatchMedia({ query: StylingConstants.mediaWideWidth });
-  const { swap } = useDetails({ resource });
+  const { swap } = useDetails();
   const { push } = usePushWithSearchParams();
   const context = useSdkContext();
 
