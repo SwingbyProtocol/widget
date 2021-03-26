@@ -1,19 +1,17 @@
 import { useCallback, useMemo, useState } from 'react';
-import { CONTRACTS, getChainFor, SkybridgeCoin } from '@swingby-protocol/sdk';
+import { CONTRACTS, SkybridgeCoin } from '@swingby-protocol/sdk';
 import { Big } from 'big.js';
 import Web3 from 'web3';
 import { TransactionConfig } from 'web3-eth';
 import { createToast } from '@swingby-protocol/pulsar';
-import { Except } from 'type-fest';
 
 import { useSdkContext } from '../store/sdkContext';
 import { logger } from '../logger';
 
 import { useOnboard } from './context';
 import { watchTransaction } from './watchTransaction';
-
-const isValidCurrency = (coin: any): coin is keyof Except<typeof CONTRACTS.coins, 'BTC'> =>
-  ['ethereum', 'binance-smart'].includes(getChainFor({ coin }));
+import { isWeb3ableCurrency } from './isWeb3ableCurrency';
+import { getTransactionChainProp } from './getTransactionChainProp';
 
 export const useApproveTokenAllowance = () => {
   const context = useSdkContext();
@@ -40,7 +38,7 @@ export const useApproveTokenAllowance = () => {
           throw new Error('No wallet has been connected');
         }
 
-        if (!isValidCurrency(currency)) {
+        if (!isWeb3ableCurrency(currency)) {
           throw new Error(`Invalid "currency": "${currency}"`);
         }
 
@@ -61,7 +59,7 @@ export const useApproveTokenAllowance = () => {
         const decimals = await contract.methods.decimals().call();
         const gasPrice = await web3.eth.getGasPrice();
         const rawTx: TransactionConfig = {
-          chain: context.mode === 'production' ? 'mainnet' : 'goerli',
+          chain: getTransactionChainProp({ mode: context.mode, coin: currency }),
           nonce: await web3.eth.getTransactionCount(address),
           gasPrice: web3.utils.toHex(gasPrice),
           from: address,
@@ -84,7 +82,10 @@ export const useApproveTokenAllowance = () => {
           );
         }
 
-        return watchTransaction(web3.eth.sendTransaction({ ...rawTx, gas: estimatedGas }))
+        return watchTransaction({
+          coin: currency,
+          tx: web3.eth.sendTransaction({ ...rawTx, gas: estimatedGas }),
+        })
           .on('error', (error) => {
             setLoading(false);
             setError(error);

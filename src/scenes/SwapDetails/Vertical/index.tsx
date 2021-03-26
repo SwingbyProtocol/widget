@@ -1,5 +1,5 @@
 import { Loading, useBuildTestId, SwapProgress, Button } from '@swingby-protocol/pulsar';
-import { buildExplorerLink, SkybridgeResource, getChainFor } from '@swingby-protocol/sdk';
+import { buildExplorerLink, SkybridgeResource } from '@swingby-protocol/sdk';
 import { useCallback, useMemo, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Big } from 'big.js';
@@ -17,6 +17,7 @@ import {
   useOnboard,
   useTransferToken,
   useApproveTokenAllowance,
+  isWeb3ableCurrency,
 } from '../../../modules/web3';
 import { logger } from '../../../modules/logger';
 
@@ -91,8 +92,7 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
     return <Loading data-testid={buildTestId('loading')} />;
   }
 
-  const chain = getChainFor({ coin: swap.currencyDeposit });
-  const supportsWeb3 = chain === 'ethereum' || chain === 'binance-smart';
+  const supportsWeb3 = isWeb3ableCurrency(swap.currencyDeposit);
 
   return (
     <VerticalWidgetView
