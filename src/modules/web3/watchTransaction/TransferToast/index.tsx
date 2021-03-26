@@ -1,5 +1,5 @@
 import { PulsarThemeProvider } from '@swingby-protocol/pulsar';
-import { buildExplorerLink } from '@swingby-protocol/sdk';
+import { buildExplorerLink, SkybridgeCoin } from '@swingby-protocol/sdk';
 import { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 
@@ -12,6 +12,7 @@ type Props = {
   confirmations?: number | null;
   transactionStatus?: boolean | null;
   error?: Error | null;
+  coin: SkybridgeCoin;
 };
 
 export const TransferToast = ({
@@ -19,6 +20,7 @@ export const TransferToast = ({
   confirmations,
   transactionStatus,
   error,
+  coin,
 }: Props) => {
   const context = useSdkContext();
 
@@ -56,7 +58,7 @@ export const TransferToast = ({
             variant="secondary"
             size="street"
             shape="fit"
-            href={buildExplorerLink({ context, coin: 'WBTC', transactionId })}
+            href={buildExplorerLink({ context, coin, transactionId })}
             target="_blank"
           >
             <FormattedMessage id="widget.onboard.explorer" />

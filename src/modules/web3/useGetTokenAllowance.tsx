@@ -7,6 +7,7 @@ import { useSdkContext } from '../store/sdkContext';
 import { logger } from '../logger';
 
 import { useOnboard } from './context';
+import { isWeb3ableCurrency } from './isWeb3ableCurrency';
 
 export const useGetTokenAllowance = () => {
   const context = useSdkContext();
@@ -22,7 +23,7 @@ export const useGetTokenAllowance = () => {
         throw new Error('No wallet has been connected');
       }
 
-      if (currency !== 'WBTC' && currency !== 'sbBTC') {
+      if (!isWeb3ableCurrency(currency)) {
         throw new Error(`Invalid "currency": "${currency}"`);
       }
 

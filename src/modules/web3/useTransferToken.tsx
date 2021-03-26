@@ -11,6 +11,8 @@ import { useSdkContext } from '../store/sdkContext';
 
 import { useOnboard } from './context';
 import { watchTransaction } from './watchTransaction';
+import { isWeb3ableCurrency } from './isWeb3ableCurrency';
+import { getTransactionChainProp } from './getTransactionChainProp';
 
 export const useTransferToken = () => {
   const context = useSdkContext();
@@ -33,7 +35,7 @@ export const useTransferToken = () => {
           throw new Error('No swap has been provided');
         }
 
-        if (swap.currencyDeposit !== 'WBTC' && swap.currencyDeposit !== 'sbBTC') {
+        if (!isWeb3ableCurrency(swap.currencyDeposit)) {
           throw new Error(`Invalid "currencyDeposit": "${swap.currencyDeposit}"`);
         }
 
@@ -56,7 +58,7 @@ export const useTransferToken = () => {
         const tokenDecimals = await contract.methods.decimals().call();
         const gasPrice = await web3.eth.getGasPrice();
         const rawTx: TransactionConfig = {
-          chain: context.mode === 'production' ? 'mainnet' : 'goerli',
+          chain: getTransactionChainProp({ mode: context.mode, coin: currencyDeposit }),
           nonce: await web3.eth.getTransactionCount(address),
           gasPrice: web3.utils.toHex(gasPrice),
           from: address,
@@ -82,7 +84,10 @@ export const useTransferToken = () => {
           );
         }
 
-        return watchTransaction(web3.eth.sendTransaction({ ...rawTx, gas: estimatedGas }))
+        return watchTransaction({
+          coin: swap.currencyDeposit,
+          tx: web3.eth.sendTransaction({ ...rawTx, gas: estimatedGas }),
+        })
           .on('error', (error) => {
             setLoading(false);
             setError(error);

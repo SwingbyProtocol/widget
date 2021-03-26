@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { getChainFor, SkybridgeCoin } from '@swingby-protocol/sdk';
+import { SkybridgeCoin } from '@swingby-protocol/sdk';
 
 import { logger } from '../logger';
 
 import { useOnboard } from './context';
 import { useGetTokenAllowance } from './useGetTokenAllowance';
+import { isWeb3ableCurrency } from './isWeb3ableCurrency';
 
 export const useTokenAllowance = ({
   currency,
@@ -18,12 +19,8 @@ export const useTokenAllowance = ({
   const { getTokenAllowance } = useGetTokenAllowance();
 
   const recheck = useCallback(async () => {
-    if (
-      !address ||
-      !currency ||
-      !spenderAddress ||
-      getChainFor({ coin: currency }) !== 'ethereum'
-    ) {
+    if (!address || !currency || !spenderAddress || !isWeb3ableCurrency(currency)) {
+      logger.debug({ address, currency, spenderAddress }, 'Will not check token allowance');
       return;
     }
 
