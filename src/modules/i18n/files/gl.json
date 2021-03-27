@@ -28,7 +28,7 @@
   "widget.explorer-btn": "Explorador",
   "widget.explorer-link": "Explorador",
   "widget.explorer-link-long": "Ver no explorador",
-  "widget.warning-production": "Este produto está en beta. Non intercambies grandes cantidades cuxa perda non poidas asumir. {readTutorial}.",
+  "widget.warning-production": "Este produto está en beta. Intercambia só cantidades pequenas e asegúrate de seguir as instruccións de uso. {readTutorial}.",
   "widget.warning-production.tutorial": "Ler tutorial",
   "widget.warning-test": "Estás usando o modo “test”. Non envíes diñeiro real.",
   "widget.warning-do-not-use-exchange-addresses": "Por favor, envía diñeiro só desde enderezos que che pertenzan. Non envíes diñeiro desde exchanges.",

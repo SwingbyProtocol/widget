@@ -41,7 +41,7 @@
   "widget.explorer-btn": "Explorer",
   "widget.explorer-link": "Explorer",
   "widget.explorer-link-long": "View on explorer",
-  "widget.warning-production": "This is a product in beta. Do not swap large amounts you can’t afford to lose. {readTutorial}.",
+  "widget.warning-production": "This is a product in beta. Only swap small amounts and be sure to follow the usage instructions. {readTutorial}.",
   "widget.warning-production.tutorial": "Read tutorial",
   "widget.warning-test": "You are using “test” mode. Do not send real funds.",
   "widget.warning-do-not-use-exchange-addresses": "Please, send funds only from addresses owned by you. Do not send funds from an exchange.",
