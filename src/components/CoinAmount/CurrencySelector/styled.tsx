@@ -11,6 +11,20 @@ export const ButtonCoinCaret = styled(Icon.CaretRight)`
   color: ${({ theme }) => theme.pulsar.color.primary.normal};
 `;
 
+export const CoinWithIcon = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+export const SectionTitle = styled.div`
+  background: ${({ theme }) => theme.pulsar.color.bg.accent};
+  font-size: ${({ theme }) => rem(theme.pulsar.size.room)};
+  font-weight: 500;
+  padding: ${({ theme }) => rem(theme.pulsar.size.box)}
+    ${({ theme }) => rem(theme.pulsar.size.room)};
+`;
+
 export const ButtonCoin = styled(Button)`
   border-color: ${({ theme }) => theme.pulsar.components.input.idle.border};
   color: ${({ theme }) => theme.pulsar.color.text.accent};

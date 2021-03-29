@@ -59,5 +59,8 @@
   "widget.onboard.transaction-confirmed-by": "Transaction succeeded! ({value} confirmations)",
   "widget.onboard.transaction-result-ok": "Transaction succeeded!",
   "widget.onboard.transaction-result-bad": "Transaction failed!",
-  "widget.onboard.explorer": "Explorer"
+  "widget.onboard.explorer": "Explorer",
+  "widget.coin-chain.bitcoin": " ",
+  "widget.coin-chain.ethereum": "On Ethereum",
+  "widget.coin-chain.binance-smart": "On BSC"
 }

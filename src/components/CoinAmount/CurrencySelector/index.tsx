@@ -6,12 +6,22 @@ import {
   useMatchMedia,
 } from '@swingby-protocol/pulsar';
 import { SkybridgeCoin } from '@swingby-protocol/sdk';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { StylingConstants } from '../../../modules/styles';
+import { buildCoinMap } from '../coin-map';
 
 import { HorizonalList } from './HorizonalList';
-import { ButtonCoin, ButtonCoinCaret, ButtonCoinName, LonelyCoinButton, Variant } from './styled';
+import {
+  ButtonCoin,
+  ButtonCoinCaret,
+  ButtonCoinName,
+  LonelyCoinButton,
+  SectionTitle,
+  Variant,
+  CoinWithIcon,
+} from './styled';
 
 type Props = {
   coins: SkybridgeCoin[];
@@ -21,7 +31,7 @@ type Props = {
 } & Testable;
 
 export const CurrencySelector = ({
-  coins,
+  coins: coinsParam,
   variant,
   value,
   onChange,
@@ -30,6 +40,7 @@ export const CurrencySelector = ({
   const { buildTestId } = useBuildTestId({ id: testId });
   const hasWideWidth = useMatchMedia({ query: StylingConstants.mediaWideWidth });
   const [isHorizontalSelectorOpen, setHorizontalSelectorOpen] = useState(false);
+  const { formatMessage } = useIntl();
 
   useEffect(() => {
     if (variant === 'vertical') {
@@ -37,27 +48,50 @@ export const CurrencySelector = ({
     }
   }, [variant]);
 
+  const coinMap = useMemo(() => buildCoinMap(coinsParam), [coinsParam]);
+
   if (variant === 'vertical') {
     return (
       <Dropdown
         target={
           <Dropdown.DefaultTarget variant="input" size="state">
-            <CoinIcon symbol={value} />
-            <>&nbsp;{value}</>
+            <CoinWithIcon>
+              <CoinIcon symbol={value} />
+              <>&nbsp;{value}</>
+            </CoinWithIcon>
           </Dropdown.DefaultTarget>
         }
         data-testid={buildTestId('')}
       >
-        {coins.map((coin) => (
-          <Dropdown.Item
-            key={coin}
-            onClick={() => onChange(coin)}
-            data-testid={buildTestId(`item-${coin}`)}
-          >
-            <CoinIcon symbol={coin} />
-            &nbsp;{coin}
-          </Dropdown.Item>
-        ))}
+        {Array.from(coinMap.keys()).map((chain) => {
+          const section = formatMessage({ id: `widget.coin-chain.${chain}` }).trim();
+          const coins = coinMap.get(chain);
+          if (!coins || coins.length < 1) {
+            return null;
+          }
+
+          return (
+            <React.Fragment key={chain}>
+              {!!section && (
+                <SectionTitle>
+                  <FormattedMessage id={`widget.coin-chain.${chain}`} />
+                </SectionTitle>
+              )}
+              {coins.map((coin) => (
+                <Dropdown.Item
+                  key={coin}
+                  onClick={() => onChange(coin)}
+                  data-testid={buildTestId(`item-${coin}`)}
+                >
+                  <CoinWithIcon>
+                    <CoinIcon symbol={coin} />
+                    &nbsp;{coin.replace(/\..+$/, '')}
+                  </CoinWithIcon>
+                </Dropdown.Item>
+              ))}
+            </React.Fragment>
+          );
+        })}
       </Dropdown>
     );
   }
@@ -76,7 +110,7 @@ export const CurrencySelector = ({
           <ButtonCoinCaret />
         </ButtonCoin>
         <HorizonalList
-          coins={coins}
+          coins={coinsParam}
           isOpen={isHorizontalSelectorOpen}
           onClose={() => setHorizontalSelectorOpen(false)}
           onChange={onChange}
@@ -96,7 +130,7 @@ export const CurrencySelector = ({
       </LonelyCoinButton>
       <HorizonalList
         isOpen={isHorizontalSelectorOpen}
-        coins={coins}
+        coins={coinsParam}
         onClose={() => setHorizontalSelectorOpen(false)}
         onChange={onChange}
         data-testid={buildTestId('coin-list')}
