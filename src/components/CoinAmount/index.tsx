@@ -6,7 +6,7 @@ import { useEffect, useMemo, useState } from 'react';
 import {
   estimateAmountReceiving,
   getCoinsFor,
-  getSwapableWith,
+  getSwapableFrom,
   SkybridgeResource,
   SkybridgeCoin,
 } from '@swingby-protocol/sdk';
@@ -46,7 +46,7 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
 
   const coinsOut = useMemo<SkybridgeCoin[]>(
     () =>
-      getSwapableWith({ context, coin: currencyDeposit, resource }).filter(
+      getSwapableFrom({ context, coin: currencyDeposit, resource }).filter(
         (it) => it !== currencyDeposit,
       ),
     [context, resource, currencyDeposit],

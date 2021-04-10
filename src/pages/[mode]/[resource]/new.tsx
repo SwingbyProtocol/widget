@@ -1,5 +1,6 @@
 import { shouldBlockRegion } from '@swingby-protocol/ip-check';
 import { createOrUpdateToast } from '@swingby-protocol/pulsar';
+import { getSwapableTo } from '@swingby-protocol/sdk';
 import { DateTime } from 'luxon';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
@@ -37,8 +38,23 @@ export default function ResourceNew({ ipInfo }: Props) {
 
   useEffect(() => {
     if (typeof defaultCurrencyReceiving !== 'string' || !defaultCurrencyReceiving) return;
+
+    if (
+      mode &&
+      resource &&
+      (typeof defaultCurrencyDeposit !== 'string' || !defaultCurrencyDeposit)
+    ) {
+      const coins = getSwapableTo({
+        coin: defaultCurrencyReceiving as any,
+        context: { mode },
+        resource,
+      });
+      console.log({ coins });
+      dispatch(actionSetSwapFormData({ currencyDeposit: coins[0] as any }));
+    }
+
     dispatch(actionSetSwapFormData({ currencyReceiving: defaultCurrencyReceiving as any }));
-  }, [dispatch, defaultCurrencyReceiving]);
+  }, [dispatch, defaultCurrencyDeposit, defaultCurrencyReceiving, mode, resource]);
 
   useEffect(() => {
     if (typeof defaultAddressReceiving !== 'string' || !defaultAddressReceiving) return;
