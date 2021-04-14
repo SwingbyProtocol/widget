@@ -21,7 +21,7 @@
   "dependencies": {
     "@swingby-protocol/ip-check": "^2.1.0",
     "@swingby-protocol/pulsar": "^3.10.1",
-    "@swingby-protocol/sdk": "^1.0.0-alpha.95",
+    "@swingby-protocol/sdk": "^1.0.0-alpha.97",
     "big.js": "6.0.3",
     "bnc-onboard": "^1.19.2",
     "hex-to-binary": "^1.0.1",
