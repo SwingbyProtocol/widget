@@ -149,7 +149,7 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
           <Loading data-testid={buildTestId('amount-to.loading')} />
         ) : isAmountReceivingValid ? (
           <>
-            {amountReceiving}
+            {Number(Number(amountReceiving).toFixed(4))}
             <EstLabel>
               <FormattedMessage id="widget.amount-receiving-estimation-label" />
             </EstLabel>
