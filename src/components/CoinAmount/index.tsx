@@ -1,5 +1,5 @@
 import { Loading, Testable, TextInput, useBuildTestId } from '@swingby-protocol/pulsar';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, FormattedNumber } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { Big } from 'big.js';
 import { useEffect, useMemo, useState } from 'react';
@@ -149,7 +149,7 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
           <Loading data-testid={buildTestId('amount-to.loading')} />
         ) : isAmountReceivingValid ? (
           <>
-            {amountReceiving}
+            <FormattedNumber value={Number(amountReceiving)} maximumFractionDigits={4} />
             <EstLabel>
               <FormattedMessage id="widget.amount-receiving-estimation-label" />
             </EstLabel>
