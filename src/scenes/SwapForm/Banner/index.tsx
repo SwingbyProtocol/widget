@@ -20,6 +20,7 @@ import {
 } from '../../../modules/store/swapForm';
 import { StylingConstants } from '../../../modules/styles';
 import { useCreate } from '../../../modules/create-swap';
+import { useIsBridgeUnderMaintenance } from '../../../modules/maintenance-mode';
 
 import { BannerContainer, ResponsiveSpace, AddressInput, StakeEarn, ErrorBox } from './styled';
 
@@ -32,6 +33,7 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
   const dispatch = useDispatch();
   const { isReceivingAddressValid } = useIsReceivingAddressValid();
   const { loading, create, error } = useCreate({ resource });
+  const { isBridgeUnderMaintenance } = useIsBridgeUnderMaintenance();
 
   return (
     <BannerContainer>
@@ -58,7 +60,12 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
             variant="primary"
             size="state"
             shape="fit"
-            disabled={!areCurrenciesAndAmountValid || !isReceivingAddressValid || loading}
+            disabled={
+              !areCurrenciesAndAmountValid ||
+              !isReceivingAddressValid ||
+              loading ||
+              isBridgeUnderMaintenance
+            }
             onClick={create}
             data-testid={buildTestId('swap-btn')}
           >
@@ -79,7 +86,7 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
             variant="primary"
             size="state"
             shape="fit"
-            disabled={!areCurrenciesAndAmountValid}
+            disabled={!areCurrenciesAndAmountValid || isBridgeUnderMaintenance}
             onClick={() => dispatch(actionSetSwapFormStep('step-address'))}
             data-testid={buildTestId('next-btn')}
           >

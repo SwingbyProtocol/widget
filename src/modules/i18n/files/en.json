@@ -62,5 +62,6 @@
   "widget.onboard.explorer": "Explorer",
   "widget.coin-chain.bitcoin": " ",
   "widget.coin-chain.ethereum": "On Ethereum",
-  "widget.coin-chain.binance-smart": "On BSC"
+  "widget.coin-chain.binance-smart": "On BSC",
+  "widget.maintenance-warning": "This bridge is currently under maintenance."
 }
