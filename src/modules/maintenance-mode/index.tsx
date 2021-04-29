@@ -20,10 +20,13 @@ export const useIsBridgeUnderMaintenance = () => {
   const { formatMessage } = useIntl();
   const { currencyDeposit, currencyReceiving } = useSelector((state) => state.swapForm);
   const context = useSdkContext();
-  const currentBridge = useMemo(
-    () => getBridgeFor({ context, currencyDeposit, currencyReceiving }),
-    [context, currencyDeposit, currencyReceiving],
-  );
+  const currentBridge = useMemo(() => {
+    try {
+      getBridgeFor({ context, currencyDeposit, currencyReceiving });
+    } catch (e) {
+      return null;
+    }
+  }, [context, currencyDeposit, currencyReceiving]);
   const [isBridgeUnderMaintenance, setBridgeUnderMaintenance] = useState(false);
 
   useEffect(() => {

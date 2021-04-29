@@ -51,4 +51,8 @@ beforeEach(() => {
     { pathname: /\/swaps\/query$/, query: { hash: 'fake-hash-expired' } },
     { fixture: 'fake-swap-expired.json' },
   ).as('fake-hash-expired');
+  cy.intercept(
+    { pathname: /\/api\/(mode|production)\/[^/]+\/status$/ },
+    { fixture: 'maintenance-mode.json' },
+  ).as('maintenance-mode');
 });
