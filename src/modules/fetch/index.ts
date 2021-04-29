@@ -38,3 +38,14 @@ export const fetch = async <
 
   return { ok: true, status: result.status, response };
 };
+
+export const fetcher = async <Data extends unknown = unknown>(
+  ...args: Parameters<typeof fetch>
+) => {
+  const result = await fetch<Data>(...args);
+  if (!result.ok) {
+    throw new Error(`${result.status}: ${result.response}`);
+  }
+
+  return result.response;
+};

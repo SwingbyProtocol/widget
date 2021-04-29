@@ -16,6 +16,7 @@ import { VerticalWidgetView } from '../../../components/VerticalWidgetView';
 import { Separator } from '../../../components/Separator';
 import { useCreate } from '../../../modules/create-swap';
 import { NodeSelector } from '../../../components/NodeSelector';
+import { useIsBridgeUnderMaintenance } from '../../../modules/maintenance-mode';
 
 import {
   ErrorContainer,
@@ -35,6 +36,7 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
   const { areCurrenciesAndAmountValid } = useAreCurrenciesValid({ resource });
   const { isReceivingAddressValid } = useIsReceivingAddressValid();
   const { loading, create, error } = useCreate({ resource });
+  const { isBridgeUnderMaintenance } = useIsBridgeUnderMaintenance();
 
   return (
     <VerticalWidgetView
@@ -107,7 +109,12 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
         <Button
           variant="primary"
           size="state"
-          disabled={!areCurrenciesAndAmountValid || !isReceivingAddressValid || loading}
+          disabled={
+            !areCurrenciesAndAmountValid ||
+            !isReceivingAddressValid ||
+            loading ||
+            isBridgeUnderMaintenance
+          }
           onClick={create}
           data-testid={buildTestId('swap-btn')}
         >
@@ -119,7 +126,7 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
         <Button
           variant="primary"
           size="state"
-          disabled={!areCurrenciesAndAmountValid}
+          disabled={!areCurrenciesAndAmountValid || isBridgeUnderMaintenance}
           onClick={() => dispatch(actionSetSwapFormStep('step-address'))}
           data-testid={buildTestId('next-btn')}
         >
