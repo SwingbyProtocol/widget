@@ -79,7 +79,15 @@ export const NodeSelector = ({ swap }: Props) => {
         return;
       }
 
-      const nodes = [...result.swapNodes].filter((it) => !!it);
+      const nodes = [...result.swapNodes]
+        .map((it) => it.restUri)
+        .filter((it) => {
+          try {
+            return new URL(it).protocol === 'https:';
+          } catch (e) {
+            return false;
+          }
+        });
       nodes.sort();
 
       setNodes(nodes);
