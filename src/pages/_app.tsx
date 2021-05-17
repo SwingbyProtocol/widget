@@ -51,6 +51,10 @@ function MyApp({ Component, pageProps, router }: AppProps) {
               <WidgetLayoutProvider>
                 <Favicon />
                 <Head>
+                  <meta
+                    name="viewport"
+                    content="width=device-width, initial-scale=1, maximum-scale=1"
+                  />
                   <link rel="stylesheet" href={PULSAR_GLOBAL_FONT_HREF} />
                   <title>{messages['widget.tab-title.generic']}</title>
                 </Head>
