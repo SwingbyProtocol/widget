@@ -40,15 +40,17 @@ export const useIsBridgeUnderMaintenance = () => {
         return;
       }
 
-      try {
-        const { status } = await fetcher<{ status: ApiStatus }>(
-          `/api/${context.mode}/${currentBridge}/status`,
-        );
-        if (cancelled) return;
-        setBridgeUnderMaintenance(status === ApiStatus.Maintenance);
-      } catch (e) {
-        if (cancelled) return;
-        setBridgeUnderMaintenance(false);
+      if (currentBridge) {
+        try {
+          const { status } = await fetcher<{ status: ApiStatus }>(
+            `/api/${context.mode}/${currentBridge}/status`,
+          );
+          if (cancelled) return;
+          setBridgeUnderMaintenance(status === ApiStatus.Maintenance);
+        } catch (e) {
+          if (cancelled) return;
+          setBridgeUnderMaintenance(false);
+        }
       }
 
       setTimeout(check, 10000);
