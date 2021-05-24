@@ -22,7 +22,7 @@ export const useIsBridgeUnderMaintenance = () => {
   const context = useSdkContext();
   const currentBridge = useMemo(() => {
     try {
-      getBridgeFor({ context, currencyDeposit, currencyReceiving });
+      return getBridgeFor({ context, currencyDeposit, currencyReceiving });
     } catch (e) {
       return null;
     }
@@ -30,6 +30,8 @@ export const useIsBridgeUnderMaintenance = () => {
   const [isBridgeUnderMaintenance, setBridgeUnderMaintenance] = useState(false);
 
   useEffect(() => {
+    if (!currentBridge) return;
+
     let cancelled = false;
 
     const check = async () => {
@@ -40,17 +42,15 @@ export const useIsBridgeUnderMaintenance = () => {
         return;
       }
 
-      if (currentBridge) {
-        try {
-          const { status } = await fetcher<{ status: ApiStatus }>(
-            `/api/${context.mode}/${currentBridge}/status`,
-          );
-          if (cancelled) return;
-          setBridgeUnderMaintenance(status === ApiStatus.Maintenance);
-        } catch (e) {
-          if (cancelled) return;
-          setBridgeUnderMaintenance(false);
-        }
+      try {
+        const { status } = await fetcher<{ status: ApiStatus }>(
+          `/api/${context.mode}/${currentBridge}/status`,
+        );
+        if (cancelled) return;
+        setBridgeUnderMaintenance(status === ApiStatus.Maintenance);
+      } catch (e) {
+        if (cancelled) return;
+        setBridgeUnderMaintenance(false);
       }
 
       setTimeout(check, 10000);
