@@ -21,7 +21,8 @@
   "dependencies": {
     "@swingby-protocol/ip-check": "^2.1.0",
     "@swingby-protocol/pulsar": "^3.14.1",
-    "@swingby-protocol/sdk": "^1.0.0-alpha.100",
+    "@swingby-protocol/sdk": "https://github.com/SwingbyProtocol/js-sdk.git#v1.0.0-alpha.101",
+    "add": "^2.0.6",
     "big.js": "6.0.3",
     "bnc-onboard": "^1.19.2",
     "hex-to-binary": "^1.0.1",
@@ -41,7 +42,8 @@
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "styled-components": "^5.2.1",
-    "web3": "^1.3.4"
+    "web3": "^1.3.4",
+    "yarn": "^1.22.11"
   },
   "devDependencies": {
     "@percy/cypress": "^2.3.4",
