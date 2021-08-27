@@ -21,7 +21,7 @@
   "dependencies": {
     "@swingby-protocol/ip-check": "^2.1.0",
     "@swingby-protocol/pulsar": "^3.14.1",
-    "@swingby-protocol/sdk": "https://github.com/SwingbyProtocol/js-sdk.git#v1.0.0-alpha.101",
+    "@swingby-protocol/sdk": "^1.0.0-alpha.103",
     "add": "^2.0.6",
     "big.js": "6.0.3",
     "bnc-onboard": "^1.19.2",
