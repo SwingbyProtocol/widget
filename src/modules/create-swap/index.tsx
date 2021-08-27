@@ -48,7 +48,6 @@ export const useCreate = ({ resource }: { resource: SkybridgeResource }) => {
             addressReceiving,
             affiliateCode,
           });
-          console.log('swap', swap);
 
           logger.debug('createSwap() has finished', swap);
 
