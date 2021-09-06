@@ -40,6 +40,8 @@
   "widget.confirm-address": "請確認這是您的錢包地址!",
   "widget.explorer-btn": "Explorer",
   "widget.explorer-link": "Explorer",
+  "widget.explorer-deposit": "付款",
+  "widget.explorer-swap": "兌換",
   "widget.explorer-link-long": "移至Explorer了解更多",
   "widget.warning-test": "您正在使用“測試網”模式。請不要發送主網的資金。",
   "widget.warning-do-not-use-exchange-addresses": "請只從您所擁有的錢包地址發送資金。請不要使用交易所錢包地址來兌換。 ",

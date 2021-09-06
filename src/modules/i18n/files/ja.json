@@ -40,6 +40,8 @@
   "widget.confirm-address": "受取アドレスはご本人様のものであることをご確認の上、上記Skybridgeデポジットアドレスまでご送信をお願い致します。",
   "widget.explorer-btn": "Explorer",
   "widget.explorer-link": "Explorer",
+  "widget.explorer-deposit": "入金",
+  "widget.explorer-swap": "スワップ",
   "widget.explorer-link-long": "Explorerで確認する",
   "widget.warning-test": "ご使用中のネットワークはテストネットです。メインネット用の資産を送信しないで下さい。",
   "widget.warning-do-not-use-exchange-addresses": "仮想通貨交換所ウォレットアドレスからの送信は行わないようお願い致します。",

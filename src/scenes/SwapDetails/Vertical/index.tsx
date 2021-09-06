@@ -1,31 +1,32 @@
-import { Loading, useBuildTestId, SwapProgress, Button } from '@swingby-protocol/pulsar';
+import { Button, Loading, SwapProgress, useBuildTestId } from '@swingby-protocol/pulsar';
 import { buildExplorerLink, SkybridgeResource } from '@swingby-protocol/sdk';
+import { Big } from 'big.js';
 import { useCallback, useMemo, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { Big } from 'big.js';
 
+import { NodeSelector } from '../../../components/NodeSelector';
 import { Space } from '../../../components/Space';
 import { VerticalWidgetView } from '../../../components/VerticalWidgetView';
 import { useDetails } from '../../../modules/details';
-import { getTransferUriFor } from '../../../modules/send-funds-uri';
-import { usePushWithSearchParams } from '../../../modules/push-keeping-search';
-import { NodeSelector } from '../../../components/NodeSelector';
 import { useWidgetLayout } from '../../../modules/layout';
+import { logger } from '../../../modules/logger';
+import { usePushWithSearchParams } from '../../../modules/push-keeping-search';
+import { getTransferUriFor } from '../../../modules/send-funds-uri';
 import { useSdkContext } from '../../../modules/store/sdkContext';
 import {
-  useTokenAllowance,
-  useOnboard,
-  useTransferToken,
-  useApproveTokenAllowance,
   isWeb3ableCurrency,
+  useApproveTokenAllowance,
+  useOnboard,
+  useTokenAllowance,
+  useTransferToken,
 } from '../../../modules/web3';
-import { logger } from '../../../modules/logger';
 
 import {
+  ExplorerContainer,
   ExplorerLink,
   ExplorerLinkCaret,
   ProgressContainer,
-  ExplorerContainer,
+  RowLink,
   StyledQRCode,
   TransferButtonsContainer,
 } from './styled';
@@ -41,13 +42,13 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
   const { address } = useOnboard();
   const { transfer, loading: isTransferring } = useTransferToken();
   const { approveTokenAllowance, loading: isApproving } = useApproveTokenAllowance();
-  const [hasTransactionSucceeded, setTransactionSucceded] = useState(false);
+  const [hasTransactionSucceeded, setTransactionSucceeded] = useState(false);
   const { allowance, recheck: recheckAllowance } = useTokenAllowance({
     currency: swap?.currencyDeposit,
     spenderAddress: swap?.addressDeposit,
   });
 
-  const explorerLink = useMemo(() => {
+  const outboundLink = useMemo(() => {
     if (!swap || !swap.txReceivingId) return undefined;
     return buildExplorerLink({
       context,
@@ -56,10 +57,19 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
     });
   }, [context, swap]);
 
+  const inboundLink = useMemo(() => {
+    if (!swap || !swap.txDepositId) return undefined;
+    return buildExplorerLink({
+      context,
+      coin: swap.currencyDeposit,
+      transactionId: swap.txDepositId,
+    });
+  }, [context, swap]);
+
   const doTransfer = useCallback(async () => {
     try {
       const result = await transfer({ swap });
-      setTransactionSucceded(result.status);
+      setTransactionSucceeded(result.status);
     } catch (e) {
       logger.error(e);
     }
@@ -93,6 +103,22 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
   }
 
   const supportsWeb3 = isWeb3ableCurrency(swap.currencyDeposit);
+
+  const explorerLink = ({ url, txType }: { url: string; txType: 'inbound' | 'outbound' }) => (
+    <div>
+      <ExplorerLink href={url} target="_blank" data-testid={buildTestId('explorer-link')}>
+        <RowLink>
+          <FormattedMessage
+            id={txType === 'inbound' ? 'widget.explorer-deposit' : 'widget.explorer-swap'}
+          />
+          <div>
+            <FormattedMessage id="widget.explorer-link-long" />
+            <ExplorerLinkCaret />
+          </div>
+        </RowLink>
+      </ExplorerLink>
+    </div>
+  );
 
   return (
     <VerticalWidgetView
@@ -161,21 +187,13 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
           />
         </ProgressContainer>
       )}
-      {explorerLink && (
-        <>
-          <Space size="town" shape="fill" />
-          <ExplorerContainer>
-            <ExplorerLink
-              href={explorerLink}
-              target="_blank"
-              data-testid={buildTestId('explorer-link')}
-            >
-              <FormattedMessage id="widget.explorer-link-long" />
-              <ExplorerLinkCaret />
-            </ExplorerLink>
-          </ExplorerContainer>
-        </>
-      )}
+      <>
+        <Space size="town" shape="fill" />
+        <ExplorerContainer>
+          {inboundLink && explorerLink({ url: inboundLink, txType: 'inbound' })}
+          {outboundLink && explorerLink({ url: outboundLink, txType: 'outbound' })}
+        </ExplorerContainer>
+      </>
     </VerticalWidgetView>
   );
 };

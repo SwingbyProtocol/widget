@@ -41,6 +41,8 @@
   "widget.explorer-btn": "Explorer",
   "widget.explorer-link": "Explorer",
   "widget.explorer-link-long": "View on explorer",
+  "widget.explorer-deposit": "Deposit",
+  "widget.explorer-swap": "Swap",
   "widget.warning-production": "This is a product in beta. Only swap small amounts and be sure to follow the usage instructions. {readTutorial}.",
   "widget.warning-production.tutorial": "Read tutorial",
   "widget.warning-test": "You are using “test” mode. Do not send real funds.",
