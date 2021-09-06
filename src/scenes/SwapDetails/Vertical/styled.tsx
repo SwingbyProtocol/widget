@@ -12,7 +12,6 @@ export const ExplorerLink = styled.a`
   height: ${({ theme }) => rem(theme.pulsar.size.street)};
   width: 100%;
   flex-shrink: 0;
-  border-top: 1px solid ${({ theme }) => theme.pulsar.color.border.normal};
   font-size: ${({ theme }) => rem(theme.pulsar.size.closet)};
   cursor: pointer;
   text-decoration: none;
@@ -43,6 +42,15 @@ export const ExplorerContainer = styled.div`
   margin-left: ${rem(-StylingConstants.widgetVerticalPadding)};
   margin-right: ${rem(-StylingConstants.widgetVerticalPadding)};
   margin-bottom: ${rem(-StylingConstants.widgetVerticalPadding)};
+  display: flex;
+  justify-content: space-evenly;
+  border-top: 1px solid ${({ theme }) => theme.pulsar.color.border.normal};
+`;
+
+export const RowLink = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 `;
 
 export const TransferButtonsContainer = styled.div`
