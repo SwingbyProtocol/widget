@@ -23,7 +23,7 @@
     "@swingby-protocol/pulsar": "^3.14.1",
     "@swingby-protocol/sdk": "^1.0.0-alpha.104",
     "big.js": "6.0.3",
-    "bnc-onboard": "^1.19.2",
+    "bnc-onboard": "^1.27.0",
     "hex-to-binary": "^1.0.1",
     "isomorphic-unfetch": "^3.1.0",
     "isomorphic-webcrypto": "^2.3.6",

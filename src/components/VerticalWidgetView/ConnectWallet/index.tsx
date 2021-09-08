@@ -10,12 +10,15 @@ export const ConnectWallet = () => {
   const logIn = useCallback(async () => {
     if (!onboard) return;
     await onboard.walletSelect();
-    await onboard.walletCheck();
+    const checkResult = await onboard.walletCheck();
+    if (!checkResult) {
+      throw new Error('Invalid wallet/network selected');
+    }
   }, [onboard]);
 
-  const logOut = useCallback(async () => {
+  const logOut = useCallback(() => {
     if (!onboard) return;
-    await onboard.walletReset();
+    onboard.walletReset();
   }, [onboard]);
 
   return (
