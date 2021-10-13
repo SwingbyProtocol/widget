@@ -109,6 +109,11 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
     }
   }, [amountReceiving]);
 
+  const reverseCurrency = () => {
+    dispatch(actionSetSwapFormData({ currencyDeposit: currencyReceiving }));
+    dispatch(actionSetSwapFormData({ currencyReceiving: currencyDeposit }));
+  };
+
   return (
     <CoinAmountContainer variant={variant} data-testid={buildTestId('')}>
       {variant === 'vertical' && (
@@ -131,7 +136,11 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
         state={isAmountDesiredValid ? 'normal' : 'danger'}
       />
       {variant === 'vertical' && <Label />}
-      {variant === 'banner' ? <SwapHorizontal /> : <SwapVertical />}
+      {variant === 'banner' ? (
+        <SwapHorizontal onClick={reverseCurrency} />
+      ) : (
+        <SwapVertical onClick={reverseCurrency} />
+      )}
       {variant === 'vertical' && (
         <Label>
           <FormattedMessage id="widget.to" />
