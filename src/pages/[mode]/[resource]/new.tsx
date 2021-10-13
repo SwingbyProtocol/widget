@@ -1,11 +1,9 @@
 import { shouldBlockRegion } from '@swingby-protocol/ip-check';
-import { createOrUpdateToast } from '@swingby-protocol/pulsar';
 import { getSwapableTo } from '@swingby-protocol/sdk';
 import { DateTime } from 'luxon';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { FormattedMessage } from 'react-intl';
 import { useDispatch } from 'react-redux';
 
 import { LocalStorage } from '../../../modules/env';
@@ -77,32 +75,6 @@ export default function ResourceNew({ ipInfo }: Props) {
 
     dispatch(actionSetSwapFormData({ affiliateCode }));
   }, [dispatch, affiliateCode]);
-
-  useEffect(() => {
-    createOrUpdateToast({
-      content:
-        mode === 'test' ? (
-          <FormattedMessage id="widget.warning-test" />
-        ) : (
-          <FormattedMessage
-            id="widget.warning-production"
-            values={{
-              readTutorial: (
-                <a
-                  target="_blank"
-                  rel="noreferrer"
-                  href="https://swingby.medium.com/how-to-convert-your-wbtc-into-btc-with-skybridge-8eebe2b711ad"
-                >
-                  <FormattedMessage id="widget.warning-production.tutorial" />
-                </a>
-              ),
-            }}
-          />
-        ),
-      type: mode === 'test' ? 'info' : 'warning',
-      toastId: 'mode-warning',
-    });
-  }, [mode]);
 
   if (!mode) return <></>;
   if (!resource) return <></>;
