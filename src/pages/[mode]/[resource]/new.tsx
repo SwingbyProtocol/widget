@@ -1,9 +1,11 @@
 import { shouldBlockRegion } from '@swingby-protocol/ip-check';
+import { createOrUpdateToast } from '@swingby-protocol/pulsar';
 import { getSwapableTo } from '@swingby-protocol/sdk';
 import { DateTime } from 'luxon';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import { FormattedMessage } from 'react-intl';
 import { useDispatch } from 'react-redux';
 
 import { LocalStorage } from '../../../modules/env';
@@ -75,6 +77,15 @@ export default function ResourceNew({ ipInfo }: Props) {
 
     dispatch(actionSetSwapFormData({ affiliateCode }));
   }, [dispatch, affiliateCode]);
+
+  useEffect(() => {
+    mode === 'test' &&
+      createOrUpdateToast({
+        content: <FormattedMessage id="widget.warning-test" />,
+        type: 'info',
+        toastId: 'mode-warning',
+      });
+  }, [mode]);
 
   if (!mode) return <></>;
   if (!resource) return <></>;

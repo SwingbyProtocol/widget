@@ -95,7 +95,7 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
         </>
       )}
       <StakeEarn as="a" target="_blank" href="https://skybridge.info/pool">
-        <FormattedMessage id="widget.stake-btc-earn-rewards" />
+        <FormattedMessage id="widget.warning" />
       </StakeEarn>
     </BannerContainer>
   );
