@@ -43,7 +43,7 @@
   "widget.explorer-link-long": "View on explorer",
   "widget.explorer-deposit": "Deposit",
   "widget.explorer-swap": "Swap",
-  "widget.warning": "Product is in Beta. Use at your own risk",
+  "widget.warning": "Product is in Beta. Use at your own risk.",
   "widget.warning-test": "You are using “test” mode. Do not send real funds.",
   "widget.warning-do-not-use-exchange-addresses": "Please, send funds only from addresses owned by you. Do not send funds from an exchange.",
   "widget.ip-block": "You appear to be accessing this app from a country or region where its usage is not permitted.",
