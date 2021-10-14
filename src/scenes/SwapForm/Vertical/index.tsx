@@ -134,8 +134,8 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
         </Button>
       )}
 
-      <StakeEarn as="a" target="_blank" href="https://skybridge.info/pool">
-        <FormattedMessage id="widget.stake-btc-earn-rewards" />
+      <StakeEarn as="span">
+        <FormattedMessage id="widget.warning" />
       </StakeEarn>
     </VerticalWidgetView>
   );
