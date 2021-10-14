@@ -79,12 +79,13 @@ export default function ResourceNew({ ipInfo }: Props) {
   }, [dispatch, affiliateCode]);
 
   useEffect(() => {
-    mode === 'test' &&
+    if (mode === 'test') {
       createOrUpdateToast({
         content: <FormattedMessage id="widget.warning-test" />,
         type: 'info',
         toastId: 'mode-warning',
       });
+    }
   }, [mode]);
 
   if (!mode) return <></>;
