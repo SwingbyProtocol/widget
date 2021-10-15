@@ -77,6 +77,7 @@ const swap = css`
 export const SwapVertical = styled(Icon.SwapVertical)`
   ${swap};
   grid-column: 1 / 3;
+  cursor: pointer;
 
   @media ${StylingConstants.mediaVerticalWideWidth} {
     grid-column: 2 / 4;
@@ -93,6 +94,7 @@ export const SwapVertical = styled(Icon.SwapVertical)`
 
 export const SwapHorizontal = styled(Icon.SwapHorizontal)`
   ${swap};
+  cursor: pointer;
 `;
 
 export const AmountReceiving = styled.span`
