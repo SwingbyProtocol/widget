@@ -27,5 +27,5 @@
     "https://testnet-node-24.swingby.network",
     "https://testnet-node-25.swingby.network"
   ],
-  "indexerNodes": ["https://indexer-goerli.swingby.network"]
+  "indexerNodes": ["https://indexer-ropsten.swingby.network"]
 }

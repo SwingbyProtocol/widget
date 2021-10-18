@@ -1,6 +1,6 @@
 {
   "blockbook": {
-    "coin": "Ethereum Testnet Goerli",
+    "coin": "Ethereum Testnet Ropsten",
     "host": "7e35d465fe00",
     "version": "0.3.4",
     "gitCommit": "3f85595",
