@@ -8,7 +8,7 @@ const APP_NAME = 'Skybridge Widget';
 
 const getEtherNetwork = ({ mode }: { mode: SkybridgeMode }) => {
   const network =
-    mode === 'production' ? { id: 1, network: 'mainnet' } : { id: 5, network: 'goerli' };
+    mode === 'production' ? { id: 1, network: 'mainnet' } : { id: 5, network: 'ropsten' };
 
   return {
     id: network.id,

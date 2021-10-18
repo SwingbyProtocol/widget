@@ -19,5 +19,5 @@ export const getTransactionChainProp = ({
     return undefined;
   }
 
-  return mode === 'production' ? 'mainnet' : 'goerli';
+  return mode === 'production' ? 'mainnet' : 'ropsten';
 };
