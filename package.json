@@ -53,7 +53,7 @@
     "@graphql-codegen/typescript-operations": "1.17.15",
     "@graphql-codegen/typescript-react-apollo": "2.2.2",
     "@percy/cypress": "^2.3.4",
-    "@swingby-protocol/eslint-config": "^2.1.0",
+    "@swingby-protocol/eslint-config": "^2.3.0",
     "@swingby-protocol/prettier-config": "^1.0.2",
     "@types/big.js": "^6.0.2",
     "@types/jest": "^26.0.20",

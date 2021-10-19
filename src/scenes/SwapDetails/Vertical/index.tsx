@@ -13,6 +13,7 @@ import { logger } from '../../../modules/logger';
 import { usePushWithSearchParams } from '../../../modules/push-keeping-search';
 import { getTransferUriFor } from '../../../modules/send-funds-uri';
 import { useSdkContext } from '../../../modules/store/sdkContext';
+import { useGetSignature } from '../../../modules/terms';
 import {
   isWeb3ableCurrency,
   useApproveTokenAllowance,
@@ -47,6 +48,7 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
     currency: swap?.currencyDeposit,
     spenderAddress: swap?.addressDeposit,
   });
+  const { addressTerms, getSignature } = useGetSignature();
 
   const outboundLink = useMemo(() => {
     if (!swap || !swap.txReceivingId) return undefined;
@@ -78,17 +80,30 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
   const doApprove = useCallback(async () => {
     if (!swap) return;
 
-    try {
+    const approveToken = async () => {
       await approveTokenAllowance({
         currency: swap.currencyDeposit,
         spenderAddress: swap.addressDeposit,
         amount: swap.amountDeposit,
       });
       recheckAllowance();
+    };
+
+    try {
+      if (addressTerms?.hasSignedTerms) {
+        await approveToken();
+        return;
+      } else {
+        const signature = await getSignature();
+        if (signature) {
+          await approveToken();
+          return;
+        }
+      }
     } catch (e) {
       logger.error(e);
     }
-  }, [swap, approveTokenAllowance, recheckAllowance]);
+  }, [swap, approveTokenAllowance, recheckAllowance, addressTerms, getSignature]);
 
   const needsApproval = useMemo(
     () =>

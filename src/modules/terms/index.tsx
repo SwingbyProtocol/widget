@@ -1,0 +1,1 @@
+export { useGetSignature } from './useGetSignature';
