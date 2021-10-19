@@ -7,7 +7,7 @@ export const isWeb3ableCurrency = (
   try {
     if (typeof coin !== 'string') return false;
     return ['ethereum', 'binance-smart'].includes(getChainFor({ coin: coin as any }));
-  } catch (e) {
+  } catch (err) {
     return false;
   }
 };

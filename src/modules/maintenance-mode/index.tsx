@@ -23,7 +23,7 @@ export const useIsBridgeUnderMaintenance = () => {
   const currentBridge = useMemo(() => {
     try {
       return getBridgeFor({ context, currencyDeposit, currencyReceiving });
-    } catch (e) {
+    } catch (err) {
       return null;
     }
   }, [context, currencyDeposit, currencyReceiving]);
@@ -48,7 +48,7 @@ export const useIsBridgeUnderMaintenance = () => {
         );
         if (cancelled) return;
         setBridgeUnderMaintenance(status === ApiStatus.Maintenance);
-      } catch (e) {
+      } catch (err) {
         if (cancelled) return;
         setBridgeUnderMaintenance(false);
       }

@@ -10,7 +10,7 @@ export const getTransactionChainProp = ({
   const bridge = (() => {
     try {
       return getChainFor({ coin });
-    } catch (e) {
+    } catch (err) {
       return null;
     }
   })();

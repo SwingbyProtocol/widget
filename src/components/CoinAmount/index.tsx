@@ -85,8 +85,8 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
 
         if (cancelled) return;
         setAmountReceiving(amountReceiving);
-      } catch (e) {
-        logger.error(e);
+      } catch (err) {
+        logger.error({ err });
 
         if (cancelled) return;
         setAmountReceiving('');
@@ -104,7 +104,7 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
     try {
       new Big(amountReceiving);
       return true;
-    } catch (e) {
+    } catch (err) {
       return false;
     }
   }, [amountReceiving]);

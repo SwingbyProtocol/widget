@@ -13,7 +13,7 @@ import { logger } from '../../../modules/logger';
 import { usePushWithSearchParams } from '../../../modules/push-keeping-search';
 import { getTransferUriFor } from '../../../modules/send-funds-uri';
 import { useSdkContext } from '../../../modules/store/sdkContext';
-import { useGetSignature } from '../../../modules/terms';
+import { useAssertTermsSignature } from '../../../modules/terms';
 import {
   isWeb3ableCurrency,
   useApproveTokenAllowance,
@@ -48,7 +48,7 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
     currency: swap?.currencyDeposit,
     spenderAddress: swap?.addressDeposit,
   });
-  const { checkTermsSignature } = useGetSignature();
+  const { assertTermsSignature } = useAssertTermsSignature();
 
   const outboundLink = useMemo(() => {
     if (!swap || !swap.txReceivingId) return undefined;
@@ -72,8 +72,8 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
     try {
       const result = await transfer({ swap });
       setTransactionSucceeded(result.status);
-    } catch (e) {
-      logger.error(e);
+    } catch (err) {
+      logger.error({ err });
     }
   }, [transfer, swap]);
 
@@ -81,17 +81,17 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
     if (!swap) return;
 
     try {
-      await checkTermsSignature();
+      await assertTermsSignature();
       await approveTokenAllowance({
         currency: swap.currencyDeposit,
         spenderAddress: swap.addressDeposit,
         amount: swap.amountDeposit,
       });
       recheckAllowance();
-    } catch (e) {
-      logger.error(e);
+    } catch (err) {
+      logger.error({ err });
     }
-  }, [swap, approveTokenAllowance, recheckAllowance, checkTermsSignature]);
+  }, [swap, approveTokenAllowance, recheckAllowance, assertTermsSignature]);
 
   const needsApproval = useMemo(
     () =>

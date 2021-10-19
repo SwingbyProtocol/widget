@@ -33,7 +33,7 @@ export const NodeSelector = ({ swap }: Props) => {
 
     try {
       return getBridgeFor({ context, currencyDeposit, currencyReceiving });
-    } catch (e) {
+    } catch (err) {
       return null;
     }
   }, [context, swap, currencyDeposit, currencyReceiving]);
@@ -84,7 +84,7 @@ export const NodeSelector = ({ swap }: Props) => {
         .filter((it): it is string => {
           try {
             return new URL(it!).protocol === 'https:';
-          } catch (e) {
+          } catch (err) {
             return false;
           }
         });

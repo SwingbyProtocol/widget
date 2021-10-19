@@ -93,16 +93,16 @@ export const useApproveTokenAllowance = () => {
           .on('receipt', () => {
             setLoading(false);
           });
-      } catch (e) {
+      } catch (err: any) {
         setLoading(false);
-        setError(e);
+        setError(err);
 
-        logger.error(e, 'Something went wrong trying to send the approval transaction');
-        if (e?.message) {
-          createToast({ content: e?.message, type: 'danger' });
+        logger.error({ err }, 'Something went wrong trying to send the approval transaction');
+        if (err?.message) {
+          createToast({ content: err?.message, type: 'danger' });
         }
 
-        throw e;
+        throw err;
       }
     },
     [onboard, context, address, wallet],

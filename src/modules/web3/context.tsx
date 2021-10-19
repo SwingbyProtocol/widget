@@ -33,7 +33,7 @@ export const OnboardProvider = ({ children }: { children?: React.ReactNode }) =>
 
     try {
       return getBridgeFor({ context, currencyDeposit, currencyReceiving });
-    } catch (e) {
+    } catch (err) {
       return null;
     }
   }, [context, swap, currencyDeposit, currencyReceiving]);

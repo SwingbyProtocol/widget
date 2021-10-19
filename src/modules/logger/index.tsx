@@ -15,5 +15,5 @@ export const logger = pino({ level: logLevel });
       `To see the internal logs of the Skybridge SDK, run the following code in your console.\n\n%clocalStorage.debug = 'skybridge-sdk:*';`,
       'color: orange;',
     );
-  } catch (e) {}
+  } catch (err) {}
 })();

@@ -5,7 +5,7 @@ export const getNodeDisplayName = (node: string | null) => {
     }
 
     return new URL(node).host;
-  } catch (e) {
+  } catch (err) {
     return node;
   }
 };
