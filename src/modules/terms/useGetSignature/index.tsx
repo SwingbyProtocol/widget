@@ -32,8 +32,8 @@ export const useGetSignature = () => {
 
   const getSignature = useCallback(async () => {
     if (!msgData || !wallet || !address || !onboard) return;
-    const message = msgData && msgData.termsMessage.message;
-    const seed = msgData && msgData.termsMessage.seed;
+    const message = msgData.termsMessage.message;
+    const seed = msgData.termsMessage.seed;
     try {
       const web3 = new Web3(wallet.provider);
       const signature = await web3.eth.personal.sign(message, address, seed);
