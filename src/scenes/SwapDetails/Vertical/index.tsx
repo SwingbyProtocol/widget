@@ -93,13 +93,9 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
       if (addressTerms?.hasSignedTerms) {
         await approveToken();
         return;
-      } else {
-        const signature = await getSignature();
-        if (signature) {
-          await approveToken();
-          return;
-        }
       }
+      const signature = await getSignature();
+      signature && (await approveToken());
     } catch (e) {
       logger.error(e);
     }
