@@ -10,6 +10,8 @@ import { Provider as ReduxProvider } from 'react-redux';
 import Head from 'next/head';
 import { useMemo } from 'react';
 import { isSkybridgeMode } from '@swingby-protocol/sdk';
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import { relayStylePagination } from '@apollo/client/utilities'; // eslint-disable-line import/no-internal-modules
 
 import { languages } from '../modules/i18n';
 import { WidgetLayoutProvider } from '../modules/layout';
@@ -18,9 +20,24 @@ import { Favicon } from '../components/Favicon';
 import { GlobalStyles } from '../modules/styles';
 import { SdkContextGateKeeper } from '../modules/store/sdkContext';
 import { OnboardProvider, OnboardGlobalStyles } from '../modules/web3';
+import { graphEndpoint } from '../modules/env';
 
 function MyApp({ Component, pageProps, router }: AppProps) {
   const store = useStore();
+
+  const apolloClient = new ApolloClient({
+    uri: graphEndpoint,
+    cache: new InMemoryCache({
+      typePolicies: {
+        Query: {
+          fields: {
+            transactions: relayStylePagination(['where']),
+          },
+        },
+      },
+    }),
+  });
+
   const defaultLocale = router.defaultLocale ?? 'en';
   const locale = (() => {
     const result = router.locale ?? defaultLocale;
@@ -40,32 +57,34 @@ function MyApp({ Component, pageProps, router }: AppProps) {
   }
 
   return (
-    <PulsarThemeProvider theme={theme}>
-      <IntlProvider messages={messages} locale={locale} defaultLocale={defaultLocale}>
-        <PulsarGlobalStyles />
-        <GlobalStyles />
-        <OnboardGlobalStyles />
-        <ReduxProvider store={store}>
-          <SdkContextGateKeeper mode={router.query.mode}>
-            <OnboardProvider>
-              <WidgetLayoutProvider>
-                <Favicon />
-                <Head>
-                  <meta
-                    name="viewport"
-                    content="width=device-width, initial-scale=1, maximum-scale=1"
-                  />
-                  <link rel="stylesheet" href={PULSAR_GLOBAL_FONT_HREF} />
-                  <title>{messages['widget.tab-title.generic']}</title>
-                </Head>
-                <Component {...pageProps} />
-                <PulsarToastContainer />
-              </WidgetLayoutProvider>
-            </OnboardProvider>
-          </SdkContextGateKeeper>
-        </ReduxProvider>
-      </IntlProvider>
-    </PulsarThemeProvider>
+    <ApolloProvider client={apolloClient}>
+      <PulsarThemeProvider theme={theme}>
+        <IntlProvider messages={messages} locale={locale} defaultLocale={defaultLocale}>
+          <PulsarGlobalStyles />
+          <GlobalStyles />
+          <OnboardGlobalStyles />
+          <ReduxProvider store={store}>
+            <SdkContextGateKeeper mode={router.query.mode}>
+              <OnboardProvider>
+                <WidgetLayoutProvider>
+                  <Favicon />
+                  <Head>
+                    <meta
+                      name="viewport"
+                      content="width=device-width, initial-scale=1, maximum-scale=1"
+                    />
+                    <link rel="stylesheet" href={PULSAR_GLOBAL_FONT_HREF} />
+                    <title>{messages['widget.tab-title.generic']}</title>
+                  </Head>
+                  <Component {...pageProps} />
+                  <PulsarToastContainer />
+                </WidgetLayoutProvider>
+              </OnboardProvider>
+            </SdkContextGateKeeper>
+          </ReduxProvider>
+        </IntlProvider>
+      </PulsarThemeProvider>
+    </ApolloProvider>
   );
 }
 
