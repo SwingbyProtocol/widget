@@ -11,3 +11,5 @@ export const blocknativeApiKey =
 
 export const infuraApiKey =
   process.env.NEXT_PUBLIC_INFURA_KEY || 'f35c2a4f3d0941a38a3edb62ed10c847';
+
+export const graphQlEndpoint = 'https://network.skybridge.exchange/api/v3/graphql';

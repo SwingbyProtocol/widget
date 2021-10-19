@@ -16,6 +16,7 @@
 
 # production
 /build
+/src/generated
 
 # misc
 .DS_Store
@@ -34,3 +35,5 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+/graphql.schema.json

@@ -84,8 +84,8 @@ function getStoredAffiliateCode(): string | null {
     );
 
     return affiliateCode;
-  } catch (e) {
-    logger.error(e, 'Could not read stored affiliate code');
+  } catch (err) {
+    logger.error({ err }, 'Could not read stored affiliate code');
     return null;
   }
 }

@@ -26,7 +26,7 @@ export const useAreCurrenciesValid = ({ resource }: { resource: SkybridgeResourc
     const isAmountDesiredValid = (() => {
       try {
         return new Big(amountDesired).gte('0.0004');
-      } catch (e) {
+      } catch (err) {
         return false;
       }
     })();
@@ -49,8 +49,8 @@ export const useIsReceivingAddressValid = () => {
     try {
       const chain = getChainFor({ coin: currencyReceiving });
       return { isReceivingAddressValid: isAddressValid({ context, address: addressOut, chain }) };
-    } catch (e) {
-      logger.error(e);
+    } catch (err) {
+      logger.error({ err });
       return { isReceivingAddressValid: false };
     }
   }, [context, addressOut, currencyReceiving]);

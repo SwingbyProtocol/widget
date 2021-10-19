@@ -95,8 +95,8 @@ export const useCreate = ({ resource }: { resource: SkybridgeResource }) => {
       })();
 
       push(`/${context.mode}/${resource}/${hash}`);
-    } catch (e) {
-      setError(e.message);
+    } catch (err) {
+      setError((err as any).message);
     } finally {
       setLoading(false);
     }

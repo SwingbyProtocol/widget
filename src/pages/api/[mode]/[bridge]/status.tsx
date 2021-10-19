@@ -32,8 +32,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     } else {
       res.status(200).json({ status: 1 });
     }
-  } catch (e) {
-    logger.error(e, 'Failed to forward to call to affiliate program');
+  } catch (err) {
+    logger.error({ err }, 'Failed to forward to call to affiliate program');
     res.status(500).json({ message: 'Failed to forward to call to affiliate program' });
   }
 };

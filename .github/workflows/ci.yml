@@ -13,6 +13,8 @@ jobs:
           node-version: 12.x
       - uses: bahmutov/npm-install@v1
 
+      - run: yarn generate
+
       - name: Lint
         run: yarn lint
 

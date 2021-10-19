@@ -110,8 +110,8 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ req }) => 
               regionCode: `${req.headers['x-vercel-ip-country']}`,
               innerRegionCode: `${req.headers['x-vercel-ip-country-region']}`,
             });
-          } catch (e) {
-            logger.error(e, 'Error checking whether region should be blocked');
+          } catch (err) {
+            logger.error({ err }, 'Error checking whether region should be blocked');
             return false;
           }
         })(),

@@ -27,7 +27,7 @@ export const fetch = async <
     const str = await result.text();
     try {
       return JSON.parse(str);
-    } catch (e) {
+    } catch (err) {
       return str;
     }
   })();

@@ -1,5 +1,5 @@
 import React, { useContext, useMemo, useEffect, useState } from 'react';
-import { Wallet } from 'bnc-onboard/dist/src/interfaces'; // eslint-disable-line import/no-internal-modules
+import type { Wallet } from 'bnc-onboard/dist/src/interfaces'; // eslint-disable-line import/no-internal-modules
 import { useTheme } from 'styled-components';
 import { getBridgeFor } from '@swingby-protocol/sdk';
 import { useSelector } from 'react-redux';
@@ -33,7 +33,7 @@ export const OnboardProvider = ({ children }: { children?: React.ReactNode }) =>
 
     try {
       return getBridgeFor({ context, currencyDeposit, currencyReceiving });
-    } catch (e) {
+    } catch (err) {
       return null;
     }
   }, [context, swap, currencyDeposit, currencyReceiving]);

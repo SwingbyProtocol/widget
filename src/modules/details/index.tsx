@@ -65,8 +65,8 @@ export const useDetails = (): SwapDetails => {
         }
 
         timeoutId = setTimeout(doStuff, MS_TILL_NEXT_TRY);
-      } catch (e) {
-        logger.error('Error trying to fetch swap details', e);
+      } catch (err) {
+        logger.error({ err }, 'Error trying to fetch swap details');
         timeoutId = setTimeout(doStuff, MS_TILL_NEXT_TRY);
       }
     };

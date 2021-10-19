@@ -31,8 +31,8 @@ export const useTokenAllowance = ({
       });
 
       setAllowance(result);
-    } catch (e) {
-      logger.error(e, 'Failed to get allowance');
+    } catch (err) {
+      logger.error({ err }, 'Failed to get allowance');
       setAllowance(null);
     }
   }, [address, spenderAddress, currency, getTokenAllowance]);

@@ -11,7 +11,7 @@ export const usePushWithSearchParams = () => {
           try {
             const { query } = parseUrl(asPath);
             return query;
-          } catch (e) {
+          } catch (err) {
             return {};
           }
         })();
