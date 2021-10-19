@@ -24,7 +24,7 @@ export const useGetSignature = () => {
   const { onboard, wallet, address } = useOnboard();
   const { data: msgData } = useTermsMessageQuery();
   const [signTerms] = useSignTermsMutation();
-  const { data: addressTerms } = useHasSignedTermsQuery({
+  const { data: addressTerms, refetch } = useHasSignedTermsQuery({
     variables: {
       address: address!,
     },
@@ -38,12 +38,13 @@ export const useGetSignature = () => {
       const web3 = new Web3(wallet.provider);
       const signature = await web3.eth.personal.sign(message, address, seed);
       await signTerms({ variables: { address, signature } });
+      await refetch();
       return signature;
     } catch (e) {
       logger.error('Error trying to get signature', e);
       return false;
     }
-  }, [address, wallet, onboard, msgData, signTerms]);
+  }, [address, wallet, onboard, msgData, signTerms, refetch]);
 
   return useMemo(() => ({ addressTerms, getSignature }), [addressTerms, getSignature]);
 };

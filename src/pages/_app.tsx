@@ -1,41 +1,32 @@
-import { AppProps } from 'next/app';
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import {
   PulsarGlobalStyles,
   PulsarThemeProvider,
-  PULSAR_GLOBAL_FONT_HREF,
   PulsarToastContainer,
+  PULSAR_GLOBAL_FONT_HREF,
 } from '@swingby-protocol/pulsar';
-import { IntlProvider } from 'react-intl';
-import { Provider as ReduxProvider } from 'react-redux';
+import { isSkybridgeMode } from '@swingby-protocol/sdk';
+import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useMemo } from 'react';
-import { isSkybridgeMode } from '@swingby-protocol/sdk';
-import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
-import { relayStylePagination } from '@apollo/client/utilities'; // eslint-disable-line import/no-internal-modules
+import { IntlProvider } from 'react-intl';
+import { Provider as ReduxProvider } from 'react-redux';
 
+import { Favicon } from '../components/Favicon';
+import { graphEndpoint } from '../modules/env';
 import { languages } from '../modules/i18n';
 import { WidgetLayoutProvider } from '../modules/layout';
 import { useStore } from '../modules/store';
-import { Favicon } from '../components/Favicon';
-import { GlobalStyles } from '../modules/styles';
 import { SdkContextGateKeeper } from '../modules/store/sdkContext';
-import { OnboardProvider, OnboardGlobalStyles } from '../modules/web3';
-import { graphEndpoint } from '../modules/env';
+import { GlobalStyles } from '../modules/styles';
+import { OnboardGlobalStyles, OnboardProvider } from '../modules/web3';
 
 function MyApp({ Component, pageProps, router }: AppProps) {
   const store = useStore();
 
   const apolloClient = new ApolloClient({
     uri: graphEndpoint,
-    cache: new InMemoryCache({
-      typePolicies: {
-        Query: {
-          fields: {
-            transactions: relayStylePagination(['where']),
-          },
-        },
-      },
-    }),
+    cache: new InMemoryCache(),
   });
 
   const defaultLocale = router.defaultLocale ?? 'en';
