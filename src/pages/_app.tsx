@@ -13,7 +13,7 @@ import { IntlProvider } from 'react-intl';
 import { Provider as ReduxProvider } from 'react-redux';
 
 import { Favicon } from '../components/Favicon';
-import { graphEndpoint } from '../modules/env';
+import { graphQlEndpoint } from '../modules/env';
 import { languages } from '../modules/i18n';
 import { WidgetLayoutProvider } from '../modules/layout';
 import { useStore } from '../modules/store';
@@ -25,7 +25,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
   const store = useStore();
 
   const apolloClient = new ApolloClient({
-    uri: graphEndpoint,
+    uri: graphQlEndpoint,
     cache: new InMemoryCache(),
   });
 
