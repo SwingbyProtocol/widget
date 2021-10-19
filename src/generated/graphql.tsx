@@ -4,7 +4,7 @@ export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-const defaultOptions = {};
+const defaultOptions =  {}
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -25,7 +25,7 @@ export type BooleanFilter = {
 
 export enum Bridge {
   BtcErc = 'btc_erc',
-  BtcBep20 = 'btc_bep20',
+  BtcBep20 = 'btc_bep20'
 }
 
 export type BridgeEnumFilter = {
@@ -34,6 +34,7 @@ export type BridgeEnumFilter = {
   not?: Maybe<BridgeEnumFilter>;
   notIn?: Maybe<Array<Maybe<Bridge>>>;
 };
+
 
 export type DateTimeFilter = {
   equals?: Maybe<Scalars['DateTime']>;
@@ -45,6 +46,7 @@ export type DateTimeFilter = {
   not?: Maybe<DateTimeFilter>;
   notIn?: Maybe<Array<Maybe<Scalars['DateTime']>>>;
 };
+
 
 export type DecimalFilter = {
   equals?: Maybe<Scalars['Decimal']>;
@@ -73,7 +75,7 @@ export type Message = {
 
 export enum Mode {
   Test = 'test',
-  Production = 'production',
+  Production = 'production'
 }
 
 export type ModeEnumFilter = {
@@ -87,6 +89,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   signTerms?: Maybe<Scalars['Boolean']>;
 };
+
 
 export type MutationSignTermsArgs = {
   address: Scalars['String'];
@@ -122,7 +125,7 @@ export enum NodeStatus {
   MayChurnOutBondExpiring = 'MAY_CHURN_OUT__BOND_EXPIRING',
   InactiveBondTooLow = 'INACTIVE__BOND_TOO_LOW',
   InactiveBondExpired = 'INACTIVE__BOND_EXPIRED',
-  Unreachable = 'UNREACHABLE',
+  Unreachable = 'UNREACHABLE'
 }
 
 export type Query = {
@@ -134,9 +137,11 @@ export type Query = {
   termsMessage: Message;
 };
 
+
 export type QueryTransactionArgs = {
   id: Scalars['ID'];
 };
+
 
 export type QueryTransactionsArgs = {
   where?: Maybe<TransactionWhereInput>;
@@ -146,10 +151,12 @@ export type QueryTransactionsArgs = {
   before?: Maybe<Scalars['String']>;
 };
 
+
 export type QueryNodesArgs = {
   mode: Mode;
   bridge: Bridge;
 };
+
 
 export type QueryHasSignedTermsArgs = {
   address: Scalars['String'];
@@ -172,7 +179,7 @@ export type StringFilter = {
 
 export enum StringFilterMode {
   Default = 'default',
-  Insensitive = 'insensitive',
+  Insensitive = 'insensitive'
 }
 
 export type Transaction = {
@@ -202,7 +209,7 @@ export enum TransactionCurrency {
   WbtcErc20 = 'WBTC__ERC20',
   SbBtcErc20 = 'sbBTC__ERC20',
   BtcbBep20 = 'BTCB__BEP20',
-  SbBtcBep20 = 'sbBTC__BEP20',
+  SbBtcBep20 = 'sbBTC__BEP20'
 }
 
 export type TransactionCurrencyEnumFilter = {
@@ -221,7 +228,7 @@ export enum TransactionStatus {
   SigningRefund = 'SIGNING_REFUND',
   SendingRefund = 'SENDING_REFUND',
   Refunded = 'REFUNDED',
-  Expired = 'EXPIRED',
+  Expired = 'EXPIRED'
 }
 
 export type TransactionStatusEnumFilter = {
@@ -234,7 +241,7 @@ export type TransactionStatusEnumFilter = {
 export enum TransactionType {
   Swap = 'SWAP',
   Deposit = 'DEPOSIT',
-  Withdrawal = 'WITHDRAWAL',
+  Withdrawal = 'WITHDRAWAL'
 }
 
 export type TransactionTypeEnumFilter = {
@@ -281,33 +288,47 @@ export type TransactionsConnectionEdges = {
   cursor: Scalars['String'];
 };
 
-export type TermsMessageQueryVariables = Exact<{ [key: string]: never }>;
+export type TermsMessageQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type TermsMessageQuery = { __typename?: 'Query' } & {
-  termsMessage: { __typename?: 'Message' } & Pick<Message, 'message' | 'seed'>;
-};
+
+export type TermsMessageQuery = (
+  { __typename?: 'Query' }
+  & { termsMessage: (
+    { __typename?: 'Message' }
+    & Pick<Message, 'message' | 'seed'>
+  ) }
+);
 
 export type HasSignedTermsQueryVariables = Exact<{
   address: Scalars['String'];
 }>;
 
-export type HasSignedTermsQuery = { __typename?: 'Query' } & Pick<Query, 'hasSignedTerms'>;
+
+export type HasSignedTermsQuery = (
+  { __typename?: 'Query' }
+  & Pick<Query, 'hasSignedTerms'>
+);
 
 export type SignTermsMutationVariables = Exact<{
   address: Scalars['String'];
   signature: Scalars['String'];
 }>;
 
-export type SignTermsMutation = { __typename?: 'Mutation' } & Pick<Mutation, 'signTerms'>;
+
+export type SignTermsMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'signTerms'>
+);
+
 
 export const TermsMessageDocument = gql`
-  query TermsMessage {
-    termsMessage {
-      message
-      seed
-    }
+    query TermsMessage {
+  termsMessage {
+    message
+    seed
   }
-`;
+}
+    `;
 
 /**
  * __useTermsMessageQuery__
@@ -324,35 +345,22 @@ export const TermsMessageDocument = gql`
  *   },
  * });
  */
-export function useTermsMessageQuery(
-  baseOptions?: Apollo.QueryHookOptions<TermsMessageQuery, TermsMessageQueryVariables>,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<TermsMessageQuery, TermsMessageQueryVariables>(
-    TermsMessageDocument,
-    options,
-  );
-}
-export function useTermsMessageLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<TermsMessageQuery, TermsMessageQueryVariables>,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<TermsMessageQuery, TermsMessageQueryVariables>(
-    TermsMessageDocument,
-    options,
-  );
-}
+export function useTermsMessageQuery(baseOptions?: Apollo.QueryHookOptions<TermsMessageQuery, TermsMessageQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<TermsMessageQuery, TermsMessageQueryVariables>(TermsMessageDocument, options);
+      }
+export function useTermsMessageLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TermsMessageQuery, TermsMessageQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<TermsMessageQuery, TermsMessageQueryVariables>(TermsMessageDocument, options);
+        }
 export type TermsMessageQueryHookResult = ReturnType<typeof useTermsMessageQuery>;
 export type TermsMessageLazyQueryHookResult = ReturnType<typeof useTermsMessageLazyQuery>;
-export type TermsMessageQueryResult = Apollo.QueryResult<
-  TermsMessageQuery,
-  TermsMessageQueryVariables
->;
+export type TermsMessageQueryResult = Apollo.QueryResult<TermsMessageQuery, TermsMessageQueryVariables>;
 export const HasSignedTermsDocument = gql`
-  query HasSignedTerms($address: String!) {
-    hasSignedTerms(address: $address)
-  }
-`;
+    query HasSignedTerms($address: String!) {
+  hasSignedTerms(address: $address)
+}
+    `;
 
 /**
  * __useHasSignedTermsQuery__
@@ -370,39 +378,23 @@ export const HasSignedTermsDocument = gql`
  *   },
  * });
  */
-export function useHasSignedTermsQuery(
-  baseOptions: Apollo.QueryHookOptions<HasSignedTermsQuery, HasSignedTermsQueryVariables>,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<HasSignedTermsQuery, HasSignedTermsQueryVariables>(
-    HasSignedTermsDocument,
-    options,
-  );
-}
-export function useHasSignedTermsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<HasSignedTermsQuery, HasSignedTermsQueryVariables>,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<HasSignedTermsQuery, HasSignedTermsQueryVariables>(
-    HasSignedTermsDocument,
-    options,
-  );
-}
+export function useHasSignedTermsQuery(baseOptions: Apollo.QueryHookOptions<HasSignedTermsQuery, HasSignedTermsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<HasSignedTermsQuery, HasSignedTermsQueryVariables>(HasSignedTermsDocument, options);
+      }
+export function useHasSignedTermsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<HasSignedTermsQuery, HasSignedTermsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<HasSignedTermsQuery, HasSignedTermsQueryVariables>(HasSignedTermsDocument, options);
+        }
 export type HasSignedTermsQueryHookResult = ReturnType<typeof useHasSignedTermsQuery>;
 export type HasSignedTermsLazyQueryHookResult = ReturnType<typeof useHasSignedTermsLazyQuery>;
-export type HasSignedTermsQueryResult = Apollo.QueryResult<
-  HasSignedTermsQuery,
-  HasSignedTermsQueryVariables
->;
+export type HasSignedTermsQueryResult = Apollo.QueryResult<HasSignedTermsQuery, HasSignedTermsQueryVariables>;
 export const SignTermsDocument = gql`
-  mutation SignTerms($address: String!, $signature: String!) {
-    signTerms(address: $address, signature: $signature)
-  }
-`;
-export type SignTermsMutationFn = Apollo.MutationFunction<
-  SignTermsMutation,
-  SignTermsMutationVariables
->;
+    mutation SignTerms($address: String!, $signature: String!) {
+  signTerms(address: $address, signature: $signature)
+}
+    `;
+export type SignTermsMutationFn = Apollo.MutationFunction<SignTermsMutation, SignTermsMutationVariables>;
 
 /**
  * __useSignTermsMutation__
@@ -422,18 +414,10 @@ export type SignTermsMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useSignTermsMutation(
-  baseOptions?: Apollo.MutationHookOptions<SignTermsMutation, SignTermsMutationVariables>,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<SignTermsMutation, SignTermsMutationVariables>(
-    SignTermsDocument,
-    options,
-  );
-}
+export function useSignTermsMutation(baseOptions?: Apollo.MutationHookOptions<SignTermsMutation, SignTermsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SignTermsMutation, SignTermsMutationVariables>(SignTermsDocument, options);
+      }
 export type SignTermsMutationHookResult = ReturnType<typeof useSignTermsMutation>;
 export type SignTermsMutationResult = Apollo.MutationResult<SignTermsMutation>;
-export type SignTermsMutationOptions = Apollo.BaseMutationOptions<
-  SignTermsMutation,
-  SignTermsMutationVariables
->;
+export type SignTermsMutationOptions = Apollo.BaseMutationOptions<SignTermsMutation, SignTermsMutationVariables>;

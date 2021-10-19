@@ -10,34 +10,60 @@ import { logger } from '../../logger';
 import { useOnboard } from '../../web3';
 
 export const useGetSignature = () => {
-  const { onboard, wallet, address } = useOnboard();
+  const { wallet, address } = useOnboard();
   const { data: msgData } = useTermsMessageQuery();
   const [signTerms] = useSignTermsMutation();
   const [fetchTerms, { data }] = useHasSignedTermsLazyQuery();
 
-  const checkTermsSignature = useCallback(async () => {
-    if (!msgData || !wallet || !address || !onboard) return;
+  const assertTermsSignature = useCallback(async () => {
+    if (!msgData) {
+      throw new Error('No Terms of Service message found');
+    }
 
-    const message = msgData.termsMessage.message;
-    const seed = msgData.termsMessage.seed;
+    if (!wallet || !address) {
+      throw new Error('No wallet connected');
+    }
+
+    if (!data) {
+      throw new Error('No response for "hasSignedTerms" availabled');
+    }
+
+    if (data.hasSignedTerms) {
+      return;
+    }
+
     try {
-      if (!data || data.hasSignedTerms) return;
+      const message = msgData.termsMessage.message;
+      const seed = msgData.termsMessage.seed;
 
-      if (!data.hasSignedTerms) {
-        const web3 = new Web3(wallet.provider);
-        const signature = await web3.eth.personal.sign(message, address, seed);
-        await signTerms({ variables: { address, signature } });
-      }
+      const web3 = new Web3(wallet.provider);
+      const signature = await web3.eth.personal.sign(message, address, seed);
+      await signTerms({ variables: { address, signature } });
+
+      fetchTerms({ variables: { address } });
     } catch (e) {
       logger.error({ err: e }, 'Error trying to get signature');
       throw e;
     }
-  }, [address, wallet, onboard, msgData, signTerms, data]);
+  }, [address, wallet, msgData, signTerms, data, fetchTerms]);
 
   useEffect(() => {
     if (!address) return;
-    fetchTerms({ variables: { address } });
+
+    let cancelled = false;
+
+    const refetch = () => {
+      if (cancelled) return;
+      fetchTerms({ variables: { address } });
+      setTimeout(refetch, 30000);
+    };
+
+    refetch();
+
+    return () => {
+      cancelled = true;
+    };
   }, [fetchTerms, address]);
 
-  return useMemo(() => ({ checkTermsSignature, fetchTerms }), [checkTermsSignature, fetchTerms]);
+  return useMemo(() => ({ assertTermsSignature, fetchTerms }), [assertTermsSignature, fetchTerms]);
 };
