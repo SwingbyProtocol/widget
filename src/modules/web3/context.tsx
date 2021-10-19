@@ -1,5 +1,5 @@
 import React, { useContext, useMemo, useEffect, useState } from 'react';
-import { Wallet } from 'bnc-onboard/dist/src/interfaces'; // eslint-disable-line import/no-internal-modules
+import { Wallet } from 'bnc-onboard/dist/src/interfaces'; // eslint-disable-line
 import { useTheme } from 'styled-components';
 import { getBridgeFor } from '@swingby-protocol/sdk';
 import { useSelector } from 'react-redux';
