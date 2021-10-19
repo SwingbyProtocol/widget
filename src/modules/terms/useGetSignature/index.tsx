@@ -1,50 +1,43 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import Web3 from 'web3';
 
 import {
-  useHasSignedTermsQuery,
+  useHasSignedTermsLazyQuery,
   useSignTermsMutation,
   useTermsMessageQuery,
 } from '../../../generated/graphql';
 import { logger } from '../../logger';
 import { useOnboard } from '../../web3';
 
-/*
- * Store the signature data who signed on Terms of Use.
- * To recover from signature(hex) -> await web3.eth.personal.ecRecover(SIGNATURE_MESSAGE, signature)
- *  >> returns signed `wallet address`.
- *  !! MUST use same wallet.provider (same address?) to make web3 instance. const web3 = new Web3(wallet.provider)
- *
- * Fixme: Getting error when use 'Ledger' option with `Ethereum Ledger Live -m/44'/60'` derivation path
- * name: "TransportError", message: "Ledger Device is busy (lock getAddress)
- * Could be an error on 'Ledger Live App'.
- */
-
 export const useGetSignature = () => {
   const { onboard, wallet, address } = useOnboard();
   const { data: msgData } = useTermsMessageQuery();
   const [signTerms] = useSignTermsMutation();
-  const { data: addressTerms, refetch } = useHasSignedTermsQuery({
-    variables: {
-      address: address!,
-    },
-  });
+  const [fetchTerms, { data }] = useHasSignedTermsLazyQuery();
 
-  const getSignature = useCallback(async () => {
+  const checkTermsSignature = useCallback(async () => {
     if (!msgData || !wallet || !address || !onboard) return;
+
     const message = msgData.termsMessage.message;
     const seed = msgData.termsMessage.seed;
     try {
-      const web3 = new Web3(wallet.provider);
-      const signature = await web3.eth.personal.sign(message, address, seed);
-      await signTerms({ variables: { address, signature } });
-      await refetch();
-      return signature;
-    } catch (e) {
-      logger.error('Error trying to get signature', e);
-      return false;
-    }
-  }, [address, wallet, onboard, msgData, signTerms, refetch]);
+      if (!data || data.hasSignedTerms) return;
 
-  return useMemo(() => ({ addressTerms, getSignature }), [addressTerms, getSignature]);
+      if (!data.hasSignedTerms) {
+        const web3 = new Web3(wallet.provider);
+        const signature = await web3.eth.personal.sign(message, address, seed);
+        await signTerms({ variables: { address, signature } });
+      }
+    } catch (e) {
+      logger.error({ err: e }, 'Error trying to get signature');
+      throw e;
+    }
+  }, [address, wallet, onboard, msgData, signTerms, data]);
+
+  useEffect(() => {
+    if (!address) return;
+    fetchTerms({ variables: { address } });
+  }, [fetchTerms, address]);
+
+  return useMemo(() => ({ checkTermsSignature, fetchTerms }), [checkTermsSignature, fetchTerms]);
 };

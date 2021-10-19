@@ -48,7 +48,7 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
     currency: swap?.currencyDeposit,
     spenderAddress: swap?.addressDeposit,
   });
-  const { addressTerms, getSignature } = useGetSignature();
+  const { checkTermsSignature } = useGetSignature();
 
   const outboundLink = useMemo(() => {
     if (!swap || !swap.txReceivingId) return undefined;
@@ -80,26 +80,18 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
   const doApprove = useCallback(async () => {
     if (!swap) return;
 
-    const approveToken = async () => {
+    try {
+      await checkTermsSignature();
       await approveTokenAllowance({
         currency: swap.currencyDeposit,
         spenderAddress: swap.addressDeposit,
         amount: swap.amountDeposit,
       });
       recheckAllowance();
-    };
-
-    try {
-      if (addressTerms?.hasSignedTerms) {
-        await approveToken();
-        return;
-      }
-      const signature = await getSignature();
-      signature && (await approveToken());
     } catch (e) {
       logger.error(e);
     }
-  }, [swap, approveTokenAllowance, recheckAllowance, addressTerms, getSignature]);
+  }, [swap, approveTokenAllowance, recheckAllowance, checkTermsSignature]);
 
   const needsApproval = useMemo(
     () =>
