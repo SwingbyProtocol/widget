@@ -22,7 +22,6 @@ export const useTransferToken = () => {
 
   const transfer = useCallback(
     async ({ swap }: { swap: null | DefaultRootState['swaps'][string] }) => {
-      console.log('transfer');
       try {
         if (!onboard) {
           throw new Error('Onboard has not been initialised');
@@ -50,18 +49,14 @@ export const useTransferToken = () => {
         }
 
         const web3 = new Web3(wallet.provider);
-        console.log('web3', web3);
         const contract = new web3.eth.Contract(
           CONTRACTS.coins[currencyDeposit][context.mode].abi,
           CONTRACTS.coins[currencyDeposit][context.mode].address,
           wallet.provider,
         );
-        console.log('contract', contract);
 
         const tokenDecimals = await contract.methods.decimals().call();
-        console.log('tokenDecimals', tokenDecimals);
         const gasPrice = await web3.eth.getGasPrice();
-        console.log('gasPrice', gasPrice);
         const rawTx: TransactionConfig = {
           chain: getTransactionChainProp({ mode: context.mode, coin: currencyDeposit }),
           nonce: await web3.eth.getTransactionCount(address),
@@ -78,7 +73,6 @@ export const useTransferToken = () => {
         };
 
         const estimatedGas = await web3.eth.estimateGas(rawTx);
-        console.log('estimated', estimatedGas);
         if (!estimatedGas) {
           logger.warn(rawTx, 'Did not get any value from estimateGas(): %s', estimatedGas);
         } else {
