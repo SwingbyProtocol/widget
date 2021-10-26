@@ -1,6 +1,5 @@
 import { Button, Loading, SwapProgress, useBuildTestId } from '@swingby-protocol/pulsar';
 import { buildExplorerLink, SkybridgeResource } from '@swingby-protocol/sdk';
-import { Big } from 'big.js';
 import { useCallback, useMemo, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
@@ -14,13 +13,7 @@ import { usePushWithSearchParams } from '../../../modules/push-keeping-search';
 import { getTransferUriFor } from '../../../modules/send-funds-uri';
 import { useSdkContext } from '../../../modules/store/sdkContext';
 import { useAssertTermsSignature } from '../../../modules/terms';
-import {
-  isWeb3ableCurrency,
-  useApproveTokenAllowance,
-  useOnboard,
-  useTokenAllowance,
-  useTransferToken,
-} from '../../../modules/web3';
+import { isWeb3ableCurrency, useOnboard, useTransferToken } from '../../../modules/web3';
 
 import {
   ExplorerContainer,
@@ -42,12 +35,7 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
   const layout = useWidgetLayout();
   const { address } = useOnboard();
   const { transfer, loading: isTransferring } = useTransferToken();
-  const { approveTokenAllowance, loading: isApproving } = useApproveTokenAllowance();
   const [hasTransactionSucceeded, setTransactionSucceeded] = useState(false);
-  const { allowance, recheck: recheckAllowance } = useTokenAllowance({
-    currency: swap?.currencyDeposit,
-    spenderAddress: swap?.addressDeposit,
-  });
   const { assertTermsSignature } = useAssertTermsSignature();
 
   const outboundLink = useMemo(() => {
@@ -70,36 +58,13 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
 
   const doTransfer = useCallback(async () => {
     try {
+      await assertTermsSignature();
       const result = await transfer({ swap });
       setTransactionSucceeded(result.status);
     } catch (err) {
       logger.error({ err });
     }
-  }, [transfer, swap]);
-
-  const doApprove = useCallback(async () => {
-    if (!swap) return;
-
-    try {
-      await assertTermsSignature();
-      await approveTokenAllowance({
-        currency: swap.currencyDeposit,
-        spenderAddress: swap.addressDeposit,
-        amount: swap.amountDeposit,
-      });
-      recheckAllowance();
-    } catch (err) {
-      logger.error({ err });
-    }
-  }, [swap, approveTokenAllowance, recheckAllowance, assertTermsSignature]);
-
-  const needsApproval = useMemo(
-    () =>
-      typeof allowance !== 'string' ||
-      !swap?.amountDeposit ||
-      new Big(allowance).lt(swap.amountDeposit),
-    [allowance, swap?.amountDeposit],
-  );
+  }, [transfer, swap, assertTermsSignature]);
 
   if (!swap) {
     return <Loading data-testid={buildTestId('loading')} />;
@@ -140,29 +105,7 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
         !isTransferring &&
         !hasTransactionSucceeded && (
           <TransferButtonsContainer>
-            <Button
-              variant={!needsApproval ? 'secondary' : 'primary'}
-              size="city"
-              shape="fit"
-              onClick={doApprove}
-              disabled={isApproving || !needsApproval}
-            >
-              {isApproving ? (
-                <Loading />
-              ) : (
-                <FormattedMessage
-                  id="widget.onboard.approve-btn"
-                  values={{ symbol: swap.currencyDeposit }}
-                />
-              )}
-            </Button>
-            <Button
-              variant="primary"
-              size="city"
-              shape="fit"
-              onClick={doTransfer}
-              disabled={needsApproval}
-            >
+            <Button variant="primary" size="city" shape="fit" onClick={doTransfer}>
               <FormattedMessage id="widget.onboard.transfer-btn" />
             </Button>
           </TransferButtonsContainer>
