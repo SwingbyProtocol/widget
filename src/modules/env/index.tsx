@@ -14,4 +14,4 @@ export const infuraApiKey =
 
 export const graphQlEndpoint = 'https://network.skybridge.exchange/api/v3/graphql';
 
-export const wcBridge = process.env.NEXT_PUBLIC_WC_BRIDGE;
+export const walletConnectBridge = process.env.NEXT_PUBLIC_WALLET_CONNECT_BRIDGE;

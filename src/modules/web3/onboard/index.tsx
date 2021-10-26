@@ -2,7 +2,7 @@ import type { SkybridgeBridge, SkybridgeMode } from '@swingby-protocol/sdk';
 import Onboard from 'bnc-onboard';
 import type { Subscriptions } from 'bnc-onboard/dist/src/interfaces'; // eslint-disable-line import/no-internal-modules
 
-import { blocknativeApiKey, infuraApiKey, wcBridge } from '../../env';
+import { blocknativeApiKey, infuraApiKey, walletConnectBridge } from '../../env';
 
 const APP_NAME = 'Skybridge Widget';
 
@@ -61,7 +61,7 @@ export const initOnboard = ({
         {
           walletName: 'walletConnect',
           infuraKey: infuraApiKey,
-          bridge: wcBridge,
+          bridge: walletConnectBridge,
           preferred: true,
         },
         { walletName: 'walletLink', rpcUrl, appName: APP_NAME, preferred: true },
