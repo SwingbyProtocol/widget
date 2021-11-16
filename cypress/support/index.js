@@ -12,45 +12,66 @@ beforeEach(() => {
     'floats-balance',
   );
   cy.intercept(
-    { pathname: /\/swaps\/query$/, query: { hash: 'fake-hash-waiting' } },
+    { pathname: /\/graphql$/ },
+    (req) => {
+      const { id } = req.body.variables;
+      req.reply({
+        data: {
+          transaction: {
+            at: '2020-11-25T14:43:10.000Z',
+            depositAddress: 'mzJ9Gi7vvp1NGw4fviWjkZaJxWakk5zfHt',
+            depositAmount: '0.99999854',
+            depositCurrency: 'BTC',
+            depositTxHash: [
+              'fake-hash-completed',
+              'fake-hash-refunded',
+              'fake-hash-sending-refund',
+              'fake-hash-sending-with-txout',
+              'fake-hash-sending',
+            ].includes(id)
+              ? '298380c8f74ec2a7a2ff2b9a76fb46958338957ec53fabcba61aa59f7a840e93'
+              : null,
+            feeCurrency: 'WBTC__ERC20',
+            feeTotal: '0.0000001',
+            id,
+            receivingAddress: '0x3F4341a0599f63F444B6f1e0c7C5cAf81b5843Cc',
+            receivingAmount: '0.99999612',
+            receivingCurrency: 'WBTC__ERC20',
+            receivingTxHash: ['fake-hash-sending-refund', 'fake-hash-refunded'].includes(id)
+              ? '298380c8f74ec2a7a2ff2b9a76fb46958338957ec53fabcba61aa59f7a840e93'
+              : ['fake-hash-sending-with-txout', 'fake-hash-completed'].includes(id)
+              ? '0x0e0c172a755bff9ea74e2404b271d4841082dc5fd10b41c83a6811c39e828f6e'
+              : null,
+            sendingAddress: 'tb1qkyamrxnwv6cqj9s9nnm244s455sflatpnttk4n',
+            status:
+              id === 'fake-hash-waiting'
+                ? 'WAITING'
+                : id === 'fake-hash-pending'
+                ? 'PENDING'
+                : id === 'fake-hash-signing'
+                ? 'SIGNING'
+                : id === 'fake-hash-signing-refund'
+                ? 'SIGNING_REFUND'
+                : id === 'fake-hash-sending'
+                ? 'SENDING'
+                : id === 'fake-hash-sending-refund'
+                ? 'SENDING_REFUND'
+                : id === 'fake-hash-sending-with-txout'
+                ? 'SENDING'
+                : id === 'fake-hash-completed'
+                ? 'COMPLETED'
+                : id === 'fake-hash-refunded'
+                ? 'REFUNDED'
+                : id === 'fake-hash-expired'
+                ? 'EXPIRED'
+                : '__INVALID__',
+            type: 'SWAP',
+          },
+        },
+      });
+    },
     { fixture: 'fake-swap-waiting.json' },
   ).as('fake-hash-waiting');
-  cy.intercept(
-    { pathname: /\/swaps\/query$/, query: { hash: 'fake-hash-pending' } },
-    { fixture: 'fake-swap-pending.json' },
-  ).as('fake-hash-pending');
-  cy.intercept(
-    { pathname: /\/swaps\/query$/, query: { hash: 'fake-hash-signing' } },
-    { fixture: 'fake-swap-signing.json' },
-  ).as('fake-hash-signing');
-  cy.intercept(
-    { pathname: /\/swaps\/query$/, query: { hash: 'fake-hash-signing-refund' } },
-    { fixture: 'fake-swap-signing-refund.json' },
-  ).as('fake-hash-signing-refund');
-  cy.intercept(
-    { pathname: /\/swaps\/query$/, query: { hash: 'fake-hash-sending' } },
-    { fixture: 'fake-swap-sending.json' },
-  ).as('fake-hash-sending');
-  cy.intercept(
-    { pathname: /\/swaps\/query$/, query: { hash: 'fake-hash-sending-refund' } },
-    { fixture: 'fake-swap-sending-refund.json' },
-  ).as('fake-hash-sending-refund');
-  cy.intercept(
-    { pathname: /\/swaps\/query$/, query: { hash: 'fake-hash-sending-with-txout' } },
-    { fixture: 'fake-swap-sending-with-txout.json' },
-  ).as('fake-hash-sending-with-txout');
-  cy.intercept(
-    { pathname: /\/swaps\/query$/, query: { hash: 'fake-hash-completed' } },
-    { fixture: 'fake-swap-completed.json' },
-  ).as('fake-hash-completed');
-  cy.intercept(
-    { pathname: /\/swaps\/query$/, query: { hash: 'fake-hash-refunded' } },
-    { fixture: 'fake-swap-refunded.json' },
-  ).as('fake-hash-refunded');
-  cy.intercept(
-    { pathname: /\/swaps\/query$/, query: { hash: 'fake-hash-expired' } },
-    { fixture: 'fake-swap-expired.json' },
-  ).as('fake-hash-expired');
   cy.intercept(
     { pathname: /\/api\/(mode|production)\/[^/]+\/status$/ },
     { fixture: 'maintenance-mode.json' },

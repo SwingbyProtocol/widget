@@ -1,0 +1,23 @@
+query SwapDetails($id: ID!) {
+  transaction(id: $id) {
+    id
+    receivingAddress
+    receivingTxHash
+    type
+    at
+    status
+    mode
+    bridge
+    depositAddress
+    depositAmount
+    depositCurrency
+    depositTxHash
+    sendingAddress
+    receivingAddress
+    receivingAmount
+    receivingTxHash
+    receivingCurrency
+    feeCurrency
+    feeTotal
+  }
+}
