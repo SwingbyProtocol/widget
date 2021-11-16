@@ -1,87 +1,59 @@
-import { getFloatDetails, getSwapDetails, getWithdrawalDetails } from '@swingby-protocol/sdk';
-import { useEffect, useMemo, useState } from 'react';
-import { DefaultRootState, useDispatch, useSelector } from 'react-redux';
+import { DateTime } from 'luxon';
+import { useMemo } from 'react';
+import { DefaultRootState, useSelector } from 'react-redux';
 
-import { logger } from '../logger';
+import { TransactionCurrency, useSwapDetailsQuery } from '../../generated/graphql';
 import { useWidgetPathParams } from '../path-params';
-import { useSdkContext } from '../store/sdkContext';
-import { actionSetSwap } from '../store/swaps';
 
 const MS_TILL_NEXT_TRY = 10000;
 
 type SwapDetails = { loading: boolean; swap: null | DefaultRootState['swaps'][string] };
 
+const covertGqlCurrency = (
+  value: TransactionCurrency,
+): NonNullable<DefaultRootState['swaps'][string]>['currencyDeposit'] => {
+  switch (value) {
+    case TransactionCurrency.Btc:
+      return 'BTC';
+    case TransactionCurrency.BtcbBep20:
+      return 'BTCB.BEP20';
+    case TransactionCurrency.SbBtcBep20:
+      return 'sbBTC.BEP20';
+    case TransactionCurrency.SbBtcErc20:
+      return 'sbBTC';
+    case TransactionCurrency.WbtcErc20:
+      return 'WBTC';
+  }
+};
+
 export const useDetails = (): SwapDetails => {
-  const { hash: hashParam, resource } = useWidgetPathParams();
+  const { hash: hashParam } = useWidgetPathParams();
   const hash = hashParam ?? '';
 
-  const [loading, setLoading] = useState(false);
-  const dispatch = useDispatch();
-  const swap = useSelector((state) => state.swaps[hash]);
-  const context = useSdkContext();
+  const { data, loading } = useSwapDetailsQuery({
+    variables: { id: hash },
+    pollInterval: MS_TILL_NEXT_TRY,
+  });
+  const swapRedux = useSelector((state) => state.swaps[hash]);
 
-  useEffect(() => {
-    let timeoutId: NodeJS.Timeout | null = null;
-    let cancelled = false;
-
-    const doStuff = async () => {
-      setLoading(true);
-
-      try {
-        const swap = await (async () => {
-          if (resource === 'swap') {
-            const result = await getSwapDetails({ context, hash });
-            logger.debug('getSwapDetails() returned: %O', result);
-            return result;
-          }
-
-          if (resource === 'pool') {
-            const result = await getFloatDetails({ context, hash });
-            logger.debug('getFloatDetails() returned: %O', result);
-            return result;
-          }
-
-          if (resource === 'withdrawal') {
-            const result = await getWithdrawalDetails({ context, hash });
-            logger.debug('getWithdrawalDetails() returned: %O', result);
-            return result;
-          }
-
-          throw new Error(`Invalid resource "${resource}"`);
-        })();
-        if (cancelled) {
-          return;
-        }
-
-        dispatch(actionSetSwap({ ...swap }));
-
-        if (
-          swap.status === 'COMPLETED' ||
-          swap.status === 'REFUNDED' ||
-          swap.status === 'EXPIRED'
-        ) {
-          setLoading(false);
-          return;
-        }
-
-        timeoutId = setTimeout(doStuff, MS_TILL_NEXT_TRY);
-      } catch (err) {
-        logger.error({ err }, 'Error trying to fetch swap details');
-        timeoutId = setTimeout(doStuff, MS_TILL_NEXT_TRY);
-      }
+  const swap: null | DefaultRootState['swaps'][string] = useMemo(() => {
+    if (!data) return swapRedux ?? null;
+    return {
+      addressDeposit: data.transaction.depositAddress,
+      addressReceiving: data.transaction.receivingAddress,
+      amountDeposit: data.transaction.depositAmount,
+      hash: data.transaction.id,
+      amountReceiving: data.transaction.receivingAmount,
+      currencyDeposit: covertGqlCurrency(data.transaction.depositCurrency),
+      currencyReceiving: covertGqlCurrency(data.transaction.receivingCurrency),
+      timestamp: DateTime.fromISO(data.transaction.at).toJSDate(),
+      feeCurrency: covertGqlCurrency(data.transaction.feeCurrency),
+      feeTotal: data.transaction.feeTotal,
+      status: data.transaction.status,
+      txDepositId: data.transaction.depositTxHash,
+      txReceivingId: data.transaction.receivingTxHash,
     };
-
-    doStuff();
-
-    return () => {
-      cancelled = true;
-
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-        timeoutId = null;
-      }
-    };
-  }, [dispatch, hash, context, resource]);
+  }, [data, swapRedux]);
 
   return useMemo(() => ({ swap: swap ?? null, loading }), [swap, loading]);
 };
