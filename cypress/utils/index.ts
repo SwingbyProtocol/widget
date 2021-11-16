@@ -51,8 +51,8 @@ export const testStatuses = ({
     cy.get(`[data-testid="${testId}.swap-details.status-label"`).should(
       'have.text',
       testId === 'banner'
-        ? `Refunding 0.99999854${NON_BREAKING_SPACE}BTC`
-        : `Refunding 0.99999854${NON_BREAKING_SPACE}BTC to`,
+        ? `Refunding 0.99999612${NON_BREAKING_SPACE}WBTC`
+        : `Refunding 0.99999612${NON_BREAKING_SPACE}WBTC to`,
     );
     cy.percySnapshot(`${name}: signing refund`, { widths: [width], minHeight: height });
   });
@@ -72,8 +72,8 @@ export const testStatuses = ({
     cy.get(`[data-testid="${testId}.swap-details.status-label"`).should(
       'have.text',
       testId === 'banner'
-        ? `Refunding 0.99999854${NON_BREAKING_SPACE}BTC`
-        : `Refunding 0.99999854${NON_BREAKING_SPACE}BTC to`,
+        ? `Refunding 0.99999612${NON_BREAKING_SPACE}WBTC`
+        : `Refunding 0.99999612${NON_BREAKING_SPACE}WBTC to`,
     );
   });
 
@@ -103,8 +103,8 @@ export const testStatuses = ({
     cy.get(`[data-testid="${testId}.swap-details.status-label"`).should(
       'have.text',
       testId === 'banner'
-        ? 'Refunded 0.99999854 BTC'
-        : `Refunded 0.99999854${NON_BREAKING_SPACE}BTC to`,
+        ? 'Refunded 0.99999612 WBTC'
+        : `Refunded 0.99999612${NON_BREAKING_SPACE}WBTC to`,
     );
   });
 
