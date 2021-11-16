@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { PulsarThemeProvider, Testable, useBuildTestId } from '@swingby-protocol/pulsar';
 
 import { Space } from '../Space';
@@ -27,6 +28,9 @@ export const VerticalWidgetView = ({
   children,
   'data-testid': testId,
 }: Props) => {
+  const {
+    query: { disableNavigation },
+  } = useRouter();
   const { buildTestId } = useBuildTestId({ id: testId });
   const layout = useWidgetLayout();
   return (
@@ -38,7 +42,7 @@ export const VerticalWidgetView = ({
               <FancyTopContainer data-testid={buildTestId('top')}>
                 <Space size="widgetVerticalPadding" />
                 <NavBarContainer>
-                  {onClickBack && (
+                  {typeof disableNavigation === 'undefined' && onClickBack && (
                     <BackButton onClick={onClickBack} data-testid={buildTestId('back-btn')} />
                   )}
                   <Space size="box" shape="fill" />
