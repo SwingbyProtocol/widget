@@ -3,7 +3,6 @@ import { buildExplorerLink, SkybridgeResource } from '@swingby-protocol/sdk';
 import { useCallback, useMemo, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { NodeSelector } from '../../../components/NodeSelector';
 import { Space } from '../../../components/Space';
 import { VerticalWidgetView } from '../../../components/VerticalWidgetView';
 import { useDetails } from '../../../modules/details';
@@ -94,8 +93,6 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
       top={<Top swap={swap} data-testid={buildTestId('')} />}
       data-testid={buildTestId('')}
     >
-      {layout === 'website' && <NodeSelector swap={swap} />}
-
       {address && swap.status === 'WAITING' && (isTransferring || hasTransactionSucceeded) && (
         <Loading />
       )}
