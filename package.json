@@ -23,7 +23,7 @@
     "@apollo/client": "^3.3.11",
     "@swingby-protocol/ip-check": "^2.1.0",
     "@swingby-protocol/pulsar": "^3.14.1",
-    "@swingby-protocol/sdk": "^1.0.0-alpha.111",
+    "@swingby-protocol/sdk": "^1.0.0-alpha.114",
     "big.js": "6.0.3",
     "bnc-onboard": "^1.19.2",
     "graphql": "^15.5.0",
