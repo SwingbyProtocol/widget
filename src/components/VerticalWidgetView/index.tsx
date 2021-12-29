@@ -44,11 +44,9 @@ export const VerticalWidgetView = ({
               <FancyTopContainer data-testid={buildTestId('top')}>
                 <Space size="widgetVerticalPadding" />
                 <NavBarContainer>
-                  {typeof disableNavigation === 'undefined' &&
-                    onClickBack &&
-                    !swap?.isSkypoolsSwap && (
-                      <BackButton onClick={onClickBack} data-testid={buildTestId('back-btn')} />
-                    )}
+                  {typeof disableNavigation === 'undefined' && onClickBack && (
+                    <BackButton onClick={onClickBack} data-testid={buildTestId('back-btn')} />
+                  )}
                   <Space size="box" shape="fill" />
                   {swap?.currencyDeposit !== 'BTC' && <ConnectWallet />}
                 </NavBarContainer>
