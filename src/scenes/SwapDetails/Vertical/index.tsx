@@ -6,7 +6,6 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { Space } from '../../../components/Space';
 import { VerticalWidgetView } from '../../../components/VerticalWidgetView';
 import { useDetails } from '../../../modules/details';
-import { useWidgetLayout } from '../../../modules/layout';
 import { logger } from '../../../modules/logger';
 import { usePushWithSearchParams } from '../../../modules/push-keeping-search';
 import { getTransferUriFor } from '../../../modules/send-funds-uri';
@@ -31,7 +30,6 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
   const { push } = usePushWithSearchParams();
   const { locale } = useIntl();
   const context = useSdkContext();
-  const layout = useWidgetLayout();
   const { address } = useOnboard();
   const { transfer, loading: isTransferring } = useTransferToken();
   const [hasTransactionSucceeded, setTransactionSucceeded] = useState(false);
