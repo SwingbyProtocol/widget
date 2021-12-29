@@ -27,7 +27,6 @@ export const Top = ({
   const smallSpaceSize = layout === 'widget-full' || layout === 'website' ? 'closet' : 'drawer';
   const copyToClipboardSize = layout === 'widget-full' || layout === 'website' ? 'city' : 'town';
   const sendExactlyNote = formatMessage({ id: 'widget.status-label-long.WAITING.note' });
-  console.log('swap', swap);
 
   if (swap.status === 'COMPLETED' || swap.status === 'EXPIRED') {
     return (
