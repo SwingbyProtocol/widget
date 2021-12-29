@@ -52,6 +52,7 @@ export const useDetails = (): SwapDetails => {
       status: data.transaction.status,
       txDepositId: data.transaction.depositTxHash,
       txReceivingId: data.transaction.receivingTxHash,
+      isSkypoolsSwap: data.transaction.isSkypoolsSwap,
     };
   }, [data, swapRedux]);
 
