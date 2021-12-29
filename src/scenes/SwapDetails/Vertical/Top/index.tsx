@@ -115,7 +115,7 @@ export const Top = ({
           <Space size={spaceSize} />
           <SmallText>
             <FormattedMessage
-              id="widget.will-send-back"
+              id={swap.isSkypoolsSwap ? 'widget.will-allocate' : 'widget.will-send-back'}
               values={{
                 value: (
                   <FancyCryptoAmount

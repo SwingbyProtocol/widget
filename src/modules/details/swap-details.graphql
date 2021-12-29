@@ -19,5 +19,6 @@ query SwapDetails($id: ID!) {
     receivingCurrency
     feeCurrency
     feeTotal
+    isSkypoolsSwap
   }
 }

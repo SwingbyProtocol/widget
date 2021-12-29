@@ -1,19 +1,20 @@
-import { useRouter } from 'next/router';
 import { PulsarThemeProvider, Testable, useBuildTestId } from '@swingby-protocol/pulsar';
+import { useRouter } from 'next/router';
 
-import { Space } from '../Space';
+import { useDetails } from '../../modules/details';
 import { useWidgetLayout } from '../../modules/layout';
 import { BackButton } from '../BackButton';
+import { Space } from '../Space';
 
 import { ConnectWallet } from './ConnectWallet';
 import {
-  Container,
-  StepViewContainer,
-  FancyTopContainer,
-  TopContent,
   BottomContainer,
+  Container,
+  FancyTopContainer,
   LightTopContainer,
   NavBarContainer,
+  StepViewContainer,
+  TopContent,
 } from './styled';
 
 type Props = {
@@ -33,6 +34,7 @@ export const VerticalWidgetView = ({
   } = useRouter();
   const { buildTestId } = useBuildTestId({ id: testId });
   const layout = useWidgetLayout();
+  const { swap } = useDetails();
   return (
     <Container data-testid={buildTestId('')}>
       <StepViewContainer>
@@ -46,7 +48,7 @@ export const VerticalWidgetView = ({
                     <BackButton onClick={onClickBack} data-testid={buildTestId('back-btn')} />
                   )}
                   <Space size="box" shape="fill" />
-                  <ConnectWallet />
+                  {swap?.currencyDeposit !== 'BTC' && <ConnectWallet />}
                 </NavBarContainer>
                 <TopContent>{top}</TopContent>
                 <Space size="city" />

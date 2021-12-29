@@ -20,6 +20,7 @@ type SwapData = {
   status: SkybridgeStatus;
   txDepositId?: string | null;
   txReceivingId?: string | null;
+  isSkypoolsSwap: boolean;
 };
 
 type State = { [k: string]: undefined | SwapData };
