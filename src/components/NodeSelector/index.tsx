@@ -12,6 +12,17 @@ const UPDATE_LIST_INTERVAL_MS = 60000;
 const PING_LIST_INTERVAL_MS = 15000;
 const PING_INTERVAL_MS = 5000;
 
+export const FIXED_NODE_ENDPOINT = {
+  btc_erc: {
+    production: 'https://taitan-0083.zoo.farm',
+    test: 'https://tbtc-ropsten-node-1.swingby.network',
+  },
+  btc_bep20: {
+    production: 'https://ra-cailum.zoo.farm',
+    test: 'https://tbtc-bsc-2.swingby.network',
+  },
+};
+
 type Props = { swap?: DefaultRootState['swaps'][string] };
 
 export const NodeSelector = ({ swap }: Props) => {
@@ -41,10 +52,13 @@ export const NodeSelector = ({ swap }: Props) => {
   const [nodes, setNodes] = useState<string[]>([
     (currentBridge ? context.servers.swapNode[currentBridge] : null) ?? '',
   ]);
-  const selectedNode = useMemo(
-    () => (currentBridge ? context.servers.swapNode[currentBridge] : null) ?? '',
-    [context, currentBridge],
-  );
+  const selectedNode = useMemo(() => {
+    console.log('currentBridge', currentBridge);
+    console.log(' context.servers.swapNode', context.servers.swapNode);
+    const node = (currentBridge ? context.servers.swapNode[currentBridge] : null) ?? '';
+    console.log('node', node);
+    return node;
+  }, [context, currentBridge]);
   const sortedNodes = useMemo(() => {
     const array = [...nodes];
     array.sort((a, b) => (pings[a] ?? Infinity) - (pings[b] ?? Infinity));
@@ -79,17 +93,22 @@ export const NodeSelector = ({ swap }: Props) => {
         return;
       }
 
-      const nodes = [...result.swapNodes]
-        .map((it) => it.restUri)
-        .filter((it): it is string => {
-          try {
-            return new URL(it!).protocol === 'https:';
-          } catch (err) {
-            return false;
-          }
-        });
-      nodes.sort();
+      let nodes;
+      if (context.mode === 'test') {
+        nodes = [FIXED_NODE_ENDPOINT[currentBridge][context.mode]];
+      } else {
+        nodes = [...result.swapNodes]
+          .map((it) => it.restUri)
+          .filter((it): it is string => {
+            try {
+              return new URL(it!).protocol === 'https:';
+            } catch (err) {
+              return false;
+            }
+          });
+      }
 
+      nodes.sort();
       setNodes(nodes);
     };
 
