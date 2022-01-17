@@ -23,7 +23,7 @@
     "@apollo/client": "^3.3.11",
     "@swingby-protocol/ip-check": "^2.1.0",
     "@swingby-protocol/pulsar": "^3.14.1",
-    "@swingby-protocol/sdk": "^1.0.0-alpha.116",
+    "@swingby-protocol/sdk": "1.0.0-alpha.117",
     "big.js": "6.0.3",
     "bnc-onboard": "^1.19.2",
     "graphql": "^15.5.0",
@@ -43,6 +43,7 @@
     "react-use": "^17.1.1",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
+    "sharp": "^0.29.3",
     "styled-components": "^5.2.1",
     "web3": "^1.3.4"
   },
