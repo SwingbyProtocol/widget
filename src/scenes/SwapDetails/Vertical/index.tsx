@@ -1,5 +1,6 @@
 import { Button, Loading, SwapProgress, useBuildTestId } from '@swingby-protocol/pulsar';
 import { buildExplorerLink, SkybridgeResource } from '@swingby-protocol/sdk';
+import { useRouter } from 'next/router';
 import { useCallback, useMemo, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
@@ -7,7 +8,6 @@ import { Space } from '../../../components/Space';
 import { VerticalWidgetView } from '../../../components/VerticalWidgetView';
 import { useDetails } from '../../../modules/details';
 import { logger } from '../../../modules/logger';
-import { usePushWithSearchParams } from '../../../modules/push-keeping-search';
 import { getTransferUriFor } from '../../../modules/send-funds-uri';
 import { useSdkContext } from '../../../modules/store/sdkContext';
 import { useAssertTermsSignature } from '../../../modules/terms';
@@ -27,7 +27,7 @@ import { Top } from './Top';
 export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
   const { buildTestId } = useBuildTestId({ id: 'vertical.swap-details' });
   const { swap } = useDetails();
-  const { push } = usePushWithSearchParams();
+  const { push } = useRouter();
   const { locale } = useIntl();
   const context = useSdkContext();
   const { address } = useOnboard();
@@ -87,7 +87,10 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
 
   return (
     <VerticalWidgetView
-      onClickBack={() => push(`/${context.mode}/${resource}/new`)}
+      onClickBack={() => {
+        console.log(`/${context.mode}/${resource}/new`);
+        push(`/${context.mode}/${resource}/new`);
+      }}
       top={<Top swap={swap} data-testid={buildTestId('')} />}
       data-testid={buildTestId('')}
     >
