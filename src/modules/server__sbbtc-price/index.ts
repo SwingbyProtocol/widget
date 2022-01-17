@@ -15,6 +15,7 @@ export const calculateSbbtcPrice = async ({
     CONTRACTS.bridges[bridge][mode].abi,
     CONTRACTS.bridges[bridge][mode].address,
   );
-  const price = contract.methods.getCurrentPriceLP().call();
-  return ethers.utils.parseUnits(price, 8).toString();
+  const price = await contract.methods.getCurrentPriceLP().call();
+  const formattedPrice = ethers.utils.formatUnits(price, 8).toString();
+  return formattedPrice;
 };
