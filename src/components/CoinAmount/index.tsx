@@ -8,12 +8,12 @@ import {
   getSwapableFrom,
   SkybridgeResource,
   SkybridgeCoin,
+  estimateAmountReceiving,
 } from '@swingby-protocol/sdk';
 
 import { actionSetSwapFormData, useAreCurrenciesValid } from '../../modules/store/swapForm';
 import { logger } from '../../modules/logger';
 import { useSdkContext } from '../../modules/store/sdkContext';
-import { estimateAmountReceiving } from '../../modules/temp';
 
 import {
   CoinAmountContainer,
