@@ -8,6 +8,7 @@ import { createToast } from '@swingby-protocol/pulsar';
 
 import { logger } from '../logger';
 import { useSdkContext } from '../store/sdkContext';
+import { TransactionQuery } from '../details';
 
 import { useOnboard } from './context';
 import { watchTransaction } from './watchTransaction';
@@ -21,7 +22,7 @@ export const useTransferToken = () => {
   const [error, setError] = useState<Error | null>(null);
 
   const transfer = useCallback(
-    async ({ swap }: { swap: null | DefaultRootState['swaps'][string] }) => {
+    async ({ swap }: { swap: null | DefaultRootState['swaps'][string] | TransactionQuery }) => {
       try {
         if (!onboard) {
           throw new Error('Onboard has not been initialised');

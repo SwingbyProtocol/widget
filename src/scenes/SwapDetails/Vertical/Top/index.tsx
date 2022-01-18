@@ -8,18 +8,15 @@ import {
   useBuildTestId,
 } from '@swingby-protocol/pulsar';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { DefaultRootState } from 'react-redux';
 
 import { FancyCryptoAmount } from '../../../../components/FancyCryptoAmount';
 import { Space } from '../../../../components/Space';
+import { TransactionQuery } from '../../../../modules/details';
 import { useWidgetLayout } from '../../../../modules/layout';
 
-import { BigText, SmallText, CoinWithText, Container } from './styled';
+import { BigText, CoinWithText, Container, SmallText } from './styled';
 
-export const Top = ({
-  swap,
-  'data-testid': testId,
-}: Testable & { swap: NonNullable<DefaultRootState['swaps'][string]> }) => {
+export const Top = ({ swap, 'data-testid': testId }: Testable & { swap: TransactionQuery }) => {
   const { buildTestId } = useBuildTestId({ id: testId });
   const { locale, formatMessage } = useIntl();
   const layout = useWidgetLayout();

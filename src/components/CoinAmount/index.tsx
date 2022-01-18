@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Big } from 'big.js';
 import { useEffect, useMemo, useState } from 'react';
 import {
-  estimateAmountReceiving,
   getCoinsFor,
   getSwapableFrom,
   SkybridgeResource,
@@ -14,6 +13,7 @@ import {
 import { actionSetSwapFormData, useAreCurrenciesValid } from '../../modules/store/swapForm';
 import { logger } from '../../modules/logger';
 import { useSdkContext } from '../../modules/store/sdkContext';
+import { estimateAmountReceiving } from '../../modules/temp';
 
 import {
   CoinAmountContainer,
@@ -82,6 +82,7 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
           currencyDeposit,
           currencyReceiving,
         });
+        console.log('amountReceiving', amountReceiving);
 
         if (cancelled) return;
         setAmountReceiving(amountReceiving);

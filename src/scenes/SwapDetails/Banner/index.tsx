@@ -11,12 +11,12 @@ import {
 import { buildExplorerLink, SkybridgeResource } from '@swingby-protocol/sdk';
 import { useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { useRouter } from 'next/router';
 
 import { BackButton } from '../../../components/BackButton';
 import { Space } from '../../../components/Space';
 import { StylingConstants } from '../../../modules/styles';
 import { useDetails } from '../../../modules/details';
-import { usePushWithSearchParams } from '../../../modules/push-keeping-search';
 import { useSdkContext } from '../../../modules/store/sdkContext';
 
 import { BannerContainer, ResponsiveSpace, SendTo, SendToLabel, SendToValue } from './styled';
@@ -26,7 +26,7 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
   const { formatMessage, locale } = useIntl();
   const hasWideWidth = useMatchMedia({ query: StylingConstants.mediaWideWidth });
   const { swap } = useDetails();
-  const { push } = usePushWithSearchParams();
+  const { push } = useRouter();
   const context = useSdkContext();
 
   const explorerLink = useMemo(() => {

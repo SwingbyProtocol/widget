@@ -1,6 +1,6 @@
-export { OnboardProvider, useOnboard } from './context';
-export { useTransferToken } from './useTransferToken';
-export { useGetTokenAllowance } from './useGetTokenAllowance';
 export { buildShortAddress } from './buildShortAddress';
-export { OnboardGlobalStyles } from './OnboardGlobalStyles';
+export { OnboardProvider, useOnboard } from './context';
 export { isWeb3ableCurrency } from './isWeb3ableCurrency';
+export { OnboardGlobalStyles } from './OnboardGlobalStyles';
+export { useGetTokenAllowance } from './useGetTokenAllowance';
+export { useTransferToken } from './useTransferToken';

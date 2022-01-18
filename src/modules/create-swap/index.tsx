@@ -2,6 +2,7 @@ import {
   createFloat,
   createSwap,
   createWithdrawal,
+  getBridgeFor,
   SkybridgeResource,
 } from '@swingby-protocol/sdk';
 import { useCallback, useMemo, useState } from 'react';
@@ -38,7 +39,7 @@ export const useCreate = ({ resource }: { resource: SkybridgeResource }) => {
     });
 
     try {
-      const { hash } = await (async () => {
+      const swap = await (async () => {
         if (resource === 'swap') {
           const swap = await createSwap({
             context,
@@ -94,7 +95,9 @@ export const useCreate = ({ resource }: { resource: SkybridgeResource }) => {
         throw new Error(`Invalid action "${resource}"`);
       })();
 
-      push(`/${context.mode}/${resource}/${hash}`);
+      const bridge = getBridgeFor({ ...swap, context });
+
+      push(`/${context.mode}/${resource}/${swap.hash}?bridge=${bridge}`);
     } catch (err) {
       setError((err as any).message);
     } finally {
