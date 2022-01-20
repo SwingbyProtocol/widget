@@ -10,7 +10,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 12.x
+          node-version: 14.x
       - uses: bahmutov/npm-install@v1
 
       - run: yarn generate
@@ -21,10 +21,10 @@ jobs:
       - name: Test
         run: yarn test --ci --coverage --maxWorkers=2
 
-      - name: UI tests
-        run: |
-          yarn build
-          yarn start & yarn wait-on http://localhost:3000/test/swap/new
-          yarn percy exec -- cypress run --browser=chrome -e CI=true
-        env:
-          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+      # - name: UI tests
+      #   run: |
+      #     yarn build
+      #     yarn start & yarn wait-on http://localhost:3000/test/swap/new
+      #     yarn percy exec -- cypress run --browser=chrome -e CI=true
+      #   env:
+      #     PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}

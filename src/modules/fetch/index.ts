@@ -4,7 +4,7 @@ import { logger } from '../logger';
 
 export const fetch = async <
   SuccessResponse extends unknown,
-  ErrorResponse extends unknown = string
+  ErrorResponse extends unknown = string,
 >(
   url: Parameters<typeof originalFetch>[0],
   optionsParam?: Parameters<typeof originalFetch>[1],
