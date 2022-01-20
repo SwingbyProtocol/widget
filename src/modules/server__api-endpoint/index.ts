@@ -47,97 +47,101 @@ export const getStringParam = <T extends string>({
   }
 };
 
-export const createEndpoint = <T extends any = any>({
-  logId,
-  fn,
-}: {
-  logId: string;
-  fn: (params: {
-    req: NextApiRequest;
-    res: NextApiResponse<T>;
-    mode: SkybridgeMode;
-    bridge: SkybridgeBridge;
-    logger: typeof loggerBase;
-  }) => void | Promise<void>;
-}) => async (req: NextApiRequest, res: NextApiResponse<T>) => {
-  const startedAt = DateTime.utc();
+export const createEndpoint =
+  <T extends any = any>({
+    logId,
+    fn,
+  }: {
+    logId: string;
+    fn: (params: {
+      req: NextApiRequest;
+      res: NextApiResponse<T>;
+      mode: SkybridgeMode;
+      bridge: SkybridgeBridge;
+      logger: typeof loggerBase;
+    }) => void | Promise<void>;
+  }) =>
+  async (req: NextApiRequest, res: NextApiResponse<T>) => {
+    const startedAt = DateTime.utc();
 
-  const ctx = {
-    mode: undefined as SkybridgeMode | undefined,
-    bridge: undefined as SkybridgeBridge | undefined,
-    logger: loggerBase.child({ logId }),
-  };
+    const ctx = {
+      mode: undefined as SkybridgeMode | undefined,
+      bridge: undefined as SkybridgeBridge | undefined,
+      logger: loggerBase.child({ logId }),
+    };
 
-  try {
-    await corsMiddleware({ req, res });
+    try {
+      await corsMiddleware({ req, res });
 
-    return await fn({
-      req,
-      res,
-      get mode() {
-        if (!ctx.mode) {
-          ctx.mode = getStringParam<SkybridgeMode>({
-            req,
-            from: 'query',
-            name: 'mode',
-            oneOf: ['test', 'production'],
-            defaultValue: 'test',
-          });
+      return await fn({
+        req,
+        res,
+        get mode() {
+          if (!ctx.mode) {
+            ctx.mode = getStringParam<SkybridgeMode>({
+              req,
+              from: 'query',
+              name: 'mode',
+              oneOf: ['test', 'production'],
+              defaultValue: 'test',
+            });
 
-          ctx.logger = ctx.logger.child({ mode: ctx.mode });
-        }
+            ctx.logger = ctx.logger.child({ mode: ctx.mode });
+          }
 
-        return ctx.mode;
-      },
-      get bridge() {
-        if (!ctx.bridge) {
-          ctx.bridge = getStringParam({
-            req,
-            from: 'query',
-            name: 'bridge',
-            oneOf: SKYBRIDGE_BRIDGES,
-          });
+          return ctx.mode;
+        },
+        get bridge() {
+          if (!ctx.bridge) {
+            ctx.bridge = getStringParam({
+              req,
+              from: 'query',
+              name: 'bridge',
+              oneOf: SKYBRIDGE_BRIDGES,
+            });
 
-          ctx.logger = ctx.logger.child({ bridge: ctx.bridge });
-        }
+            ctx.logger = ctx.logger.child({ bridge: ctx.bridge });
+          }
 
-        return ctx.bridge;
-      },
-      get logger() {
-        return ctx.logger;
-      },
-    });
-  } catch (e: any) {
-    const message = e?.message || '';
+          return ctx.bridge;
+        },
+        get logger() {
+          return ctx.logger;
+        },
+      });
+    } catch (e: any) {
+      const message = e?.message || '';
 
-    if (e instanceof InvalidParamError) {
-      ctx.logger.trace(e);
-      res.status(StatusCodes.BAD_REQUEST).json({ message } as any);
-      return;
-    }
+      if (e instanceof InvalidParamError) {
+        ctx.logger.trace(e);
+        res.status(StatusCodes.BAD_REQUEST).json({ message } as any);
+        return;
+      }
 
-    if (e instanceof InvalidParamError) {
-      ctx.logger.trace(e);
-      res.status(StatusCodes.METHOD_NOT_ALLOWED).json({ message } as any);
-      return;
-    }
+      if (e instanceof InvalidParamError) {
+        ctx.logger.trace(e);
+        res.status(StatusCodes.METHOD_NOT_ALLOWED).json({ message } as any);
+        return;
+      }
 
-    if (e instanceof NotAuthenticatedError) {
-      ctx.logger.trace(e);
+      if (e instanceof NotAuthenticatedError) {
+        ctx.logger.trace(e);
+        res
+          .status(StatusCodes.UNAUTHORIZED)
+          .json({ message: message || 'No authentication was provided' } as any);
+        return;
+      }
+
+      ctx.logger.error(e);
       res
-        .status(StatusCodes.UNAUTHORIZED)
-        .json({ message: message || 'No authentication was provided' } as any);
-      return;
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ message: 'Something went wrong' } as any);
+    } finally {
+      const spent = DateTime.utc().diff(startedAt);
+
+      const level: keyof typeof ctx.logger =
+        spent.as('milliseconds') > WARN_IF_SPENT_MORE_THAN.as('milliseconds') ? 'warn' : 'info';
+
+      ctx.logger[level]('Endpoint done in %dms!', spent.as('milliseconds'));
     }
-
-    ctx.logger.error(e);
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: 'Something went wrong' } as any);
-  } finally {
-    const spent = DateTime.utc().diff(startedAt);
-
-    const level: keyof typeof ctx.logger =
-      spent.as('milliseconds') > WARN_IF_SPENT_MORE_THAN.as('milliseconds') ? 'warn' : 'info';
-
-    ctx.logger[level]('Endpoint done in %dms!', spent.as('milliseconds'));
-  }
-};
+  };
