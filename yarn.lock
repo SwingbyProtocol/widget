@@ -2570,10 +2570,10 @@
     qrcode.react "^1.0.0"
     react-toastify "^6.2.0"
 
-"@swingby-protocol/sdk@1.0.0-alpha.120":
-  version "1.0.0-alpha.120"
-  resolved "https://registry.yarnpkg.com/@swingby-protocol/sdk/-/sdk-1.0.0-alpha.120.tgz#47a80eeb3683b11cdc9efa5ddf4cd8ffeecdde8b"
-  integrity sha512-yiWF6By7f1ciDFSfzl3JQDMeVB1FiYi3COUb8ZR0TXbEDC0w2RJ1jG4UOwj08zrBeyP1ZeirFuO0NCmQwyzyzg==
+"@swingby-protocol/sdk@^1.0.0-alpha.123":
+  version "1.0.0-alpha.123"
+  resolved "https://registry.yarnpkg.com/@swingby-protocol/sdk/-/sdk-1.0.0-alpha.123.tgz#1de94cb3a73f50c07fe3e57711ef2849ea2436ef"
+  integrity sha512-L8WbrFfSULFic2pnx0vYZTj6YxTwgFFSpVpghEGno6SEFq03++KHgoR2e2PRnww14w8UB2zjgmn4HKBL0ZIpwQ==
   dependencies:
     "@typescript-eslint/eslint-plugin" "4.18.0"
     bech32 "^2.0.0"
@@ -4274,9 +4274,9 @@ bip66@^1.1.0, bip66@^1.1.5:
     safe-buffer "^5.0.1"
 
 bitcoin-address-validation@^2.0.1:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/bitcoin-address-validation/-/bitcoin-address-validation-2.2.0.tgz#ed2b6649da8e40b7f9c9da46cef24ce32d70450d"
-  integrity sha512-QD5pNRfJXzK7IbKrXDq/oOqPkZmwn8bZJMIgZEv/JyxnDJ+06VwY91R2biPO1Fs00W1s64qp9Yz3hcRr5PiVLA==
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/bitcoin-address-validation/-/bitcoin-address-validation-2.2.1.tgz#049b5bc54687e4a28a5b7f599968986c5a9f98cb"
+  integrity sha512-f6LXNpvRKlTbHWb37N9tHoAbYGbshzM8FPWvCtloh++hxZ0/dmkokvKNVLz6HkG82zVwo8w6Sq4JmfO2timzyg==
   dependencies:
     base58-js "^1.0.0"
     bech32 "^2.0.0"

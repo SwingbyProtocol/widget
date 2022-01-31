@@ -82,7 +82,6 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
           currencyDeposit,
           currencyReceiving,
         });
-        console.log('amountReceiving', amountReceiving);
 
         if (cancelled) return;
         setAmountReceiving(amountReceiving);
