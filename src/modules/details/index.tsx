@@ -62,7 +62,9 @@ export const useDetails = () => {
     if (!bridge || !hash || !resource || !baseEndpoint) return;
     try {
       setLoading(true);
-      const url = `${baseEndpoint}/${resource === 'swap' ? 'swaps' : 'floats'}/query?hash=${hash}`;
+      const url = `${baseEndpoint}/${
+        resource === 'swap' || resource === 'withdrawal' ? 'swaps' : 'floats'
+      }/query?hash=${hash}`;
       const result = await fetcher<{ items: SkybridgeQuery[] }>(url);
       const data = result.items[0] ?? null;
       if (!data) return;
