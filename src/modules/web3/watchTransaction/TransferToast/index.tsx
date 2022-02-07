@@ -25,9 +25,10 @@ export const TransferToast = ({
   const context = useSdkContext();
 
   const text = useMemo(() => {
-    if (error) {
-      return <FormattedMessage id="widget.onboard.transaction-result-bad" />;
-    }
+    // Todo (Testnet): check with withdraw sbBTC
+    // if (error) {
+    //   return <FormattedMessage id="widget.onboard.transaction-result-bad" />;
+    // }
 
     if (confirmations) {
       return (
@@ -39,15 +40,18 @@ export const TransferToast = ({
     }
 
     if (typeof transactionStatus === 'boolean') {
-      return transactionStatus ? (
-        <FormattedMessage id="widget.onboard.transaction-result-ok" />
-      ) : (
-        <FormattedMessage id="widget.onboard.transaction-result-bad" />
-      );
+      return transactionStatus && <FormattedMessage id="widget.onboard.transaction-result-ok" />;
+      // return transactionStatus ? (
+      //   <FormattedMessage id="widget.onboard.transaction-result-ok" />
+      // ) : (
+
+      // Todo (Testnet): check with withdraw sbBTC
+      //   <FormattedMessage id="widget.onboard.transaction-result-bad" />
+      // );
     }
 
     return <FormattedMessage id="widget.onboard.transaction-sent" />;
-  }, [confirmations, transactionStatus, error]);
+  }, [confirmations, transactionStatus]);
 
   return (
     <PulsarThemeProvider>
