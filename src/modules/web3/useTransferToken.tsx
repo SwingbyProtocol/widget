@@ -57,9 +57,7 @@ export const useTransferToken = () => {
         );
 
         const tokenDecimals = await contract.methods.decimals().call();
-        console.log('1');
         const gasPrice = await web3.eth.getGasPrice();
-        console.log('2');
         const rawTx: TransactionConfig = {
           chain: getTransactionChainProp({ mode: context.mode, coin: currencyDeposit }),
           nonce: await web3.eth.getTransactionCount(address),
@@ -75,9 +73,7 @@ export const useTransferToken = () => {
             .encodeABI(),
         };
 
-        console.log('3');
         const estimatedGas = await web3.eth.estimateGas(rawTx);
-        console.log('4');
         if (!estimatedGas) {
           logger.warn(rawTx, 'Did not get any value from estimateGas(): %s', estimatedGas);
         } else {
