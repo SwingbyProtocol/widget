@@ -25,7 +25,7 @@ export const useTransferToken = () => {
     async ({ swap }: { swap: null | DefaultRootState['swaps'][string] | TransactionQuery }) => {
       try {
         if (!onboard) {
-          throw new Error('Onboard has not been initialised');
+          throw new Error('Onboard has not been initialized');
         }
 
         if (!address || !wallet) {
