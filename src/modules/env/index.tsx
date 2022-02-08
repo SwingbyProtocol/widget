@@ -4,6 +4,7 @@ export const logLevel =
 export enum LocalStorage {
   AffiliateCode = 'affiliateCode',
   AffiliateCodeSavedAt = 'affiliateCodeSavedAt',
+  Terms = 'swingby-widget.terms',
 }
 
 export const blocknativeApiKey =
@@ -11,7 +12,5 @@ export const blocknativeApiKey =
 
 export const infuraApiKey =
   process.env.NEXT_PUBLIC_INFURA_KEY || 'f35c2a4f3d0941a38a3edb62ed10c847';
-
-export const graphQlEndpoint = 'https://network.skybridge.exchange/api/v3/graphql';
 
 export const walletConnectBridge = process.env.NEXT_PUBLIC_WALLET_CONNECT_BRIDGE;
