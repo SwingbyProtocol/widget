@@ -7,10 +7,8 @@ export enum LocalStorage {
   Terms = 'swingby-widget.terms',
 }
 
-export const blocknativeApiKey =
-  process.env.NEXT_PUBLIC_BLOCKNATIVE_KEY || '9ed4d1ba-367b-48e6-b9bc-77e00782e4ba';
+export const blocknativeApiKey = process.env.NEXT_PUBLIC_BLOCKNATIVE_KEY;
 
-export const infuraApiKey =
-  process.env.NEXT_PUBLIC_INFURA_KEY || 'f35c2a4f3d0941a38a3edb62ed10c847';
+export const infuraApiKey = process.env.NEXT_PUBLIC_INFURA_KEY;
 
 export const walletConnectBridge = process.env.NEXT_PUBLIC_WALLET_CONNECT_BRIDGE;
