@@ -1,4 +1,4 @@
-Swingby's swap widget.
+Swingby's swap widget. (for only BTC-BSC network)
 
 ## Getting started
 
