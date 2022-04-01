@@ -16,22 +16,7 @@ const getEtherNetwork = ({ mode }: { mode: SkybridgeMode }) => {
   };
 };
 
-const getBscNetwork = ({ mode }: { mode: SkybridgeMode }) => {
-  const id = mode === 'production' ? 56 : 97;
-  return {
-    id,
-    rpcUrl:
-      mode === 'production'
-        ? 'https://bsc-dataseed1.binance.org:443'
-        : 'https://data-seed-prebsc-1-s1.binance.org:8545',
-  };
-};
-
-const getNetwork = ({ mode, bridge }: { mode: SkybridgeMode; bridge: SkybridgeBridge }) => {
-  if (bridge === 'btc_bep20') {
-    return getBscNetwork({ mode });
-  }
-
+const getNetwork = ({ mode }: { mode: SkybridgeMode; bridge: SkybridgeBridge }) => {
   return getEtherNetwork({ mode });
 };
 

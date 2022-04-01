@@ -20,8 +20,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       switch (bridge) {
         case 'btc_erc':
           return 'https://btc-wbtc-mainnet.s3.eu-central-1.amazonaws.com/platform_status.json';
-        case 'btc_bep20':
-          return 'https://btc-bsc-mainnet.s3-ap-southeast-1.amazonaws.com/platform_status.json';
+        case 'btc_skypool':
+          return 'https://btc-skypools-mainnet.s3.ap-southeast-1.amazonaws.com/platform_status.json';
         default:
           return null;
       }

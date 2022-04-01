@@ -15,10 +15,10 @@ const covertGqlCurrency = (
   switch (value) {
     case TransactionCurrency.Btc:
       return 'BTC';
-    case TransactionCurrency.BtcbBep20:
-      return 'BTCB.BEP20';
-    case TransactionCurrency.SbBtcBep20:
-      return 'sbBTC.BEP20';
+    case TransactionCurrency.SbBtcSkypool:
+      return 'sbBTC.SKYPOOL';
+    case TransactionCurrency.WbtcSkypool:
+      return 'WBTC.SKYPOOL';
     case TransactionCurrency.SbBtcErc20:
       return 'sbBTC';
     case TransactionCurrency.WbtcErc20:
