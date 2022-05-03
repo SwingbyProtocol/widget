@@ -58,7 +58,7 @@ import { testStatuses } from '../utils';
       );
 
       cy.get('[data-testid="vertical.form.swap-btn"]').should('not.be.disabled').click();
-      cy.get('[data-testid="vertical.swap-details.status-label"]').should('be.visible');
+      // cy.get('[data-testid="vertical.swap-details.status-label"]').should('be.visible');
     });
 
     testStatuses({ name, width, height, testId: 'vertical' });
