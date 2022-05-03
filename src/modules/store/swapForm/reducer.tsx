@@ -14,7 +14,7 @@ enum Actions {
 const initialState = {
   step: 'step-amounts' as 'step-amounts' | 'step-address',
   currencyDeposit: 'BTC' as SkybridgeCoin,
-  currencyReceiving: 'WBTC' as SkybridgeCoin,
+  currencyReceiving: 'WBTC.SKYPOOL' as SkybridgeCoin,
   amountDesired: '',
   addressReceiving: '',
   affiliateCode: getStoredAffiliateCode() as string | null,
