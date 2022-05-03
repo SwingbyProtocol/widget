@@ -62,6 +62,7 @@ export const HorizonalList = ({
                                 onClose();
                               }}
                               data-testid={buildTestId(`item-${coin}`)}
+                              key={coin}
                             >
                               <CoinIcon symbol={coin} />
                               &nbsp;{coin}

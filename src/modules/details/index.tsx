@@ -39,7 +39,7 @@ export const useDetails = (): SwapDetails => {
   const swap: null | DefaultRootState['swaps'][string] = useMemo(() => {
     if (!data) return swapRedux ?? null;
     return {
-      addressDeposit: data.transaction.depositAddress,
+      addressDeposit: data.transaction.depositAddress as string,
       addressReceiving: data.transaction.receivingAddress,
       amountDeposit: data.transaction.depositAmount,
       hash: data.transaction.id,
