@@ -15,3 +15,17 @@ export const buildCoinMap = (coins: SkybridgeCoin[]): CoinMap => {
 
   return map;
 };
+
+export const swingbyTextDisplay = (coin: SkybridgeCoin): string => {
+  switch (coin) {
+    case 'WBTC': {
+      return 'WBTC (legacy)';
+    }
+    case 'WBTC.SKYPOOL': {
+      return 'WBTC';
+    }
+    default: {
+      return coin;
+    }
+  }
+};

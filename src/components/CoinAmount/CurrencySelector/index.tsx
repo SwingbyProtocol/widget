@@ -10,7 +10,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { StylingConstants } from '../../../modules/styles';
-import { buildCoinMap } from '../coin-map';
+import { buildCoinMap, swingbyTextDisplay } from '../coin-map';
 
 import { HorizonalList } from './HorizonalList';
 import {
@@ -57,7 +57,7 @@ export const CurrencySelector = ({
           <Dropdown.DefaultTarget variant="input" size="state">
             <CoinWithIcon>
               <CoinIcon symbol={value} />
-              <>&nbsp;{value}</>
+              <>&nbsp;{swingbyTextDisplay(value)}</>
             </CoinWithIcon>
           </Dropdown.DefaultTarget>
         }
@@ -85,7 +85,7 @@ export const CurrencySelector = ({
                 >
                   <CoinWithIcon>
                     <CoinIcon symbol={coin} />
-                    &nbsp;{coin.replace(/\..+$/, '')}
+                    &nbsp;{swingbyTextDisplay(coin).replace(/\..+$/, '')}
                   </CoinWithIcon>
                 </Dropdown.Item>
               ))}
@@ -106,7 +106,7 @@ export const CurrencySelector = ({
           data-testid={buildTestId('')}
         >
           <CoinIcon symbol={value} />
-          <ButtonCoinName>{value}</ButtonCoinName>
+          <ButtonCoinName>{swingbyTextDisplay(value)}</ButtonCoinName>
           <ButtonCoinCaret />
         </ButtonCoin>
         <HorizonalList
