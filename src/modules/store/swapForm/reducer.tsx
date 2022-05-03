@@ -1,6 +1,6 @@
-import { SkybridgeCoin } from '@swingby-protocol/sdk';
 import { DateTime } from 'luxon';
 import { Reducer } from 'redux';
+import { SkybridgeCoin } from '@swingby-protocol/sdk';
 
 import { LocalStorage } from '../../env';
 import { logger } from '../../logger';
@@ -11,8 +11,13 @@ enum Actions {
   Clear = 'SwapForm/CLEAR',
 }
 
+export enum StepType {
+  'step-amounts' = 'step-amounts',
+  'step-address' = 'step-address',
+}
+
 const initialState = {
-  step: 'step-amounts' as 'step-amounts' | 'step-address',
+  step: StepType['step-amounts'],
   currencyDeposit: 'BTC' as SkybridgeCoin,
   currencyReceiving: 'WBTC.SKYPOOL' as SkybridgeCoin,
   amountDesired: '',
@@ -20,7 +25,14 @@ const initialState = {
   affiliateCode: getStoredAffiliateCode() as string | null,
 };
 
-type State = typeof initialState;
+type State = {
+  step: StepType;
+  currencyDeposit: SkybridgeCoin;
+  currencyReceiving: SkybridgeCoin;
+  amountDesired: string;
+  addressReceiving: string;
+  affiliateCode: string | null;
+};
 
 export const swapForm: Reducer<State, Action> = (state = initialState, action) => {
   if (action.type === Actions.Clear) {
