@@ -42,7 +42,7 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
       {step === 'step-address' ? (
         <>
           <BackButton
-            onClick={() => dispatch(actionSetSwapFormStep(StepType['step-amounts']))}
+            onClick={() => dispatch(actionSetSwapFormStep(StepType.stepAmounts))}
             data-testid={buildTestId('back-btn')}
           />
           <ResponsiveSpace />
@@ -88,7 +88,7 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
             size="state"
             shape="fit"
             disabled={!areCurrenciesAndAmountValid || isBridgeUnderMaintenance}
-            onClick={() => dispatch(actionSetSwapFormStep(StepType['step-address']))}
+            onClick={() => dispatch(actionSetSwapFormStep(StepType.stepAddress))}
             data-testid={buildTestId('next-btn')}
           >
             {hasWideWidth ? formatMessage({ id: 'widget.swap-btn' }) : <Icon.CaretRight />}

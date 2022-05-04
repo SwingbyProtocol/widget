@@ -12,12 +12,12 @@ enum Actions {
 }
 
 export enum StepType {
-  'step-amounts' = 'step-amounts',
-  'step-address' = 'step-address',
+  stepAmounts = 'step-amounts',
+  stepAddress = 'step-address',
 }
 
 const initialState = {
-  step: StepType['step-amounts'],
+  step: StepType.stepAmounts,
   currencyDeposit: 'BTC' as SkybridgeCoin,
   currencyReceiving: 'WBTC.SKYPOOL' as SkybridgeCoin,
   amountDesired: '',
