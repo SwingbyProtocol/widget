@@ -1,9 +1,9 @@
-import {Button, CoinIcon, Loading, TextInput, useBuildTestId} from '@swingby-protocol/pulsar';
-import {FormattedMessage, useIntl} from 'react-intl';
-import {useDispatch, useSelector} from 'react-redux';
-import {SkybridgeResource} from '@swingby-protocol/sdk';
+import { Button, CoinIcon, Loading, TextInput, useBuildTestId } from '@swingby-protocol/pulsar';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
+import { SkybridgeResource } from '@swingby-protocol/sdk';
 
-import {CoinAmount} from '../../../components/CoinAmount';
+import { CoinAmount } from '../../../components/CoinAmount';
 import {
   actionSetSwapFormData,
   actionSetSwapFormStep,
@@ -11,15 +11,22 @@ import {
   useAreCurrenciesValid,
   useIsReceivingAddressValid,
 } from '../../../modules/store/swapForm';
-import {Space} from '../../../components/Space';
-import {useWidgetLayout} from '../../../modules/layout';
-import {VerticalWidgetView} from '../../../components/VerticalWidgetView';
-import {Separator} from '../../../components/Separator';
-import {useCreate} from '../../../modules/create-swap';
-import {NodeSelector} from '../../../components/NodeSelector';
-import {useIsBridgeUnderMaintenance} from '../../../modules/maintenance-mode';
+import { Space } from '../../../components/Space';
+import { useWidgetLayout } from '../../../modules/layout';
+import { VerticalWidgetView } from '../../../components/VerticalWidgetView';
+import { Separator } from '../../../components/Separator';
+import { useCreate } from '../../../modules/create-swap';
+import { NodeSelector } from '../../../components/NodeSelector';
+import { useIsBridgeUnderMaintenance } from '../../../modules/maintenance-mode';
 
-import {ErrorBox, ErrorContainer, ErrorTitle, StakeEarn, TermsOfUseContainer, TermsOfUseLink,} from './styled';
+import {
+  ErrorBox,
+  ErrorContainer,
+  ErrorTitle,
+  StakeEarn,
+  TermsOfUseContainer,
+  TermsOfUseLink,
+} from './styled';
 
 export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
   const { buildTestId } = useBuildTestId({ id: 'vertical.form' });
