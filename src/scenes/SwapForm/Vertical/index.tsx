@@ -5,8 +5,9 @@ import { SkybridgeResource } from '@swingby-protocol/sdk';
 
 import { CoinAmount } from '../../../components/CoinAmount';
 import {
-  actionSetSwapFormStep,
   actionSetSwapFormData,
+  actionSetSwapFormStep,
+  StepType,
   useAreCurrenciesValid,
   useIsReceivingAddressValid,
 } from '../../../modules/store/swapForm';
@@ -19,10 +20,10 @@ import { NodeSelector } from '../../../components/NodeSelector';
 import { useIsBridgeUnderMaintenance } from '../../../modules/maintenance-mode';
 
 import {
-  ErrorContainer,
-  StakeEarn,
   ErrorBox,
+  ErrorContainer,
   ErrorTitle,
+  StakeEarn,
   TermsOfUseContainer,
   TermsOfUseLink,
 } from './styled';
@@ -42,7 +43,7 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
     <VerticalWidgetView
       onClickBack={
         step === 'step-address' && layout !== 'widget-full' && layout !== 'website'
-          ? () => dispatch(actionSetSwapFormStep('step-amounts'))
+          ? () => dispatch(actionSetSwapFormStep(StepType.stepAmounts))
           : undefined
       }
       data-testid={buildTestId('')}
@@ -127,7 +128,7 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
           variant="primary"
           size="state"
           disabled={!areCurrenciesAndAmountValid || isBridgeUnderMaintenance}
-          onClick={() => dispatch(actionSetSwapFormStep('step-address'))}
+          onClick={() => dispatch(actionSetSwapFormStep(StepType.stepAddress))}
           data-testid={buildTestId('next-btn')}
         >
           {formatMessage({ id: 'widget.next-btn' })}

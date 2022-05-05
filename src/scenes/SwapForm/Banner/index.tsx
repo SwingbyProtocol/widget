@@ -17,6 +17,7 @@ import {
   actionSetSwapFormData,
   useAreCurrenciesValid,
   useIsReceivingAddressValid,
+  StepType,
 } from '../../../modules/store/swapForm';
 import { StylingConstants } from '../../../modules/styles';
 import { useCreate } from '../../../modules/create-swap';
@@ -41,7 +42,7 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
       {step === 'step-address' ? (
         <>
           <BackButton
-            onClick={() => dispatch(actionSetSwapFormStep('step-amounts'))}
+            onClick={() => dispatch(actionSetSwapFormStep(StepType.stepAmounts))}
             data-testid={buildTestId('back-btn')}
           />
           <ResponsiveSpace />
@@ -87,7 +88,7 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
             size="state"
             shape="fit"
             disabled={!areCurrenciesAndAmountValid || isBridgeUnderMaintenance}
-            onClick={() => dispatch(actionSetSwapFormStep('step-address'))}
+            onClick={() => dispatch(actionSetSwapFormStep(StepType.stepAddress))}
             data-testid={buildTestId('next-btn')}
           >
             {hasWideWidth ? formatMessage({ id: 'widget.swap-btn' }) : <Icon.CaretRight />}

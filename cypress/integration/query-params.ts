@@ -15,7 +15,7 @@ describe('Query params', () => {
 
     cy.get('[data-testid="vertical.form.amounts.currency-from-select.target"]').should(
       'have.text',
-      `${NON_BREAKING_SPACE}WBTC`,
+      `${NON_BREAKING_SPACE}WBTC (legacy)`,
     );
     cy.get('[data-testid="vertical.form.amounts.currency-to-select.target"]').should(
       'have.text',
@@ -43,7 +43,7 @@ describe('Query params', () => {
     );
     cy.get('[data-testid="vertical.form.amounts.currency-to-select.target"]').should(
       'have.text',
-      `${NON_BREAKING_SPACE}WBTC`,
+      `${NON_BREAKING_SPACE}WBTC (legacy)`,
     );
     cy.get('[data-testid="vertical.form.amounts.amount-from.native-input"]').should(
       'have.value',
@@ -63,7 +63,7 @@ describe('Query params', () => {
 
     cy.get('[data-testid="vertical.form.amounts.currency-from-select.target"]').should(
       'have.text',
-      `${NON_BREAKING_SPACE}WBTC`,
+      `${NON_BREAKING_SPACE}WBTC (legacy)`,
     );
     cy.get('[data-testid="vertical.form.amounts.currency-to-select.target"]').should(
       'have.text',
@@ -91,7 +91,7 @@ describe('Query params', () => {
     );
     cy.get('[data-testid="vertical.form.amounts.currency-to-select.target"]').should(
       'have.text',
-      `${NON_BREAKING_SPACE}WBTC`,
+      `${NON_BREAKING_SPACE}WBTC (legacy)`,
     );
     cy.get('[data-testid="vertical.form.amounts.amount-from.native-input"]').should(
       'have.value',

@@ -3,6 +3,7 @@ import { SkybridgeCoin } from '@swingby-protocol/sdk';
 import { useTransition, animated } from 'react-spring';
 
 import { BackButton } from '../../../BackButton';
+import { swingbyTextDisplay } from '../../coin-map';
 
 import { HorizontalSelectorBg, Container, CoinList, CoinButton, CoinListWrapper } from './styled';
 
@@ -65,7 +66,7 @@ export const HorizonalList = ({
                               key={coin}
                             >
                               <CoinIcon symbol={coin} />
-                              &nbsp;{coin}
+                              &nbsp;{swingbyTextDisplay(coin)}
                             </CoinButton>
                           ))}
                         </CoinListWrapper>
