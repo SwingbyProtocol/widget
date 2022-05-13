@@ -4,7 +4,7 @@ import { useCallback, useMemo } from 'react';
 import { logger } from '../logger';
 import { useSdkContext } from '../store/sdkContext';
 
-export const useGetCurrentPrice = () => {
+export const useSbBTCPrice = () => {
   const context = useSdkContext();
 
   const getCurrentPrice = useCallback(async () => {
