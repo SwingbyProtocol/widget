@@ -56,6 +56,7 @@ export const useIsReceivingAddressValid = () => {
       return {
         isReceivingAddressValid:
           !isTaprootAddress && isAddressValid({ context, address: addressOut, chain }),
+        isTaprootAddress: true,
       };
     } catch (err) {
       logger.error({ err });

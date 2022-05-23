@@ -55,3 +55,9 @@ export const ErrorBox = styled.div`
   background: ${({ theme }) => theme.pulsar.color.border.danger};
   padding: ${rem(1)} ${({ theme }) => rem(theme.pulsar.size.drawer)};
 `;
+
+export const ErrorTitle = styled.div`
+  font-size: ${({ theme }) => rem(theme.pulsar.size.closet)};
+  color: ${({ theme }) => theme.pulsar.color.danger.normal};
+  margin-bottom: ${({ theme }) => rem(theme.pulsar.size.box)};
+`;

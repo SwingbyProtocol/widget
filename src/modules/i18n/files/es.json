@@ -33,5 +33,6 @@
   "widget.ip-block": "Pareces estar accediendo a esta app desde un país o región en el que su uso no está permitido.",
   "widget.swap-error-title": "Ha ocurrido un error inesperado.",
   "widget.terms-of-use-warning": "Al clicar en «Intercambiar», aceptas nuestros {termsOfUse}.",
-  "widget.terms-of-use-warning.link": "Términos de Uso"
+  "widget.terms-of-use-warning.link": "Términos de Uso",
+  "widget.swap-not-supported-address": "Direcciones Taproot aún no soportadas. Por favor, utilice otro tipo de dirección."
 }
