@@ -1,4 +1,4 @@
-import { createToast } from '@swingby-protocol/pulsar';
+import { createToast, Loading } from '@swingby-protocol/pulsar';
 import { SkybridgeResource } from '@swingby-protocol/sdk';
 import { useEffect } from 'react';
 import { useIntl } from 'react-intl';
@@ -14,7 +14,7 @@ import { Vertical } from './Vertical';
 
 export const SwapDetails = ({ resource }: { resource: SkybridgeResource }) => {
   const layout = useWidgetLayout();
-  const { swap } = useDetails();
+  const { swap, loading, error } = useDetails();
   const { formatMessage } = useIntl();
 
   useEffect(() => {
@@ -26,16 +26,28 @@ export const SwapDetails = ({ resource }: { resource: SkybridgeResource }) => {
     });
   }, [swap?.status, formatMessage]);
 
+  const SwapDetailsElement = () => {
+    if (loading) {
+      return <Loading />;
+    }
+    if (error) {
+      return <div>Error fetching swap details: {error}</div>;
+    }
+    if (!swap) {
+      return <div>NO SWAP FOUND</div>;
+    }
+    if (layout === 'widget-banner') {
+      return <Banner resource={resource} swap={swap} />;
+    }
+    return <Vertical resource={resource} />;
+  };
+
   return (
     <>
       <HeadTitle />
       <Favicon />
       <WidgetContainer>
-        {layout === 'widget-banner' ? (
-          <Banner resource={resource} />
-        ) : (
-          <Vertical resource={resource} />
-        )}
+        <SwapDetailsElement />
       </WidgetContainer>
     </>
   );
