@@ -60,8 +60,9 @@ export const Banner = ({ resource, swap }: BannerProps) => {
         </SendToLabel>
         {swap.status === 'PENDING' && (
           <>
-            {' '}
-            <SendToValue>Waiting for confirmations…</SendToValue>
+            <SendToValue>
+              <FormattedMessage id="widget.status-label-long.WAITING_CONFIRMATIONS" />
+            </SendToValue>
           </>
         )}
         {swap.status !== 'EXPIRED' && swap.status !== 'PENDING' && (

@@ -1,7 +1,7 @@
 import { createToast, Loading } from '@swingby-protocol/pulsar';
 import { SkybridgeResource } from '@swingby-protocol/sdk';
 import { useEffect } from 'react';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { Favicon } from '../../components/Favicon';
 import { HeadTitle } from '../../components/HeadTitle';
@@ -31,10 +31,10 @@ export const SwapDetails = ({ resource }: { resource: SkybridgeResource }) => {
       return <Loading />;
     }
     if (error) {
-      return <div>Error fetching swap details: {error}</div>;
+      return <FormattedMessage id="widget.status-label-short.ERROR" values={{ error }} />;
     }
     if (!swap) {
-      return <div>NO SWAP FOUND</div>;
+      return <FormattedMessage id="widget.status-label-short.SWAP_NOT_FOUND" />;
     }
     if (layout === 'widget-banner') {
       return <Banner resource={resource} swap={swap} />;

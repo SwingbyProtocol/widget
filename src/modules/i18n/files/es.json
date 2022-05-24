@@ -6,6 +6,8 @@
   "widget.receiving-address.placeholder": "Tu dirección de destino…",
   "widget.next-btn": "Siguiente",
   "widget.swap-btn": "Intercambiar",
+  "widget.status-label-short.ERROR": "Error intentando obtener los detalles del intercambio: {error}",
+  "widget.status-label-short.SWAP_NOT_FOUND": "No se encontro el intercambio",
   "widget.status-label-short.WAITING": "Envía",
   "widget.status-label-short.PENDING": "Detectados",
   "widget.status-label-short.SIGNING": "Enviando",
@@ -17,6 +19,7 @@
   "widget.status-label-short.EXPIRED": "Este intercambio ha expirado",
   "widget.status-label-long.WAITING": "Envía {value} exactos a",
   "widget.status-label-long.WAITING.note": " ",
+  "widget.status-label-long.WAITING_CONFIRMATIONS": "Esperando por confirmaciones...",
   "widget.status-label-long.PENDING": "Enviando {value} a",
   "widget.status-label-long.SIGNING": "Enviando {value} a",
   "widget.status-label-long.SENDING": "Enviando {value} a",
@@ -32,6 +35,6 @@
   "widget.warning-do-not-use-exchange-addresses": "Por favor, envía dinero solo desde direcciones que te pertenezcan. No envíes dinero desde plataformas de intercambio.",
   "widget.ip-block": "Pareces estar accediendo a esta app desde un país o región en el que su uso no está permitido.",
   "widget.swap-error-title": "Ha ocurrido un error inesperado.",
-  "widget.terms-of-use-warning": "Al clicar en «Intercambiar», aceptas nuestros {termsOfUse}.",
+  "widget.terms-of-use-warning": "Al hacer click en «Intercambiar», aceptas nuestros {termsOfUse}.",
   "widget.terms-of-use-warning.link": "Términos de Uso"
 }
