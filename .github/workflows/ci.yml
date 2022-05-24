@@ -25,6 +25,3 @@ jobs:
         run: |
           yarn build
           yarn start & yarn wait-on http://localhost:3000/test/swap/new
-          yarn percy exec -- cypress run --browser=chrome -e CI=true
-        env:
-          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
