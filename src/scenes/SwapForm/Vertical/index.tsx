@@ -35,7 +35,7 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
   const dispatch = useDispatch();
   const layout = useWidgetLayout();
   const { areCurrenciesAndAmountValid } = useAreCurrenciesValid({ resource });
-  const { isReceivingAddressValid } = useIsReceivingAddressValid();
+  const { isReceivingAddressValid, isTaprootAddress } = useIsReceivingAddressValid();
   const { loading, create, error } = useCreate({ resource });
   const { isBridgeUnderMaintenance } = useIsBridgeUnderMaintenance();
 
@@ -76,7 +76,11 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
           />
         </>
       )}
-
+      {isTaprootAddress && (
+        <ErrorTitle>
+          <FormattedMessage id="widget.swap-not-supported-address" />
+        </ErrorTitle>
+      )}
       <Space size="street" shape="fill" />
 
       {error && (
