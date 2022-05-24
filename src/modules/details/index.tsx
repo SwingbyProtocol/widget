@@ -7,7 +7,11 @@ import { useWidgetPathParams } from '../path-params';
 
 const MS_TILL_NEXT_TRY = 10000;
 
-type SwapDetails = { loading: boolean; swap: null | DefaultRootState['swaps'][string] };
+type SwapDetails = {
+  loading: boolean;
+  swap: null | DefaultRootState['swaps'][string];
+  error?: string;
+};
 
 const covertGqlCurrency = (
   value: TransactionCurrency,
@@ -29,12 +33,13 @@ const covertGqlCurrency = (
 export const useDetails = (): SwapDetails => {
   const { hash: hashParam } = useWidgetPathParams();
   const hash = hashParam ?? '';
+  const swapRedux = useSelector((state) => state.swaps[hash]);
 
-  const { data, loading } = useSwapDetailsQuery({
+  const { data, loading, error } = useSwapDetailsQuery({
     variables: { id: hash },
     pollInterval: MS_TILL_NEXT_TRY,
+    errorPolicy: 'all',
   });
-  const swapRedux = useSelector((state) => state.swaps[hash]);
 
   const swap: null | DefaultRootState['swaps'][string] = useMemo(() => {
     if (!data) return swapRedux ?? null;
@@ -56,5 +61,11 @@ export const useDetails = (): SwapDetails => {
     };
   }, [data, swapRedux]);
 
-  return useMemo(() => ({ swap: swap ?? null, loading }), [swap, loading]);
+  return useMemo(() => {
+    return {
+      error: error?.message,
+      swap: swap ?? null,
+      loading,
+    };
+  }, [error?.message, loading, swap]);
 };
