@@ -32,10 +32,10 @@ export const swingbyTextDisplay = (coin: SkybridgeCoin): string => {
       return 'WBTC';
     }
     case 'sbBTC': {
-      return 'sbBTC (Legacy)'
+      return 'sbBTC (Legacy)';
     }
     case 'sbBTC.SKYPOOL': {
-      return 'sbBTC'
+      return 'sbBTC';
     }
     default: {
       return coin;
