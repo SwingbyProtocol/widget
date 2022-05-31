@@ -39,7 +39,7 @@ export const SwapDetails = ({ resource }: { resource: SkybridgeResource }) => {
     if (layout === 'widget-banner') {
       return <Banner resource={resource} swap={swap} />;
     }
-    return <Vertical resource={resource} />;
+    return <Vertical resource={resource} swap={swap} />;
   };
 
   return (
