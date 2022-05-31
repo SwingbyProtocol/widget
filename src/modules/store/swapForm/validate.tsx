@@ -48,7 +48,16 @@ export const useIsReceivingAddressValid = () => {
   return useMemo(() => {
     try {
       const chain = getChainFor({ coin: currencyReceiving });
-      return { isReceivingAddressValid: isAddressValid({ context, address: addressOut, chain }) };
+      let isTaprootAddress = false;
+      if (chain === 'bitcoin') {
+        // taproot addresses are Bitcoin addresses that start with 'bc1p' for mainnet and 'tb1p' for testnet
+        isTaprootAddress = addressOut.startsWith('bc1p') || addressOut.startsWith('tb1p');
+      }
+      return {
+        isReceivingAddressValid:
+          !isTaprootAddress && isAddressValid({ context, address: addressOut, chain }),
+        isTaprootAddress,
+      };
     } catch (err) {
       logger.error({ err });
       return { isReceivingAddressValid: false };

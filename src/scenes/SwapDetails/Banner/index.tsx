@@ -15,17 +15,21 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { BackButton } from '../../../components/BackButton';
 import { Space } from '../../../components/Space';
 import { StylingConstants } from '../../../modules/styles';
-import { useDetails } from '../../../modules/details';
 import { usePushWithSearchParams } from '../../../modules/push-keeping-search';
 import { useSdkContext } from '../../../modules/store/sdkContext';
+import { SwapData } from '../../../modules/store/swaps';
 
 import { BannerContainer, ResponsiveSpace, SendTo, SendToLabel, SendToValue } from './styled';
 
-export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
+type BannerProps = {
+  resource: SkybridgeResource;
+  swap?: SwapData | null;
+};
+
+export const Banner = ({ resource, swap }: BannerProps) => {
   const { buildTestId } = useBuildTestId({ id: 'banner.swap-details' });
   const { formatMessage, locale } = useIntl();
   const hasWideWidth = useMatchMedia({ query: StylingConstants.mediaWideWidth });
-  const { swap } = useDetails();
   const { push } = usePushWithSearchParams();
   const context = useSdkContext();
 
@@ -56,8 +60,9 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
         </SendToLabel>
         {swap.status === 'PENDING' && (
           <>
-            {' '}
-            <SendToValue>Waiting for confirmations…</SendToValue>
+            <SendToValue>
+              <FormattedMessage id="widget.status-label-long.WAITING_CONFIRMATIONS" />
+            </SendToValue>
           </>
         )}
         {swap.status !== 'EXPIRED' && swap.status !== 'PENDING' && (

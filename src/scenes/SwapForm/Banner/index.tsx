@@ -23,7 +23,14 @@ import { StylingConstants } from '../../../modules/styles';
 import { useCreate } from '../../../modules/create-swap';
 import { useIsBridgeUnderMaintenance } from '../../../modules/maintenance-mode';
 
-import { BannerContainer, ResponsiveSpace, AddressInput, StakeEarn, ErrorBox } from './styled';
+import {
+  BannerContainer,
+  ResponsiveSpace,
+  AddressInput,
+  StakeEarn,
+  ErrorBox,
+  ErrorTitle,
+} from './styled';
 
 export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
   const { buildTestId } = useBuildTestId({ id: 'banner.form' });
@@ -32,13 +39,19 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
   const { currencyReceiving, addressReceiving, step } = useSelector((state) => state.swapForm);
   const { areCurrenciesAndAmountValid } = useAreCurrenciesValid({ resource });
   const dispatch = useDispatch();
-  const { isReceivingAddressValid } = useIsReceivingAddressValid();
+  const { isReceivingAddressValid, isTaprootAddress } = useIsReceivingAddressValid();
   const { loading, create, error } = useCreate({ resource });
   const { isBridgeUnderMaintenance } = useIsBridgeUnderMaintenance();
-
   return (
     <BannerContainer>
       {error && <ErrorBox>{error}</ErrorBox>}
+      {isTaprootAddress && (
+        <ErrorBox>
+          <ErrorTitle>
+            <FormattedMessage id="widget.swap-not-supported-address" />
+          </ErrorTitle>
+        </ErrorBox>
+      )}
       {step === 'step-address' ? (
         <>
           <BackButton
