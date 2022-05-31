@@ -57,6 +57,7 @@
   "widget.swap-error-title": "An unexpected error occurred.",
   "widget.taproot-swap-not-supported-address": "Taproot address is not supported yet. Please use other address.",
   "widget.invalid-address": "The given address is not valid, please check that you are using a valid {network} address.",
+  "widget.invalid-amounts": "The amount of the transaction is not valid, please try again with another amount",
   "widget.node-selector.node-name": "{nodeName}{ping}",
   "widget.onboard.connect-btn": "Connect Wallet",
   "widget.onboard.approve-btn": "Approve {symbol}",
