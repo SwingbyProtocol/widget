@@ -56,6 +56,10 @@ export const Top = ({
     else return +(+(swap.amountDeposit ?? 0) * sbBTCPrice).toFixed(7);
   }, [sbBTCPrice, swap]);
 
+  //Currently we have 0.2% fees of withdraw liquidity
+  // Just apply this logic to sbBTC.SKYPOOL
+  const feeRetention = swap.currencyDeposit !== 'sbBTC.SKYPOOL' ? 1 : 1 - 0.02;
+
   if (swap.status === 'COMPLETED' || swap.status === 'EXPIRED') {
     return (
       <Container>
@@ -72,7 +76,7 @@ export const Top = ({
             <CoinIcon symbol={swap.currencyReceiving} />
             &nbsp;
             {getCryptoAssetFormatter({ locale, displaySymbol: swap.currencyReceiving }).format(
-              receivedAmount,
+              receivedAmount * feeRetention,
             )}
           </CoinWithText>
         </BigText>
