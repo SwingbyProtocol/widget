@@ -81,13 +81,16 @@ export const Vertical = ({ resource }: VerticalProps) => {
 
       {!formValid && (
         <ErrorContainer>
-          <ErrorTitle>
-            <FormattedMessage
-              id={errorText ? errorText : 'widget.swap-error-title'}
-              values={{ network: getChainFor({ coin: currencyReceiving }) }}
-            />
-          </ErrorTitle>
-          {executionError ? <ErrorBox>{executionError}</ErrorBox> : null}
+          {executionError ? (
+            <ErrorBox>{executionError}</ErrorBox>
+          ) : (
+            <ErrorTitle>
+              <FormattedMessage
+                id={errorText ? errorText : 'widget.swap-error-title'}
+                values={{ network: getChainFor({ coin: currencyReceiving }) }}
+              />
+            </ErrorTitle>
+          )}
         </ErrorContainer>
       )}
 

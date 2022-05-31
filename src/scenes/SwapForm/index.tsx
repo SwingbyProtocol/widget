@@ -40,7 +40,7 @@ export const useValidateForm = ({ resource }: FormProps): ValidFormReturn => {
 
   const formValid = isAddressEmpty
     ? true
-    : areCurrenciesAndAmountValid && isReceivingAddressValid && !isBridgeUnderMaintenance;
+    : areCurrenciesAndAmountValid && isReceivingAddressValid && !isBridgeUnderMaintenance && !error;
 
   useEffect(() => {
     if (formValid) {
