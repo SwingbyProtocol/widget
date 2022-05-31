@@ -40,10 +40,7 @@ export const useValidateForm = ({ resource }: FormProps): ValidFormReturn => {
 
   const formValid = isAddressEmpty
     ? true
-    : areCurrenciesAndAmountValid &&
-      isReceivingAddressValid &&
-      !loading &&
-      !isBridgeUnderMaintenance;
+    : areCurrenciesAndAmountValid && isReceivingAddressValid && !isBridgeUnderMaintenance;
 
   useEffect(() => {
     if (formValid) {
@@ -51,7 +48,7 @@ export const useValidateForm = ({ resource }: FormProps): ValidFormReturn => {
       return;
     }
     if (!areCurrenciesAndAmountValid) {
-      setErrorText('Currencies invalid');
+      setErrorText('widget.invalid-amounts');
       return;
     }
     if (isTaprootAddress) {
@@ -69,6 +66,7 @@ export const useValidateForm = ({ resource }: FormProps): ValidFormReturn => {
   }, [
     areCurrenciesAndAmountValid,
     formValid,
+    loading,
     isBridgeUnderMaintenance,
     isReceivingAddressValid,
     isTaprootAddress,
