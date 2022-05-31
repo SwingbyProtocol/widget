@@ -6,7 +6,7 @@ enum Actions {
   Clear = 'Swaps/CLEAR',
 }
 
-type SwapData = {
+export type SwapData = {
   hash: string;
   addressReceiving: string;
   addressDeposit: string;

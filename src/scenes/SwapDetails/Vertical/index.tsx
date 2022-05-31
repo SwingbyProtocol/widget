@@ -5,13 +5,13 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import { Space } from '../../../components/Space';
 import { VerticalWidgetView } from '../../../components/VerticalWidgetView';
-import { useDetails } from '../../../modules/details';
 import { logger } from '../../../modules/logger';
 import { usePushWithSearchParams } from '../../../modules/push-keeping-search';
 import { getTransferUriFor } from '../../../modules/send-funds-uri';
 import { useSdkContext } from '../../../modules/store/sdkContext';
 import { useAssertTermsSignature } from '../../../modules/terms';
 import { isWeb3ableCurrency, useOnboard, useTransferToken } from '../../../modules/web3';
+import { SwapData } from '../../../modules/store/swaps';
 
 import {
   ExplorerContainer,
@@ -24,9 +24,13 @@ import {
 } from './styled';
 import { Top } from './Top';
 
-export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
+type VerticalProps = {
+  resource: SkybridgeResource;
+  swap?: SwapData | null;
+};
+
+export const Vertical = ({ resource, swap }: VerticalProps) => {
   const { buildTestId } = useBuildTestId({ id: 'vertical.swap-details' });
-  const { swap } = useDetails();
   const { push } = usePushWithSearchParams();
   const { locale } = useIntl();
   const context = useSdkContext();
@@ -90,6 +94,7 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
       onClickBack={() => push(`/${context.mode}/${resource}/new`)}
       top={<Top swap={swap} data-testid={buildTestId('')} />}
       data-testid={buildTestId('')}
+      swap={swap}
     >
       {address && swap.status === 'WAITING' && (isTransferring || hasTransactionSucceeded) && (
         <Loading />

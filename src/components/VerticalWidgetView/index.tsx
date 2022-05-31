@@ -1,10 +1,10 @@
 import { PulsarThemeProvider, Testable, useBuildTestId } from '@swingby-protocol/pulsar';
 import { useRouter } from 'next/router';
 
-import { useDetails } from '../../modules/details';
 import { useWidgetLayout } from '../../modules/layout';
 import { BackButton } from '../BackButton';
 import { Space } from '../Space';
+import { SwapData } from '../../modules/store/swaps';
 
 import { ConnectWallet } from './ConnectWallet';
 import {
@@ -21,12 +21,14 @@ type Props = {
   onClickBack?: () => void;
   top?: React.ReactNode;
   children?: React.ReactNode;
+  swap?: SwapData | null;
 } & Testable;
 
 export const VerticalWidgetView = ({
   onClickBack,
   top,
   children,
+  swap,
   'data-testid': testId,
 }: Props) => {
   const {
@@ -34,7 +36,6 @@ export const VerticalWidgetView = ({
   } = useRouter();
   const { buildTestId } = useBuildTestId({ id: testId });
   const layout = useWidgetLayout();
-  const { swap } = useDetails();
   return (
     <Container data-testid={buildTestId('')}>
       <StepViewContainer>
