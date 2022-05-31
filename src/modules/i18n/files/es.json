@@ -37,5 +37,6 @@
   "widget.swap-error-title": "Ha ocurrido un error inesperado.",
   "widget.terms-of-use-warning": "Al hacer click en «Intercambiar», aceptas nuestros {termsOfUse}.",
   "widget.terms-of-use-warning.link": "Términos de Uso",
-  "widget.swap-not-supported-address": "Direcciones Taproot aún no soportadas. Por favor, utilice otro tipo de dirección."
+  "widget.taproot-swap-not-supported-address": "Direcciones Taproot aún no soportadas. Por favor, utilice otro tipo de dirección.",
+  "widget.invalid-address": "La direccion utilizada no es valida, por favor verifique que se este utilizando una direccion de la red {network}."
 }
