@@ -8,20 +8,17 @@ import {
 } from '@swingby-protocol/pulsar';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { SkybridgeResource } from '@swingby-protocol/sdk';
+import { getChainFor, SkybridgeResource } from '@swingby-protocol/sdk';
 
 import { BackButton } from '../../../components/BackButton';
 import { CoinAmount } from '../../../components/CoinAmount';
 import {
   actionSetSwapFormStep,
   actionSetSwapFormData,
-  useAreCurrenciesValid,
-  useIsReceivingAddressValid,
   StepType,
 } from '../../../modules/store/swapForm';
 import { StylingConstants } from '../../../modules/styles';
-import { useCreate } from '../../../modules/create-swap';
-import { useIsBridgeUnderMaintenance } from '../../../modules/maintenance-mode';
+import { useValidateForm } from '../index';
 
 import {
   BannerContainer,
@@ -37,19 +34,25 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
   const { formatMessage } = useIntl();
   const hasWideWidth = useMatchMedia({ query: StylingConstants.mediaWideWidth });
   const { currencyReceiving, addressReceiving, step } = useSelector((state) => state.swapForm);
-  const { areCurrenciesAndAmountValid } = useAreCurrenciesValid({ resource });
   const dispatch = useDispatch();
-  const { isReceivingAddressValid, isTaprootAddress } = useIsReceivingAddressValid();
-  const { loading, create, error } = useCreate({ resource });
-  const { isBridgeUnderMaintenance } = useIsBridgeUnderMaintenance();
+  const { formValid, errorText, loading, create, executionError } = useValidateForm({
+    resource,
+  });
+
   return (
     <BannerContainer>
-      {error && <ErrorBox>{error}</ErrorBox>}
-      {isTaprootAddress && (
+      {!formValid && (
         <ErrorBox>
-          <ErrorTitle>
-            <FormattedMessage id="widget.swap-not-supported-address" />
-          </ErrorTitle>
+          {executionError ? (
+            executionError
+          ) : (
+            <ErrorTitle>
+              <FormattedMessage
+                id={errorText ? errorText : 'widget.swap-error-title'}
+                values={{ network: getChainFor({ coin: currencyReceiving }) }}
+              />
+            </ErrorTitle>
+          )}
         </ErrorBox>
       )}
       {step === 'step-address' ? (
@@ -74,12 +77,7 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
             variant="primary"
             size="state"
             shape="fit"
-            disabled={
-              !areCurrenciesAndAmountValid ||
-              !isReceivingAddressValid ||
-              loading ||
-              isBridgeUnderMaintenance
-            }
+            disabled={!formValid || loading}
             onClick={create}
             data-testid={buildTestId('swap-btn')}
           >
@@ -100,7 +98,6 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
             variant="primary"
             size="state"
             shape="fit"
-            disabled={!areCurrenciesAndAmountValid || isBridgeUnderMaintenance}
             onClick={() => dispatch(actionSetSwapFormStep(StepType.stepAddress))}
             data-testid={buildTestId('next-btn')}
           >

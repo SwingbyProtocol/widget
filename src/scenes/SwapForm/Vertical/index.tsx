@@ -1,23 +1,20 @@
 import { Button, CoinIcon, Loading, TextInput, useBuildTestId } from '@swingby-protocol/pulsar';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { SkybridgeResource } from '@swingby-protocol/sdk';
+import { getChainFor, SkybridgeResource } from '@swingby-protocol/sdk';
 
 import { CoinAmount } from '../../../components/CoinAmount';
 import {
   actionSetSwapFormData,
   actionSetSwapFormStep,
   StepType,
-  useAreCurrenciesValid,
-  useIsReceivingAddressValid,
 } from '../../../modules/store/swapForm';
 import { Space } from '../../../components/Space';
 import { useWidgetLayout } from '../../../modules/layout';
 import { VerticalWidgetView } from '../../../components/VerticalWidgetView';
 import { Separator } from '../../../components/Separator';
-import { useCreate } from '../../../modules/create-swap';
 import { NodeSelector } from '../../../components/NodeSelector';
-import { useIsBridgeUnderMaintenance } from '../../../modules/maintenance-mode';
+import { useValidateForm } from '../index';
 
 import {
   ErrorBox,
@@ -28,16 +25,19 @@ import {
   TermsOfUseLink,
 } from './styled';
 
-export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
+type VerticalProps = {
+  resource: SkybridgeResource;
+};
+
+export const Vertical = ({ resource }: VerticalProps) => {
   const { buildTestId } = useBuildTestId({ id: 'vertical.form' });
   const { formatMessage } = useIntl();
   const { addressReceiving, currencyReceiving, step } = useSelector((state) => state.swapForm);
   const dispatch = useDispatch();
   const layout = useWidgetLayout();
-  const { areCurrenciesAndAmountValid } = useAreCurrenciesValid({ resource });
-  const { isReceivingAddressValid, isTaprootAddress } = useIsReceivingAddressValid();
-  const { loading, create, error } = useCreate({ resource });
-  const { isBridgeUnderMaintenance } = useIsBridgeUnderMaintenance();
+  const { formValid, errorText, loading, create, executionError, isFormEmpty } = useValidateForm({
+    resource,
+  });
 
   return (
     <VerticalWidgetView
@@ -76,21 +76,24 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
           />
         </>
       )}
-      {isTaprootAddress && (
-        <ErrorTitle>
-          <FormattedMessage id="widget.swap-not-supported-address" />
-        </ErrorTitle>
-      )}
+
       <Space size="street" shape="fill" />
 
-      {error && (
+      {!formValid && (
         <ErrorContainer>
-          <ErrorTitle>
-            <FormattedMessage id="widget.swap-error-title" />
-          </ErrorTitle>
-          <ErrorBox>{error}</ErrorBox>
+          {executionError ? (
+            <ErrorBox>{executionError}</ErrorBox>
+          ) : (
+            <ErrorTitle>
+              <FormattedMessage
+                id={errorText ? errorText : 'widget.swap-error-title'}
+                values={{ network: getChainFor({ coin: currencyReceiving }) }}
+              />
+            </ErrorTitle>
+          )}
         </ErrorContainer>
       )}
+
       {(step === 'step-address' || layout === 'widget-full' || layout === 'website') && (
         <TermsOfUseContainer>
           <FormattedMessage
@@ -114,12 +117,7 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
         <Button
           variant="primary"
           size="state"
-          disabled={
-            !areCurrenciesAndAmountValid ||
-            !isReceivingAddressValid ||
-            loading ||
-            isBridgeUnderMaintenance
-          }
+          disabled={!formValid || loading || isFormEmpty}
           onClick={create}
           data-testid={buildTestId('swap-btn')}
         >
@@ -131,7 +129,7 @@ export const Vertical = ({ resource }: { resource: SkybridgeResource }) => {
         <Button
           variant="primary"
           size="state"
-          disabled={!areCurrenciesAndAmountValid || isBridgeUnderMaintenance}
+          disabled={!formValid || isFormEmpty}
           onClick={() => dispatch(actionSetSwapFormStep(StepType.stepAddress))}
           data-testid={buildTestId('next-btn')}
         >

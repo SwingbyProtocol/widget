@@ -1,7 +1,13 @@
 import { Big } from 'big.js';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { getChainFor, getCoinsFor, isAddressValid, SkybridgeResource } from '@swingby-protocol/sdk';
+import {
+  getChainFor,
+  getCoinsFor,
+  isAddressValid,
+  SkybridgeResource,
+  isTaprootAddress,
+} from '@swingby-protocol/sdk';
 
 import { logger } from '../../logger';
 import { useSdkContext } from '../sdkContext';
@@ -48,19 +54,17 @@ export const useIsReceivingAddressValid = () => {
   return useMemo(() => {
     try {
       const chain = getChainFor({ coin: currencyReceiving });
-      let isTaprootAddress = false;
-      if (chain === 'bitcoin') {
-        // taproot addresses are Bitcoin addresses that start with 'bc1p' for mainnet and 'tb1p' for testnet
-        isTaprootAddress = addressOut.startsWith('bc1p') || addressOut.startsWith('tb1p');
-      }
+
       return {
-        isReceivingAddressValid:
-          !isTaprootAddress && isAddressValid({ context, address: addressOut, chain }),
-        isTaprootAddress,
+        isReceivingAddressValid: addressOut
+          ? isAddressValid({ context, address: addressOut, chain })
+          : true,
+        isTaprootAddress: isTaprootAddress(addressOut),
+        isAddressEmpty: !addressOut.length,
       };
     } catch (err) {
       logger.error({ err });
-      return { isReceivingAddressValid: false };
+      return { isReceivingAddressValid: false, isAddressEmpty: false };
     }
   }, [context, addressOut, currencyReceiving]);
 };
