@@ -4,7 +4,7 @@ import {
   createWithdrawal,
   SkybridgeResource,
 } from '@swingby-protocol/sdk';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { logger } from '../logger';
@@ -25,6 +25,12 @@ export const useCreate = ({ resource }: { resource: SkybridgeResource }) => {
   const dispatch = useDispatch();
   const { push } = usePushWithSearchParams();
 
+  useEffect(() => {
+    if (currencyReceiving && currencyDeposit && amountDesired) {
+      setError(null);
+    }
+  }, [amountDesired, currencyDeposit, currencyReceiving]);
+
   const create = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -38,7 +44,7 @@ export const useCreate = ({ resource }: { resource: SkybridgeResource }) => {
     });
 
     try {
-      const { hash } = await (async () => {
+      const getSwapHash = async () => {
         if (resource === 'swap') {
           const swap = await createSwap({
             context,
@@ -92,7 +98,9 @@ export const useCreate = ({ resource }: { resource: SkybridgeResource }) => {
         }
 
         throw new Error(`Invalid action "${resource}"`);
-      })();
+      };
+
+      const { hash } = await getSwapHash();
 
       push(`/${context.mode}/${resource}/${hash}`);
     } catch (err) {
