@@ -2354,10 +2354,10 @@
     qrcode.react "^1.0.0"
     react-toastify "^6.2.0"
 
-"@swingby-protocol/sdk@^1.0.0-alpha.133":
-  version "1.0.0-alpha.133"
-  resolved "https://registry.yarnpkg.com/@swingby-protocol/sdk/-/sdk-1.0.0-alpha.133.tgz#9c2f54dd84b8e2ddc6b60a7468180858e05e91fe"
-  integrity sha512-PKqu/t43JXM5TYuQgr6z+zSDE4pZIuUD+VzFxeGBXbK7HfcFT/sBnygrvHUnoYTkXEH7lvle+VT8apotDXRLGw==
+"@swingby-protocol/sdk@v1.2.0-alpha.3":
+  version "1.2.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/@swingby-protocol/sdk/-/sdk-1.2.0-alpha.3.tgz#7bda519312bf7868af37eabf17a7d6b5e1c1296c"
+  integrity sha512-Y29wJx+8dtoS1SY1NbbnbmVDJ5JZoeuwJLbRckz9Y+bOqg7EJih3F589tMsvu/HSRjXaPlrsTK6Z8hvC6VXXuA==
   dependencies:
     "@typescript-eslint/eslint-plugin" "4.18.0"
     bech32 "^2.0.0"

@@ -42,7 +42,6 @@ export const StakeEarn = styled.span`
 
 export const ErrorBox = styled.div`
   position: absolute;
-  bottom: 0;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -54,6 +53,7 @@ export const ErrorBox = styled.div`
   color: ${({ theme }) => theme.pulsar.color.danger.normal};
   background: ${({ theme }) => theme.pulsar.color.border.danger};
   padding: ${rem(1)} ${({ theme }) => rem(theme.pulsar.size.drawer)};
+  margin-top: 80px;
 `;
 
 export const ErrorTitle = styled.div`
