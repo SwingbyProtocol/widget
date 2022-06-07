@@ -53,12 +53,11 @@ export const Top = ({
   const receivedAmount = useMemo(() => {
     // If is not sbBTC.SKYPOOL the conversion rate is not used, just rendered what swap said
     if (swap.currencyDeposit !== 'sbBTC.SKYPOOL') return +(swap.amountReceiving ?? 0);
-    else return +(+(swap.amountDeposit ?? 0) * sbBTCPrice).toFixed(7);
+    // Currently we have 0.2% fees of withdraw liquidity
+    // Just apply this logic to sbBTC.SKYPOOL
+    // We use the amountDeposit as base since the amountReceiving is wrong from the api
+    else return +(+(swap.amountDeposit ?? 0) * sbBTCPrice * (1 - 0.02)).toFixed(7);
   }, [sbBTCPrice, swap]);
-
-  //Currently we have 0.2% fees of withdraw liquidity
-  // Just apply this logic to sbBTC.SKYPOOL
-  const feeRetention = swap.currencyDeposit !== 'sbBTC.SKYPOOL' ? 1 : 1 - 0.02;
 
   if (swap.status === 'COMPLETED' || swap.status === 'EXPIRED') {
     return (
@@ -76,7 +75,7 @@ export const Top = ({
             <CoinIcon symbol={swap.currencyReceiving} />
             &nbsp;
             {getCryptoAssetFormatter({ locale, displaySymbol: swap.currencyReceiving }).format(
-              receivedAmount * feeRetention,
+              receivedAmount,
             )}
           </CoinWithText>
         </BigText>
