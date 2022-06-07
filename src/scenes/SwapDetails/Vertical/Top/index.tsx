@@ -56,7 +56,7 @@ export const Top = ({
     // Currently we have 0.2% fees of withdraw liquidity
     // Just apply this logic to sbBTC.SKYPOOL
     // We use the amountDeposit as base since the amountReceiving is wrong from the api
-    else return +(+(swap.amountDeposit ?? 0) * sbBTCPrice * (1 - 0.02)).toFixed(7);
+    else return +(+(swap.amountDeposit ?? 0) * sbBTCPrice * (1 - 0.002)).toFixed(7);
   }, [sbBTCPrice, swap]);
 
   if (swap.status === 'COMPLETED' || swap.status === 'EXPIRED') {
