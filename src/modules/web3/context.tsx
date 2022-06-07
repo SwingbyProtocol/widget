@@ -8,7 +8,7 @@ import { useSdkContext } from '../store/sdkContext';
 import { useDetails } from '../details';
 import { logger } from '../logger';
 
-import { initOnboard } from './onboard';
+import { initOnboard, loadLastUsedProvider, saveLastUsedProvider } from './onboard';
 
 const Context = React.createContext<{
   address: string | null;
@@ -39,16 +39,35 @@ export const OnboardProvider = ({ children }: { children?: React.ReactNode }) =>
   }, [context, swap, currencyDeposit, currencyReceiving]);
 
   useEffect(() => {
+    const tryToConnectToLastUsedProvider = async () => {
+      if (!onboard) {
+        return;
+      }
+      const lastUsedProvider = loadLastUsedProvider();
+      await onboard.walletSelect(lastUsedProvider);
+    };
+
+    tryToConnectToLastUsedProvider();
+  }, [onboard]);
+
+  useEffect(() => {
     if (!currentBridge) {
       logger.debug('"currentBridge" is not defined, will skip');
       return;
     }
 
+    const walletSubscription = (wallet: Wallet) => {
+      if (wallet.name) {
+        saveLastUsedProvider(wallet.name);
+      }
+      setWallet(wallet);
+    };
+
     setOnboard(
       initOnboard({
         mode: context.mode,
         bridge: currentBridge,
-        subscriptions: { address: setAddress, wallet: setWallet },
+        subscriptions: { address: setAddress, wallet: walletSubscription },
       }),
     );
   }, [context, currentBridge]);
