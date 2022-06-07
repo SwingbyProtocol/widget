@@ -67,6 +67,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
                     <link rel="stylesheet" href={PULSAR_GLOBAL_FONT_HREF} />
                     <title>{messages['widget.tab-title.generic']}</title>
                   </Head>
+                  {/* @ts-ignore */}
                   <Component {...pageProps} />
                   <PulsarToastContainer />
                 </WidgetLayoutProvider>
