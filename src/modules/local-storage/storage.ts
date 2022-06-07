@@ -27,7 +27,7 @@ class Storage {
     let saved: string | null = null;
     try {
       saved = this.storage.getItem(fullKey);
-    } catch (err) {
+    } catch (err: any) {
       logger.error({ err }, `key ${key} – ${err.message}`);
     }
 
@@ -35,7 +35,7 @@ class Storage {
 
     try {
       return JSON.parse(saved) as T;
-    } catch (err) {
+    } catch (err: any) {
       logger.error({ err }, `key ${key} – ${err.message}`);
     }
   };
@@ -44,7 +44,7 @@ class Storage {
     const fullKey = this.prefixKey(key);
     try {
       this.storage.setItem(fullKey, JSON.stringify(item));
-    } catch (err) {
+    } catch (err: any) {
       logger.error({ err }, `key ${key} – ${err.message}`);
     }
   };
@@ -53,7 +53,7 @@ class Storage {
     const fullKey = this.prefixKey(key);
     try {
       this.storage.removeItem(fullKey);
-    } catch (err) {
+    } catch (err: any) {
       logger.error({ err }, `key ${key} – ${err.message}`);
     }
   };
