@@ -66,3 +66,8 @@ export const StyledQRCode = styled(QRCode)`
     font-size: ${rem(150)};
   }
 `;
+
+export const StyledQRContainer = styled.div`
+  background: #212223;
+  padding: 20px;
+`;

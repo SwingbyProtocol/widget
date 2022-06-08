@@ -20,6 +20,7 @@ import {
   ProgressContainer,
   RowLink,
   StyledQRCode,
+  StyledQRContainer,
   TransferButtonsContainer,
 } from './styled';
 import { Top } from './Top';
@@ -114,7 +115,7 @@ export const Vertical = ({ resource, swap }: VerticalProps) => {
         swap.status === 'WAITING' &&
         !isTransferring &&
         !hasTransactionSucceeded && (
-          <>
+          <StyledQRContainer>
             <FormattedMessage id="widget.status-label-long.TITLE-BELLOW" />
             <StyledQRCode
               value={getTransferUriFor({
@@ -123,7 +124,7 @@ export const Vertical = ({ resource, swap }: VerticalProps) => {
                 amount: swap.amountDeposit,
               })}
             />
-          </>
+          </StyledQRContainer>
         )}
       {swap.status !== 'WAITING' && (
         <ProgressContainer>
