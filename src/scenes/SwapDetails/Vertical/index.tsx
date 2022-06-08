@@ -114,13 +114,16 @@ export const Vertical = ({ resource, swap }: VerticalProps) => {
         swap.status === 'WAITING' &&
         !isTransferring &&
         !hasTransactionSucceeded && (
-          <StyledQRCode
-            value={getTransferUriFor({
-              address: swap.addressDeposit,
-              coin: swap.currencyDeposit,
-              amount: swap.amountDeposit,
-            })}
-          />
+          <>
+            <FormattedMessage id="widget.status-label-long.TITLE-BELLOW" />
+            <StyledQRCode
+              value={getTransferUriFor({
+                address: swap.addressDeposit,
+                coin: swap.currencyDeposit,
+                amount: swap.amountDeposit,
+              })}
+            />
+          </>
         )}
       {swap.status !== 'WAITING' && (
         <ProgressContainer>
