@@ -1,7 +1,8 @@
-import { useMemo } from 'react';
 import { DefaultRootState } from 'react-redux';
 import { createStore, applyMiddleware, Store } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
+
+import { isServer } from '../env';
 
 import { rootReducer } from './root';
 
@@ -26,14 +27,11 @@ const initializeStore = (preloadedState: Partial<DefaultRootState> | undefined =
   }
 
   // For SSG and SSR always create a new store
-  if (typeof window === 'undefined') return _store;
+  if (isServer) return _store;
   // Create the store once in the client
   if (!store) store = _store;
 
   return _store;
 };
 
-export function useStore(initialState: Partial<DefaultRootState> | undefined = undefined) {
-  const store = useMemo(() => initializeStore(initialState), [initialState]);
-  return store;
-}
+export const initialStore = initializeStore();
