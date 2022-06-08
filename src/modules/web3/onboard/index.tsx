@@ -3,8 +3,11 @@ import Onboard from 'bnc-onboard';
 import type { Subscriptions } from 'bnc-onboard/dist/src/interfaces'; // eslint-disable-line import/no-internal-modules
 
 import { blocknativeApiKey, infuraApiKey, walletConnectBridge } from '../../env';
+import { saveToStorageWithExpiry, loadFromStorageWithExpiry } from '../../local-storage';
 
 const APP_NAME = 'Skybridge Widget';
+
+const LAST_USED_PROVIDER_KEY = 'ONBOARD__lastUsedProvider';
 
 const getEtherNetwork = ({ mode }: { mode: SkybridgeMode }) => {
   const network =
@@ -71,4 +74,14 @@ export const initOnboard = ({
       { checkName: 'balance', minimumBalance: '100000' },
     ],
   });
+};
+
+export const saveLastUsedProvider = (name: string): void => {
+  const expireInDays = (days: number) => 60 * 60 * 24 * 1000 * days;
+  const expiry = expireInDays(365);
+  saveToStorageWithExpiry(LAST_USED_PROVIDER_KEY, name, expiry);
+};
+
+export const loadLastUsedProvider = (): string | undefined => {
+  return loadFromStorageWithExpiry<string>(LAST_USED_PROVIDER_KEY);
 };
