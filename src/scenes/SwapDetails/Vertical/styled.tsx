@@ -68,6 +68,7 @@ export const StyledQRCode = styled(QRCode)`
 `;
 
 export const StyledQRContainer = styled.div`
-  background: #212223;
+  background: #888d9375;
   padding: 20px;
+  border-radius: ${({ theme }) => rem(theme.pulsar.size.box)};
 `;
