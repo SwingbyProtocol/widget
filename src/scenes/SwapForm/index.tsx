@@ -29,11 +29,8 @@ type FormProps = {
 
 export const useValidateForm = ({ resource }: FormProps): ValidFormReturn => {
   const { areCurrenciesAndAmountValid } = useAreCurrenciesValid({ resource });
-  const {
-    isReceivingAddressValid,
-    isTaprootAddress,
-    isAddressEmpty,
-  } = useIsReceivingAddressValid();
+  const { isReceivingAddressValid, isTaprootAddress, isAddressEmpty } =
+    useIsReceivingAddressValid();
   const { isBridgeUnderMaintenance } = useIsBridgeUnderMaintenance();
   const { loading, create, error } = useCreate({ resource });
   const [errorText, setErrorText] = useState('');
