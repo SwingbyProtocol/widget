@@ -7,13 +7,21 @@ import { logger } from '../../logger';
 
 import { TransferToast } from './TransferToast';
 
+type WatchTransactionProps = {
+  coin: SkybridgeCoin;
+  tx: PromiEvent<TransactionReceipt>;
+  onReceipt: (receipt: TransactionReceipt) => void;
+  onTxHash: (txHash: string) => void;
+  onError: (error: Error) => void;
+};
+
 export const watchTransaction = ({
   coin,
   tx,
-}: {
-  coin: SkybridgeCoin;
-  tx: PromiEvent<TransactionReceipt>;
-}) => {
+  onError,
+  onReceipt,
+  onTxHash,
+}: WatchTransactionProps) => {
   let transactionHash: string | null = null;
 
   tx.on('transactionHash', (hash) => {
@@ -24,6 +32,7 @@ export const watchTransaction = ({
       type: 'default',
       toastId: 'transaction-result',
     });
+    onTxHash(transactionHash);
   })
     .on('confirmation', (confirmations) => {
       updateToast({
@@ -45,6 +54,7 @@ export const watchTransaction = ({
         type: 'danger',
         toastId: 'transaction-result',
       });
+      onError(error);
     })
     .on('receipt', (receipt) => {
       createOrUpdateToast({
@@ -58,6 +68,7 @@ export const watchTransaction = ({
         type: receipt.status ? 'success' : 'danger',
         toastId: 'transaction-result',
       });
+      onReceipt(receipt);
     });
 
   return tx;
