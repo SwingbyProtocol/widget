@@ -111,5 +111,5 @@ export const useTransferToken = () => {
     [address, context, onboard, wallet],
   );
 
-  return useMemo(() => ({ loading, error, transfer }), [loading, error, transfer]);
+  return useMemo(() => ({ loading, error, transfer, txHash }), [loading, error, transfer, txHash]);
 };
