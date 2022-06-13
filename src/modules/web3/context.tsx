@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { useSdkContext } from '../store/sdkContext';
 import { useDetails } from '../details';
 import { logger } from '../logger';
+import { useWidgetLayout } from '../layout';
 
 import { initOnboard, loadLastUsedProvider, saveLastUsedProvider } from './onboard';
 
@@ -25,6 +26,7 @@ export const OnboardProvider = ({ children }: { children?: React.ReactNode }) =>
   const currencyReceiving = useSelector((state) => state.swapForm.currencyReceiving);
   const { swap } = useDetails();
   const theme = useTheme();
+  const layout = useWidgetLayout();
 
   const currentBridge = useMemo(() => {
     if (swap) {
@@ -40,7 +42,7 @@ export const OnboardProvider = ({ children }: { children?: React.ReactNode }) =>
 
   useEffect(() => {
     const tryToConnectToLastUsedProvider = async () => {
-      if (!onboard) {
+      if (!onboard || layout !== 'website') {
         return;
       }
       const lastUsedProvider = loadLastUsedProvider();
@@ -48,7 +50,7 @@ export const OnboardProvider = ({ children }: { children?: React.ReactNode }) =>
     };
 
     tryToConnectToLastUsedProvider();
-  }, [onboard]);
+  }, [onboard, layout]);
 
   useEffect(() => {
     if (!currentBridge) {
