@@ -58,6 +58,11 @@ export const OnboardProvider = ({ children }: { children?: React.ReactNode }) =>
       return;
     }
 
+    if (onboard) {
+      logger.debug('"onboard" already defined, will skip');
+      return;
+    }
+
     const walletSubscription = (wallet: Wallet) => {
       if (wallet.name) {
         saveLastUsedProvider(wallet.name);
@@ -72,7 +77,7 @@ export const OnboardProvider = ({ children }: { children?: React.ReactNode }) =>
         subscriptions: { address: setAddress, wallet: walletSubscription },
       }),
     );
-  }, [context, currentBridge]);
+  }, [context, currentBridge, onboard]);
 
   useEffect(() => {
     onboard?.config({ darkMode: theme.pulsar.id !== 'PulsarLight' });

@@ -66,3 +66,12 @@ export const StyledQRCode = styled(QRCode)`
     font-size: ${rem(150)};
   }
 `;
+
+export const StyledQRContainer = styled.div`
+  background: #888d9375;
+  padding: 20px;
+  border-radius: ${({ theme }) => rem(theme.pulsar.size.box)};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;

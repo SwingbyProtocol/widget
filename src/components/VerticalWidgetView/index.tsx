@@ -22,6 +22,7 @@ type Props = {
   top?: React.ReactNode;
   children?: React.ReactNode;
   swap?: SwapData | null;
+  fromBTC: boolean;
 } & Testable;
 
 export const VerticalWidgetView = ({
@@ -30,6 +31,7 @@ export const VerticalWidgetView = ({
   children,
   swap,
   'data-testid': testId,
+  fromBTC,
 }: Props) => {
   const {
     query: { disableNavigation },
@@ -39,44 +41,48 @@ export const VerticalWidgetView = ({
   return (
     <Container data-testid={buildTestId('')}>
       <StepViewContainer>
-        {layout !== 'widget-small' && (top || onClickBack) && (
-          <>
-            <PulsarThemeProvider theme="accent">
-              <FancyTopContainer data-testid={buildTestId('top')}>
+        <PulsarThemeProvider theme="accent">
+          <FancyTopContainer data-testid={buildTestId('top')}>
+            {layout !== 'widget-small' && (top || onClickBack) && (
+              <>
+                <PulsarThemeProvider theme="accent">
+                  <FancyTopContainer data-testid={buildTestId('top')}>
+                    <Space size="widgetVerticalPadding" />
+                    <NavBarContainer>
+                      {typeof disableNavigation === 'undefined' && onClickBack && (
+                        <BackButton onClick={onClickBack} data-testid={buildTestId('back-btn')} />
+                      )}
+                      <Space size="box" shape="fill" />
+                      {swap?.currencyDeposit !== 'BTC' && <ConnectWallet />}
+                    </NavBarContainer>
+                    <TopContent>{top}</TopContent>
+                    <Space size="city" />
+                  </FancyTopContainer>
+                </PulsarThemeProvider>
+              </>
+            )}
+            {layout === 'widget-small' && (top || onClickBack) && (
+              <LightTopContainer data-testid={buildTestId('top')}>
                 <Space size="widgetVerticalPadding" />
                 <NavBarContainer>
-                  {typeof disableNavigation === 'undefined' && onClickBack && (
+                  {onClickBack && (
                     <BackButton onClick={onClickBack} data-testid={buildTestId('back-btn')} />
                   )}
                   <Space size="box" shape="fill" />
-                  {swap?.currencyDeposit !== 'BTC' && <ConnectWallet />}
+                  {fromBTC ? null : <ConnectWallet />}
                 </NavBarContainer>
-                <TopContent>{top}</TopContent>
-                <Space size="city" />
-              </FancyTopContainer>
-            </PulsarThemeProvider>
-          </>
-        )}
-        {layout === 'widget-small' && (top || onClickBack) && (
-          <LightTopContainer data-testid={buildTestId('top')}>
+                {top && <TopContent>{top}</TopContent>}
+              </LightTopContainer>
+            )}
             <Space size="widgetVerticalPadding" />
-            <NavBarContainer>
-              {onClickBack && (
-                <BackButton onClick={onClickBack} data-testid={buildTestId('back-btn')} />
-              )}
-              <Space size="box" shape="fill" />
-              <ConnectWallet />
-            </NavBarContainer>
-            {top && <TopContent>{top}</TopContent>}
-          </LightTopContainer>
-        )}
-        <Space size="widgetVerticalPadding" />
-        {children && (
-          <BottomContainer data-testid={buildTestId('bottom')} hasNoTop={!top}>
-            {children}
-          </BottomContainer>
-        )}
-        <Space size="widgetVerticalPadding" />
+            {children && (
+              <BottomContainer data-testid={buildTestId('bottom')} hasNoTop={!top}>
+                {children}
+              </BottomContainer>
+            )}
+            <Space size="widgetVerticalPadding" />
+          </FancyTopContainer>
+        </PulsarThemeProvider>
       </StepViewContainer>
     </Container>
   );

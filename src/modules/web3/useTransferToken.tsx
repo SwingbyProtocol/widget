@@ -3,7 +3,7 @@ import { CONTRACTS } from '@swingby-protocol/sdk';
 import { Big } from 'big.js';
 import type { DefaultRootState } from 'react-redux';
 import Web3 from 'web3';
-import { TransactionConfig } from 'web3-eth';
+import { TransactionConfig, TransactionReceipt } from 'web3-eth';
 import { createToast } from '@swingby-protocol/pulsar';
 
 import { logger } from '../logger';
@@ -18,6 +18,7 @@ export const useTransferToken = () => {
   const context = useSdkContext();
   const { onboard, wallet, address } = useOnboard();
   const [loading, setLoading] = useState(false);
+  const [txHash, setTxHash] = useState<string | null>(null);
   const [error, setError] = useState<Error | null>(null);
 
   const transfer = useCallback(
@@ -84,17 +85,16 @@ export const useTransferToken = () => {
           );
         }
 
-        return watchTransaction({
+        return await watchTransaction({
           coin: swap.currencyDeposit,
           tx: web3.eth.sendTransaction({ ...rawTx, gas: estimatedGas }),
-        })
-          .on('error', (error) => {
+          onReceipt: (receipt: TransactionReceipt) => setLoading(false),
+          onError: (error: Error) => {
             setLoading(false);
             setError(error);
-          })
-          .on('receipt', () => {
-            setLoading(false);
-          });
+          },
+          onTxHash: (transactionHash: string) => setTxHash(transactionHash),
+        });
       } catch (err: any) {
         setLoading(false);
         setError(err);
@@ -110,5 +110,5 @@ export const useTransferToken = () => {
     [address, context, onboard, wallet],
   );
 
-  return useMemo(() => ({ loading, error, transfer }), [loading, error, transfer]);
+  return useMemo(() => ({ loading, error, transfer, txHash }), [loading, error, transfer, txHash]);
 };

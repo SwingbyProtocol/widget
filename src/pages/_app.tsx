@@ -16,14 +16,12 @@ import { Favicon } from '../components/Favicon';
 import { graphQlEndpoint } from '../modules/env';
 import { languages } from '../modules/i18n';
 import { WidgetLayoutProvider } from '../modules/layout';
-import { useStore } from '../modules/store';
+import { initialStore } from '../modules/store';
 import { SdkContextGateKeeper } from '../modules/store/sdkContext';
 import { GlobalStyles } from '../modules/styles';
 import { OnboardGlobalStyles, OnboardProvider } from '../modules/web3';
 
-function MyApp({ Component, pageProps, router }: AppProps) {
-  const store = useStore();
-
+const App = ({ Component, pageProps, router }: AppProps) => {
   const apolloClient = new ApolloClient({
     uri: graphQlEndpoint,
     cache: new InMemoryCache(),
@@ -54,7 +52,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
           <PulsarGlobalStyles />
           <GlobalStyles />
           <OnboardGlobalStyles />
-          <ReduxProvider store={store}>
+          <ReduxProvider store={initialStore}>
             <SdkContextGateKeeper mode={router.query.mode}>
               <OnboardProvider>
                 <WidgetLayoutProvider>
@@ -78,6 +76,6 @@ function MyApp({ Component, pageProps, router }: AppProps) {
       </PulsarThemeProvider>
     </ApolloProvider>
   );
-}
+};
 
-export default MyApp;
+export default App;

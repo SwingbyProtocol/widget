@@ -30,6 +30,8 @@
   "widget.status-label-short.COMPLETED": "Sent",
   "widget.status-label-short.REFUNDED": "Refunded",
   "widget.status-label-short.EXPIRED": "This swap has expired",
+  "widget.status-label-long.TITLE": "To send the funds, you can connect your wallet or scan the QR code",
+  "widget.status-label-long.TITLE-BELLOW": "Or scan the QR code",
   "widget.status-label-long.WAITING": "Send exactly {value} to",
   "widget.status-label-long.WAITING.note": " ",
   "widget.status-label-long.WAITING_CONFIRMATIONS": "Waiting for confirmations…",
