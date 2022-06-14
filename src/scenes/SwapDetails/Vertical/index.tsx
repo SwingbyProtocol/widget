@@ -36,7 +36,7 @@ export const Vertical = ({ resource, swap }: VerticalProps) => {
   const { locale } = useIntl();
   const context = useSdkContext();
   const { address } = useOnboard();
-  const { transfer, loading: isTransferring } = useTransferToken();
+  const { transfer, loading: isTransferring, txHash } = useTransferToken();
   const [hasTransactionSucceeded, setTransactionSucceeded] = useState(false);
   const { assertTermsSignature } = useAssertTermsSignature();
 
@@ -50,13 +50,15 @@ export const Vertical = ({ resource, swap }: VerticalProps) => {
   }, [context, swap]);
 
   const inboundLink = useMemo(() => {
-    if (!swap || !swap.txDepositId) return undefined;
+    if (!swap) return undefined;
+    if (!txHash && !swap.txDepositId) return undefined;
+
     return buildExplorerLink({
       context,
       coin: swap.currencyDeposit,
-      transactionId: swap.txDepositId,
+      transactionId: swap.txDepositId ? swap.txDepositId : (txHash as string),
     });
-  }, [context, swap]);
+  }, [context, swap, txHash]);
 
   const doTransfer = useCallback(async () => {
     try {
@@ -96,10 +98,8 @@ export const Vertical = ({ resource, swap }: VerticalProps) => {
       top={<Top swap={swap} data-testid={buildTestId('')} />}
       data-testid={buildTestId('')}
       swap={swap}
+      fromBTC={swap.currencyDeposit === 'BTC'}
     >
-      {address && swap.status === 'WAITING' && (isTransferring || hasTransactionSucceeded) && (
-        <Loading />
-      )}
       {address &&
         supportsWeb3 &&
         swap.status === 'WAITING' &&
@@ -126,7 +126,8 @@ export const Vertical = ({ resource, swap }: VerticalProps) => {
             />
           </StyledQRContainer>
         )}
-      {swap.status !== 'WAITING' && (
+
+      {txHash && (
         <ProgressContainer>
           <SwapProgress
             messages={SwapProgress.defaultMessages({ locale })}
@@ -137,6 +138,7 @@ export const Vertical = ({ resource, swap }: VerticalProps) => {
           />
         </ProgressContainer>
       )}
+
       <>
         <Space size="town" shape="fill" />
         <ExplorerContainer>
