@@ -22,6 +22,7 @@ type Props = {
   top?: React.ReactNode;
   children?: React.ReactNode;
   swap?: SwapData | null;
+  fromBTC: boolean;
 } & Testable;
 
 export const VerticalWidgetView = ({
@@ -30,6 +31,7 @@ export const VerticalWidgetView = ({
   children,
   swap,
   'data-testid': testId,
+  fromBTC,
 }: Props) => {
   const {
     query: { disableNavigation },
@@ -67,7 +69,7 @@ export const VerticalWidgetView = ({
                     <BackButton onClick={onClickBack} data-testid={buildTestId('back-btn')} />
                   )}
                   <Space size="box" shape="fill" />
-                  <ConnectWallet />
+                  {fromBTC ? null : <ConnectWallet />}
                 </NavBarContainer>
                 {top && <TopContent>{top}</TopContent>}
               </LightTopContainer>

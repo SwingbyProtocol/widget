@@ -18,7 +18,6 @@ export const useTransferToken = () => {
   const context = useSdkContext();
   const { onboard, wallet, address } = useOnboard();
   const [loading, setLoading] = useState(false);
-  // @todo (agustin) return the txHash to show the UI
   const [txHash, setTxHash] = useState<string | null>(null);
   const [error, setError] = useState<Error | null>(null);
 
