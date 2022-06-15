@@ -9,10 +9,13 @@ import {
 } from '@swingby-protocol/pulsar';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { DefaultRootState } from 'react-redux';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useInterval } from 'react-use';
 
 import { FancyCryptoAmount } from '../../../../components/FancyCryptoAmount';
 import { Space } from '../../../../components/Space';
 import { useWidgetLayout } from '../../../../modules/layout';
+import { useSbBTCPrice } from '../../../../modules/web3';
 
 import { BigText, SmallText, CoinWithText, Container } from './styled';
 
@@ -23,10 +26,38 @@ export const Top = ({
   const { buildTestId } = useBuildTestId({ id: testId });
   const { locale, formatMessage } = useIntl();
   const layout = useWidgetLayout();
+  const { getCurrentPrice } = useSbBTCPrice();
   const spaceSize = layout === 'widget-full' || layout === 'website' ? 'house' : 'room';
   const smallSpaceSize = layout === 'widget-full' || layout === 'website' ? 'closet' : 'drawer';
   const copyToClipboardSize = layout === 'widget-full' || layout === 'website' ? 'city' : 'town';
   const sendExactlyNote = formatMessage({ id: 'widget.status-label-long.WAITING.note' });
+
+  const [sbBTCPrice, setCurrencyPrice] = useState(1);
+  const asyncGetPrice = useCallback(async () => {
+    // If is not sbBTC.SKYPOOL the conversion rate is not used
+    if (swap.currencyDeposit !== 'sbBTC.SKYPOOL') return;
+    try {
+      const price = await getCurrentPrice();
+      setCurrencyPrice(price['sbBTC.SKYPOOL'].priceSbBTC);
+    } catch (e) {
+      console.warn(e);
+    }
+  }, [getCurrentPrice, swap]);
+
+  useEffect(() => {
+    asyncGetPrice();
+  }, [asyncGetPrice]);
+
+  useInterval(() => asyncGetPrice(), 10 * 1000);
+
+  const receivedAmount = useMemo(() => {
+    // If is not sbBTC.SKYPOOL the conversion rate is not used, just rendered what swap said
+    if (swap.currencyDeposit !== 'sbBTC.SKYPOOL') return +(swap.amountReceiving ?? 0);
+    // Currently we have 0.2% fees of withdraw liquidity
+    // Just apply this logic to sbBTC.SKYPOOL
+    // We use the amountDeposit as base since the amountReceiving is wrong from the api
+    else return +(+(swap.amountDeposit ?? 0) * sbBTCPrice * (1 - 0.002)).toFixed(7);
+  }, [sbBTCPrice, swap]);
 
   if (swap.status === 'COMPLETED' || swap.status === 'EXPIRED') {
     return (
@@ -44,7 +75,7 @@ export const Top = ({
             <CoinIcon symbol={swap.currencyReceiving} />
             &nbsp;
             {getCryptoAssetFormatter({ locale, displaySymbol: swap.currencyReceiving }).format(
-              +(swap.amountReceiving ?? 0),
+              receivedAmount,
             )}
           </CoinWithText>
         </BigText>
@@ -67,10 +98,7 @@ export const Top = ({
             id={`widget.status-label-long.${swap.status}`}
             values={{
               value: (
-                <FancyCryptoAmount
-                  amount={+(swap.amountReceiving ?? 0)}
-                  displaySymbol={swap.currencyReceiving}
-                />
+                <FancyCryptoAmount amount={receivedAmount} displaySymbol={swap.currencyReceiving} />
               ),
             }}
           />
@@ -119,7 +147,7 @@ export const Top = ({
               values={{
                 value: (
                   <FancyCryptoAmount
-                    amount={+swap.amountReceiving}
+                    amount={receivedAmount}
                     displaySymbol={swap.currencyReceiving}
                   />
                 ),
