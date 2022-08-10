@@ -23,6 +23,8 @@ import {
   Variant,
   AmountReceiving,
   EstLabel,
+  SwapFeeLabel,
+  SwapFeeLabelSmall,
 } from './styled';
 import { CurrencySelector } from './CurrencySelector';
 
@@ -35,6 +37,8 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
   );
   const dispatch = useDispatch();
   const [amountReceiving, setAmountReceiving] = useState('');
+  const [feeTotal, setFeeTotal] = useState('');
+  const [feeBridgePercent, setFeeBridgePercent] = useState('');
   const [isCalculating, setIsCalculating] = useState(false);
   const context = useSdkContext();
   const { areCurrenciesAndAmountValid, isAmountDesiredValid } = useAreCurrenciesValid({ resource });
@@ -76,7 +80,7 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
         setIsCalculating(true);
 
         if (cancelled) return;
-        const { amountReceiving } = await estimateAmountReceiving({
+        const { amountReceiving, feeTotal, feeBridgeFraction } = await estimateAmountReceiving({
           context,
           amountDesired,
           currencyDeposit,
@@ -84,7 +88,11 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
         });
 
         if (cancelled) return;
+        const feeBridgePercent = String(parseFloat(feeBridgeFraction) * 100);
+
         setAmountReceiving(amountReceiving);
+        setFeeTotal(feeTotal);
+        setFeeBridgePercent(feeBridgePercent);
       } catch (err) {
         logger.error({ err });
 
@@ -135,11 +143,23 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
         data-testid={buildTestId('amount-from')}
         state={isAmountDesiredValid ? 'normal' : 'danger'}
       />
+
       {variant === 'vertical' && <Label />}
       {variant === 'banner' ? (
         <SwapHorizontal onClick={reverseCurrency} />
       ) : (
-        <SwapVertical onClick={reverseCurrency} />
+        <>
+          <SwapVertical onClick={reverseCurrency} />
+          <SwapFeeLabel>
+            {feeTotal !== '' && (
+              <>
+                -{feeTotal}
+                <br />
+                <SwapFeeLabelSmall>({feeBridgePercent}% + network fees)</SwapFeeLabelSmall>
+              </>
+            )}
+          </SwapFeeLabel>
+        </>
       )}
       {variant === 'vertical' && (
         <Label>
@@ -165,6 +185,18 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
           </>
         ) : null}
       </AmountReceiving>
+
+      {variant === 'banner' && (
+        <SwapFeeLabel>
+          {feeTotal !== '' && (
+            <>
+              -{feeTotal}
+              <br />
+              <SwapFeeLabelSmall>({feeBridgePercent}% + network fees)</SwapFeeLabelSmall>
+            </>
+          )}
+        </SwapFeeLabel>
+      )}
     </CoinAmountContainer>
   );
 };

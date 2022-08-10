@@ -80,21 +80,54 @@ export const SwapVertical = styled(Icon.SwapVertical)`
   cursor: pointer;
 
   @media ${StylingConstants.mediaVerticalWideWidth} {
-    grid-column: 2 / 4;
+    grid-column: 2 / 2;
   }
 
   @media ${StylingConstants.mediaLayout.widgetFull} {
-    grid-column: 1 / 3;
+    grid-column: 1 / 2;
   }
 
   @media ${StylingConstants.mediaWebsiteWideWidth} {
-    grid-column: 2 / 4;
+    grid-column: 2 / 2;
   }
 `;
 
 export const SwapHorizontal = styled(Icon.SwapHorizontal)`
   ${swap};
   cursor: pointer;
+`;
+
+export const SwapFeeLabel = styled.span`
+  ${swap};
+  margin-left: ${({ theme }) => rem(theme.pulsar.size.house)};
+  margin-top: ${({ theme }) => rem(-theme.pulsar.size.drawer)};
+  margin-bottom: ${({ theme }) => rem(-theme.pulsar.size.drawer)};
+  min-height: ${({ theme }) => rem(theme.pulsar.size.town)};
+  font-size: ${({ theme }) => rem(theme.pulsar.size.closet)};
+  color: ${({ theme }) => theme.pulsar.color.text.accent};
+
+  place-self: stretch;
+  grid-column: 2 / 3;
+
+  @media ${StylingConstants.mediaVerticalWideWidth} {
+    grid-column: 2 / 2;
+  }
+
+  @media ${StylingConstants.mediaLayout.widgetSmall} {
+    grid-column: 3 / 4;
+  }
+
+  @media ${StylingConstants.mediaLayout.widgetFull} {
+    grid-column: 2 / 3;
+  }
+
+  @media ${StylingConstants.mediaWebsiteWideWidth} {
+    grid-column: 3 / 4;
+  }
+`;
+
+export const SwapFeeLabelSmall = styled.span`
+  font-size: 0.8em;
 `;
 
 export const AmountReceiving = styled.span`

@@ -10,7 +10,7 @@ export const BannerContainer = styled.div`
   flex-shrink: 1;
   background: ${({ theme }) => theme.pulsar.color.bg.normal};
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   margin: ${rem(StylingConstants.widgetBannerPadding)};
 `;
