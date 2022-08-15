@@ -138,10 +138,16 @@ export const AmountReceiving = styled.span`
   position: relative;
 `;
 
-export const EstLabel = styled.span`
-  position: absolute;
-  left: ${({ theme }) => rem(theme.pulsar.size.room)};
-  bottom: ${({ theme }) => rem(-theme.pulsar.size.room)};
+export const RewardAmountReceiving = styled.span`
+  display: block;
+  margin-top: ${({ theme }) => rem(theme.pulsar.size.box)};
+  margin-bottom: ${({ theme }) => rem(-theme.pulsar.size.street)};
+  margin-right: ${({ theme }) => rem(-theme.pulsar.size.room)};
   font-size: ${({ theme }) => rem(theme.pulsar.size.closet)};
-  font-weight: 600;
+  font-weight: 500;
+  color: ${({ theme }) => theme.pulsar.color.text.accent};
+`;
+
+export const RewardAmountReceivingSmall = styled.span`
+  font-size: 0.8em;
 `;
