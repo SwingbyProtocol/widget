@@ -107,8 +107,9 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
         setFeeBridgePercent(feeBridgePercent);
 
         if (parseFloat(rewardAmountReceiving)) {
+          const rebateRatePercent = String(parseFloat(rebateRate) / 100);
           setRewardAmountReceiving(rewardAmountReceiving);
-          setRebateRate(rebateRate);
+          setRebateRate(rebateRatePercent);
         }
       } catch (err) {
         logger.error({ err });
@@ -200,7 +201,12 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
               <>
                 <br />
                 <RewardAmountReceiving>
-                  +{rewardAmountReceiving} SWINGBY
+                  +
+                  <FormattedNumber
+                    value={Number(rewardAmountReceiving)}
+                    maximumFractionDigits={4}
+                  />
+                  &nbsp;SWINGBY
                   <br />
                   <RewardAmountReceivingSmall>({rebateRate}% rebate)</RewardAmountReceivingSmall>
                 </RewardAmountReceiving>
