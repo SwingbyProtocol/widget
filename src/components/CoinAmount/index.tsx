@@ -15,6 +15,7 @@ import {
 import { actionSetSwapFormData, useAreCurrenciesValid } from '../../modules/store/swapForm';
 import { logger } from '../../modules/logger';
 import { useSdkContext } from '../../modules/store/sdkContext';
+import { rebalanceRewardsUrl } from '../../modules/env';
 
 import {
   CoinAmountContainer,
@@ -27,6 +28,7 @@ import {
   SwapFeeLabelSmall,
   RewardAmountReceiving,
   RewardAmountReceivingSmall,
+  Atag,
 } from './styled';
 import { CurrencySelector } from './CurrencySelector';
 
@@ -208,7 +210,13 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
                   />
                   &nbsp;SWINGBY
                   <br />
-                  <RewardAmountReceivingSmall>({rebateRate}% rebate)</RewardAmountReceivingSmall>
+                  <RewardAmountReceivingSmall>
+                    ({rebateRate}%{' '}
+                    <Atag href={rebalanceRewardsUrl} rel="noopener noreferrer" target="_blank">
+                      rebalance rewards
+                    </Atag>
+                    )
+                  </RewardAmountReceivingSmall>
                 </RewardAmountReceiving>
               </>
             )}
