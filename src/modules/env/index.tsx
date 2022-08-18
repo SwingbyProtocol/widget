@@ -17,3 +17,5 @@ export const graphQlEndpoint = 'https://network.skybridge.exchange/api/v3/graphq
 export const walletConnectBridge = process.env.NEXT_PUBLIC_WALLET_CONNECT_BRIDGE;
 
 export const isServer = typeof window === 'undefined';
+
+export const rebalanceRewardsUrl = 'https://swingby.substack.com/p/bridge-rebalancing-guide';

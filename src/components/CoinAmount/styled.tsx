@@ -151,3 +151,8 @@ export const RewardAmountReceiving = styled.span`
 export const RewardAmountReceivingSmall = styled.span`
   font-size: 0.8em;
 `;
+
+export const Atag = styled.a`
+  text-decoration: none;
+  color: ${({ theme }) => theme.pulsar.color.primary.active} !important;
+`;
