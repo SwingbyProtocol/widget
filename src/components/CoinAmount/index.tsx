@@ -9,6 +9,7 @@ import {
   getSwapableFrom,
   SkybridgeResource,
   SkybridgeCoin,
+  estimateSwapRewards,
 } from '@swingby-protocol/sdk';
 
 import { actionSetSwapFormData, useAreCurrenciesValid } from '../../modules/store/swapForm';
@@ -22,9 +23,10 @@ import {
   SwapHorizontal,
   Variant,
   AmountReceiving,
-  EstLabel,
   SwapFeeLabel,
   SwapFeeLabelSmall,
+  RewardAmountReceiving,
+  RewardAmountReceivingSmall,
 } from './styled';
 import { CurrencySelector } from './CurrencySelector';
 
@@ -39,6 +41,8 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
   const [amountReceiving, setAmountReceiving] = useState('');
   const [feeTotal, setFeeTotal] = useState('');
   const [feeBridgePercent, setFeeBridgePercent] = useState('');
+  const [rewardAmountReceiving, setRewardAmountReceiving] = useState('');
+  const [rebateRate, setRebateRate] = useState('');
   const [isCalculating, setIsCalculating] = useState(false);
   const context = useSdkContext();
   const { areCurrenciesAndAmountValid, isAmountDesiredValid } = useAreCurrenciesValid({ resource });
@@ -69,6 +73,7 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
   useEffect(() => {
     if (!areCurrenciesAndAmountValid) {
       setAmountReceiving('');
+      setRewardAmountReceiving('');
       setIsCalculating(false);
       return;
     }
@@ -80,7 +85,14 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
         setIsCalculating(true);
 
         if (cancelled) return;
+
         const { amountReceiving, feeTotal, feeBridgeFraction } = await estimateAmountReceiving({
+          context,
+          amountDesired,
+          currencyDeposit,
+          currencyReceiving,
+        });
+        const { amountReceiving: rewardAmountReceiving, rebateRate } = await estimateSwapRewards({
           context,
           amountDesired,
           currencyDeposit,
@@ -88,11 +100,17 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
         });
 
         if (cancelled) return;
-        const feeBridgePercent = String(parseFloat(feeBridgeFraction) * 100);
 
+        const feeBridgePercent = String(parseFloat(feeBridgeFraction) * 100);
         setAmountReceiving(amountReceiving);
         setFeeTotal(feeTotal);
         setFeeBridgePercent(feeBridgePercent);
+
+        if (parseFloat(rewardAmountReceiving)) {
+          const rebateRatePercent = String(parseFloat(rebateRate) / 100);
+          setRewardAmountReceiving(rewardAmountReceiving);
+          setRebateRate(rebateRatePercent);
+        }
       } catch (err) {
         logger.error({ err });
 
@@ -179,9 +197,21 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
         ) : isAmountReceivingValid ? (
           <>
             <FormattedNumber value={Number(amountReceiving)} maximumFractionDigits={4} />
-            <EstLabel>
-              <FormattedMessage id="widget.amount-receiving-estimation-label" />
-            </EstLabel>
+            {rewardAmountReceiving !== '' && (
+              <>
+                <br />
+                <RewardAmountReceiving>
+                  +
+                  <FormattedNumber
+                    value={Number(rewardAmountReceiving)}
+                    maximumFractionDigits={4}
+                  />
+                  &nbsp;SWINGBY
+                  <br />
+                  <RewardAmountReceivingSmall>({rebateRate}% rebate)</RewardAmountReceivingSmall>
+                </RewardAmountReceiving>
+              </>
+            )}
           </>
         ) : null}
       </AmountReceiving>
