@@ -20,5 +20,6 @@ query SwapDetails($id: ID!) {
     feeCurrency
     feeTotal
     isSkypoolsSwap
+    rebalanceRewards
   }
 }
