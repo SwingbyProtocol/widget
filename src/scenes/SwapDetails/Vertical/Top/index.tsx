@@ -166,20 +166,23 @@ export const Top = ({
               }}
             />
           </FeeText>
-          <FeeText>
-            <FormattedMessage
-              id={'widget.swap-rebalance-rewards'}
-              values={{
-                value: (
-                  <FormattedNumber
-                    value={Number(swap.rebalanceRewards)}
-                    maximumFractionDigits={4}
-                  />
-                ),
-                symbol: 'SWINGBY',
-              }}
-            />
-          </FeeText>
+
+          {Number(swap.rebalanceRewards) > 0 && (
+            <FeeText>
+              <FormattedMessage
+                id={'widget.swap-rebalance-rewards'}
+                values={{
+                  value: (
+                    <FormattedNumber
+                      value={Number(swap.rebalanceRewards)}
+                      maximumFractionDigits={4}
+                    />
+                  ),
+                  symbol: 'SWINGBY',
+                }}
+              />
+            </FeeText>
+          )}
           <Space size={spaceSize} />
 
           <SmallText>
