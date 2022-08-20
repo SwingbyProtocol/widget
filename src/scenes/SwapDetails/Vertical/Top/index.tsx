@@ -7,7 +7,7 @@ import {
   Tooltip,
   useBuildTestId,
 } from '@swingby-protocol/pulsar';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage, FormattedNumber, useIntl } from 'react-intl';
 import { DefaultRootState } from 'react-redux';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useInterval } from 'react-use';
@@ -17,7 +17,7 @@ import { Space } from '../../../../components/Space';
 import { useWidgetLayout } from '../../../../modules/layout';
 import { useSbBTCPrice } from '../../../../modules/web3';
 
-import { BigText, SmallText, CoinWithText, Container } from './styled';
+import { BigText, SmallText, CoinWithText, Container, FeeText } from './styled';
 
 export const Top = ({
   swap,
@@ -151,16 +151,37 @@ export const Top = ({
                     displaySymbol={swap.currencyReceiving}
                   />
                 ),
-                address: (
-                  <Tooltip content={swap.addressReceiving} targetHtmlTag="span">
-                    {`${swap.addressReceiving.substr(0, 6)}…${swap.addressReceiving.substr(
-                      swap.addressReceiving.length - 4,
-                    )}`}
-                  </Tooltip>
-                ),
+                address: swap.addressReceiving,
               }}
             />
           </SmallText>
+
+          <Space size={spaceSize} />
+          <FeeText>
+            <FormattedMessage
+              id={'widget.swap-network-fees'}
+              values={{
+                value: <FormattedNumber value={Number(swap.feeTotal)} maximumFractionDigits={4} />,
+                symbol: swap.feeCurrency,
+              }}
+            />
+          </FeeText>
+          <FeeText>
+            <FormattedMessage
+              id={'widget.swap-rebalance-rewards'}
+              values={{
+                value: (
+                  <FormattedNumber
+                    value={Number(swap.rebalanceRewards)}
+                    maximumFractionDigits={4}
+                  />
+                ),
+                symbol: 'SWINGBY',
+              }}
+            />
+          </FeeText>
+          <Space size={spaceSize} />
+
           <SmallText>
             <FormattedMessage id="widget.confirm-address" />
           </SmallText>
