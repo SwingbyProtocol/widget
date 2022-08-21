@@ -141,25 +141,45 @@ export const Top = ({
       {typeof swap.amountReceiving === 'string' && (
         <>
           <Space size={spaceSize} />
-          <SmallText>
-            <FormattedMessage
-              id={swap.isSkypoolsSwap ? 'widget.will-allocate' : 'widget.will-send-back'}
-              values={{
-                value: (
-                  <FancyCryptoAmount
-                    amount={receivedAmount}
-                    displaySymbol={swap.currencyReceiving}
-                  />
-                ),
-                address: swap.addressReceiving,
-              }}
-            />
-          </SmallText>
+          {swap.isSkypoolsSwap ? (
+            <SmallText>
+              <FormattedMessage
+                id="widget.will-allocate"
+                values={{
+                  value: (
+                    <FancyCryptoAmount
+                      amount={receivedAmount}
+                      displaySymbol={swap.currencyReceiving}
+                    />
+                  ),
+                  address: swap.addressReceiving,
+                }}
+              />
+            </SmallText>
+          ) : (
+            <>
+              <SmallText>
+                <FormattedMessage
+                  id="widget.will-send-back"
+                  values={{
+                    value: (
+                      <FancyCryptoAmount
+                        amount={receivedAmount}
+                        displaySymbol={swap.currencyReceiving}
+                      />
+                    ),
+                  }}
+                />
+              </SmallText>
+              <Space size={spaceSize} />
+              <SmallText>{swap.addressReceiving}</SmallText>
+            </>
+          )}
 
           <Space size={spaceSize} />
           <FeeText>
             <FormattedMessage
-              id={'widget.swap-network-fees'}
+              id="widget.swap-network-fees"
               values={{
                 value: <FormattedNumber value={Number(swap.feeTotal)} maximumFractionDigits={4} />,
                 symbol: swap.feeCurrency,
@@ -170,7 +190,7 @@ export const Top = ({
           {Number(swap.rebalanceRewards) > 0 && (
             <FeeText>
               <FormattedMessage
-                id={'widget.swap-rebalance-rewards'}
+                id="widget.swap-rebalance-rewards"
                 values={{
                   value: (
                     <FormattedNumber

@@ -39,7 +39,7 @@
   "widget.status-label-long.SIGNING_REFUND": "Refunding {value} to",
   "widget.status-label-long.SENDING_REFUND": "Refunding {value} to",
   "widget.status-label-long.REFUNDED": "Refunded {value} to",
-  "widget.will-send-back": "Skybridge will send {value} to {address}.",
+  "widget.will-send-back": "Skybridge will send {value} to",
   "widget.will-allocate": "Skybridge will allocate {value} to {address} on the swap contract. You can then swap to another token or withdraw your wrapped BTC.",
   "widget.confirm-address": "Please confirm that you control this address!",
   "widget.explorer-btn": "Explorer",
