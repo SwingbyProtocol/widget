@@ -21,6 +21,7 @@ export type SwapData = {
   txDepositId?: string | null;
   txReceivingId?: string | null;
   isSkypoolsSwap: boolean;
+  rebalanceRewards?: string | null;
 };
 
 type State = { [k: string]: undefined | SwapData };

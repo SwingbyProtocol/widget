@@ -13,6 +13,13 @@ export const SmallText = styled.span`
   text-align: center;
   font-weight: 600;
   font-size: ${({ theme }) => rem(theme.pulsar.size.closet)};
+  line-height: 1.5em;
+`;
+
+export const FeeText = styled.span`
+  display: block;
+  font-size: ${({ theme }) => rem(theme.pulsar.size.closet)};
+  line-height: 1.5em;
 `;
 
 export const CoinWithText = styled.span`
