@@ -76,6 +76,7 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
     if (!areCurrenciesAndAmountValid) {
       setAmountReceiving('');
       setRewardAmountReceiving('');
+      setFeeTotal('');
       setIsCalculating(false);
       return;
     }
@@ -84,6 +85,9 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
 
     (async () => {
       try {
+        setAmountReceiving('');
+        setRewardAmountReceiving('');
+        setFeeTotal('');
         setIsCalculating(true);
 
         if (cancelled) return;
