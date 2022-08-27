@@ -231,11 +231,9 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
       {variant === 'banner' && (
         <SwapFeeLabel>
           {feeTotal !== '' && (
-            <>
-              -{feeTotal}
-              <br />
-              <SwapFeeLabelSmall>({feeBridgePercent}% + network fees)</SwapFeeLabelSmall>
-            </>
+            <SwapFeeLabelSmall>
+              -{feeTotal}&nbsp;({feeBridgePercent}% + network fees)
+            </SwapFeeLabelSmall>
           )}
         </SwapFeeLabel>
       )}

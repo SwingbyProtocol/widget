@@ -46,6 +46,10 @@ export const CoinAmountContainer = styled.div<{ variant: Variant }>`
   width: 100%;
   ${({ variant }) => variant === 'vertical' && vertical};
   ${({ variant }) => variant === 'banner' && wideBanner};
+
+  @media ${StylingConstants.mediaVerticalWideWidth} {
+    row-gap: 0;
+  }
 `;
 
 export const Label = styled.span`
@@ -111,6 +115,8 @@ export const SwapFeeLabel = styled.span`
 
   @media ${StylingConstants.mediaVerticalWideWidth} {
     grid-column: 2 / 2;
+    margin: 0;
+    min-height: ${({ theme }) => rem(theme.pulsar.size.house)};
   }
 
   @media ${StylingConstants.mediaLayout.widgetSmall} {

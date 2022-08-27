@@ -4,15 +4,19 @@ import { TextInput } from '@swingby-protocol/pulsar';
 
 import { StylingConstants } from '../../../modules/styles';
 
-export const BannerContainer = styled.div`
+export const BannerContainer = styled.div<{ step: string }>`
   position: relative;
   flex-grow: 1;
   flex-shrink: 1;
   background: ${({ theme }) => theme.pulsar.color.bg.normal};
   display: flex;
-  align-items: flex-start;
+  align-items: ${({ step }) => (step === 'step-amounts' ? 'flex-start' : 'center')};
   justify-content: center;
   margin: ${rem(StylingConstants.widgetBannerPadding)};
+
+  @media ${StylingConstants.mediaVerticalWideWidth} {
+    margin: 0 ${rem(StylingConstants.widgetBannerPadding)};
+  }
 `;
 
 export const AddressInput = styled(TextInput)`
