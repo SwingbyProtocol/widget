@@ -133,13 +133,15 @@ export const Vertical = ({ resource, swap }: VerticalProps) => {
           />
         </ProgressContainer>
       )}
-      <>
-        <Space size="town" shape="fill" />
-        <ExplorerContainer>
-          {inboundLink && explorerLink({ url: inboundLink, txType: 'inbound' })}
-          {outboundLink && explorerLink({ url: outboundLink, txType: 'outbound' })}
-        </ExplorerContainer>
-      </>
+      {(inboundLink || outboundLink) && (
+        <>
+          <Space size="town" shape="fill" />
+          <ExplorerContainer>
+            {inboundLink && explorerLink({ url: inboundLink, txType: 'inbound' })}
+            {outboundLink && explorerLink({ url: outboundLink, txType: 'outbound' })}
+          </ExplorerContainer>
+        </>
+      )}
     </VerticalWidgetView>
   );
 };

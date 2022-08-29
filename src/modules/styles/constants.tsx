@@ -4,7 +4,7 @@ const website = `(min-height: ${rem(600)})`;
 
 export const StylingConstants = {
   widgetBannerPadding: 14,
-  widgetVerticalPadding: 40,
+  widgetVerticalPadding: 20,
   mediaWideWidth: `(min-width: ${rem(600)})`,
   mediaVerticalWideWidth: `(min-width: ${rem(400)})`,
   mediaWebsiteWideWidth: `${website} and (min-width: ${rem(500)})`,
