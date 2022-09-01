@@ -33,8 +33,16 @@ const vertical = css`
 const wideBanner = css`
   @media ${StylingConstants.mediaWideWidth} {
     grid-template-columns: 1fr 1fr auto 1fr 1fr;
-    ${wideSpace};
+    column-gap: ${({ theme }) => rem(theme.pulsar.size.house)};
+    row-gap: 0;
   }
+`;
+
+const bannerSwapFeeLabel = css`
+  margin: 0;
+  margin-right: ${({ theme }) => rem(-theme.pulsar.size.house)};
+  min-height: ${({ theme }) => rem(theme.pulsar.size.house)};
+  white-space: nowrap;
 `;
 
 export const CoinAmountContainer = styled.div<{ variant: Variant }>`
@@ -46,10 +54,6 @@ export const CoinAmountContainer = styled.div<{ variant: Variant }>`
   width: 100%;
   ${({ variant }) => variant === 'vertical' && vertical};
   ${({ variant }) => variant === 'banner' && wideBanner};
-
-  @media ${StylingConstants.mediaVerticalWideWidth} {
-    row-gap: 0;
-  }
 `;
 
 export const Label = styled.span`
@@ -101,7 +105,7 @@ export const SwapHorizontal = styled(Icon.SwapHorizontal)`
   cursor: pointer;
 `;
 
-export const SwapFeeLabel = styled.span`
+export const SwapFeeLabel = styled.span<{ variant: Variant }>`
   ${swap};
   margin-left: ${({ theme }) => rem(theme.pulsar.size.house)};
   margin-top: ${({ theme }) => rem(-theme.pulsar.size.drawer)};
@@ -109,14 +113,13 @@ export const SwapFeeLabel = styled.span`
   min-height: ${({ theme }) => rem(theme.pulsar.size.town)};
   font-size: ${({ theme }) => rem(theme.pulsar.size.closet)};
   color: ${({ theme }) => theme.pulsar.color.text.accent};
+  ${({ variant }) => variant === 'banner' && bannerSwapFeeLabel};
 
   place-self: stretch;
   grid-column: 2 / 3;
 
   @media ${StylingConstants.mediaVerticalWideWidth} {
     grid-column: 2 / 2;
-    margin: 0;
-    min-height: ${({ theme }) => rem(theme.pulsar.size.house)};
   }
 
   @media ${StylingConstants.mediaLayout.widgetSmall} {
