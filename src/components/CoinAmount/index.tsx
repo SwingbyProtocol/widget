@@ -174,7 +174,7 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
       ) : (
         <>
           <SwapVertical onClick={reverseCurrency} />
-          <SwapFeeLabel>
+          <SwapFeeLabel variant={variant}>
             {feeTotal !== '' && (
               <>
                 -{feeTotal}
@@ -229,13 +229,11 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
       </AmountReceiving>
 
       {variant === 'banner' && (
-        <SwapFeeLabel>
+        <SwapFeeLabel variant={variant}>
           {feeTotal !== '' && (
-            <>
-              -{feeTotal}
-              <br />
-              <SwapFeeLabelSmall>({feeBridgePercent}% + network fees)</SwapFeeLabelSmall>
-            </>
+            <SwapFeeLabelSmall>
+              -{feeTotal}&nbsp;({feeBridgePercent}% + network fees)
+            </SwapFeeLabelSmall>
           )}
         </SwapFeeLabel>
       )}

@@ -4,7 +4,6 @@ import {
   getCryptoAssetFormatter,
   Icon,
   Testable,
-  Tooltip,
   useBuildTestId,
 } from '@swingby-protocol/pulsar';
 import { FormattedMessage, FormattedNumber, useIntl } from 'react-intl';

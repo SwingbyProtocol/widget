@@ -40,7 +40,7 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
   });
 
   return (
-    <BannerContainer>
+    <BannerContainer step={step}>
       {!formValid && (
         <ErrorBox>
           {executionError ? (
