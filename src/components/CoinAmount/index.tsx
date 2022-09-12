@@ -9,6 +9,7 @@ import {
   getSwapableFrom,
   SkybridgeResource,
   SkybridgeCoin,
+  SkybridgeBridge,
   estimateSwapRewards,
 } from '@swingby-protocol/sdk';
 
@@ -50,15 +51,19 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
   const { areCurrenciesAndAmountValid, isAmountDesiredValid } = useAreCurrenciesValid({ resource });
 
   const coinsIn = useMemo<SkybridgeCoin[]>(
-    () => getCoinsFor({ context, resource, direction: 'in' }),
+    () =>
+      getCoinsFor({ context, resource, direction: 'in', bridge: 'btc_skypool' as SkybridgeBridge }),
     [context, resource],
   );
 
   const coinsOut = useMemo<SkybridgeCoin[]>(
     () =>
-      getSwapableFrom({ context, coin: currencyDeposit, resource }).filter(
-        (it) => it !== currencyDeposit,
-      ),
+      getSwapableFrom({
+        context,
+        coin: currencyDeposit,
+        resource,
+        bridge: 'btc_skypool' as SkybridgeBridge,
+      }).filter((it) => it !== currencyDeposit),
     [context, resource, currencyDeposit],
   );
 
