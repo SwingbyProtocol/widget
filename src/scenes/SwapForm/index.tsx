@@ -46,7 +46,7 @@ export const checkUD = async (search_value) => {
 export const useValidateForm = ({ resource }: FormProps): ValidFormReturn => {
   const { areCurrenciesAndAmountValid } = useAreCurrenciesValid({ resource });
   const { isReceivingAddressValid, isTaprootAddress, isAddressEmpty } =
-   useIsReceivingAddressValid();
+    useIsReceivingAddressValid();
   const { isBridgeUnderMaintenance } = useIsBridgeUnderMaintenance();
   const { loading, create, error } = useCreate({ resource });
   const [errorText, setErrorText] = useState('');
