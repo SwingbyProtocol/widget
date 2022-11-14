@@ -1,5 +1,6 @@
 import { SkybridgeResource } from '@swingby-protocol/sdk';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 import { useWidgetLayout } from '../../modules/layout';
 import { WidgetContainer } from '../../components/WidgetContainer';
@@ -10,7 +11,6 @@ import { IpBlockWarning } from '../../components/IpBlockWarning';
 import { useAreCurrenciesValid, useIsReceivingAddressValid } from '../../modules/store/swapForm';
 import { useIsBridgeUnderMaintenance } from '../../modules/maintenance-mode';
 import { useCreate } from '../../modules/create-swap';
-import axios from 'axios';
 
 import { Vertical } from './Vertical';
 import { Banner } from './Banner';
@@ -45,11 +45,7 @@ export const checkUD = async (search_value) => {
 
 export const useValidateForm = ({ resource }: FormProps): ValidFormReturn => {
   const { areCurrenciesAndAmountValid } = useAreCurrenciesValid({ resource });
-  const {
-    isReceivingAddressValid,
-    isTaprootAddress,
-    isAddressEmpty,
-  } = useIsReceivingAddressValid();
+  const { isReceivingAddressValid, isTaprootAddress, isAddressEmpty } = useIsReceivingAddressValid();
   const { isBridgeUnderMaintenance } = useIsBridgeUnderMaintenance();
   const { loading, create, error } = useCreate({ resource });
   const [errorText, setErrorText] = useState('');

@@ -2,6 +2,7 @@ import { Button, CoinIcon, Loading, TextInput, useBuildTestId } from '@swingby-p
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { getChainFor, SkybridgeResource } from '@swingby-protocol/sdk';
+import { useState } from 'react';
 
 import { CoinAmount } from '../../../components/CoinAmount';
 import {
@@ -24,7 +25,6 @@ import {
   TermsOfUseContainer,
   TermsOfUseLink,
 } from './styled';
-import { useState } from 'react';
 
 type VerticalProps = {
   resource: SkybridgeResource;
