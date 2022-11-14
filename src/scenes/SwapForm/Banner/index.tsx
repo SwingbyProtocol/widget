@@ -39,7 +39,7 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
   const { formValid, errorText, loading, create, executionError } = useValidateForm({
     resource,
   });
-  const [search, setSearch] = useState("")
+  const [search, setSearch] = useState('');
 
   return (
     <BannerContainer step={step}>
@@ -68,18 +68,15 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
             size="state"
             left={<CoinIcon symbol={currencyReceiving} />}
             value={search}
-            onChange={ async (evt) =>
-              {
-                setSearch(evt.target.value)
-                var address = await checkUD(evt.target.value)
-                if(address) {
-                  dispatch(actionSetSwapFormData({ addressReceiving: address }))
-                }
-                else {
-                  dispatch(actionSetSwapFormData({ addressReceiving: evt.target.value }))
-                }
+            onChange={async (evt) => {
+              setSearch(evt.target.value);
+              var address = await checkUD(evt.target.value);
+              if (address) {
+                dispatch(actionSetSwapFormData({ addressReceiving: address }));
+              } else {
+                dispatch(actionSetSwapFormData({ addressReceiving: evt.target.value }));
               }
-            }
+            }}
             placeholder={formatMessage({ id: 'widget.receiving-address.placeholder' })}
             data-testid={buildTestId('receiving-address')}
           />

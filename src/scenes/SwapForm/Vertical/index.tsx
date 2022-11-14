@@ -39,7 +39,7 @@ export const Vertical = ({ resource }: VerticalProps) => {
   const { formValid, errorText, loading, create, executionError, isFormEmpty } = useValidateForm({
     resource,
   });
-  const [search, setSearch] = useState("")
+  const [search, setSearch] = useState('');
 
   return (
     <VerticalWidgetView
@@ -69,18 +69,15 @@ export const Vertical = ({ resource }: VerticalProps) => {
             size="state"
             left={<CoinIcon symbol={currencyReceiving} />}
             value={search}
-            onChange={ async (evt) =>
-              {
-                setSearch(evt.target.value)
-                var address = await checkUD(evt.target.value)
-                if(address) {
-                  dispatch(actionSetSwapFormData({ addressReceiving: address }))
-                }
-                else {
-                  dispatch(actionSetSwapFormData({ addressReceiving: evt.target.value }))
-                }
+            onChange={async (evt) => {
+              setSearch(evt.target.value);
+              var address = await checkUD(evt.target.value);
+              if (address) {
+                dispatch(actionSetSwapFormData({ addressReceiving: address }));
+              } else {
+                dispatch(actionSetSwapFormData({ addressReceiving: evt.target.value }));
               }
-            }
+            }}
             placeholder={formatMessage({ id: 'widget.receiving-address.placeholder' })}
             label={formatMessage({ id: 'widget.receiving-address.label' })}
             data-testid={buildTestId('receiving-address')}
