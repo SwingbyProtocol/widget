@@ -28,7 +28,7 @@ type FormProps = {
   resource: SkybridgeResource;
 };
 
-export const checkUD = async (search_value) => {
+export const checkUD = async (search_value: String) => {
   const API_URL = 'https://resolve.unstoppabledomains.com/domains/';
   const API_KEY1 = process.env.NEXT_PUBLIC_UD_API_KEY;
   try {
