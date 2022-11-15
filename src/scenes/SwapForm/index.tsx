@@ -1,5 +1,6 @@
 import { SkybridgeResource } from '@swingby-protocol/sdk';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 import { useWidgetLayout } from '../../modules/layout';
 import { WidgetContainer } from '../../components/WidgetContainer';
@@ -25,6 +26,21 @@ type ValidFormReturn = {
 
 type FormProps = {
   resource: SkybridgeResource;
+};
+
+export const checkUD = async (search_value: String) => {
+  const API_URL = 'https://resolve.unstoppabledomains.com/domains/';
+  const API_KEY1 = process.env.NEXT_PUBLIC_UD_API_KEY;
+  try {
+    var res = await axios.get(API_URL + search_value, {
+      headers: {
+        Authorization: `bearer ${API_KEY1}`,
+      },
+    });
+    return res.data.meta.owner;
+  } catch (err) {
+    return null;
+  }
 };
 
 export const useValidateForm = ({ resource }: FormProps): ValidFormReturn => {

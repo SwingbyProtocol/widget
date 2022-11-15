@@ -2,6 +2,7 @@ import { Button, CoinIcon, Loading, TextInput, useBuildTestId } from '@swingby-p
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { getChainFor, SkybridgeResource } from '@swingby-protocol/sdk';
+import { useState } from 'react';
 
 import { CoinAmount } from '../../../components/CoinAmount';
 import {
@@ -14,7 +15,7 @@ import { useWidgetLayout } from '../../../modules/layout';
 import { VerticalWidgetView } from '../../../components/VerticalWidgetView';
 import { Separator } from '../../../components/Separator';
 import { NodeSelector } from '../../../components/NodeSelector';
-import { useValidateForm } from '../index';
+import { useValidateForm, checkUD } from '../index';
 
 import {
   ErrorBox,
@@ -38,6 +39,7 @@ export const Vertical = ({ resource }: VerticalProps) => {
   const { formValid, errorText, loading, create, executionError, isFormEmpty } = useValidateForm({
     resource,
   });
+  const [search, setSearch] = useState('');
 
   return (
     <VerticalWidgetView
@@ -66,10 +68,16 @@ export const Vertical = ({ resource }: VerticalProps) => {
           <TextInput
             size="state"
             left={<CoinIcon symbol={currencyReceiving} />}
-            value={addressReceiving}
-            onChange={(evt) =>
-              dispatch(actionSetSwapFormData({ addressReceiving: evt.target.value }))
-            }
+            value={search}
+            onChange={async (evt) => {
+              setSearch(evt.target.value);
+              var address = await checkUD(evt.target.value);
+              if (address) {
+                dispatch(actionSetSwapFormData({ addressReceiving: address }));
+              } else {
+                dispatch(actionSetSwapFormData({ addressReceiving: evt.target.value }));
+              }
+            }}
             placeholder={formatMessage({ id: 'widget.receiving-address.placeholder' })}
             label={formatMessage({ id: 'widget.receiving-address.label' })}
             data-testid={buildTestId('receiving-address')}
