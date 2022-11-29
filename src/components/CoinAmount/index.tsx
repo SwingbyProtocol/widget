@@ -106,7 +106,11 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
 
         if (cancelled) return;
 
-        const feeBridgePercent = (parseFloat(feeBridgeFraction) * 100).toPrecision(2);
+        const feeBridgePercent = new Intl.NumberFormat('en-US', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 18,
+        }).format(parseFloat(feeBridgeFraction) * 100);
+
         setAmountReceiving(amountReceiving);
         setFeeTotal(feeTotal);
         setFeeBridgePercent(feeBridgePercent);
@@ -122,7 +126,11 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
           if (cancelled) return;
 
           if (parseFloat(rewardAmountReceiving)) {
-            const rebateRatePercent = (parseFloat(rebateRate) / 100).toPrecision(2);
+            const rebateRatePercent = new Intl.NumberFormat('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 18,
+            }).format(parseFloat(rebateRate) / 100);
+
             setRewardAmountReceiving(rewardAmountReceiving);
             setRebateRate(rebateRatePercent);
           }
