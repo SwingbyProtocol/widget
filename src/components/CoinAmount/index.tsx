@@ -103,12 +103,6 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
           currencyDeposit,
           currencyReceiving,
         });
-        const { amountReceiving: rewardAmountReceiving, rebateRate } = await estimateSwapRewards({
-          context,
-          amountDesired,
-          currencyDeposit,
-          currencyReceiving,
-        });
 
         if (cancelled) return;
 
@@ -117,10 +111,21 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
         setFeeTotal(feeTotal);
         setFeeBridgePercent(feeBridgePercent);
 
-        if (parseFloat(rewardAmountReceiving)) {
-          const rebateRatePercent = String(parseFloat(rebateRate) / 100);
-          setRewardAmountReceiving(rewardAmountReceiving);
-          setRebateRate(rebateRatePercent);
+        if (currencyDeposit !== 'sbBTC.SKYPOOL') {
+          const { amountReceiving: rewardAmountReceiving, rebateRate } = await estimateSwapRewards({
+            context,
+            amountDesired,
+            currencyDeposit,
+            currencyReceiving,
+          });
+
+          if (cancelled) return;
+
+          if (parseFloat(rewardAmountReceiving)) {
+            const rebateRatePercent = String(parseFloat(rebateRate) / 100);
+            setRewardAmountReceiving(rewardAmountReceiving);
+            setRebateRate(rebateRatePercent);
+          }
         }
       } catch (err) {
         logger.error({ err });
