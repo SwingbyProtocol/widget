@@ -106,7 +106,7 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
 
         if (cancelled) return;
 
-        const feeBridgePercent = String(parseFloat(feeBridgeFraction) * 100);
+        const feeBridgePercent = (parseFloat(feeBridgeFraction) * 100).toPrecision(2);
         setAmountReceiving(amountReceiving);
         setFeeTotal(feeTotal);
         setFeeBridgePercent(feeBridgePercent);
@@ -122,7 +122,7 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
           if (cancelled) return;
 
           if (parseFloat(rewardAmountReceiving)) {
-            const rebateRatePercent = String(parseFloat(rebateRate) / 100);
+            const rebateRatePercent = (parseFloat(rebateRate) / 100).toPrecision(2);
             setRewardAmountReceiving(rewardAmountReceiving);
             setRebateRate(rebateRatePercent);
           }
