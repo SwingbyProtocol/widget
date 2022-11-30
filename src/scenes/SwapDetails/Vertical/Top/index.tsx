@@ -58,6 +58,12 @@ export const Top = ({
     else return +(+(swap.amountDeposit ?? 0) * sbBTCPrice * (1 - 0.002)).toFixed(7);
   }, [sbBTCPrice, swap]);
 
+  const rebalanceReward = useMemo(() => {
+    if (swap.currencyDeposit !== 'sbBTC.SKYPOOL') return +(swap.rebalanceRewards ?? 0);
+    // No rebalance rewards for sbBTC.SKYPOOL
+    return 0;
+  }, [swap]);
+
   if (swap.status === 'COMPLETED' || swap.status === 'EXPIRED') {
     return (
       <Container>
@@ -186,7 +192,7 @@ export const Top = ({
             />
           </FeeText>
 
-          {Number(swap.rebalanceRewards) > 0 && (
+          {rebalanceReward > 0 && (
             <FeeText>
               <FormattedMessage
                 id="widget.swap-rebalance-rewards"
