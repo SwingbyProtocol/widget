@@ -71,7 +71,6 @@
   "widget.coin-chain.ethereum": "On Ethereum",
   "widget.coin-chain.skypools": "On Ethereum",
   "widget.coin-chain.binance-smart": "On BSC",
-  "widget.maintenance-warning": "This bridge is currently under maintenance.",
   "widget.swap-network-fees": "Network fees: {value} {symbol}",
   "widget.swap-rebalance-rewards": "Rebalance rewards: {value} {symbol}"
 }
