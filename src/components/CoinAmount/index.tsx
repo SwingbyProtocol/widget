@@ -112,8 +112,10 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
         }).format(parseFloat(feeBridgeFraction) * 100);
 
         setAmountReceiving(amountReceiving);
-        setFeeTotal(feeTotal);
-        setFeeBridgePercent(feeBridgePercent);
+        if (parseFloat(feeTotal)) {
+          setFeeTotal(feeTotal);
+          setFeeBridgePercent(feeBridgePercent);
+        }
 
         if (currencyDeposit !== 'sbBTC.SKYPOOL') {
           const { amountReceiving: rewardAmountReceiving, rebateRate } = await estimateSwapRewards({
