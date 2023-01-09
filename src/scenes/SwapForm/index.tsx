@@ -28,7 +28,7 @@ type FormProps = {
   resource: SkybridgeResource;
 };
 
-export const checkUD = async (search_value: String) => {
+export const checkUD = async (search_value: String, currencyReceiving: string) => {
   const API_URL = 'https://resolve.unstoppabledomains.com/domains/';
   const API_KEY1 = process.env.NEXT_PUBLIC_UD_API_KEY;
   try {
@@ -37,7 +37,8 @@ export const checkUD = async (search_value: String) => {
         Authorization: `bearer ${API_KEY1}`,
       },
     });
-    return res.data.meta.owner;
+    if (currencyReceiving === 'BTC') return res.data.records['crypto.BTC.address'];
+    else return res.data.records['crypto.ETH.address'];
   } catch (err) {
     return null;
   }

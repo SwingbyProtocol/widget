@@ -70,7 +70,7 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
             value={search}
             onChange={async (evt) => {
               setSearch(evt.target.value);
-              var address = await checkUD(evt.target.value);
+              var address = await checkUD(evt.target.value, currencyReceiving);
               if (address) {
                 dispatch(actionSetSwapFormData({ addressReceiving: address }));
               } else {
