@@ -9,7 +9,7 @@ import {
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { getChainFor, SkybridgeResource } from '@swingby-protocol/sdk';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { BackButton } from '../../../components/BackButton';
 import { CoinAmount } from '../../../components/CoinAmount';
@@ -19,7 +19,7 @@ import {
   StepType,
 } from '../../../modules/store/swapForm';
 import { StylingConstants } from '../../../modules/styles';
-import { useValidateForm, checkUD } from '../index';
+import { useValidateForm, checkUD, useDebounce } from '../index';
 
 import {
   BannerContainer,
@@ -40,6 +40,11 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
     resource,
   });
   const [search, setSearch] = useState('');
+  const debouncedValue = useDebounce<string>(search, 600);
+
+  useEffect(() => {
+    checkUD(debouncedValue, currencyReceiving, dispatch);
+  }, [debouncedValue]);
 
   return (
     <BannerContainer step={step}>
@@ -70,12 +75,6 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
             value={search}
             onChange={async (evt) => {
               setSearch(evt.target.value);
-              var address = await checkUD(evt.target.value, currencyReceiving);
-              if (address) {
-                dispatch(actionSetSwapFormData({ addressReceiving: address }));
-              } else {
-                dispatch(actionSetSwapFormData({ addressReceiving: evt.target.value }));
-              }
             }}
             placeholder={formatMessage({ id: 'widget.receiving-address.placeholder' })}
             data-testid={buildTestId('receiving-address')}

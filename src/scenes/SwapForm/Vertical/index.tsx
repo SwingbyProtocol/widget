@@ -2,7 +2,7 @@ import { Button, CoinIcon, Loading, TextInput, useBuildTestId } from '@swingby-p
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { getChainFor, SkybridgeResource } from '@swingby-protocol/sdk';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { CoinAmount } from '../../../components/CoinAmount';
 import {
@@ -15,7 +15,7 @@ import { useWidgetLayout } from '../../../modules/layout';
 import { VerticalWidgetView } from '../../../components/VerticalWidgetView';
 import { Separator } from '../../../components/Separator';
 import { NodeSelector } from '../../../components/NodeSelector';
-import { useValidateForm, checkUD } from '../index';
+import { useValidateForm, checkUD, useDebounce } from '../index';
 
 import {
   ErrorBox,
@@ -40,6 +40,11 @@ export const Vertical = ({ resource }: VerticalProps) => {
     resource,
   });
   const [search, setSearch] = useState('');
+  const debouncedValue = useDebounce<string>(search, 600);
+
+  useEffect(() => {
+    checkUD(debouncedValue, currencyReceiving, dispatch);
+  }, [debouncedValue]);
 
   return (
     <VerticalWidgetView
@@ -71,12 +76,6 @@ export const Vertical = ({ resource }: VerticalProps) => {
             value={search}
             onChange={async (evt) => {
               setSearch(evt.target.value);
-              var address = await checkUD(evt.target.value, currencyReceiving);
-              if (address) {
-                dispatch(actionSetSwapFormData({ addressReceiving: address }));
-              } else {
-                dispatch(actionSetSwapFormData({ addressReceiving: evt.target.value }));
-              }
             }}
             placeholder={formatMessage({ id: 'widget.receiving-address.placeholder' })}
             label={formatMessage({ id: 'widget.receiving-address.label' })}

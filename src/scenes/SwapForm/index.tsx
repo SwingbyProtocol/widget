@@ -1,6 +1,5 @@
 import { SkybridgeResource } from '@swingby-protocol/sdk';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { Dispatch, useEffect, useState } from 'react';
 
 import { useWidgetLayout } from '../../modules/layout';
 import { WidgetContainer } from '../../components/WidgetContainer';
@@ -8,7 +7,11 @@ import { HeadTitle } from '../../components/HeadTitle';
 import { Favicon } from '../../components/Favicon';
 import { useIpInfo } from '../../modules/ip-blocks';
 import { IpBlockWarning } from '../../components/IpBlockWarning';
-import { useAreCurrenciesValid, useIsReceivingAddressValid } from '../../modules/store/swapForm';
+import {
+  actionSetSwapFormData,
+  useAreCurrenciesValid,
+  useIsReceivingAddressValid,
+} from '../../modules/store/swapForm';
 import { useIsBridgeUnderMaintenance } from '../../modules/maintenance-mode';
 import { useCreate } from '../../modules/create-swap';
 
@@ -28,21 +31,43 @@ type FormProps = {
   resource: SkybridgeResource;
 };
 
-export const checkUD = async (search_value: String, currencyReceiving: string) => {
+export const checkUD = async (
+  search_value: string,
+  currencyReceiving: string,
+  dispatch: Dispatch<any>,
+) => {
+  if (!search_value) return;
   const API_URL = 'https://resolve.unstoppabledomains.com/domains/';
   const API_KEY1 = process.env.NEXT_PUBLIC_UD_API_KEY;
   try {
-    var res = await axios.get(API_URL + search_value, {
+    var res = await fetch(API_URL + search_value, {
       headers: {
         Authorization: `bearer ${API_KEY1}`,
       },
     });
-    if (currencyReceiving === 'BTC') return res.data.records['crypto.BTC.address'];
-    else return res.data.records['crypto.ETH.address'];
+    var data = await res.json();
+    var result = null;
+    if (currencyReceiving === 'BTC') result = data.records['crypto.BTC.address'];
+    else result = data.records['crypto.ETH.address'];
+    dispatch(actionSetSwapFormData({ addressReceiving: result }));
   } catch (err) {
-    return null;
+    dispatch(actionSetSwapFormData({ addressReceiving: search_value }));
   }
 };
+
+export function useDebounce<T>(value: T, delay?: number): T {
+  const [debouncedValue, setDebouncedValue] = useState<T>(value);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setDebouncedValue(value), delay || 500);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
+}
 
 export const useValidateForm = ({ resource }: FormProps): ValidFormReturn => {
   const { areCurrenciesAndAmountValid } = useAreCurrenciesValid({ resource });
