@@ -103,24 +103,39 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
           currencyDeposit,
           currencyReceiving,
         });
-        const { amountReceiving: rewardAmountReceiving, rebateRate } = await estimateSwapRewards({
-          context,
-          amountDesired,
-          currencyDeposit,
-          currencyReceiving,
-        });
 
         if (cancelled) return;
 
-        const feeBridgePercent = String(parseFloat(feeBridgeFraction) * 100);
-        setAmountReceiving(amountReceiving);
-        setFeeTotal(feeTotal);
-        setFeeBridgePercent(feeBridgePercent);
+        const feeBridgePercent = new Intl.NumberFormat('en-US', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 18,
+        }).format(parseFloat(feeBridgeFraction) * 100);
 
-        if (parseFloat(rewardAmountReceiving)) {
-          const rebateRatePercent = String(parseFloat(rebateRate) / 100);
-          setRewardAmountReceiving(rewardAmountReceiving);
-          setRebateRate(rebateRatePercent);
+        setAmountReceiving(amountReceiving);
+        if (parseFloat(feeTotal)) {
+          setFeeTotal(feeTotal);
+          setFeeBridgePercent(feeBridgePercent);
+        }
+
+        if (currencyDeposit !== 'sbBTC.SKYPOOL') {
+          const { amountReceiving: rewardAmountReceiving, rebateRate } = await estimateSwapRewards({
+            context,
+            amountDesired,
+            currencyDeposit,
+            currencyReceiving,
+          });
+
+          if (cancelled) return;
+
+          if (parseFloat(rewardAmountReceiving)) {
+            const rebateRatePercent = new Intl.NumberFormat('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 18,
+            }).format(parseFloat(rebateRate) / 100);
+
+            setRewardAmountReceiving(rewardAmountReceiving);
+            setRebateRate(rebateRatePercent);
+          }
         }
       } catch (err) {
         logger.error({ err });

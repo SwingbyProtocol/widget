@@ -12,7 +12,6 @@ import {
   useAreCurrenciesValid,
   useIsReceivingAddressValid,
 } from '../../modules/store/swapForm';
-import { useIsBridgeUnderMaintenance } from '../../modules/maintenance-mode';
 import { useCreate } from '../../modules/create-swap';
 
 import { Vertical } from './Vertical';
@@ -73,13 +72,12 @@ export const useValidateForm = ({ resource }: FormProps): ValidFormReturn => {
   const { areCurrenciesAndAmountValid } = useAreCurrenciesValid({ resource });
   const { isReceivingAddressValid, isTaprootAddress, isAddressEmpty } =
     useIsReceivingAddressValid();
-  const { isBridgeUnderMaintenance } = useIsBridgeUnderMaintenance();
   const { loading, create, error } = useCreate({ resource });
   const [errorText, setErrorText] = useState('');
 
   const formValid = isAddressEmpty
     ? true
-    : areCurrenciesAndAmountValid && isReceivingAddressValid && !isBridgeUnderMaintenance && !error;
+    : areCurrenciesAndAmountValid && isReceivingAddressValid && !error;
 
   useEffect(() => {
     if (formValid) {
@@ -98,15 +96,10 @@ export const useValidateForm = ({ resource }: FormProps): ValidFormReturn => {
       setErrorText('widget.invalid-address');
       return;
     }
-    if (isBridgeUnderMaintenance) {
-      setErrorText('widget.maintenance-warning');
-      return;
-    }
   }, [
     areCurrenciesAndAmountValid,
     formValid,
     loading,
-    isBridgeUnderMaintenance,
     isReceivingAddressValid,
     isTaprootAddress,
     setErrorText,

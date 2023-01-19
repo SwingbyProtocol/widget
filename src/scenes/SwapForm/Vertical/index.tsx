@@ -2,14 +2,10 @@ import { Button, CoinIcon, Loading, TextInput, useBuildTestId } from '@swingby-p
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { getChainFor, SkybridgeResource } from '@swingby-protocol/sdk';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { CoinAmount } from '../../../components/CoinAmount';
-import {
-  actionSetSwapFormData,
-  actionSetSwapFormStep,
-  StepType,
-} from '../../../modules/store/swapForm';
+import { actionSetSwapFormStep, StepType } from '../../../modules/store/swapForm';
 import { Space } from '../../../components/Space';
 import { useWidgetLayout } from '../../../modules/layout';
 import { VerticalWidgetView } from '../../../components/VerticalWidgetView';
