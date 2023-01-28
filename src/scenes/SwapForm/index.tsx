@@ -46,8 +46,11 @@ export const checkUD = async (
     });
     var data = await res.json();
     var result = null;
-    if (currencyReceiving === 'BTC') result = data.records['crypto.BTC.address'];
-    else result = data.records['crypto.ETH.address'];
+    if (currencyReceiving === 'BTC') {
+      result = data.records['crypto.BTC.address'];
+    } else {
+      result = data.records['crypto.ETH.address'];
+    }
     dispatch(actionSetSwapFormData({ addressReceiving: result }));
   } catch (err) {
     dispatch(actionSetSwapFormData({ addressReceiving: search_value }));

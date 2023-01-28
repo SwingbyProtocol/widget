@@ -13,11 +13,7 @@ import { useEffect, useState } from 'react';
 
 import { BackButton } from '../../../components/BackButton';
 import { CoinAmount } from '../../../components/CoinAmount';
-import {
-  actionSetSwapFormStep,
-  actionSetSwapFormData,
-  StepType,
-} from '../../../modules/store/swapForm';
+import { actionSetSwapFormStep, StepType } from '../../../modules/store/swapForm';
 import { StylingConstants } from '../../../modules/styles';
 import { useValidateForm, checkUD, useDebounce } from '../index';
 
@@ -34,17 +30,17 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
   const { buildTestId } = useBuildTestId({ id: 'banner.form' });
   const { formatMessage } = useIntl();
   const hasWideWidth = useMatchMedia({ query: StylingConstants.mediaWideWidth });
-  const { currencyReceiving, addressReceiving, step } = useSelector((state) => state.swapForm);
+  const { currencyReceiving, step } = useSelector((state) => state.swapForm);
   const dispatch = useDispatch();
   const { formValid, errorText, loading, create, executionError } = useValidateForm({
     resource,
   });
   const [search, setSearch] = useState('');
-  const debouncedValue = useDebounce<string>(search, 600);
+  const debounceSearch = useDebounce<string>(search, 600);
 
   useEffect(() => {
-    checkUD(debouncedValue, currencyReceiving, dispatch);
-  }, [debouncedValue]);
+    checkUD(debounceSearch, currencyReceiving, dispatch);
+  }, [debounceSearch, currencyReceiving, dispatch]);
 
   return (
     <BannerContainer step={step}>
