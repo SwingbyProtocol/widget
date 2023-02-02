@@ -9,17 +9,13 @@ import {
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { getChainFor, SkybridgeResource } from '@swingby-protocol/sdk';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { BackButton } from '../../../components/BackButton';
 import { CoinAmount } from '../../../components/CoinAmount';
-import {
-  actionSetSwapFormStep,
-  actionSetSwapFormData,
-  StepType,
-} from '../../../modules/store/swapForm';
+import { actionSetSwapFormStep, StepType } from '../../../modules/store/swapForm';
 import { StylingConstants } from '../../../modules/styles';
-import { useValidateForm, checkUD } from '../index';
+import { useValidateForm, checkUD, useDebounce } from '../index';
 
 import {
   BannerContainer,
@@ -34,12 +30,17 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
   const { buildTestId } = useBuildTestId({ id: 'banner.form' });
   const { formatMessage } = useIntl();
   const hasWideWidth = useMatchMedia({ query: StylingConstants.mediaWideWidth });
-  const { currencyReceiving, addressReceiving, step } = useSelector((state) => state.swapForm);
+  const { currencyReceiving, step } = useSelector((state) => state.swapForm);
   const dispatch = useDispatch();
   const { formValid, errorText, loading, create, executionError } = useValidateForm({
     resource,
   });
   const [search, setSearch] = useState('');
+  const debounceSearch = useDebounce<string>(search, 600);
+
+  useEffect(() => {
+    checkUD(debounceSearch, currencyReceiving, dispatch);
+  }, [debounceSearch, currencyReceiving, dispatch]);
 
   return (
     <BannerContainer step={step}>
@@ -70,12 +71,6 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
             value={search}
             onChange={async (evt) => {
               setSearch(evt.target.value);
-              var address = await checkUD(evt.target.value);
-              if (address) {
-                dispatch(actionSetSwapFormData({ addressReceiving: address }));
-              } else {
-                dispatch(actionSetSwapFormData({ addressReceiving: evt.target.value }));
-              }
             }}
             placeholder={formatMessage({ id: 'widget.receiving-address.placeholder' })}
             data-testid={buildTestId('receiving-address')}
