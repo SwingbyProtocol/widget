@@ -10,7 +10,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { StylingConstants } from '../../../modules/styles';
-import { buildCoinMap, swingbyTextDisplay } from '../coin-map';
+import { buildCoinMap, swingbyTextDisplay } from '../../../modules/coin-map';
 
 import { HorizonalList } from './HorizonalList';
 import {

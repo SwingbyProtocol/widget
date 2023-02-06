@@ -3,7 +3,7 @@ import { SkybridgeCoin } from '@swingby-protocol/sdk';
 import { useTransition, animated } from 'react-spring';
 
 import { BackButton } from '../../../BackButton';
-import { swingbyTextDisplay } from '../../coin-map';
+import { swingbyTextDisplay } from '../../../../modules/coin-map';
 
 import { HorizontalSelectorBg, Container, CoinList, CoinButton, CoinListWrapper } from './styled';
 
