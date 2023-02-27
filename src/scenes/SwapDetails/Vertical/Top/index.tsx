@@ -15,6 +15,7 @@ import { FancyCryptoAmount } from '../../../../components/FancyCryptoAmount';
 import { Space } from '../../../../components/Space';
 import { useWidgetLayout } from '../../../../modules/layout';
 import { useSbBTCPrice } from '../../../../modules/web3';
+import { swingbyTextDisplay } from '../../../../modules/coin-map';
 
 import { BigText, SmallText, CoinWithText, Container, FeeText } from './styled';
 
@@ -71,17 +72,19 @@ export const Top = ({
           <CoinWithText>
             <CoinIcon symbol={swap.currencyDeposit} />
             &nbsp;
-            {getCryptoAssetFormatter({ locale, displaySymbol: swap.currencyDeposit }).format(
-              +swap.amountDeposit,
-            )}
+            {getCryptoAssetFormatter({
+              locale,
+              displaySymbol: swingbyTextDisplay(swap.currencyDeposit),
+            }).format(+swap.amountDeposit)}
           </CoinWithText>
           <Icon.SwapVertical />
           <CoinWithText>
             <CoinIcon symbol={swap.currencyReceiving} />
             &nbsp;
-            {getCryptoAssetFormatter({ locale, displaySymbol: swap.currencyReceiving }).format(
-              receivedAmount,
-            )}
+            {getCryptoAssetFormatter({
+              locale,
+              displaySymbol: swingbyTextDisplay(swap.currencyReceiving),
+            }).format(receivedAmount)}
           </CoinWithText>
         </BigText>
       </Container>
@@ -103,7 +106,10 @@ export const Top = ({
             id={`widget.status-label-long.${swap.status}`}
             values={{
               value: (
-                <FancyCryptoAmount amount={receivedAmount} displaySymbol={swap.currencyReceiving} />
+                <FancyCryptoAmount
+                  amount={receivedAmount}
+                  displaySymbol={swingbyTextDisplay(swap.currencyReceiving)}
+                />
               ),
             }}
           />
@@ -111,7 +117,7 @@ export const Top = ({
         <Space size={smallSpaceSize} />
         <CopyToClipboard
           value={swap.addressReceiving}
-          left={<CoinIcon symbol={swap.currencyReceiving} />}
+          left={<CoinIcon symbol={swingbyTextDisplay(swap.currencyReceiving)} />}
           size={copyToClipboardSize}
           data-testid={buildTestId('address')}
         />
@@ -128,7 +134,7 @@ export const Top = ({
             value: (
               <FancyCryptoAmount
                 amount={+swap.amountDeposit}
-                displaySymbol={swap.currencyDeposit}
+                displaySymbol={swingbyTextDisplay(swap.currencyDeposit)}
               />
             ),
           }}
@@ -139,7 +145,7 @@ export const Top = ({
       <CopyToClipboard
         variant="accent"
         value={swap.addressDeposit}
-        left={<CoinIcon symbol={swap.currencyDeposit} />}
+        left={<CoinIcon symbol={swingbyTextDisplay(swap.currencyDeposit)} />}
         size={copyToClipboardSize}
         data-testid={buildTestId('address')}
       />
@@ -154,7 +160,7 @@ export const Top = ({
                   value: (
                     <FancyCryptoAmount
                       amount={receivedAmount}
-                      displaySymbol={swap.currencyReceiving}
+                      displaySymbol={swingbyTextDisplay(swap.currencyReceiving)}
                     />
                   ),
                   address: swap.addressReceiving,
@@ -170,7 +176,7 @@ export const Top = ({
                     value: (
                       <FancyCryptoAmount
                         amount={receivedAmount}
-                        displaySymbol={swap.currencyReceiving}
+                        displaySymbol={swingbyTextDisplay(swap.currencyReceiving)}
                       />
                     ),
                   }}
