@@ -32,7 +32,7 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
   const hasWideWidth = useMatchMedia({ query: StylingConstants.mediaWideWidth });
   const { currencyReceiving, step } = useSelector((state) => state.swapForm);
   const dispatch = useDispatch();
-  const { formValid, errorText, loading, create, executionError } = useValidateForm({
+  const { formValid, errorText, loading, create, executionError, isFormEmpty } = useValidateForm({
     resource,
   });
   const [search, setSearch] = useState('');
@@ -80,7 +80,7 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
             variant="primary"
             size="state"
             shape="fit"
-            disabled={!formValid || loading}
+            disabled={!formValid || loading || isFormEmpty}
             onClick={create}
             data-testid={buildTestId('swap-btn')}
           >
