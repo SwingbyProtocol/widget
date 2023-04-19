@@ -47,7 +47,7 @@
   "widget.explorer-link-long": "View on explorer",
   "widget.explorer-deposit": "Deposit",
   "widget.explorer-swap": "Swap",
-  "widget.warning-production": "This is a product in beta. Only swap small amounts and be sure to follow the usage instructions. {readTutorial}.",
+  "widget.warning-production": "Skybridge is in withdraw mode to prepare for a contract upgrade. Withdraw your sbBTC to BTC/WBTC, ASAP.",
   "widget.warning-production.tutorial": "Read tutorial",
   "widget.warning-test": "You are using “test” mode. Do not send real funds.",
   "widget.warning-do-not-use-exchange-addresses": "Please, send funds only from addresses owned by you. Do not send funds from an exchange.",
