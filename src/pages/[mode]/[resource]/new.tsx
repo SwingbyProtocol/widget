@@ -79,13 +79,29 @@ export default function ResourceNew({ ipInfo }: Props) {
   }, [dispatch, affiliateCode]);
 
   useEffect(() => {
-    if (mode === 'test') {
-      createOrUpdateToast({
-        content: <FormattedMessage id="widget.warning-test" />,
-        type: 'info',
-        toastId: 'mode-warning',
-      });
-    }
+    createOrUpdateToast({
+      content:
+        mode === 'test' ? (
+          <FormattedMessage id="widget.warning-test" />
+        ) : (
+          <FormattedMessage
+            id="widget.warning-production"
+            values={{
+              readTutorial: (
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href="https://swingby.medium.com/how-to-convert-your-wbtc-into-btc-with-skybridge-8eebe2b711ad"
+                >
+                  <FormattedMessage id="widget.warning-production.tutorial" />
+                </a>
+              ),
+            }}
+          />
+        ),
+      type: mode === 'test' ? 'info' : 'warning',
+      toastId: 'mode-warning',
+    });
   }, [mode]);
 
   if (!mode) return <></>;

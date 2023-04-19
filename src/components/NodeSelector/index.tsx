@@ -81,7 +81,7 @@ export const NodeSelector = ({ swap }: Props) => {
 
       const nodes = [...result.swapNodes]
         .map((it) => it.restUri)
-        .filter((it): it is string => {
+        .filter((it) => {
           try {
             return new URL(it!).protocol === 'https:';
           } catch (err) {

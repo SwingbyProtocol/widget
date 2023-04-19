@@ -42,6 +42,13 @@ export const StakeEarn = styled.span`
   align-items: center;
   justify-content: flex-start;
   font-weight: 600;
+
+  &,
+  &:visited {
+    color: ${({ theme }) => theme.pulsar.color.text.normal};
+    text-decoration: underline;
+    text-decoration-color: ${({ theme }) => theme.pulsar.color.primary.normal};
+  }
 `;
 
 export const ErrorBox = styled.div`
