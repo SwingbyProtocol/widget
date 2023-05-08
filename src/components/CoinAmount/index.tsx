@@ -17,6 +17,7 @@ import { actionSetSwapFormData, useAreCurrenciesValid } from '../../modules/stor
 import { logger } from '../../modules/logger';
 import { useSdkContext } from '../../modules/store/sdkContext';
 import { rebalanceRewardsUrl } from '../../modules/env';
+import { useDebounce } from '../../modules/use-debounce';
 
 import {
   CoinAmountContainer,
@@ -41,6 +42,10 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
     (state) => state.swapForm,
   );
   const dispatch = useDispatch();
+
+  const [amountDesiredInput, setAmountDesiredInput] = useState('');
+  const debounceAmountDesiredInput = useDebounce<string>(amountDesiredInput, 600);
+
   const [amountReceiving, setAmountReceiving] = useState('');
   const [feeTotal, setFeeTotal] = useState('');
   const [feeBridgePercent, setFeeBridgePercent] = useState('');
@@ -182,6 +187,14 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
     [currencyReceiving, dispatch],
   );
 
+  const handleChangeAmountDesiredInput = useCallback((evt: React.ChangeEvent<HTMLInputElement>) => {
+    setAmountDesiredInput(evt.target.value);
+  }, []);
+
+  useEffect(() => {
+    dispatch(actionSetSwapFormData({ amountDesired: debounceAmountDesiredInput }));
+  }, [debounceAmountDesiredInput, dispatch]);
+
   return (
     <CoinAmountContainer variant={variant} data-testid={buildTestId('')}>
       {variant === 'vertical' && (
@@ -198,8 +211,8 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
       />
       <TextInput
         size="state"
-        value={amountDesired}
-        onChange={(evt) => dispatch(actionSetSwapFormData({ amountDesired: evt.target.value }))}
+        value={amountDesiredInput}
+        onChange={handleChangeAmountDesiredInput}
         data-testid={buildTestId('amount-from')}
         state={isAmountDesiredValid ? 'normal' : 'danger'}
       />
