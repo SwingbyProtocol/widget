@@ -2,7 +2,7 @@ import { Loading, Testable, TextInput, useBuildTestId } from '@swingby-protocol/
 import { FormattedMessage, FormattedNumber } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { Big } from 'big.js';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useCallback } from 'react';
 import {
   estimateAmountReceiving,
   getCoinsFor,
@@ -166,6 +166,22 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
     dispatch(actionSetSwapFormData({ currencyReceiving: currencyDeposit }));
   };
 
+  const handleChangeCurrencyDeposit = useCallback(
+    (nextCurrencyDeposit: SkybridgeCoin) => {
+      if (nextCurrencyDeposit === currencyDeposit) return;
+      dispatch(actionSetSwapFormData({ currencyDeposit: nextCurrencyDeposit }));
+    },
+    [currencyDeposit, dispatch],
+  );
+
+  const handleChangeCurrencyReceiving = useCallback(
+    (nextCurrencyReceiving: SkybridgeCoin) => {
+      if (nextCurrencyReceiving === currencyReceiving) return;
+      dispatch(actionSetSwapFormData({ currencyDeposit: nextCurrencyReceiving }));
+    },
+    [currencyReceiving, dispatch],
+  );
+
   return (
     <CoinAmountContainer variant={variant} data-testid={buildTestId('')}>
       {variant === 'vertical' && (
@@ -177,7 +193,7 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
         coins={coinsIn}
         variant={variant}
         value={currencyDeposit}
-        onChange={(currencyDeposit) => dispatch(actionSetSwapFormData({ currencyDeposit }))}
+        onChange={handleChangeCurrencyDeposit}
         data-testid={buildTestId('currency-from-select')}
       />
       <TextInput
@@ -214,7 +230,7 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
         variant={variant}
         value={currencyReceiving}
         coins={coinsOut}
-        onChange={(currencyReceiving) => dispatch(actionSetSwapFormData({ currencyReceiving }))}
+        onChange={handleChangeCurrencyReceiving}
         data-testid={buildTestId('currency-to-select')}
       />
       <AmountReceiving data-testid={buildTestId('amount-to')}>
