@@ -98,7 +98,7 @@ export const Banner = ({ resource, swap }: BannerProps) => {
           />
           <ResponsiveSpace />
           <Button
-            variant="secondary"
+            variant="primary"
             size={hasWideWidth ? 'state' : 'town'}
             shape={hasWideWidth ? 'fit' : 'square'}
             href={`${typeof window !== 'undefined' && window.location.href}`}

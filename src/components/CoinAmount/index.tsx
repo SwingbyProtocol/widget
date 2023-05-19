@@ -2,7 +2,7 @@ import { Loading, Testable, TextInput, useBuildTestId } from '@swingby-protocol/
 import { FormattedMessage, FormattedNumber } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { Big } from 'big.js';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useCallback } from 'react';
 import {
   estimateAmountReceiving,
   getCoinsFor,
@@ -17,6 +17,7 @@ import { actionSetSwapFormData, useAreCurrenciesValid } from '../../modules/stor
 import { logger } from '../../modules/logger';
 import { useSdkContext } from '../../modules/store/sdkContext';
 import { rebalanceRewardsUrl } from '../../modules/env';
+import { useDebounce } from '../../modules/use-debounce';
 
 import {
   CoinAmountContainer,
@@ -41,6 +42,10 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
     (state) => state.swapForm,
   );
   const dispatch = useDispatch();
+
+  const [amountDesiredInput, setAmountDesiredInput] = useState('');
+  const debounceAmountDesiredInput = useDebounce<string>(amountDesiredInput, 600);
+
   const [amountReceiving, setAmountReceiving] = useState('');
   const [feeTotal, setFeeTotal] = useState('');
   const [feeBridgePercent, setFeeBridgePercent] = useState('');
@@ -166,6 +171,30 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
     dispatch(actionSetSwapFormData({ currencyReceiving: currencyDeposit }));
   };
 
+  const handleChangeCurrencyDeposit = useCallback(
+    (nextCurrencyDeposit: SkybridgeCoin) => {
+      if (nextCurrencyDeposit === currencyDeposit) return;
+      dispatch(actionSetSwapFormData({ currencyDeposit: nextCurrencyDeposit }));
+    },
+    [currencyDeposit, dispatch],
+  );
+
+  const handleChangeCurrencyReceiving = useCallback(
+    (nextCurrencyReceiving: SkybridgeCoin) => {
+      if (nextCurrencyReceiving === currencyReceiving) return;
+      dispatch(actionSetSwapFormData({ currencyDeposit: nextCurrencyReceiving }));
+    },
+    [currencyReceiving, dispatch],
+  );
+
+  const handleChangeAmountDesiredInput = useCallback((evt: React.ChangeEvent<HTMLInputElement>) => {
+    setAmountDesiredInput(evt.target.value);
+  }, []);
+
+  useEffect(() => {
+    dispatch(actionSetSwapFormData({ amountDesired: debounceAmountDesiredInput }));
+  }, [debounceAmountDesiredInput, dispatch]);
+
   return (
     <CoinAmountContainer variant={variant} data-testid={buildTestId('')}>
       {variant === 'vertical' && (
@@ -177,13 +206,13 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
         coins={coinsIn}
         variant={variant}
         value={currencyDeposit}
-        onChange={(currencyDeposit) => dispatch(actionSetSwapFormData({ currencyDeposit }))}
+        onChange={handleChangeCurrencyDeposit}
         data-testid={buildTestId('currency-from-select')}
       />
       <TextInput
         size="state"
-        value={amountDesired}
-        onChange={(evt) => dispatch(actionSetSwapFormData({ amountDesired: evt.target.value }))}
+        value={amountDesiredInput}
+        onChange={handleChangeAmountDesiredInput}
         data-testid={buildTestId('amount-from')}
         state={isAmountDesiredValid ? 'normal' : 'danger'}
       />
@@ -214,7 +243,7 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
         variant={variant}
         value={currencyReceiving}
         coins={coinsOut}
-        onChange={(currencyReceiving) => dispatch(actionSetSwapFormData({ currencyReceiving }))}
+        onChange={handleChangeCurrencyReceiving}
         data-testid={buildTestId('currency-to-select')}
       />
       <AmountReceiving data-testid={buildTestId('amount-to')}>
