@@ -30,13 +30,17 @@ export const Banner = ({ resource }: { resource: SkybridgeResource }) => {
   const { buildTestId } = useBuildTestId({ id: 'banner.form' });
   const { formatMessage } = useIntl();
   const hasWideWidth = useMatchMedia({ query: StylingConstants.mediaWideWidth });
-  const { currencyReceiving, step } = useSelector((state) => state.swapForm);
+  const { currencyReceiving, addressReceiving, step } = useSelector((state) => state.swapForm);
   const dispatch = useDispatch();
   const { formValid, errorText, loading, create, executionError, isFormEmpty } = useValidateForm({
     resource,
   });
   const [search, setSearch] = useState('');
   const debounceSearch = useDebounce<string>(search, 600);
+
+  useEffect(() => {
+    if (addressReceiving) setSearch(addressReceiving);
+  }, [addressReceiving, setSearch]);
 
   useEffect(() => {
     checkUD(debounceSearch, currencyReceiving, dispatch);

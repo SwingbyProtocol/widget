@@ -29,7 +29,7 @@ type VerticalProps = {
 export const Vertical = ({ resource }: VerticalProps) => {
   const { buildTestId } = useBuildTestId({ id: 'vertical.form' });
   const { formatMessage } = useIntl();
-  const { currencyReceiving, step } = useSelector((state) => state.swapForm);
+  const { currencyReceiving, addressReceiving, step } = useSelector((state) => state.swapForm);
   const dispatch = useDispatch();
   const layout = useWidgetLayout();
   const { formValid, errorText, loading, create, executionError, isFormEmpty } = useValidateForm({
@@ -37,6 +37,10 @@ export const Vertical = ({ resource }: VerticalProps) => {
   });
   const [search, setSearch] = useState('');
   const debounceSearch = useDebounce<string>(search, 600);
+
+  useEffect(() => {
+    if (addressReceiving) setSearch(addressReceiving);
+  }, [addressReceiving, setSearch]);
 
   useEffect(() => {
     checkUD(debounceSearch, currencyReceiving, dispatch);

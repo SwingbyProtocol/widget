@@ -73,6 +73,10 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
   );
 
   useEffect(() => {
+    if (amountDesired) setAmountDesiredInput(amountDesired);
+  }, [amountDesired, setAmountDesiredInput]);
+
+  useEffect(() => {
     if (coinsIn.includes(currencyDeposit)) return;
     dispatch(actionSetSwapFormData({ currencyDeposit: coinsIn[0] ?? 'BTC' }));
   }, [coinsIn, currencyDeposit, dispatch]);
@@ -182,7 +186,7 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
   const handleChangeCurrencyReceiving = useCallback(
     (nextCurrencyReceiving: SkybridgeCoin) => {
       if (nextCurrencyReceiving === currencyReceiving) return;
-      dispatch(actionSetSwapFormData({ currencyDeposit: nextCurrencyReceiving }));
+      dispatch(actionSetSwapFormData({ currencyReceiving: nextCurrencyReceiving }));
     },
     [currencyReceiving, dispatch],
   );
@@ -192,6 +196,7 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
   }, []);
 
   useEffect(() => {
+    if (!debounceAmountDesiredInput) return;
     dispatch(actionSetSwapFormData({ amountDesired: debounceAmountDesiredInput }));
   }, [debounceAmountDesiredInput, dispatch]);
 
