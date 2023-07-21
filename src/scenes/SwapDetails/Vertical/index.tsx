@@ -12,6 +12,7 @@ import { useSdkContext } from '../../../modules/store/sdkContext';
 import { useAssertTermsSignature } from '../../../modules/terms';
 import { isWeb3ableCurrency, useOnboard, useTransferToken } from '../../../modules/web3';
 import { SwapData } from '../../../modules/store/swaps';
+import { explorerSwapDetailUrl } from '../../../modules/env';
 
 import {
   ExplorerContainer,
@@ -39,23 +40,7 @@ export const Vertical = ({ resource, swap }: VerticalProps) => {
   const [hasTransactionSucceeded, setTransactionSucceeded] = useState(false);
   const { assertTermsSignature } = useAssertTermsSignature();
 
-  const outboundLink = useMemo(() => {
-    if (!swap || !swap.txReceivingId) return undefined;
-    return buildExplorerLink({
-      context,
-      coin: swap.currencyReceiving,
-      transactionId: swap.txReceivingId,
-    });
-  }, [context, swap]);
-
-  const inboundLink = useMemo(() => {
-    if (!swap || !swap.txDepositId) return undefined;
-    return buildExplorerLink({
-      context,
-      coin: swap.currencyDeposit,
-      transactionId: swap.txDepositId,
-    });
-  }, [context, swap]);
+  const goToExplorerUrl = explorerSwapDetailUrl.replace('{swapId}', swap?.hash || '');
 
   const doTransfer = useCallback(async () => {
     try {
@@ -73,13 +58,10 @@ export const Vertical = ({ resource, swap }: VerticalProps) => {
 
   const supportsWeb3 = isWeb3ableCurrency(swap.currencyDeposit);
 
-  const explorerLink = ({ url, txType }: { url: string; txType: 'inbound' | 'outbound' }) => (
+  const explorerLink = ({ url }: { url: string }) => (
     <div>
       <ExplorerLink href={url} target="_blank" data-testid={buildTestId('explorer-link')}>
         <RowLink>
-          <FormattedMessage
-            id={txType === 'inbound' ? 'widget.explorer-deposit' : 'widget.explorer-swap'}
-          />
           <div>
             <FormattedMessage id="widget.explorer-link-long" />
             <ExplorerLinkCaret />
@@ -133,13 +115,10 @@ export const Vertical = ({ resource, swap }: VerticalProps) => {
           />
         </ProgressContainer>
       )}
-      {(inboundLink || outboundLink) && (
+      {(swap.txDepositId || swap.txReceivingId) && (
         <>
           <Space size="town" shape="fill" />
-          <ExplorerContainer>
-            {inboundLink && explorerLink({ url: inboundLink, txType: 'inbound' })}
-            {outboundLink && explorerLink({ url: outboundLink, txType: 'outbound' })}
-          </ExplorerContainer>
+          <ExplorerContainer>{explorerLink({ url: goToExplorerUrl })}</ExplorerContainer>
         </>
       )}
     </VerticalWidgetView>

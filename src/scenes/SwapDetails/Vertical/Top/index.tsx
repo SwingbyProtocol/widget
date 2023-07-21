@@ -193,7 +193,7 @@ export const Top = ({
               id="widget.swap-network-fees"
               values={{
                 value: <FormattedNumber value={Number(swap.feeTotal)} maximumFractionDigits={4} />,
-                symbol: swap.feeCurrency,
+                symbol: swingbyTextDisplay(swap.feeCurrency!),
               }}
             />
           </FeeText>
