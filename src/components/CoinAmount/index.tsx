@@ -11,6 +11,7 @@ import {
   SkybridgeCoin,
   SkybridgeBridge,
   estimateSwapRewards,
+  getSbbtcPrice,
 } from '@swingby-protocol/sdk';
 
 import { actionSetSwapFormData, useAreCurrenciesValid } from '../../modules/store/swapForm';
@@ -31,6 +32,9 @@ import {
   RewardAmountReceiving,
   RewardAmountReceivingSmall,
   Atag,
+  SbBtcPriceNotation,
+  SbBtcPriceNotationSmall,
+  SbBtcPrice,
 } from './styled';
 import { CurrencySelector } from './CurrencySelector';
 
@@ -54,6 +58,8 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
   const [isCalculating, setIsCalculating] = useState(false);
   const context = useSdkContext();
   const { areCurrenciesAndAmountValid, isAmountDesiredValid } = useAreCurrenciesValid({ resource });
+
+  const [sbBtcPrice, setSbBtcPrice] = useState('');
 
   const coinsIn = useMemo<SkybridgeCoin[]>(
     () =>
@@ -200,6 +206,10 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
     dispatch(actionSetSwapFormData({ amountDesired: debounceAmountDesiredInput }));
   }, [debounceAmountDesiredInput, dispatch]);
 
+  useEffect(() => {
+    getSbbtcPrice({ context, bridge: 'btc_skypool' }).then((price) => setSbBtcPrice(price));
+  }, [context]);
+
   return (
     <CoinAmountContainer variant={variant} data-testid={buildTestId('')}>
       {variant === 'vertical' && (
@@ -229,11 +239,18 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
         <>
           <SwapVertical onClick={reverseCurrency} />
           <SwapFeeLabel variant={variant}>
-            {feeTotal !== '' && (
+            {resource === 'swap' && feeTotal !== '' && amountReceiving && (
               <>
                 -{feeTotal}
                 <br />
-                <SwapFeeLabelSmall>({feeBridgePercent}% + network fees)</SwapFeeLabelSmall>
+                <SwapFeeLabelSmall>({feeBridgePercent}% + miner fees)</SwapFeeLabelSmall>
+              </>
+            )}
+            {resource !== 'swap' && amountReceiving && (
+              <>
+                -0.00000
+                <br />
+                <SwapFeeLabelSmall>(0.00% + miner fees)</SwapFeeLabelSmall>
               </>
             )}
           </SwapFeeLabel>
@@ -257,10 +274,10 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
         ) : isAmountReceivingValid ? (
           <>
             <FormattedNumber value={Number(amountReceiving)} maximumFractionDigits={4} />
-            {rewardAmountReceiving !== '' && (
+            {variant === 'vertical' && resource === 'swap' && rewardAmountReceiving !== '' && (
               <>
                 <br />
-                <RewardAmountReceiving>
+                <RewardAmountReceiving variant={variant}>
                   +
                   <FormattedNumber
                     value={Number(rewardAmountReceiving)}
@@ -278,19 +295,69 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
                 </RewardAmountReceiving>
               </>
             )}
+            {variant === 'vertical' &&
+              resource !== 'swap' &&
+              [currencyDeposit, currencyReceiving].some((currency) =>
+                currency.includes('sbBTC'),
+              ) && (
+                <>
+                  <br />
+                  <SbBtcPriceNotation variant={variant}>
+                    sbBTC price =&nbsp;
+                    <SbBtcPrice>
+                      <FormattedNumber value={Number(sbBtcPrice)} maximumFractionDigits={6} />
+                    </SbBtcPrice>
+                    &nbsp;
+                    {currencyDeposit.includes('sbBTC') ? currencyReceiving : currencyDeposit}
+                  </SbBtcPriceNotation>
+                </>
+              )}
           </>
         ) : null}
       </AmountReceiving>
 
       {variant === 'banner' && (
         <SwapFeeLabel variant={variant}>
-          {feeTotal !== '' && (
+          {resource === 'swap' && feeTotal !== '' && amountReceiving && (
             <SwapFeeLabelSmall>
-              -{feeTotal}&nbsp;({feeBridgePercent}% + network fees)
+              -{feeTotal}&nbsp;({feeBridgePercent}% + miner fees)
             </SwapFeeLabelSmall>
+          )}
+          {resource !== 'swap' && amountReceiving && (
+            <SwapFeeLabelSmall>-0.00000&nbsp;(0.00% + miner fees)</SwapFeeLabelSmall>
           )}
         </SwapFeeLabel>
       )}
+      {variant === 'banner' && resource === 'swap' && rewardAmountReceiving !== '' && (
+        <RewardAmountReceiving variant={variant}>
+          +
+          <FormattedNumber value={Number(rewardAmountReceiving)} maximumFractionDigits={4} />
+          &nbsp;SWINGBY
+          <br />
+          <RewardAmountReceivingSmall>
+            ({rebateRate}%{' '}
+            <Atag href={rebalanceRewardsUrl} rel="noopener noreferrer" target="_blank">
+              rebalance rewards
+            </Atag>
+            )
+          </RewardAmountReceivingSmall>
+        </RewardAmountReceiving>
+      )}
+      {variant === 'banner' &&
+        resource !== 'swap' &&
+        [currencyDeposit, currencyReceiving].some((currency) => currency.includes('sbBTC')) &&
+        amountReceiving && (
+          <SbBtcPriceNotation variant={variant}>
+            <SbBtcPriceNotationSmall>
+              sbBTC price =&nbsp;
+              <SbBtcPrice>
+                <FormattedNumber value={Number(sbBtcPrice)} maximumFractionDigits={6} />
+              </SbBtcPrice>
+              &nbsp;
+              {currencyDeposit.includes('sbBTC') ? currencyReceiving : currencyDeposit}
+            </SbBtcPriceNotationSmall>
+          </SbBtcPriceNotation>
+        )}
     </CoinAmountContainer>
   );
 };
