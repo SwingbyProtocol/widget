@@ -40,7 +40,6 @@ const wideBanner = css`
 
 const bannerSwapFeeLabel = css`
   margin: 0;
-  margin-right: ${({ theme }) => rem(-theme.pulsar.size.house)};
   min-height: ${({ theme }) => rem(theme.pulsar.size.house)};
   white-space: nowrap;
 `;
@@ -113,13 +112,15 @@ export const SwapFeeLabel = styled.span<{ variant: Variant }>`
   min-height: ${({ theme }) => rem(theme.pulsar.size.town)};
   font-size: ${({ theme }) => rem(theme.pulsar.size.closet)};
   color: ${({ theme }) => theme.pulsar.color.text.accent};
-  ${({ variant }) => variant === 'banner' && bannerSwapFeeLabel};
-
   place-self: stretch;
   grid-column: 2 / 3;
 
+  ${({ variant }) => variant === 'banner' && bannerSwapFeeLabel};
+  ${({ variant }) =>
+    variant === 'vertical' &&
+    `
   @media ${StylingConstants.mediaVerticalWideWidth} {
-    grid-column: 2 / 2;
+    grid-column: 1 / 2;
   }
 
   @media ${StylingConstants.mediaLayout.widgetSmall} {
@@ -132,7 +133,7 @@ export const SwapFeeLabel = styled.span<{ variant: Variant }>`
 
   @media ${StylingConstants.mediaWebsiteWideWidth} {
     grid-column: 3 / 4;
-  }
+  }`}
 `;
 
 export const SwapFeeLabelSmall = styled.span`
@@ -147,14 +148,25 @@ export const AmountReceiving = styled.span`
   position: relative;
 `;
 
-export const RewardAmountReceiving = styled.span`
+export const RewardAmountReceiving = styled.span<{ variant: Variant }>`
   display: block;
-  margin-top: ${({ theme }) => rem(theme.pulsar.size.box)};
-  margin-bottom: ${({ theme }) => rem(-theme.pulsar.size.street)};
-  margin-right: ${({ theme }) => rem(-theme.pulsar.size.room)};
   font-size: ${({ theme }) => rem(theme.pulsar.size.closet)};
   font-weight: 500;
   color: ${({ theme }) => theme.pulsar.color.text.accent};
+
+  ${({ variant }) =>
+    variant === 'banner' &&
+    `
+    grid-column: 5 / 6;
+    place-self: stretch;
+    `}
+  ${({ variant, theme }) =>
+    variant === 'vertical' &&
+    `
+    margin-top: ${rem(theme.pulsar.size.box)};
+    margin-bottom: ${rem(-theme.pulsar.size.street)};
+    margin-right: ${rem(-theme.pulsar.size.room)};
+    `}
 `;
 
 export const RewardAmountReceivingSmall = styled.span`
@@ -163,5 +175,35 @@ export const RewardAmountReceivingSmall = styled.span`
 
 export const Atag = styled.a`
   text-decoration: none;
+  color: ${({ theme }) => theme.pulsar.color.primary.active} !important;
+`;
+
+export const SbBtcPriceNotation = styled.span<{ variant: Variant }>`
+  display: block;
+  font-weight: 500;
+  white-space: nowrap;
+  color: ${({ theme }) => theme.pulsar.color.text.accent};
+  font-size: ${({ theme }) => rem(theme.pulsar.size.closet)};
+
+  ${({ variant }) =>
+    variant === 'banner' &&
+    `
+    grid-column: 5 / 6;
+    place-self: stretch;
+    `}
+  ${({ variant, theme }) =>
+    variant === 'vertical' &&
+    `
+    margin-top: ${rem(theme.pulsar.size.box)};
+    margin-bottom: ${rem(-theme.pulsar.size.street)};
+    margin-right: ${rem(-theme.pulsar.size.room)};
+    `}
+`;
+
+export const SbBtcPriceNotationSmall = styled.span`
+  font-size: 0.8em;
+`;
+
+export const SbBtcPrice = styled.span`
   color: ${({ theme }) => theme.pulsar.color.primary.active} !important;
 `;
