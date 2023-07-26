@@ -14,6 +14,7 @@ import {
   getSbbtcPrice,
 } from '@swingby-protocol/sdk';
 
+import { swingbyTextDisplay } from '../../modules/coin-map';
 import { actionSetSwapFormData, useAreCurrenciesValid } from '../../modules/store/swapForm';
 import { logger } from '../../modules/logger';
 import { useSdkContext } from '../../modules/store/sdkContext';
@@ -308,7 +309,9 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
                       <FormattedNumber value={Number(sbBtcPrice)} maximumFractionDigits={6} />
                     </SbBtcPrice>
                     &nbsp;
-                    {currencyDeposit.includes('sbBTC') ? currencyReceiving : currencyDeposit}
+                    {swingbyTextDisplay(
+                      currencyDeposit.includes('sbBTC') ? currencyReceiving : currencyDeposit,
+                    )}
                   </SbBtcPriceNotation>
                 </>
               )}
@@ -354,7 +357,9 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
                 <FormattedNumber value={Number(sbBtcPrice)} maximumFractionDigits={6} />
               </SbBtcPrice>
               &nbsp;
-              {currencyDeposit.includes('sbBTC') ? currencyReceiving : currencyDeposit}
+              {swingbyTextDisplay(
+                currencyDeposit.includes('sbBTC') ? currencyReceiving : currencyDeposit,
+              )}
             </SbBtcPriceNotationSmall>
           </SbBtcPriceNotation>
         )}
