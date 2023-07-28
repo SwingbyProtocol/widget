@@ -275,29 +275,32 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
         ) : isAmountReceivingValid ? (
           <>
             <FormattedNumber value={Number(amountReceiving)} maximumFractionDigits={4} />
-            {variant === 'vertical' && resource === 'swap' && rewardAmountReceiving !== '' && (
-              <>
-                <br />
-                <RewardAmountReceiving variant={variant}>
-                  +
-                  <FormattedNumber
-                    value={Number(rewardAmountReceiving)}
-                    maximumFractionDigits={4}
-                  />
-                  &nbsp;SWINGBY
-                  <br />
-                  <RewardAmountReceivingSmall>
-                    ({rebateRate}%{' '}
-                    <Atag href={rebalanceRewardsUrl} rel="noopener noreferrer" target="_blank">
-                      rebalance rewards
-                    </Atag>
-                    )
-                  </RewardAmountReceivingSmall>
-                </RewardAmountReceiving>
-              </>
-            )}
             {variant === 'vertical' &&
-              resource !== 'swap' &&
+              resource === 'swap' &&
+              !currencyDeposit.includes('sbBTC') &&
+              rewardAmountReceiving !== '' && (
+                <>
+                  <br />
+                  <RewardAmountReceiving variant={variant}>
+                    +
+                    <FormattedNumber
+                      value={Number(rewardAmountReceiving)}
+                      maximumFractionDigits={4}
+                    />
+                    &nbsp;SWINGBY
+                    <br />
+                    <RewardAmountReceivingSmall>
+                      ({rebateRate}%{' '}
+                      <Atag href={rebalanceRewardsUrl} rel="noopener noreferrer" target="_blank">
+                        rebalance rewards
+                      </Atag>
+                      )
+                    </RewardAmountReceivingSmall>
+                  </RewardAmountReceiving>
+                </>
+              )}
+            {variant === 'vertical' &&
+              (resource !== 'swap' || currencyDeposit.includes('sbBTC')) &&
               [currencyDeposit, currencyReceiving].some((currency) =>
                 currency.includes('sbBTC'),
               ) && (
@@ -331,23 +334,26 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
           )}
         </SwapFeeLabel>
       )}
-      {variant === 'banner' && resource === 'swap' && rewardAmountReceiving !== '' && (
-        <RewardAmountReceiving variant={variant}>
-          +
-          <FormattedNumber value={Number(rewardAmountReceiving)} maximumFractionDigits={4} />
-          &nbsp;SWINGBY
-          <br />
-          <RewardAmountReceivingSmall>
-            ({rebateRate}%{' '}
-            <Atag href={rebalanceRewardsUrl} rel="noopener noreferrer" target="_blank">
-              rebalance rewards
-            </Atag>
-            )
-          </RewardAmountReceivingSmall>
-        </RewardAmountReceiving>
-      )}
       {variant === 'banner' &&
-        resource !== 'swap' &&
+        resource === 'swap' &&
+        !currencyDeposit.includes('sbBTC') &&
+        rewardAmountReceiving !== '' && (
+          <RewardAmountReceiving variant={variant}>
+            +
+            <FormattedNumber value={Number(rewardAmountReceiving)} maximumFractionDigits={4} />
+            &nbsp;SWINGBY
+            <br />
+            <RewardAmountReceivingSmall>
+              ({rebateRate}%{' '}
+              <Atag href={rebalanceRewardsUrl} rel="noopener noreferrer" target="_blank">
+                rebalance rewards
+              </Atag>
+              )
+            </RewardAmountReceivingSmall>
+          </RewardAmountReceiving>
+        )}
+      {variant === 'banner' &&
+        (resource !== 'swap' || currencyDeposit.includes('sbBTC')) &&
         [currencyDeposit, currencyReceiving].some((currency) => currency.includes('sbBTC')) &&
         amountReceiving && (
           <SbBtcPriceNotation variant={variant}>
