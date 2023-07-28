@@ -240,14 +240,14 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
         <>
           <SwapVertical onClick={reverseCurrency} />
           <SwapFeeLabel variant={variant}>
-            {resource === 'swap' && feeTotal !== '' && amountReceiving && (
+            {resource !== 'pool' && feeTotal !== '' && amountReceiving && (
               <>
                 -{feeTotal}
                 <br />
                 <SwapFeeLabelSmall>({feeBridgePercent}% + miner fees)</SwapFeeLabelSmall>
               </>
             )}
-            {resource !== 'swap' && amountReceiving && (
+            {resource === 'pool' && amountReceiving && (
               <>
                 -0.00000
                 <br />
@@ -276,7 +276,7 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
           <>
             <FormattedNumber value={Number(amountReceiving)} maximumFractionDigits={4} />
             {variant === 'vertical' &&
-              resource === 'swap' &&
+              resource !== 'pool' &&
               !currencyDeposit.includes('sbBTC') &&
               rewardAmountReceiving !== '' && (
                 <>
@@ -300,7 +300,7 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
                 </>
               )}
             {variant === 'vertical' &&
-              (resource !== 'swap' || currencyDeposit.includes('sbBTC')) &&
+              (resource === 'pool' || currencyDeposit.includes('sbBTC')) &&
               [currencyDeposit, currencyReceiving].some((currency) =>
                 currency.includes('sbBTC'),
               ) && (
@@ -324,18 +324,18 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
 
       {variant === 'banner' && (
         <SwapFeeLabel variant={variant}>
-          {resource === 'swap' && feeTotal !== '' && amountReceiving && (
+          {resource !== 'pool' && feeTotal !== '' && amountReceiving && (
             <SwapFeeLabelSmall>
               -{feeTotal}&nbsp;({feeBridgePercent}% + miner fees)
             </SwapFeeLabelSmall>
           )}
-          {resource !== 'swap' && amountReceiving && (
+          {resource === 'pool' && amountReceiving && (
             <SwapFeeLabelSmall>-0.00000&nbsp;(0.00% + miner fees)</SwapFeeLabelSmall>
           )}
         </SwapFeeLabel>
       )}
       {variant === 'banner' &&
-        resource === 'swap' &&
+        resource !== 'pool' &&
         !currencyDeposit.includes('sbBTC') &&
         rewardAmountReceiving !== '' && (
           <RewardAmountReceiving variant={variant}>
@@ -353,7 +353,7 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
           </RewardAmountReceiving>
         )}
       {variant === 'banner' &&
-        (resource !== 'swap' || currencyDeposit.includes('sbBTC')) &&
+        (resource === 'pool' || currencyDeposit.includes('sbBTC')) &&
         [currencyDeposit, currencyReceiving].some((currency) => currency.includes('sbBTC')) &&
         amountReceiving && (
           <SbBtcPriceNotation variant={variant}>
