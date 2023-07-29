@@ -67,7 +67,7 @@
   "widget.onboard.transaction-result-ok": "Transaction succeeded!",
   "widget.onboard.transaction-result-bad": "Transaction failed!",
   "widget.onboard.explorer": "Explorer",
-  "widget.coin-chain.bitcoin": " ",
+  "widget.coin-chain.bitcoin": "On BTC",
   "widget.coin-chain.ethereum": "On Ethereum",
   "widget.coin-chain.skypools": "On Ethereum",
   "widget.coin-chain.binance-smart": "On BSC",

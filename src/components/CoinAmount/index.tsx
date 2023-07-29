@@ -240,14 +240,14 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
         <>
           <SwapVertical onClick={reverseCurrency} />
           <SwapFeeLabel variant={variant}>
-            {resource === 'swap' && feeTotal !== '' && amountReceiving && (
+            {resource !== 'pool' && feeTotal !== '' && amountReceiving && (
               <>
                 -{feeTotal}
                 <br />
                 <SwapFeeLabelSmall>({feeBridgePercent}% + miner fees)</SwapFeeLabelSmall>
               </>
             )}
-            {resource !== 'swap' && amountReceiving && (
+            {resource === 'pool' && amountReceiving && (
               <>
                 -0.00000
                 <br />
@@ -275,29 +275,32 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
         ) : isAmountReceivingValid ? (
           <>
             <FormattedNumber value={Number(amountReceiving)} maximumFractionDigits={4} />
-            {variant === 'vertical' && resource === 'swap' && rewardAmountReceiving !== '' && (
-              <>
-                <br />
-                <RewardAmountReceiving variant={variant}>
-                  +
-                  <FormattedNumber
-                    value={Number(rewardAmountReceiving)}
-                    maximumFractionDigits={4}
-                  />
-                  &nbsp;SWINGBY
-                  <br />
-                  <RewardAmountReceivingSmall>
-                    ({rebateRate}%{' '}
-                    <Atag href={rebalanceRewardsUrl} rel="noopener noreferrer" target="_blank">
-                      rebalance rewards
-                    </Atag>
-                    )
-                  </RewardAmountReceivingSmall>
-                </RewardAmountReceiving>
-              </>
-            )}
             {variant === 'vertical' &&
-              resource !== 'swap' &&
+              resource !== 'pool' &&
+              !currencyDeposit.includes('sbBTC') &&
+              rewardAmountReceiving !== '' && (
+                <>
+                  <br />
+                  <RewardAmountReceiving variant={variant}>
+                    +
+                    <FormattedNumber
+                      value={Number(rewardAmountReceiving)}
+                      maximumFractionDigits={4}
+                    />
+                    &nbsp;SWINGBY
+                    <br />
+                    <RewardAmountReceivingSmall>
+                      ({rebateRate}%{' '}
+                      <Atag href={rebalanceRewardsUrl} rel="noopener noreferrer" target="_blank">
+                        rebalance rewards
+                      </Atag>
+                      )
+                    </RewardAmountReceivingSmall>
+                  </RewardAmountReceiving>
+                </>
+              )}
+            {variant === 'vertical' &&
+              (resource === 'pool' || currencyDeposit.includes('sbBTC')) &&
               [currencyDeposit, currencyReceiving].some((currency) =>
                 currency.includes('sbBTC'),
               ) && (
@@ -321,33 +324,36 @@ export const CoinAmount = ({ variant, resource, 'data-testid': testId }: Props) 
 
       {variant === 'banner' && (
         <SwapFeeLabel variant={variant}>
-          {resource === 'swap' && feeTotal !== '' && amountReceiving && (
+          {resource !== 'pool' && feeTotal !== '' && amountReceiving && (
             <SwapFeeLabelSmall>
               -{feeTotal}&nbsp;({feeBridgePercent}% + miner fees)
             </SwapFeeLabelSmall>
           )}
-          {resource !== 'swap' && amountReceiving && (
+          {resource === 'pool' && amountReceiving && (
             <SwapFeeLabelSmall>-0.00000&nbsp;(0.00% + miner fees)</SwapFeeLabelSmall>
           )}
         </SwapFeeLabel>
       )}
-      {variant === 'banner' && resource === 'swap' && rewardAmountReceiving !== '' && (
-        <RewardAmountReceiving variant={variant}>
-          +
-          <FormattedNumber value={Number(rewardAmountReceiving)} maximumFractionDigits={4} />
-          &nbsp;SWINGBY
-          <br />
-          <RewardAmountReceivingSmall>
-            ({rebateRate}%{' '}
-            <Atag href={rebalanceRewardsUrl} rel="noopener noreferrer" target="_blank">
-              rebalance rewards
-            </Atag>
-            )
-          </RewardAmountReceivingSmall>
-        </RewardAmountReceiving>
-      )}
       {variant === 'banner' &&
-        resource !== 'swap' &&
+        resource !== 'pool' &&
+        !currencyDeposit.includes('sbBTC') &&
+        rewardAmountReceiving !== '' && (
+          <RewardAmountReceiving variant={variant}>
+            +
+            <FormattedNumber value={Number(rewardAmountReceiving)} maximumFractionDigits={4} />
+            &nbsp;SWINGBY
+            <br />
+            <RewardAmountReceivingSmall>
+              ({rebateRate}%{' '}
+              <Atag href={rebalanceRewardsUrl} rel="noopener noreferrer" target="_blank">
+                rebalance rewards
+              </Atag>
+              )
+            </RewardAmountReceivingSmall>
+          </RewardAmountReceiving>
+        )}
+      {variant === 'banner' &&
+        (resource === 'pool' || currencyDeposit.includes('sbBTC')) &&
         [currencyDeposit, currencyReceiving].some((currency) => currency.includes('sbBTC')) &&
         amountReceiving && (
           <SbBtcPriceNotation variant={variant}>
